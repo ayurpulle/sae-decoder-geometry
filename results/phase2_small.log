@@ -65,3 +65,21 @@ saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_po
 saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.11033161765383506
 [gaussian w16384 s0] step 50/3662 fvu 0.5496 dead 0.000 9s
 [gaussian w16384 s0] step 500/3662 fvu 0.2813 dead 0.000 88s
+[gaussian w16384 s0] step 1000/3662 fvu 0.2476 dead 0.000 173s
+[gaussian w16384 s0] step 1500/3662 fvu 0.2402 dead 0.000 258s
+[gaussian w16384 s0] step 2000/3662 fvu 0.2314 dead 0.000 343s
+[gaussian w16384 s0] step 2500/3662 fvu 0.2284 dead 0.000 428s
+[gaussian w16384 s0] step 3000/3662 fvu 0.2271 dead 0.000 513s
+[gaussian w16384 s0] step 3500/3662 fvu 0.2240 dead 0.000 598s
+[gaussian w16384 s0] step 3662/3662 fvu 0.2243 dead 0.000 626s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__gaussian__w16384__k32__s0 fvu_eval 0.22383639632895846
+[scrambled w16384 s0] step 50/3662 fvu 0.5730 dead 0.000 22s
+[scrambled w16384 s0] step 500/3662 fvu 0.5095 dead 0.000 124s
+[scrambled w16384 s0] step 1000/3662 fvu 0.3608 dead 0.000 232s
+[scrambled w16384 s0] step 1500/3662 fvu 0.4083 dead 0.000 339s
+[scrambled w16384 s0] step 2000/3662 fvu 0.3619 dead 0.000 448s
+[scrambled w16384 s0] step 2500/3662 fvu 0.3705 dead 0.000 554s
+[scrambled w16384 s0] step 3000/3662 fvu 0.4038 dead 0.000 660s
+[scrambled w16384 s0] step 3500/3662 fvu 0.4001 dead 0.000 766s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__scrambled__w16384__k32__s0 fvu_eval 0.3688185845262125
+[real w1024 s1] step 50/3662 fvu 0.2938 dead 0.000 6s
