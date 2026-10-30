@@ -1,0 +1,6 @@
+.venv/
+cache/
+ext/
+__pycache__/
+*.npy
+!results/**/*.npy
