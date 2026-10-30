@@ -9,3 +9,59 @@
 saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__real__w1024__k32__s0 fvu_eval 0.13449061858431324
 [gaussian w1024 s0] step 50/3662 fvu 0.3886 dead 0.000 4s
 [gaussian w1024 s0] step 500/3662 fvu 0.2601 dead 0.000 38s
+[gaussian w1024 s0] step 1000/3662 fvu 0.2465 dead 0.000 76s
+[gaussian w1024 s0] step 1500/3662 fvu 0.2456 dead 0.000 116s
+[gaussian w1024 s0] step 2000/3662 fvu 0.2420 dead 0.000 161s
+[gaussian w1024 s0] step 2500/3662 fvu 0.2407 dead 0.000 199s
+[gaussian w1024 s0] step 3000/3662 fvu 0.2411 dead 0.000 236s
+[gaussian w1024 s0] step 3500/3662 fvu 0.2380 dead 0.000 274s
+[gaussian w1024 s0] step 3662/3662 fvu 0.2388 dead 0.000 286s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__gaussian__w1024__k32__s0 fvu_eval 0.2381052564392756
+[scrambled w1024 s0] step 50/3662 fvu 0.5366 dead 0.000 18s
+[scrambled w1024 s0] step 500/3662 fvu 0.5079 dead 0.000 73s
+[scrambled w1024 s0] step 1000/3662 fvu 0.4023 dead 0.000 129s
+[scrambled w1024 s0] step 1500/3662 fvu 0.4560 dead 0.000 186s
+[scrambled w1024 s0] step 2000/3662 fvu 0.4004 dead 0.000 244s
+[scrambled w1024 s0] step 2500/3662 fvu 0.4048 dead 0.000 309s
+[scrambled w1024 s0] step 3000/3662 fvu 0.4383 dead 0.000 366s
+[scrambled w1024 s0] step 3500/3662 fvu 0.4323 dead 0.000 424s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__scrambled__w1024__k32__s0 fvu_eval 0.39638200803580753
+[real w4096 s0] step 50/3662 fvu 0.3292 dead 0.000 7s
+[real w4096 s0] step 500/3662 fvu 0.1788 dead 0.000 47s
+[real w4096 s0] step 1000/3662 fvu 0.1418 dead 0.000 91s
+[real w4096 s0] step 1500/3662 fvu 0.1234 dead 0.000 135s
+[real w4096 s0] step 2000/3662 fvu 0.1052 dead 0.000 178s
+[real w4096 s0] step 2500/3662 fvu 0.1227 dead 0.000 221s
+[real w4096 s0] step 3000/3662 fvu 0.0991 dead 0.000 269s
+[real w4096 s0] step 3500/3662 fvu 0.0793 dead 0.000 312s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__real__w4096__k32__s0 fvu_eval 0.11183568566299375
+[gaussian w4096 s0] step 50/3662 fvu 0.4426 dead 0.000 5s
+[gaussian w4096 s0] step 500/3662 fvu 0.2676 dead 0.000 46s
+[gaussian w4096 s0] step 1000/3662 fvu 0.2457 dead 0.000 93s
+[gaussian w4096 s0] step 1500/3662 fvu 0.2437 dead 0.000 139s
+[gaussian w4096 s0] step 2000/3662 fvu 0.2377 dead 0.000 185s
+[gaussian w4096 s0] step 2500/3662 fvu 0.2357 dead 0.000 231s
+[gaussian w4096 s0] step 3000/3662 fvu 0.2353 dead 0.000 278s
+[gaussian w4096 s0] step 3500/3662 fvu 0.2320 dead 0.000 324s
+[gaussian w4096 s0] step 3662/3662 fvu 0.2328 dead 0.000 339s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__gaussian__w4096__k32__s0 fvu_eval 0.23181028186439157
+[scrambled w4096 s0] step 50/3662 fvu 0.5329 dead 0.000 19s
+[scrambled w4096 s0] step 500/3662 fvu 0.4862 dead 0.000 83s
+[scrambled w4096 s0] step 1000/3662 fvu 0.3807 dead 0.000 149s
+[scrambled w4096 s0] step 1500/3662 fvu 0.4339 dead 0.000 215s
+[scrambled w4096 s0] step 2000/3662 fvu 0.3840 dead 0.000 282s
+[scrambled w4096 s0] step 2500/3662 fvu 0.3928 dead 0.000 349s
+[scrambled w4096 s0] step 3000/3662 fvu 0.4287 dead 0.000 429s
+[scrambled w4096 s0] step 3500/3662 fvu 0.4243 dead 0.000 498s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__scrambled__w4096__k32__s0 fvu_eval 0.39124281508793013
+[real w16384 s0] step 50/3662 fvu 0.4303 dead 0.000 11s
+[real w16384 s0] step 500/3662 fvu 0.2112 dead 0.000 88s
+[real w16384 s0] step 1000/3662 fvu 0.1650 dead 0.000 173s
+[real w16384 s0] step 1500/3662 fvu 0.1368 dead 0.000 259s
+[real w16384 s0] step 2000/3662 fvu 0.1119 dead 0.000 346s
+[real w16384 s0] step 2500/3662 fvu 0.1263 dead 0.000 433s
+[real w16384 s0] step 3000/3662 fvu 0.0993 dead 0.000 519s
+[real w16384 s0] step 3500/3662 fvu 0.0788 dead 0.000 605s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.11033161765383506
+[gaussian w16384 s0] step 50/3662 fvu 0.5496 dead 0.000 9s
+[gaussian w16384 s0] step 500/3662 fvu 0.2813 dead 0.000 88s
