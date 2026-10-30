@@ -138,3 +138,5 @@ layer_25/width_16k/average_l0_28: slope=-0.5223 windows[-0.484 -0.522 -0.509 -0.
 layer_25/width_16k/average_l0_55: slope=-0.4136 windows[-0.370 -0.414 -0.414 -0.449] fetch=15s
 layer_25/width_16k/average_l0_116: slope=-0.2867 windows[-0.228 -0.287 -0.307 -0.361] fetch=19s
 layer_25/width_16k/average_l0_285: slope=-0.2074 windows[-0.173 -0.207 -0.234 -0.349] fetch=106s
+layer_0/width_65k/average_l0_11: slope=-0.4196 windows[-0.513 -0.420 -0.355 -0.384] fetch=231s
+layer_0/width_65k/average_l0_17: slope=-0.3875 windows[-0.436 -0.387 -0.349 -0.388] fetch=298s

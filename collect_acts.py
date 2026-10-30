@@ -49,11 +49,14 @@ class HFResid:
         # Load in bf16 on CPU, keep only layers 0..layer, then cast to the compute dtype on the device.
         # (M2 GPUs have no native bf16, so bf16 compute on MPS is emulated and very slow.)
         self.model = AutoModelForCausalLM.from_pretrained(name, torch_dtype=torch.bfloat16)
+        # The (scaled) token embedding stays on CPU in bf16; only looked-up rows go to the device.
         self.model.model.layers = self.model.model.layers[:layer + 1]
         self.model.lm_head = torch.nn.Identity()
+        self.embed = self.model.model.embed_tokens.eval()
+        self.model.model.embed_tokens = torch.nn.Embedding(1, self.model.config.hidden_size)
         self.model = self.model.to(dtype).to(dev).eval()
         self.d_model = self.model.config.hidden_size
-        self.dev = dev
+        self.dev, self.dtype = dev, dtype
         self.model.model.layers[layer].register_forward_hook(self._hook)
 
     def _hook(self, module, inputs, output):
@@ -62,7 +65,7 @@ class HFResid:
 
     def __call__(self, toks):
         try:
-            self.model.model(toks.to(self.dev))
+            self.model.model(inputs_embeds=self.embed(toks).to(self.dtype).to(self.dev))
         except _Stop:
             pass
         return self._out
