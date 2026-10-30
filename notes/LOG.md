@@ -73,8 +73,8 @@ Run: `experiments/phase1_width_ladder.py` → `results/phase1/width_ladder_L12.j
 
 **Headline: L0, not width, sets the slope.** In the paper's window (ranks 11–150), slope is close to linear in log L0 and nearly width-independent:
 - about −0.74 at L0≈12, −0.47 at L0≈72, −0.24 at L0≈445;
-- roughly +0.17 per doubling of L0.
-- The paper's −0.47 (65k, L0=72) is one point on this line. Their across-layer comparison used different L0 per layer (L0 73 / 72 / 124 for layers 0 / 12 / 24). Part of the "middle layer is steepest" result could be an L0 effect: layer 24's L0 of 124 alone predicts a slope ~0.13 shallower. Must check with matched L0 across layers (Phase 1b).
+- roughly +0.10 per doubling of L0 (0.50 over 5.2 doublings).
+- The paper's −0.47 (65k, L0=72) is one point on this line. Their across-layer comparison used different L0 per layer (L0 73 / 72 / 124 for layers 0 / 12 / 24). Part of the "middle layer is steepest" result could be an L0 effect: layer 24's L0 of 124 vs 72 (0.78 doublings) alone predicts a slope ~0.08 shallower, against an observed difference of 0.21. Must check with matched L0 across layers (Phase 1b).
 
 **Width at matched L0** (log-interpolated; 262k/524k/1m have only 2 L0s, so their interpolation is coarse):
 
