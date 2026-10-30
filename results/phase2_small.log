@@ -83,3 +83,33 @@ saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_po
 [scrambled w16384 s0] step 3500/3662 fvu 0.4001 dead 0.000 766s
 saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__scrambled__w16384__k32__s0 fvu_eval 0.3688185845262125
 [real w1024 s1] step 50/3662 fvu 0.2938 dead 0.000 6s
+[real w1024 s1] step 500/3662 fvu 0.1683 dead 0.000 37s
+[real w1024 s1] step 1000/3662 fvu 0.1296 dead 0.000 71s
+[real w1024 s1] step 1500/3662 fvu 0.1497 dead 0.000 104s
+[real w1024 s1] step 2000/3662 fvu 0.1267 dead 0.000 137s
+[real w1024 s1] step 2500/3662 fvu 0.1344 dead 0.000 171s
+[real w1024 s1] step 3000/3662 fvu 0.1216 dead 0.000 205s
+[real w1024 s1] step 3500/3662 fvu 0.1478 dead 0.000 239s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__real__w1024__k32__s1 fvu_eval 0.1431082464954683
+[gaussian w1024 s1] step 50/3662 fvu 0.3843 dead 0.000 4s
+[gaussian w1024 s1] step 500/3662 fvu 0.2637 dead 0.000 38s
+[gaussian w1024 s1] step 1000/3662 fvu 0.2463 dead 0.000 75s
+[gaussian w1024 s1] step 1500/3662 fvu 0.2388 dead 0.000 113s
+[gaussian w1024 s1] step 2000/3662 fvu 0.2374 dead 0.000 150s
+[gaussian w1024 s1] step 2500/3662 fvu 0.2383 dead 0.000 188s
+[gaussian w1024 s1] step 3000/3662 fvu 0.2434 dead 0.000 225s
+[gaussian w1024 s1] step 3500/3662 fvu 0.2401 dead 0.000 263s
+[gaussian w1024 s1] step 3662/3662 fvu 0.2390 dead 0.000 275s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__gaussian__w1024__k32__s1 fvu_eval 0.23895057096972433
+[scrambled w1024 s1] step 50/3662 fvu 0.4984 dead 0.000 17s
+[scrambled w1024 s1] step 500/3662 fvu 0.4280 dead 0.000 72s
+[scrambled w1024 s1] step 1000/3662 fvu 0.4167 dead 0.000 128s
+[scrambled w1024 s1] step 1500/3662 fvu 0.4211 dead 0.000 185s
+[scrambled w1024 s1] step 2000/3662 fvu 0.4191 dead 0.000 241s
+[scrambled w1024 s1] step 2500/3662 fvu 0.4377 dead 0.000 298s
+[scrambled w1024 s1] step 3000/3662 fvu 0.4268 dead 0.000 356s
+[scrambled w1024 s1] step 3500/3662 fvu 0.4487 dead 0.000 413s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__scrambled__w1024__k32__s1 fvu_eval 0.4282224105881232
+[real w4096 s1] step 50/3662 fvu 0.3308 dead 0.000 7s
+[real w4096 s1] step 500/3662 fvu 0.1759 dead 0.000 45s
+[real w4096 s1] step 1000/3662 fvu 0.1225 dead 0.000 95s
