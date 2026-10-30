@@ -15,3 +15,13 @@ layer_12/width_65k/average_l0_72: slope=-0.4684 R2=0.994 windows[-0.476 -0.468 -
 layer_12/width_65k/average_l0_141: slope=-0.3740 R2=0.997 windows[-0.375 -0.374 -0.367 -0.455] gauss=-0.0276 fetch=81s eig=44s
 layer_12/width_65k/average_l0_297: slope=-0.2785 R2=0.999 windows[-0.250 -0.279 -0.308 -0.407] gauss=-0.0276 fetch=74s eig=12s
 layer_12/width_131k/average_l0_12: slope=-0.7453 R2=0.994 windows[-0.737 -0.745 -0.585 -0.581] gauss=-0.0201 fetch=147s eig=65s
+'The read operation timed out' thrown while requesting GET https://huggingface.co/google/gemma-scope-2b-pt-res/resolve/main/layer_12/width_131k/average_l0_20/params.npz
+Retrying in 1s [Retry 1/5].
+'[Errno 8] nodename nor servname provided, or not known' thrown while requesting GET https://huggingface.co/google/gemma-scope-2b-pt-res/resolve/main/layer_12/width_131k/average_l0_20/params.npz
+Retrying in 2s [Retry 2/5].
+'[Errno 8] nodename nor servname provided, or not known' thrown while requesting GET https://huggingface.co/google/gemma-scope-2b-pt-res/resolve/main/layer_12/width_131k/average_l0_20/params.npz
+Retrying in 4s [Retry 3/5].
+layer_12/width_131k/average_l0_20: slope=-0.6797 R2=0.993 windows[-0.671 -0.680 -0.528 -0.544] gauss=-0.0201 fetch=200s eig=46s
+layer_12/width_131k/average_l0_36: slope=-0.5962 R2=0.993 windows[-0.581 -0.596 -0.472 -0.514] gauss=-0.0201 fetch=253s eig=37s
+layer_12/width_131k/average_l0_67: slope=-0.4961 R2=0.992 windows[-0.507 -0.496 -0.415 -0.490] gauss=-0.0201 fetch=248s eig=18s
+layer_12/width_131k/average_l0_129: slope=-0.3779 R2=0.995 windows[-0.391 -0.378 -0.360 -0.461] gauss=-0.0201 fetch=249s eig=16s

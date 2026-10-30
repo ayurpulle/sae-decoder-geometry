@@ -54,30 +54,29 @@ def scramble(x, rng):
     return np.stack([x[rng.permutation(len(x)), j] for j in range(x.shape[1])], axis=1)
 
 
-def chunks(cond, acts, n_train, stats, rng, d):
-    """Yield float32 (CHUNK, d) training arrays for one pass over n_train tokens."""
+def batches(cond, acts, lo, hi, stats, seed, d, batch, scale, dev, shuffle=True):
+    """Yield scaled float32 (batch, d) tensors on `dev` covering tokens [lo, hi) once.
+
+    Real/scrambled data stay fp16 on the CPU one CHUNK at a time; only batches move to the device.
+    Gaussian samples are drawn per batch (CPU generator for reproducibility, transform on device).
+    """
+    rng = np.random.default_rng(seed)
     if cond == "gaussian":
-        L = np.linalg.cholesky(stats["cov"])
-        for _ in range(math.ceil(n_train / CHUNK)):
-            yield (rng.standard_normal((CHUNK, d)) @ L.T + stats["mean"]).astype(np.float32)
+        gen = torch.Generator().manual_seed(seed)
+        Lt = torch.tensor(np.linalg.cholesky(stats["cov"]).T * scale, dtype=torch.float32, device=dev)
+        mu = torch.tensor(stats["mean"] * scale, dtype=torch.float32, device=dev)
+        for _ in range((hi - lo) // batch):
+            yield torch.randn(batch, d, generator=gen).to(dev) @ Lt + mu
         return
-    for c in rng.permutation(math.ceil(n_train / CHUNK)):
-        x = np.asarray(acts[c * CHUNK:min((c + 1) * CHUNK, n_train)], dtype=np.float32)
+    starts = np.arange(lo, hi, CHUNK)
+    for c in (rng.permutation(starts) if shuffle else starts):
+        x = np.asarray(acts[c:min(c + CHUNK, hi)])
         if cond == "scrambled":
             x = scramble(x, rng)
-        else:
-            x = x[rng.permutation(len(x))]
-        yield x
-
-
-def eval_set(cond, acts, n_train, stats, rng, d, n_eval):
-    if cond == "gaussian":
-        L = np.linalg.cholesky(stats["cov"])
-        return (rng.standard_normal((n_eval, d)) @ L.T + stats["mean"]).astype(np.float32)
-    x = np.asarray(acts[n_train:n_train + n_eval], dtype=np.float32)
-    if cond == "scrambled":
-        x = scramble(x, rng)
-    return x
+        idx = rng.permutation(len(x)) if shuffle else np.arange(len(x))
+        for b in range(0, len(x) - batch + 1, batch):
+            yield torch.from_numpy(x[idx[b:b + batch]].astype(np.float32)).to(dev) * scale
+        del x
 
 
 def git_hash():
@@ -97,7 +96,6 @@ def train(args):
     n_train = min(args.tokens, n_total - args.eval_tokens)
     scale = math.sqrt(d / (np.trace(stats["cov"]) + stats["mean"] @ stats["mean"]))
 
-    rng = np.random.default_rng(args.seed)
     gen = torch.Generator().manual_seed(args.seed)
     sae = TopKSAE(d, args.width, args.k, gen).to(dev)
     with torch.no_grad():
@@ -110,58 +108,57 @@ def train(args):
     dead_window = args.dead_window
     step, t0 = 0, time.time()
     log = []
-    for x_np in chunks(args.cond, acts, n_train, stats, rng, d):
-        x_all = torch.from_numpy(x_np).to(dev) * scale
-        for b in range(0, len(x_all) - args.batch + 1, args.batch):
-            if step >= n_steps:
-                break
-            x = x_all[b:b + args.batch]
-            recon, (v, i), pre = sae(x)
-            err = x - recon
-            mse = err.pow(2).sum(-1).mean()
-            fvu = mse / (x - x.mean(0)).pow(2).sum(-1).mean()
-            since_fired += args.batch
-            since_fired[i[v > 0]] = 0
-            dead = since_fired > dead_window
-            loss = fvu
-            if args.aux_k and dead.any():
-                pre_dead = pre.masked_fill(~dead, -torch.inf)
-                kk = min(args.aux_k, int(dead.sum()))
-                va, ia = pre_dead.topk(kk, dim=-1)
-                aux_recon = (torch.relu(va).unsqueeze(-1) * sae.W_dec[ia]).sum(1)
-                aux = (err.detach() - aux_recon).pow(2).sum(-1).mean() / err.detach().pow(2).sum(-1).mean()
-                loss = loss + aux / 32
-            opt.zero_grad(set_to_none=True)
-            loss.backward()
-            # Remove the gradient component parallel to each decoder row (keeps rows on the sphere).
-            with torch.no_grad():
-                g = sae.W_dec.grad
-                g -= (g * sae.W_dec).sum(1, keepdim=True) * sae.W_dec
-            opt.step()
-            sched.step()
-            sae.renorm()
-            step += 1
-            if step % 500 == 0 or step == n_steps or step == 50:
-                log.append({"step": step, "fvu": fvu.item(), "dead_frac": dead.float().mean().item()})
-                print(f"[{args.cond} w{args.width} s{args.seed}] step {step}/{n_steps} fvu {fvu.item():.4f} "
-                      f"dead {dead.float().mean().item():.3f} {time.time() - t0:.0f}s", flush=True)
+    for x in batches(args.cond, acts, 0, n_train, stats, args.seed, d, args.batch, scale, dev):
+        if step >= n_steps:
+            break
+        recon, (v, i), pre = sae(x)
+        err = x - recon
+        mse = err.pow(2).sum(-1).mean()
+        fvu = mse / (x - x.mean(0)).pow(2).sum(-1).mean()
+        since_fired += args.batch
+        since_fired[i[v > 0]] = 0
+        dead = since_fired > dead_window
+        loss = fvu
+        if args.aux_k and dead.any():
+            pre_dead = pre.masked_fill(~dead, -torch.inf)
+            kk = min(args.aux_k, int(dead.sum()))
+            va, ia = pre_dead.topk(kk, dim=-1)
+            aux_recon = (torch.relu(va).unsqueeze(-1) * sae.W_dec[ia]).sum(1)
+            aux = (err.detach() - aux_recon).pow(2).sum(-1).mean() / err.detach().pow(2).sum(-1).mean()
+            loss = loss + aux / 32
+        opt.zero_grad(set_to_none=True)
+        loss.backward()
+        # Remove the gradient component parallel to each decoder row (keeps rows on the sphere).
+        with torch.no_grad():
+            g = sae.W_dec.grad
+            g -= (g * sae.W_dec).sum(1, keepdim=True) * sae.W_dec
+        opt.step()
+        sched.step()
+        sae.renorm()
+        step += 1
+        if step % 500 == 0 or step == n_steps or step == 50:
+            log.append({"step": step, "fvu": fvu.item(), "dead_frac": dead.float().mean().item()})
+            print(f"[{args.cond} w{args.width} s{args.seed}] step {step}/{n_steps} fvu {fvu.item():.4f} "
+                  f"dead {dead.float().mean().item():.3f} {time.time() - t0:.0f}s", flush=True)
 
     log.append({"step": step, "fvu": fvu.item(), "dead_frac": dead.float().mean().item()})
 
-    # Eval: FVU and per-latent firing counts on held-out / fresh data.
-    xe = eval_set(args.cond, acts, n_train, stats, np.random.default_rng(10_000 + args.seed), d, args.eval_tokens)
+    # Eval: FVU and per-latent firing counts on held-out / fresh data. Two passes over the same eval stream (seeded): mean first, then errors and firings.
+    eval_args = (args.cond, acts, n_train, n_train + args.eval_tokens, stats, 10_000 + args.seed, d, 8192, scale, dev)
     fires = torch.zeros(args.width, device=dev)
-    se, sv = 0.0, 0.0
-    mu_e = torch.tensor(xe.mean(0) * scale, device=dev)
+    se, sv, mu_e, n_e = 0.0, 0.0, torch.zeros(d, device=dev), 0
     with torch.no_grad():
-        for b in range(0, len(xe), 8192):
-            x = torch.from_numpy(xe[b:b + 8192]).to(dev) * scale
+        for x in batches(*eval_args, shuffle=False):
+            mu_e += x.sum(0)
+            n_e += len(x)
+        mu_e /= n_e
+        for x in batches(*eval_args, shuffle=False):
             recon, (v, i), _ = sae(x)
             fires.index_add_(0, i[v > 0], torch.ones_like(v[v > 0]))
             se += (x - recon).pow(2).sum().item()
             sv += (x - mu_e).pow(2).sum().item()
     return sae, {"fvu_eval": se / sv, "fires": fires.cpu().numpy(), "train_log": log, "lr": lr,
-                 "n_train_tokens": n_steps * args.batch, "input_scale": scale, "seconds": time.time() - t0}
+                 "n_train_tokens": step * args.batch, "n_eval_tokens": n_e, "input_scale": scale, "seconds": time.time() - t0}
 
 
 def main():
