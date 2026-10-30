@@ -113,3 +113,13 @@ saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_po
 [real w4096 s1] step 50/3662 fvu 0.3308 dead 0.000 7s
 [real w4096 s1] step 500/3662 fvu 0.1759 dead 0.000 45s
 [real w4096 s1] step 1000/3662 fvu 0.1225 dead 0.000 95s
+[real w4096 s1] step 1500/3662 fvu 0.1345 dead 0.000 154s
+[real w4096 s1] step 2000/3662 fvu 0.1092 dead 0.000 213s
+[real w4096 s1] step 2500/3662 fvu 0.1147 dead 0.000 269s
+[real w4096 s1] step 3000/3662 fvu 0.1015 dead 0.000 320s
+[real w4096 s1] step 3500/3662 fvu 0.1220 dead 0.000 371s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__real__w4096__k32__s1 fvu_eval 0.11471896922364794
+[gaussian w4096 s1] step 50/3662 fvu 0.4456 dead 0.000 6s
+[gaussian w4096 s1] step 500/3662 fvu 0.2712 dead 0.000 48s
+[gaussian w4096 s1] step 1000/3662 fvu 0.2427 dead 0.000 96s
+[gaussian w4096 s1] step 1500/3662 fvu 0.2328 dead 0.000 147s

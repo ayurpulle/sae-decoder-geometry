@@ -1,4 +1,4 @@
-"""Phase 1b: eigen slope vs layer at matched L0 (Gemma Scope res, 16k all layers, 65k paper layers).
+"""Phase 1b: eigen slope vs layer at matched L0 (Gemma Scope res, 16k and 65k, all layers; paper layers first).
 
 The paper compared layers using one SAE per layer with different L0s; Phase 1a showed slope moves
 ~0.10 per doubling of L0, so here every available L0 is measured and slopes are interpolated to common L0s
@@ -27,6 +27,7 @@ def plan():
           for v in avail for L, w in [(v["layer"], v["width"])] if L != "embedding"}
     jobs = [(L, "16k", l0) for L in range(26) for l0 in by[(L, "16k")]]
     jobs += [(L, "65k", l0) for L in PAPER_LAYERS for l0 in by[(L, "65k")]]
+    jobs += [(L, "65k", l0) for L in range(26) if L not in PAPER_LAYERS for l0 in by[(L, "65k")]]
     return jobs
 
 
