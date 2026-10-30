@@ -5,7 +5,7 @@ float64 mean and covariance over all cached tokens (used for the Gaussian null).
 dropped because its residual norm is an outlier.
 Usage: python collect_acts.py --model pythia-70m --hook blocks.3.hook_resid_post --n_tokens 20_000_000
        python collect_acts.py --backend hf --model google/gemma-2-2b --hook blocks.12.hook_resid_post \
-           --ctx 1024 --batch 4 --dtype bfloat16 --n_tokens 1_000_000
+           --ctx 1024 --batch 4 --dtype float32 --n_tokens 1_000_000
 The hf backend reads resid_post of block L via a forward hook on decoder layer L and stops the forward
 pass there (no TransformerLens weight conversion, which doubles peak memory for Gemma on a 16 GB Mac).
 """
@@ -46,7 +46,12 @@ class HFResid:
     def __init__(self, name, layer, dev, dtype):
         from transformers import AutoModelForCausalLM, AutoTokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(name)
-        self.model = AutoModelForCausalLM.from_pretrained(name, torch_dtype=dtype).to(dev).eval()
+        # Load in bf16 on CPU, keep only layers 0..layer, then cast to the compute dtype on the device.
+        # (M2 GPUs have no native bf16, so bf16 compute on MPS is emulated and very slow.)
+        self.model = AutoModelForCausalLM.from_pretrained(name, torch_dtype=torch.bfloat16)
+        self.model.model.layers = self.model.model.layers[:layer + 1]
+        self.model.lm_head = torch.nn.Identity()
+        self.model = self.model.to(dtype).to(dev).eval()
         self.d_model = self.model.config.hidden_size
         self.dev = dev
         self.model.model.layers[layer].register_forward_hook(self._hook)
@@ -106,7 +111,7 @@ def main():
             s += a.sum(0)
             G += a.T @ a
             n += len(a)
-            if n // 1_000_000 != (n - len(a)) // 1_000_000:
+            if n // 100_000 != (n - len(a)) // 100_000:
                 print(f"{n:,} tokens  {time.time() - t0:.0f}s", flush=True)
             if n >= args.n_tokens:
                 break
