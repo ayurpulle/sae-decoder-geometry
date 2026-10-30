@@ -45,17 +45,22 @@ def git_hash():
         return None
 
 
-def fetch_wdec(sae_id: str) -> Path:
-    dst = CACHE / sae_id / "W_dec.npy"
+def fetch_array(sae_id: str, name: str = "W_dec") -> Path:
+    """Range-read one array (e.g. W_dec, W_enc, b_enc, threshold) out of a remote params.npz; cached."""
+    dst = CACHE / sae_id / f"{name}.npy"
     if dst.exists():
         return dst
     dst.parent.mkdir(parents=True, exist_ok=True)
     tmp = dst.with_suffix(".part")
     with HfFileSystem().open(f"{REPO}/{sae_id}/params.npz", "rb", block_size=2**26) as f:
-        with zipfile.ZipFile(f).open("W_dec.npy") as m, open(tmp, "wb") as o:
+        with zipfile.ZipFile(f).open(f"{name}.npy") as m, open(tmp, "wb") as o:
             shutil.copyfileobj(m, o, length=2**24)
     tmp.rename(dst)
     return dst
+
+
+def fetch_wdec(sae_id: str) -> Path:
+    return fetch_array(sae_id, "W_dec")
 
 
 def main():
