@@ -1,4 +1,11 @@
-[real w1024 s0] step 50/3662 fvu 0.2907 dead 0.000 17s
-[real w1024 s0] step 500/3662 fvu 0.1808 dead 0.000 240s
-[real w1024 s0] step 1000/3662 fvu 0.1517 dead 0.000 424s
-[real w1024 s0] step 1500/3662 fvu 0.1379 dead 0.000 621s
+[real w1024 s0] step 50/3662 fvu 0.2908 dead 0.000 15s
+[real w1024 s0] step 500/3662 fvu 0.1809 dead 0.000 155s
+[real w1024 s0] step 1000/3662 fvu 0.1516 dead 0.000 265s
+[real w1024 s0] step 1500/3662 fvu 0.1379 dead 0.000 320s
+[real w1024 s0] step 2000/3662 fvu 0.1211 dead 0.000 380s
+[real w1024 s0] step 2500/3662 fvu 0.1450 dead 0.000 440s
+[real w1024 s0] step 3000/3662 fvu 0.1197 dead 0.000 503s
+[real w1024 s0] step 3500/3662 fvu 0.0951 dead 0.000 547s
+saved /Users/ayurpulle/Desktop/SAE/cache/saes/pythia-70m__blocks.3.hook_resid_post__real__w1024__k32__s0 fvu_eval 0.13449061858431324
+[gaussian w1024 s0] step 50/3662 fvu 0.3886 dead 0.000 4s
+[gaussian w1024 s0] step 500/3662 fvu 0.2601 dead 0.000 38s

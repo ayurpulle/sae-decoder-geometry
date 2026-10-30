@@ -25,3 +25,5 @@ layer_12/width_131k/average_l0_20: slope=-0.6797 R2=0.993 windows[-0.671 -0.680 
 layer_12/width_131k/average_l0_36: slope=-0.5962 R2=0.993 windows[-0.581 -0.596 -0.472 -0.514] gauss=-0.0201 fetch=253s eig=37s
 layer_12/width_131k/average_l0_67: slope=-0.4961 R2=0.992 windows[-0.507 -0.496 -0.415 -0.490] gauss=-0.0201 fetch=248s eig=18s
 layer_12/width_131k/average_l0_129: slope=-0.3779 R2=0.995 windows[-0.391 -0.378 -0.360 -0.461] gauss=-0.0201 fetch=249s eig=16s
+layer_12/width_131k/average_l0_264: slope=-0.2837 R2=0.999 windows[-0.263 -0.284 -0.311 -0.415] gauss=-0.0201 fetch=224s eig=17s
+layer_12/width_262k/average_l0_21: slope=-0.6657 R2=0.994 windows[-0.655 -0.666 -0.521 -0.518] gauss=-0.0146 fetch=255s eig=26s

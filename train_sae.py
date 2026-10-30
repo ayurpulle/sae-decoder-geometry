@@ -70,7 +70,7 @@ def batches(cond, acts, lo, hi, stats, seed, d, batch, scale, dev, shuffle=True)
         return
     starts = np.arange(lo, hi, CHUNK)
     for c in (rng.permutation(starts) if shuffle else starts):
-        x = np.asarray(acts[c:min(c + CHUNK, hi)])
+        x = np.array(acts[c:min(c + CHUNK, hi)])  # copy into RAM; fancy-indexing a memmap is slow
         if cond == "scrambled":
             x = scramble(x, rng)
         idx = rng.permutation(len(x)) if shuffle else np.arange(len(x))
