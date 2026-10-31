@@ -4,3 +4,4 @@ ext/
 __pycache__/
 *.npy
 !results/**/*.npy
+results/*.log

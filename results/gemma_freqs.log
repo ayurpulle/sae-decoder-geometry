@@ -1,43 +1,0 @@
-gemma access ok Fri Oct 30 16:13:48 PDT 2026
-W1030 16:13:56.222000 45523 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
-Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights:   0%|          | 1/288 [00:21<1:40:30, 21.01s/it]Loading weights:   1%|          | 2/288 [00:21<41:33,  8.72s/it]  Loading weights:   4%|▍         | 11/288 [00:21<04:45,  1.03s/it]Loading weights:  17%|█▋        | 48/288 [00:21<00:40,  5.93it/s]Loading weights:  33%|███▎      | 94/288 [00:21<00:13, 14.46it/s]Loading weights:  62%|██████▏   | 178/288 [00:21<00:03, 36.06it/s]Loading weights:  81%|████████▏ | 234/288 [00:22<00:01, 45.37it/s]Loading weights:  93%|█████████▎| 269/288 [00:24<00:00, 27.74it/s]Loading weights: 100%|██████████| 288/288 [00:25<00:00, 11.20it/s]
-102,300 tokens  1211s
-200,508 tokens  1277s
-302,808 tokens  1387s
-401,016 tokens  1485s
-503,316 tokens  1594s
-601,524 tokens  1695s
-703,824 tokens  1768s
-802,032 tokens  1830s
-900,240 tokens  1896s
-1,000,000 tokens  1955s
-done 1000000 2304 1955s
-layer_12/width_16k/average_l0_22: L0 measured 22.8 (name 22) dead 83 slope_alive -0.6366 freq[[10, 100]:-0.58 [100, 1000]:-0.46 [1000, 10000]:-0.95 [10, 8150]:-0.65] 81s
-layer_12/width_16k/average_l0_41: L0 measured 43.2 (name 41) dead 10 slope_alive -0.5235 freq[[10, 100]:-0.79 [100, 1000]:-0.43 [1000, 10000]:-0.91 [10, 8187]:-0.62] 49s
-layer_12/width_16k/average_l0_82: L0 measured 84.3 (name 82) dead 1 slope_alive -0.4200 freq[[10, 100]:-1.07 [100, 1000]:-0.41 [1000, 10000]:-0.86 [10, 8191]:-0.59] 47s
-layer_12/width_16k/average_l0_176: L0 measured 181.3 (name 176) dead 7 slope_alive -0.3219 freq[[10, 100]:-0.75 [100, 1000]:-0.55 [1000, 10000]:-0.91 [10, 8188]:-0.67] 48s
-layer_12/width_16k/average_l0_445: L0 measured 443.8 (name 445) dead 247 slope_alive -0.2435 freq[[10, 100]:-0.39 [100, 1000]:-0.32 [1000, 10000]:-1.77 [10, 8068]:-0.98] 65s
-layer_12/width_32k/average_l0_12: L0 measured 12.5 (name 12) dead 1421 slope_alive -0.7262 freq[[10, 100]:-0.61 [100, 1000]:-0.48 [1000, 10000]:-0.72 [10, 15673]:-0.71] 121s
-layer_12/width_32k/average_l0_22: L0 measured 22.3 (name 22) dead 782 slope_alive -0.6541 freq[[10, 100]:-0.65 [100, 1000]:-0.46 [1000, 10000]:-0.69 [10, 15993]:-0.70] 99s
-layer_12/width_32k/average_l0_40: L0 measured 41.0 (name 40) dead 220 slope_alive -0.5491 freq[[10, 100]:-0.92 [100, 1000]:-0.45 [1000, 10000]:-0.66 [10, 16274]:-0.69] 83s
-layer_12/width_32k/average_l0_76: L0 measured 79.6 (name 76) dead 57 slope_alive -0.4462 freq[[10, 100]:-1.11 [100, 1000]:-0.44 [1000, 10000]:-0.62 [10, 16355]:-0.67] 90s
-layer_12/width_32k/average_l0_155: L0 measured 158.7 (name 155) dead 47 slope_alive -0.3581 freq[[10, 100]:-0.89 [100, 1000]:-0.64 [1000, 10000]:-0.59 [10, 16360]:-0.69] 83s
-layer_12/width_32k/average_l0_360: L0 measured 366.4 (name 360) dead 129 slope_alive -0.2573 freq[[10, 100]:-0.42 [100, 1000]:-0.51 [1000, 10000]:-1.09 [10, 16319]:-1.00] 88s
-layer_12/width_65k/average_l0_21: L0 measured 21.6 (name 21) dead 4048 slope_alive -0.6662 freq[[10, 100]:-0.77 [100, 1000]:-0.50 [1000, 10000]:-0.60 [10, 30744]:-0.76] 153s
-layer_12/width_65k/average_l0_38: L0 measured 38.9 (name 38) dead 2290 slope_alive -0.5745 freq[[10, 100]:-0.94 [100, 1000]:-0.47 [1000, 10000]:-0.57 [10, 31623]:-0.78] 192s
-layer_12/width_65k/average_l0_72: L0 measured 75.9 (name 72) dead 608 slope_alive -0.4676 freq[[10, 100]:-1.17 [100, 1000]:-0.48 [1000, 10000]:-0.53 [10, 32464]:-0.79] 162s
-layer_12/width_65k/average_l0_141: L0 measured 142.1 (name 141) dead 209 slope_alive -0.3738 freq[[10, 100]:-1.01 [100, 1000]:-0.64 [1000, 10000]:-0.48 [10, 32663]:-0.79] 152s
-layer_12/width_65k/average_l0_297: L0 measured 302.8 (name 297) dead 584 slope_alive -0.2781 freq[[10, 100]:-0.42 [100, 1000]:-0.82 [1000, 10000]:-0.67 [10, 32476]:-0.93] 482s
-'peer closed connection without sending complete message body (received 71567 bytes, expected 83886080)' thrown while requesting GET https://huggingface.co/google/gemma-scope-2b-pt-res/resolve/main/layer_12/width_131k/average_l0_12/params.npz
-Retrying in 1s [Retry 1/5].
-'The read operation timed out' thrown while requesting GET https://huggingface.co/google/gemma-scope-2b-pt-res/resolve/main/layer_12/width_131k/average_l0_12/params.npz
-Retrying in 2s [Retry 2/5].
-layer_12/width_131k/average_l0_12: L0 measured 12.8 (name 12) dead 18189 slope_alive -0.7455 freq[[10, 100]:-0.77 [100, 1000]:-0.50 [1000, 10000]:-0.59 [10, 56441]:-0.78] 1197s
-layer_12/width_131k/average_l0_20: L0 measured 20.4 (name 20) dead 15568 slope_alive -0.6798 freq[[10, 100]:-0.77 [100, 1000]:-0.52 [1000, 10000]:-0.57 [10, 57752]:-0.81] 416s
-layer_12/width_131k/average_l0_36: L0 measured 37.8 (name 36) dead 11261 slope_alive -0.5944 freq[[10, 100]:-1.00 [100, 1000]:-0.51 [1000, 10000]:-0.54 [10, 59905]:-0.86] 427s
-'peer closed connection without sending complete message body (received 71881972 bytes, expected 83886080)' thrown while requesting GET https://huggingface.co/google/gemma-scope-2b-pt-res/resolve/main/layer_12/width_131k/average_l0_67/params.npz
-Retrying in 1s [Retry 1/5].
-'peer closed connection without sending complete message body (received 13652533 bytes, expected 83886080)' thrown while requesting GET https://huggingface.co/google/gemma-scope-2b-pt-res/resolve/main/layer_12/width_131k/average_l0_67/params.npz
-Retrying in 2s [Retry 2/5].
-'The read operation timed out' thrown while requesting GET https://huggingface.co/google/gemma-scope-2b-pt-res/resolve/main/layer_12/width_131k/average_l0_67/params.npz
-Retrying in 4s [Retry 3/5].
