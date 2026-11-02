@@ -236,3 +236,25 @@ Run: `experiments/test1_sigma_layers.py` (fp16 on MPS; validated against fp32 on
 - The Σ-matched Gaussian null gives a γ that *rises* with width (0.31 → 0.40) and is far more window-dependent (0.14 → 0.65 across windows at 16k). Real data's γ is the width-stable, window-stable one. This is Phase 2's result restated in γ: the sparse-coding objective on Σ alone sets the scale of γ but not its stability.
 
 **What a theory now has to produce.** A model-free statement of the empirical law: for a sparse autoencoder with unit-norm decoder trained on activations with covariance Σ, the decoder-direction covariance has eigenvalues λ_i ∝ (Σ eigenvalues)_i^γ with γ ≈ 1.25 − 0.11·log₂(L0) over the top ~150 eigendirections, nearly independent of width, and the mechanism also has to deliver (a) real-data width stability that a Gaussian with the same Σ lacks and (b) the mid-stack-peaked layer profile of γ at fixed L0 (Test 1). Mechanism sketch to test in Phase 3: at L0 → 1 each token is reconstructed by one latent, so decoder directions sample the activation directions themselves and the cloud inherits Σ (γ → 1 — consistent with the extrapolation hitting 1 near L0 ≈ 3–5); at larger L0 each latent explains a residual after the others, which pushes decoders toward the lower-variance directions and flattens the cloud (γ ↓). Frequency-driven allocation (2509.02565) is not needed to get this far; it would enter, if at all, through the residual γ profile across layers.
+
+## 2026-11-02 — Test 1c: explaining the layer profile of γ (interim; Gaussian-null SAE sweep running)
+
+γ (65k, L0=40, ranks 11–150) by layer: 0.40 (L0) → 0.38 (L2) → 0.51 (L6) → 0.60 (L10) → 0.65–0.66 (L12–16) → 0.59 (L18) → 0.50 (L21) → 0.43 (L23–24) → 0.49 (L25). Three candidates, correlated with γ across the 26 layers (`experiments/test1c_gamma_layers.py` → `results/test1/gamma_layers_explained.{json,png}`):
+
+**(a) Σ's shape — no.** Top-1 fraction r = −0.01, top-10 fraction +0.08, participation ratio −0.33 (primary window). Σ's own slopes correlate moderately (bulk slope r = +0.65, primary slope −0.63), but γ is a ratio containing the Σ slope, so that is partly built in. Nothing about Σ's spectrum shape predicts how strongly the SAE amplifies it.
+
+**(b) Non-Gaussianity — yes, and specifically massive-activation dimensions.** `experiments/test1c_nongauss_pass.py` (102k tokens, a different Pile shard from Test 1; `results/test1/nongauss.npz`):
+
+| layer | 0 | 3 | 6 | 8 | 9 | 10 | 12 | 14 | 16 | 18 | 20 | 22 | 24 | 25 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| max per-coordinate excess kurtosis | 7 | 7 | 4 | 95 | 471 | 574 | 650 | 758 | 683 | 397 | 208 | 82 | 31 | 20 |
+| kurtosis along PC1 | −0.9 | −0.5 | −0.3 | −0.3 | 0.3 | 5.2 | 37.8 | −0.5 | −1.0 | −1.0 | −1.1 | −0.6 | −0.9 | −0.2 |
+| median kurtosis, top-50 PCs | 1.2 | 0.3 | 0.2 | 0.1 | 0.2 | 0.2 | 0.2 | 0.2 | 0.1 | 0.1 | 0.2 | 0.2 | 0.2 | 0.4 |
+
+- **Max per-coordinate kurtosis vs γ: r = +0.93** (ranks 11–150, 65k L0=40); +0.84 to +0.88 in the other top-window/L0 combinations; ~+0.3 in the bulk windows. It is the only candidate whose layer profile matches γ's in shape: flat and tiny through layers 0–6, a steep rise at 7–9, a plateau at 11–16, a decay through 24. The token-norm tail (q99/median) also correlates (r = +0.66) and is the same phenomenon.
+- Along most top principal directions the activations are nearly Gaussian (median excess kurtosis of the top-50 PCs ≈ 0.1–0.2 at every layer). The heavy tails are confined to a few coordinates (and, at layers 10–13, to PC1 itself, kurtosis 5–38). This is why the Σ-matched Gaussian reproduces γ's *scale*: the bulk of the distribution is close to Gaussian.
+- Caveat on the correlation: both curves are smooth single bumps over 26 layers, so the effective number of independent points is small; any mid-stack-peaked quantity would correlate. The shape match (sharp onset at layers 7–9, plateau, decay) is more persuasive than the r value, but it is still correlational.
+
+**(c) Direct test — running.** Σ-matched Gaussian-null TopK SAEs (k = 40, width 4096, 3M tokens) at layers 0, 3, 7, 13, 17, 21, 24, plus a real-vs-null pair at layer 12 on the 1M cached tokens (`experiments/test1c_null_saes.py`). A Gaussian has kurtosis 0, so: if null γ is flat across layers while real γ humps, the hump comes from the non-Gaussian structure (plausibly the massive-activation dimensions); if null γ humps too, Σ is sufficient after all despite (a).
+
+Mechanism to consider if (c) comes out "flat": heavy-tailed directions have a very large dynamic range of activation magnitudes; a thresholded sparse code (TopK/JumpReLU) can tile magnitude along one direction with several latents at different scales, placing a broad cone of decoders (not just near-parallel pairs — Test 2 only merged cos > 0.5) around Σ's heavy-tailed top directions and steepening the cloud there. Testable in Phase 3 by planting a heavy-tailed magnitude distribution on a few directions in otherwise Gaussian data.
