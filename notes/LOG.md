@@ -169,3 +169,40 @@ Ranks 11–150, interpolated in log L0:
 - Frequency-driven allocation (working hypothesis): not supported in its simple form. Latent frequencies are nearly L0-invariant while the slope is not; near-duplicate clusters carry none of the slope.
 - Estimator artifact: not supported either. Real data is distinguishable from both nulls and, unlike them, width-stable.
 - Open: whether the L0 and layer dependence are both inherited from Σ through the sparsity constraint (H1). Test 1 decides this cheaply.
+
+## 2026-11-02 — Test 1 (H1, covariance inheritance): Σ spectra across all 26 Gemma-2-2B layers
+
+Run: `experiments/test1_sigma_layers.py` (fp16 on MPS; validated against fp32 on layers 0–12: eigenvalue rel. error ≤3e-4, slope differences 0.0000), 200,508 Pile tokens, ctx 1024, BOS dropped, centred Σ per layer. Analysis `test1_sigma_plot.py` → `results/test1/sigma_slopes.json`, `sigma_vs_decoder_layers.png`.
+
+**Σ eigen slope by layer:**
+
+| window | L0 | L4 | L8 | L12 | L14 | L18 | L22 | L24 |
+|---|---|---|---|---|---|---|---|---|
+| 4–50 | −0.72 | −0.73 | −0.82 | −0.92 | −0.93 | −0.88 | −0.88 | −0.96 |
+| 11–150 | −0.75 | −0.77 | −0.80 | −0.87 | −0.88 | −0.86 | −0.83 | −0.91 |
+| 31–450 | −0.86 | −0.95 | −0.88 | −0.81 | −0.79 | −0.81 | −0.84 | −0.88 |
+| 101–1000 | −0.99 | −1.15 | −1.05 | −0.84 | −0.83 | −0.84 | −0.89 | −0.91 |
+
+**H1's central prediction holds: the window-dependent flip of the layer profile is already in Σ.** In the top windows Σ steepens into a mid-stack hump (layers 12–16) and rises again at the last layer; in the bulk window Σ is steepest at layers 2–6 and shallower after. That is the same qualitative pattern Phase 1b found in the decoder cloud, window for window.
+
+**Decoder slope vs Σ slope across the 26 layers** (decoder at matched L0 from Phase 1b):
+
+| window | 65k L0=40 r | 65k L0=70 r | 16k L0=40 r | γ (65k, L0=40) | γ (65k, L0=70) |
+|---|---|---|---|---|---|
+| 4–50 | +0.73 | +0.63 | +0.70 | 0.53±0.08 | 0.45±0.08 |
+| 11–150 | +0.79 | +0.71 | +0.76 | 0.53±0.09 | 0.45±0.07 |
+| 31–450 | +0.51 | +0.53 | +0.59 | 0.53±0.09 | 0.47±0.10 |
+| 101–1000 | +0.71 | +0.68 | +0.73 | 0.56±0.11 | 0.51±0.11 |
+
+- Σ explains roughly half of the across-layer variance of the decoder slope (r² ≈ 0.5–0.6 in the top and bulk windows, ≈0.3 at ranks 31–450).
+- **γ = decoder slope / Σ slope ≈ 0.5 at L0=40 and ≈0.45 at L0=70, nearly the same in every window.** So to first order the decoder cloud's eigenvalues scale like Σ's eigenvalues to the power ~½: decoder spread along a direction tracks the activation *standard deviation* along it, not the variance. Pythia (Phase 2, k=32 of d=512): Σ slope −0.97, decoder −0.32 → γ ≈ 0.33, and the Σ-matched Gaussian null gives the same γ at 4k. γ falls as the SAE gets denser (L0 40 → 70; k/d 1.7% → 6%), so the L0 dependence from Phase 1a is a change in γ, not in Σ.
+- γ varies by ±15–20% across layers at fixed L0, so Σ does not explain everything: there is residual layer-dependence beyond second moments (largest deviations: γ is high at layers 0–3 and low at 20–23 in the top windows).
+
+**Verdict on H1:** supported as the baseline mechanism. The layer profile, including its reversal between the top and the bulk of the spectrum, is inherited from the activation covariance through the sparse-coding objective with an exponent γ(L0) ≈ ½ at Gemma Scope sparsities. What the model adds beyond Σ (Phase 2's width stability and straighter spectrum; the ±20% of γ across layers) is a second-order effect on top of this.
+
+**Revised picture of the paper's finding.** The "galaxy-scale" power law in decoder directions is, to first order, the square root of the activation covariance spectrum. It is not an artifact (Phase 2) and not driven by latent frequencies or feature splitting (freqs, Test 2), but it is not independent evidence about feature structure either: anything that shapes Σ shapes it.
+
+**Next (not started):**
+1. Make γ(L0) quantitative: γ vs L0 at layer 12 across the 28 ladder SAEs (Σ_12 is in hand; one script, minutes). Check whether γ → 1 as L0 → 0 (one latent per direction ⇒ decoder cloud ∝ Σ?) and whether Phase 2 reproduces γ(k) on the Gaussian null alone.
+2. Residual analysis: decoder slope minus γ·Σ slope, per layer — does the remainder correlate with anything (e.g. Phase 4-style cluster intrinsic dimension)?
+3. Phase 3 (planted ground truth) is now a test of whether γ ≈ ½ falls out of TopK/JumpReLU on data with a *known* Σ, and whether manifold features perturb it.

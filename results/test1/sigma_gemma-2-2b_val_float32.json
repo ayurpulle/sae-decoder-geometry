@@ -1,0 +1,17 @@
+{
+ "model": "google/gemma-2-2b",
+ "n_tokens": 8184,
+ "ctx": 1024,
+ "batch": 4,
+ "dtype": "float32",
+ "max_layers": 13,
+ "seed": 0,
+ "tag": "val_float32",
+ "n_tokens_seen": 8184,
+ "n_layers": 13,
+ "d_model": 2304,
+ "seconds": 37.34505081176758,
+ "dataset": "monology/pile-uncopyrighted",
+ "bos_dropped": true,
+ "centered": true
+}
