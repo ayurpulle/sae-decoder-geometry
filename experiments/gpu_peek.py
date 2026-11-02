@@ -1,6 +1,6 @@
 """Quick look at GPU-queue runs while the queue is still going: gamma per window for finished runs.
 
-Usage (on the pod): .venv/bin/python experiments/gpu_peek.py [width]
+Usage (on the pod): .venv/bin/python experiments/gpu_peek.py [width] [group, e.g. saes_gpu_k]
 """
 import glob
 import json
@@ -18,8 +18,9 @@ WINDOWS = [(3, 50), (10, 150), (30, 450), (100, 1000)]
 
 def main():
     width = sys.argv[1] if len(sys.argv) > 1 else "*"
+    group = sys.argv[2] if len(sys.argv) > 2 else "saes_gpu_*"
     sig = {}
-    for tj in sorted(glob.glob(str(ROOT / f"cache/saes_gpu_*/*__w{width}__*/train.json"))):
+    for tj in sorted(glob.glob(str(ROOT / f"cache/{group}/*__w{width}__*/train.json"))):
         d = Path(tj).parent
         info = json.load(open(tj))
         c = info["config"]
