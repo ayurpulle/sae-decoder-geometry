@@ -67,7 +67,7 @@ def main():
     for c in z["cov"]:
         w, v = np.linalg.eigh(c)
         vecs.append(v[:, ::-1][:, :N_PC].copy())
-    dev = "mps" if torch.backends.mps.is_available() else "cpu"
+    dev = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
     name = "google/gemma-2-2b"
     tok = AutoTokenizer.from_pretrained(name)
     model = AutoModelForCausalLM.from_pretrained(name, torch_dtype=torch.bfloat16)

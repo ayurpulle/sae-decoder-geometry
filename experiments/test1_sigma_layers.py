@@ -59,7 +59,7 @@ def main():
     args = ap.parse_args()
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
-    dev = "mps" if torch.backends.mps.is_available() else "cpu"
+    dev = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
     dtype = getattr(torch, args.dtype)
     tok = AutoTokenizer.from_pretrained(args.model)
     model = AutoModelForCausalLM.from_pretrained(args.model, torch_dtype=torch.bfloat16)

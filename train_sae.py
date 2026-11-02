@@ -8,10 +8,16 @@ Data conditions (identical architecture/optimiser/budget across them):
 Inputs are scaled by one constant c (from stats) so E||c x||^2 = d for every condition.
 The last `eval_tokens` cached tokens are held out; eval uses held-out tokens for real/scrambled and
 fresh samples for gaussian.
+
+--epochs E passes over the cached tokens E times (fresh chunk order / shuffles / scrambles per epoch).
+--drop_dim D --drop_frac f drops tokens whose |x_D| exceeds the (1-f) quantile of the first training chunk
+(e.g. Gemma's massive-activation dimension 1170), in training and eval; real/scrambled only.
+On CUDA, chunks move to the GPU and shuffling/scrambling run there; the CPU/MPS path is unchanged.
 """
 import argparse
 import json
 import math
+import os
 import subprocess
 import time
 from pathlib import Path
@@ -54,23 +60,49 @@ def scramble(x, rng):
     return np.stack([x[rng.permutation(len(x)), j] for j in range(x.shape[1])], axis=1)
 
 
-def batches(cond, acts, lo, hi, stats, seed, d, batch, scale, dev, shuffle=True):
+def batches(cond, acts, lo, hi, stats, seed, d, batch, scale, dev, shuffle=True, drop=None):
     """Yield scaled float32 (batch, d) tensors on `dev` covering tokens [lo, hi) once.
 
-    Real/scrambled data stay fp16 on the CPU one CHUNK at a time; only batches move to the device.
+    Real/scrambled data stay fp16 on the CPU one CHUNK at a time; only batches move to the device
+    (on CUDA the whole chunk moves and shuffling/scrambling run on the GPU).
     Gaussian samples are drawn per batch (CPU generator for reproducibility, transform on device).
+    drop=(dim, thr): skip tokens with |x[dim]| > thr (raw units).
     """
     rng = np.random.default_rng(seed)
+    torch_path = dev == "cuda" or os.environ.get("SAE_TORCH_DATA") == "1"  # env switch lets the GPU path be tested on CPU/MPS
     if cond == "gaussian":
-        gen = torch.Generator().manual_seed(seed)
         Lt = torch.tensor(np.linalg.cholesky(stats["cov"]).T * scale, dtype=torch.float32, device=dev)
         mu = torch.tensor(stats["mean"] * scale, dtype=torch.float32, device=dev)
+        if torch_path:
+            gen = torch.Generator(device=dev).manual_seed(seed)
+            for _ in range((hi - lo) // batch):
+                yield torch.randn(batch, d, generator=gen, device=dev) @ Lt + mu
+            return
+        gen = torch.Generator().manual_seed(seed)
         for _ in range((hi - lo) // batch):
             yield torch.randn(batch, d, generator=gen).to(dev) @ Lt + mu
         return
     starts = np.arange(lo, hi, CHUNK)
+    if torch_path:
+        gen = torch.Generator(device=dev).manual_seed(seed)
+        for c in (rng.permutation(starts) if shuffle else starts):
+            x = torch.from_numpy(np.array(acts[c:min(c + CHUNK, hi)])).to(dev)
+            if drop is not None:
+                x = x[x[:, drop[0]].abs() <= drop[1]]
+            if cond == "scrambled":
+                for j in range(0, d, 256):  # column blocks bound the argsort's memory
+                    blk = x[:, j:j + 256]
+                    order = torch.argsort(torch.rand(blk.shape, device=dev, generator=gen), dim=0)
+                    x[:, j:j + 256] = torch.gather(blk, 0, order)
+            idx = torch.randperm(len(x), device=dev, generator=gen) if shuffle else torch.arange(len(x), device=dev)
+            for b in range(0, len(x) - batch + 1, batch):
+                yield x[idx[b:b + batch]].float() * scale
+            del x
+        return
     for c in (rng.permutation(starts) if shuffle else starts):
         x = np.array(acts[c:min(c + CHUNK, hi)])  # copy into RAM; fancy-indexing a memmap is slow
+        if drop is not None:
+            x = x[np.abs(x[:, drop[0]].astype(np.float32)) <= drop[1]]
         if cond == "scrambled":
             x = scramble(x, rng)
         idx = rng.permutation(len(x)) if shuffle else np.arange(len(x))
@@ -88,7 +120,7 @@ def git_hash():
 
 
 def train(args):
-    dev = "mps" if torch.backends.mps.is_available() else ("cuda" if torch.cuda.is_available() else "cpu")
+    dev = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
     act_dir = ROOT / "cache" / "acts" / args.model / args.hook
     stats = dict(np.load(act_dir / "stats.npz"))
     if (act_dir / "acts.npy").exists():
@@ -100,6 +132,11 @@ def train(args):
         n_total = args.tokens + args.eval_tokens
     n_train = min(args.tokens, n_total - args.eval_tokens)
     scale = math.sqrt(d / (np.trace(stats["cov"]) + stats["mean"] @ stats["mean"]))
+    drop = None
+    if args.drop_dim is not None:
+        assert args.cond != "gaussian", "--drop_dim applies to real/scrambled data"
+        col = np.abs(np.asarray(acts[:min(CHUNK, n_train), args.drop_dim], dtype=np.float32))
+        drop = (args.drop_dim, float(np.quantile(col, 1 - args.drop_frac)))
 
     gen = torch.Generator().manual_seed(args.seed)
     sae = TopKSAE(d, args.width, args.k, gen).to(dev)
@@ -107,13 +144,18 @@ def train(args):
         sae.b_dec.copy_(torch.tensor(stats["mean"] * scale, dtype=torch.float32))
     lr = args.lr if args.lr else 2e-4 / math.sqrt(args.width / 16384)
     opt = torch.optim.Adam(sae.parameters(), lr=lr, betas=(0.9, 0.999), eps=6.25e-10)
-    n_steps = n_train // args.batch
+    n_steps = args.epochs * (n_train // args.batch)
     sched = torch.optim.lr_scheduler.LambdaLR(opt, lambda s: min(1.0, (n_steps - s) / (0.2 * n_steps)))
     since_fired = torch.zeros(args.width, device=dev)
     dead_window = args.dead_window
     step, t0 = 0, time.time()
     log = []
-    for x in batches(args.cond, acts, 0, n_train, stats, args.seed, d, args.batch, scale, dev):
+    def stream():
+        for epoch in range(args.epochs):
+            yield from batches(args.cond, acts, 0, n_train, stats, args.seed + 1000 * epoch, d, args.batch, scale,
+                               dev, drop=drop)
+
+    for x in stream():
         if step >= n_steps:
             break
         recon, (v, i), pre = sae(x)
@@ -150,20 +192,22 @@ def train(args):
 
     # Eval: FVU and per-latent firing counts on held-out / fresh data. Two passes over the same eval stream (seeded): mean first, then errors and firings.
     eval_args = (args.cond, acts, n_train, n_train + args.eval_tokens, stats, 10_000 + args.seed, d, 8192, scale, dev)
+    eval_kw = {"drop": drop}
     fires = torch.zeros(args.width, device=dev)
     se, sv, mu_e, n_e = 0.0, 0.0, torch.zeros(d, device=dev), 0
     with torch.no_grad():
-        for x in batches(*eval_args, shuffle=False):
+        for x in batches(*eval_args, shuffle=False, **eval_kw):
             mu_e += x.sum(0)
             n_e += len(x)
         mu_e /= n_e
-        for x in batches(*eval_args, shuffle=False):
+        for x in batches(*eval_args, shuffle=False, **eval_kw):
             recon, (v, i), _ = sae(x)
             fires.index_add_(0, i[v > 0], torch.ones_like(v[v > 0]))
             se += (x - recon).pow(2).sum().item()
             sv += (x - mu_e).pow(2).sum().item()
     return sae, {"fvu_eval": se / sv, "fires": fires.cpu().numpy(), "train_log": log, "lr": lr,
-                 "n_train_tokens": step * args.batch, "n_eval_tokens": n_e, "input_scale": scale, "seconds": time.time() - t0}
+                 "n_train_tokens": step * args.batch, "n_eval_tokens": n_e, "input_scale": scale, "seconds": time.time() - t0,
+                 "device": dev, "drop_threshold": drop[1] if drop else None}
 
 
 def main():
@@ -181,9 +225,14 @@ def main():
     ap.add_argument("--dead_window", type=int, default=2_000_000)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default="cache/saes")
+    ap.add_argument("--epochs", type=int, default=1)
+    ap.add_argument("--drop_dim", type=int, default=None)
+    ap.add_argument("--drop_frac", type=float, default=0.001)
     args = ap.parse_args()
     sae, info = train(args)
     name = f"{args.model}__{args.hook}__{args.cond}__w{args.width}__k{args.k}__s{args.seed}"
+    if args.drop_dim is not None:
+        name += f"__drop{args.drop_dim}q{args.drop_frac:g}"
     out = ROOT / args.out / name
     out.mkdir(parents=True, exist_ok=True)
     np.save(out / "W_dec.npy", sae.W_dec.detach().cpu().numpy())

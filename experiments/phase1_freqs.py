@@ -62,7 +62,7 @@ def freq_fits(freq_sorted):
 
 
 def main():
-    dev = "mps" if torch.backends.mps.is_available() else "cpu"
+    dev = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
     acts = np.load(ACTS, mmap_mode="r")
     n_tok = len(acts)
     out_json = OUT / "freqs_L12.json"

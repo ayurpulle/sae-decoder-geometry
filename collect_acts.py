@@ -17,7 +17,6 @@ from pathlib import Path
 import numpy as np
 import torch
 from datasets import load_dataset
-from transformer_lens import HookedTransformer
 
 ROOT = Path(__file__).resolve().parent
 
@@ -73,6 +72,7 @@ class HFResid:
 
 class TLResid:
     def __init__(self, name, hook, dev, dtype):
+        from transformer_lens import HookedTransformer
         self.model = HookedTransformer.from_pretrained(name, device=dev, dtype=dtype)
         self.tokenizer, self.d_model, self.dev, self.hook = self.model.tokenizer, self.model.cfg.d_model, dev, hook
         self.layer = int(hook.split(".")[1])
@@ -94,7 +94,7 @@ def main():
     ap.add_argument("--backend", choices=["tl", "hf"], default="tl")
     args = ap.parse_args()
 
-    dev = "mps" if torch.backends.mps.is_available() else ("cuda" if torch.cuda.is_available() else "cpu")
+    dev = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
     layer = int(args.hook.split(".")[1])
     if args.backend == "hf":
         resid = HFResid(args.model, layer, dev, getattr(torch, args.dtype))
@@ -108,11 +108,11 @@ def main():
     t0 = time.time()
     with torch.no_grad():
         for toks in token_batches(resid.tokenizer, args.ctx, args.batch, args.seed):
-            a = resid(toks)[:, 1:].reshape(-1, d).float().cpu().numpy().astype(np.float64)
-            a = a[: args.n_tokens - n]
-            acts[n:n + len(a)] = a.astype(np.float16)
-            s += a.sum(0)
-            G += a.T @ a
+            a = resid(toks)[:, 1:].reshape(-1, d).float()[: args.n_tokens - n]
+            acts[n:n + len(a)] = a.cpu().numpy().astype(np.float16)
+            # Per-batch sums in fp32 on the device, accumulated in fp64 on the CPU.
+            s += a.sum(0).cpu().double().numpy()
+            G += (a.T @ a).cpu().double().numpy()
             n += len(a)
             if n // 100_000 != (n - len(a)) // 100_000:
                 print(f"{n:,} tokens  {time.time() - t0:.0f}s", flush=True)
