@@ -289,3 +289,50 @@ The Gaussian null gives a *higher* γ than real data from the primary window dow
 - **Caveat that the GPU queue fixes:** this compares Gemma Scope's real SAEs (JumpReLU, ~billions of tokens) with short TopK nulls (3M tokens, FVU ≈ 0.5). The *layer profiles* are comparable (every null has the same budget), but the absolute gap is not. The GPU queue's step (A) trains real, Gaussian and scrambled SAEs with identical architecture and budget at layers 3, 13 and 23 — the clean version of this table — and step (C) removes the massive-activation tokens at layer 13 to test causation directly.
 
 **Test 1c verdict (provisional, pending GPU step A/C):** γ's mid-stack hump is a non-Gaussian effect, not a Σ effect, and is co-located (r ≈ 0.9) with the massive-activation dimension's heavy tail; latents aligned with that dimension do not carry it.
+
+## 2026-11-02 — GPU queue results (Runpod H100, 88 runs) — `results/gpu/`
+
+Setup: Gemma-2-2B `resid_post` at layers 3, 13, 23; 10M Pile tokens cached per layer (last 0.5M held out); our TopK SAE (`train_sae.py`, TF32 on CUDA), 3 epochs = 28.5M training tokens per run. γ = decoder slope / covariance slope. Pod `9885r7ihg6gcre`, 12:05–20:22 UTC. Scripts: `experiments/gpu_queue.py`, `gpu_summarize.py`, `gpu_analyze.py` → `results/gpu/{runs,sigma,analysis}.json`, `gpu_results.png`. Seed sd ≤ 0.015 on every γ in the top three windows, so every difference below of ≥0.03 is far outside noise.
+
+**Validation.** Our real-data TopK SAEs reach eval FVU 0.18–0.29 (Gemma Scope-like quality) and give γ = 0.43 at L3 (16k, k=40), against 0.41 for Gemma Scope at L3 and L0≈40. A different architecture and recipe reproduces Gemma Scope's γ at that layer, so γ is a property of the activations there, not of one recipe. At L13 ours is lower (0.51 vs 0.65): the recipe changes the size of the mid-stack effect.
+
+### A. Real vs Σ-matched Gaussian vs scrambled, equal budget, 3 seeds
+
+γ (mean ± sd), ranks 11–150 / ranks 4–50:
+
+| | L3 | L13 | L23 |
+|---|---|---|---|
+| real 16k | 0.430±0.002 / 0.313±0.008 | **0.508±0.003 / 0.484±0.009** | 0.389±0.003 / 0.421±0.008 |
+| gaussian 16k | 0.627±0.002 / 0.357±0.005 | **0.533±0.006 / 0.281±0.008** | 0.677±0.003 / 0.355±0.008 |
+| real 65k | 0.364±0.003 / 0.305±0.002 | 0.387±0.004 / 0.291±0.005 | 0.315±0.002 / 0.375±0.008 |
+| gaussian 65k | 0.562±0.002 / 0.305±0.004 | 0.485±0.003 / 0.232±0.007 | 0.663±0.007 / 0.347±0.008 |
+| scrambled 16k (vs own diag cov) | 0.640 / 0.443 | 0.557 / 0.412 | 1.077 / 0.722 |
+
+- **Gaussian γ dips at L13 in every window/width combination above.** Real γ peaks at L13 at 16k in both top windows, and in the primary window at 65k (weakly: 0.36 → 0.39 → 0.32); at 65k ranks 4–50 real γ does not peak (0.31 → 0.29 → 0.38).
+- **The robust quantity is the real-minus-Gaussian gap, which is largest at L13 in all four width×window cells** (16k primary −0.20 / −0.03 / −0.29; 16k top +0.04 / +0.20 / +0.07; 65k primary −0.20 / −0.10 / −0.35; 65k top 0.00 / +0.06 / +0.03). Restated: relative to what Σ alone produces, real activations concentrate the decoder cloud most at the middle layer.
+- **Deep windows:** Gaussian and scrambled SAEs over-concentrate everywhere (γ 1.1–2.7), real stays at 0.29–0.81. Real activations spread decoders across far more directions than a Gaussian with the same covariance would induce — the largest real-vs-null effect in the whole project, and it is width-stable and layer-stable.
+- Scrambled (vs its own diagonal covariance) behaves like the Gaussian at L3 and L13 and over-concentrates sharply at L23; FVU is worst for scrambled everywhere (0.61–0.77). Not interpreted further.
+
+### B. Small-k sweep, L13, 16k, 2 seeds — the γ(L0) law, measured directly
+
+| k (= measured L0) | 1 | 2 | 4 | 8 | 16 | 40 | 128 |
+|---|---|---|---|---|---|---|---|
+| real γ, ranks 11–150 | 1.034±0.006 | 0.893 | 0.824 | 0.732 | 0.665 | 0.509 | 0.354±0.010 |
+| real γ, ranks 4–50 | 1.152±0.009 | 0.979 | 0.854 | 0.729 | 0.481 | 0.488 | 0.324 |
+| gaussian γ, ranks 11–150 | 1.248 | 1.292 | 1.231 | 0.826 | 0.448 | 0.536 | 0.382 |
+| dead latents, real (of 16384) | 15712 | 14494 | 12652 | 9915 | 1912 | 122 | 0 |
+
+- **Real: γ = 1.016 − 0.094·log₂k, R² = 0.994 (ranks 11–150).** γ = 1.03 at k = 1: with one latent per token the decoder cloud's spectrum is Σ's (the decoders sample the activation directions); each doubling of k flattens it by ≈0.09. Gemma Scope's L12 law had −0.114 per doubling with a higher intercept (1.245); same functional form across recipes, intercept recipe-dependent. The extrapolated "γ = 1 at L0 ≈ 3–5" from Test 1b was wrong; measured directly, γ reaches 1 at L0 = 1.
+- **Caveat:** at k ≤ 8 most latents die even with AuxK (k = 1: 672 alive of 16384), so small-k spectra come from a few hundred to a few thousand directions. The top windows (ranks ≤ 150) are well-defined with ≥ 672 points; the deep windows at k ≤ 4 are not (rank deficiency — γ = 30 at ranks 101–1000 for k = 1 is that artifact, not a finding). The ranks 11–150 law above uses only well-defined points.
+- **The Gaussian null does not follow the law:** γ ≈ 1.25 for k ≤ 4, then drops abruptly between k = 4 and k = 16 and is non-monotone after. The smooth log-linear law is a property of real activations.
+
+### C. De-massive, L13, 16k, k=40, 3 seeds — **null result**
+
+Dropping tokens with the top 0.1% of |x₁₁₇₀| (threshold 256) or the top 1% (threshold 8.8) from training and eval changes γ by **≤ 0.005 in every window** (ranks 11–150: 0.508 → 0.507 → 0.508; ranks 4–50: 0.484 → 0.479 → 0.480) and FVU by ≤ 0.004. **The massive-activation tokens do not cause the mid-stack effect.** Together with Test 1c (d) (latents aligned with dim 1170 carry none of the slope), the r = 0.93 layer correlation between γ and dim 1170's kurtosis is a co-occurring marker of the mid-stack regime, not the mechanism.
+
+### Where the project stands after the GPU queue
+
+1. **Mechanism of the paper's finding (supported, now measured directly):** the decoder-direction covariance spectrum is Σ's spectrum raised to a power γ that is set by sparsity: γ ≈ 1 at L0 = 1 and falls ≈0.09–0.11 per doubling of L0, for two different SAE recipes. The paper's −0.47 is Σ's slope (−0.87 at L12) times γ(L0 = 72) ≈ 0.54.
+2. **Not an estimator artifact:** real activations give a smooth γ(L0) law, width-stable γ, and far less over-concentration in the bulk than Σ-matched Gaussian or scrambled data; the nulls do none of these.
+3. **Not frequency-driven allocation as written, not feature splitting, not massive activations.**
+4. **Open:** what about mid-stack activations (beyond Σ, beyond dim 1170) makes the SAE concentrate its cloud relative to the Gaussian expectation, and why the size of that effect depends on the recipe (JumpReLU/Gemma Scope 0.65 vs TopK 0.51 at L13). Phase 3 (planted ground truth with known Σ and controllable non-Gaussian structure — sparse features, manifolds, heavy tails) is now the right tool: it can test which structure reproduces (i) γ = 1 at k = 1, (ii) the −0.1/doubling law, (iii) real-vs-Gaussian bulk spreading.
