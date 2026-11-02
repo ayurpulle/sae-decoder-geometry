@@ -272,3 +272,20 @@ Mechanism to consider if (c) comes out "flat": heavy-tailed directions have a ve
 | Gemma Scope 65k L0=40 (reference) | 0.64 | 0.65 | 0.59 | 0.61 |
 
 The Gaussian null gives a *higher* γ than real data from the primary window down (0.82 vs 0.57), and a far more window-dependent one (0.43 → 1.01 vs 0.45 → 0.86). Same direction as Pythia at 16k width (Phase 2). Σ alone over-concentrates the cloud relative to what real activations produce; real data's non-Gaussian structure *reduces* γ below the Gaussian value, and makes the spectrum straighter. The seven-layer null sweep (same budget at every layer) will show whether the Gaussian γ is flat across layers — in which case the whole mid-stack hump is a property of how real activations depart from Gaussian — or whether Σ already carries part of it.
+
+**(c) result — Σ-matched Gaussian nulls across layers (`results/test1/null_saes.json`; TopK k=40, width 4096, 3M tokens each, same budget at every layer):**
+
+| layer | 0 | 3 | 7 | 13 | 17 | 21 | 24 |
+|---|---|---|---|---|---|---|---|
+| γ null, ranks 11–150 | 0.74 | 0.74 | 0.69 | **0.60** | 0.64 | 0.70 | 0.65 |
+| γ real (Gemma Scope 65k, L0=40) | 0.40 | 0.41 | 0.52 | **0.65** | 0.62 | 0.50 | 0.43 |
+| γ null, ranks 4–50 | 0.41 | 0.43 | 0.34 | 0.28 | 0.32 | 0.34 | 0.30 |
+| γ null, ranks 101–1000 | 2.22 | 2.09 | 2.08 | 2.18 | 2.21 | 2.17 | 1.96 |
+| max per-coordinate kurtosis | 7 | 7 | 24 | 642 | 558 | 127 | 31 |
+
+- **The Gaussian null does not reproduce the hump; it runs the other way.** Across layers, null γ correlates *negatively* with real γ (r = −0.81 primary, −0.70 ranks 4–50): it dips mid-stack exactly where real γ peaks. So Σ's layer-to-layer changes in shape, passed through the SAE objective, cannot produce the mid-stack amplification — consistent with (a). The hump comes from structure a Gaussian with the same Σ lacks.
+- **The real-minus-null gap tracks the massive-activation kurtosis:** r = +0.93 (ranks 11–150), +0.85 (4–50). It is not explained by latents pointing at dim 1170 (d), so if the heavy-tailed tokens are causal they act on the dictionary as a whole.
+- **Deep windows: the Gaussian null over-concentrates everywhere** (γ ≈ 2 at ranks 101–1000, ≈1.6 at 31–450, flat across layers), far above real (0.35–0.71). A short-trained TopK on Gaussian data piles its decoders into Σ's top subspace; real data spreads them out. This is the same direction as Phase 2 (Pythia) and the L12 real/null pair, now at every layer.
+- **Caveat that the GPU queue fixes:** this compares Gemma Scope's real SAEs (JumpReLU, ~billions of tokens) with short TopK nulls (3M tokens, FVU ≈ 0.5). The *layer profiles* are comparable (every null has the same budget), but the absolute gap is not. The GPU queue's step (A) trains real, Gaussian and scrambled SAEs with identical architecture and budget at layers 3, 13 and 23 — the clean version of this table — and step (C) removes the massive-activation tokens at layer 13 to test causation directly.
+
+**Test 1c verdict (provisional, pending GPU step A/C):** γ's mid-stack hump is a non-Gaussian effect, not a Σ effect, and is co-located (r ≈ 0.9) with the massive-activation dimension's heavy tail; latents aligned with that dimension do not carry it.
