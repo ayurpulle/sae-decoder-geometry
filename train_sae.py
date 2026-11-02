@@ -90,9 +90,14 @@ def git_hash():
 def train(args):
     dev = "mps" if torch.backends.mps.is_available() else ("cuda" if torch.cuda.is_available() else "cpu")
     act_dir = ROOT / "cache" / "acts" / args.model / args.hook
-    acts = np.load(act_dir / "acts.npy", mmap_mode="r")
     stats = dict(np.load(act_dir / "stats.npz"))
-    n_total, d = acts.shape
+    if (act_dir / "acts.npy").exists():
+        acts = np.load(act_dir / "acts.npy", mmap_mode="r")
+        n_total, d = acts.shape
+    else:  # stats-only directory: Gaussian null can run from (mean, cov) alone
+        assert args.cond == "gaussian", f"{act_dir} has no acts.npy; only --cond gaussian can run from stats"
+        acts, d = None, len(stats["mean"])
+        n_total = args.tokens + args.eval_tokens
     n_train = min(args.tokens, n_total - args.eval_tokens)
     scale = math.sqrt(d / (np.trace(stats["cov"]) + stats["mean"] @ stats["mean"]))
 
