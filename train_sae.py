@@ -115,8 +115,9 @@ def git_hash():
     try:
         return subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True,
                                        stderr=subprocess.DEVNULL).strip()
-    except Exception:
-        return None
+    except Exception:  # no checkout (e.g. a pod synced by gpu/push.sh, which writes .git_hash instead)
+        f = ROOT / ".git_hash"
+        return f.read_text().strip() if f.exists() else None
 
 
 def train(args):

@@ -5,3 +5,5 @@ __pycache__/
 *.npy
 !results/**/*.npy
 results/*.log
+.DS_Store
+.git_hash

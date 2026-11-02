@@ -7,7 +7,10 @@ HOST=${1:?host}; PORT=${2:?port}
 cd "$(dirname "$0")/.."
 SSH="ssh -p $PORT -o StrictHostKeyChecking=accept-new -i $HOME/.ssh/id_ed25519"
 $SSH root@"$HOST" 'command -v rsync >/dev/null || { apt-get update -qq && apt-get install -y -qq rsync tmux; }; mkdir -p /workspace/SAE'
+# Skip .git (~2 GB of committed result arrays) and old results; record the commit for provenance instead.
+git diff --quiet HEAD -- train_sae.py collect_acts.py geometry.py experiments gpu || echo "warning: uncommitted changes to code being pushed"
+git rev-parse HEAD > .git_hash
 rsync -az --info=stats1 -e "$SSH" \
-  --exclude .venv --exclude cache --exclude ext --exclude '__pycache__' --exclude 'results/*.log' \
+  --exclude .git --exclude .venv --exclude cache --exclude ext --exclude results --exclude '__pycache__' --exclude .DS_Store \
   ./ root@"$HOST":/workspace/SAE/
 echo "pushed to root@$HOST:/workspace/SAE"
