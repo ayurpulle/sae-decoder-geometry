@@ -10,7 +10,7 @@ $SSH root@"$HOST" 'command -v rsync >/dev/null || { apt-get update -qq && apt-ge
 # Skip .git (~2 GB of committed result arrays) and old results; record the commit for provenance instead.
 git diff --quiet HEAD -- train_sae.py collect_acts.py geometry.py experiments gpu || echo "warning: uncommitted changes to code being pushed"
 git rev-parse HEAD > .git_hash
-rsync -az --info=stats1 -e "$SSH" \
+rsync -az --stats -e "$SSH" \
   --exclude .git --exclude .venv --exclude cache --exclude ext --exclude results --exclude '__pycache__' --exclude .DS_Store \
   ./ root@"$HOST":/workspace/SAE/
 echo "pushed to root@$HOST:/workspace/SAE"
