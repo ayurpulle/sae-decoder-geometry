@@ -122,6 +122,8 @@ def git_hash():
 
 def train(args):
     dev = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
+    if dev == "cuda":
+        torch.set_float32_matmul_precision("high")  # TF32 tensor cores; every GPU-queue run uses the same setting
     act_dir = ROOT / "cache" / "acts" / args.model / args.hook
     stats = dict(np.load(act_dir / "stats.npz"))
     if (act_dir / "acts.npy").exists():
