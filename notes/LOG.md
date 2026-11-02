@@ -207,3 +207,32 @@ Run: `experiments/test1_sigma_layers.py` (fp16 on MPS; validated against fp32 on
 1. Make γ(L0) quantitative: γ vs L0 at layer 12 across the 28 ladder SAEs (Σ_12 is in hand; one script, minutes). Check whether γ → 1 as L0 → 0 (one latent per direction ⇒ decoder cloud ∝ Σ?) and whether Phase 2 reproduces γ(k) on the Gaussian null alone.
 2. Explain the γ layer profile: correlate per-layer γ with (a) Σ's top-eigenvalue fraction / effective dimension (in hand), (b) a per-layer non-Gaussianity measure of activations (kurtosis along top PCs; needs one more Gemma pass or the cached L12 acts for a start), (c) Test 2's near-duplicate fraction (in hand for L12 only).
 3. Phase 3 (planted ground truth) is now a test of whether γ ≈ ½ falls out of TopK/JumpReLU on data with a *known* Σ, and whether manifold features perturb it.
+
+## 2026-11-02 — Test 1b: γ(L0) at Gemma layer 12 — `results/test1/gamma_l0_L12.json`, `gamma_l0_L12.png`
+
+γ = decoder eigen slope / Σ₁₂ eigen slope for the 28 ladder SAEs (Phase 1a slopes; measured L0 for ≤131k, name L0 above). Σ₁₂ slopes: −0.917 (ranks 4–50), −0.872 (11–150), −0.814 (31–450), −0.836 (101–1000).
+
+**γ is a function of L0 almost alone.** Primary window (ranks 11–150), 28 SAEs, seven widths 16k–1m:
+
+    γ = 1.245 − 0.114·log₂(L0),  R² = 0.984        (power law γ = 1.98·L0^−0.31, R² = 0.980)
+
+| L0 | 12.8 | ~21 | ~40 | ~70 | ~140 | ~300 | 444 |
+|---|---|---|---|---|---|---|---|
+| γ (11–150) | 0.86 | 0.71–0.78 | 0.60–0.68 | 0.48–0.57 | 0.37–0.43 | 0.30–0.33 | 0.28 |
+
+- Width spread at fixed L0 is ≤0.07 in γ (L0≈21: 16k 0.73 … 131k 0.78 … 1m 0.71), against an L0 range of 0.58. Same for ranks 4–50 (R² 0.97, −0.108 per doubling).
+- **Sparsity acts at the top of the spectrum.** The L0 dependence weakens with depth: −0.114 per doubling at ranks 11–150, −0.071 at 31–450, −0.046 at 101–1000 (where R² falls to 0.65 and width re-enters: bulk γ at L0≈21 runs 0.78 at 16k → 0.60 at 1m, the Phase 1a width drift seen again).
+- **Extrapolation to γ = 1** (decoder cloud ∝ Σ): the log-linear fits reach it at L0 ≈ 3 (ranks 4–50) and 4.5 (11–150), i.e. near "one to a few latents per token", not at L0 → 0. Below L0 ≈ 3 the fit would give γ > 1, so either γ saturates or the relation changes; no Gemma Scope SAE is that sparse. Testable in Phase 3 with k = 1, 2, 4.
+
+**Pythia-70m L3 (Phase 2, k = 32, k/d = 6.25%), γ by window (3–25 / 6–50 / 11–100):**
+
+| cond | 1k | 4k | 16k |
+|---|---|---|---|
+| real | 0.23 / 0.32 / 0.43 | 0.23 / 0.34 / 0.42 | 0.20 / 0.33 / 0.43 |
+| gaussian N(μ,Σ) | 0.14 / 0.31 / 0.56 | 0.19 / 0.36 / 0.60 | 0.22 / 0.40 / 0.65 |
+| scrambled | 0.16 / 0.26 / 0.37 | 0.14 / 0.23 / 0.39 | 0.16 / 0.26 / 0.40 |
+
+- Real γ is width-invariant (0.32–0.34 primary) and in the same range as Gemma at the equivalent density (k/d = 6.25% ↔ L0 ≈ 144 at d = 2304 → γ ≈ 0.43); the windows are not strictly comparable across d, so this is order-of-magnitude agreement, not a test.
+- The Σ-matched Gaussian null gives a γ that *rises* with width (0.31 → 0.40) and is far more window-dependent (0.14 → 0.65 across windows at 16k). Real data's γ is the width-stable, window-stable one. This is Phase 2's result restated in γ: the sparse-coding objective on Σ alone sets the scale of γ but not its stability.
+
+**What a theory now has to produce.** A model-free statement of the empirical law: for a sparse autoencoder with unit-norm decoder trained on activations with covariance Σ, the decoder-direction covariance has eigenvalues λ_i ∝ (Σ eigenvalues)_i^γ with γ ≈ 1.25 − 0.11·log₂(L0) over the top ~150 eigendirections, nearly independent of width, and the mechanism also has to deliver (a) real-data width stability that a Gaussian with the same Σ lacks and (b) the mid-stack-peaked layer profile of γ at fixed L0 (Test 1). Mechanism sketch to test in Phase 3: at L0 → 1 each token is reconstructed by one latent, so decoder directions sample the activation directions themselves and the cloud inherits Σ (γ → 1 — consistent with the extrapolation hitting 1 near L0 ≈ 3–5); at larger L0 each latent explains a residual after the others, which pushes decoders toward the lower-variance directions and flattens the cloud (γ ↓). Frequency-driven allocation (2509.02565) is not needed to get this far; it would enter, if at all, through the residual γ profile across layers.
