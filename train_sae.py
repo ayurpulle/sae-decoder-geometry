@@ -166,7 +166,8 @@ def train(args):
         mse = err.pow(2).sum(-1).mean()
         fvu = mse / (x - x.mean(0)).pow(2).sum(-1).mean()
         since_fired += args.batch
-        since_fired[i[v > 0]] = 0
+        fired = torch.zeros_like(since_fired).scatter_add_(0, i.flatten(), (v.flatten() > 0).float())
+        since_fired.mul_((fired == 0).float())  # fixed shapes: MPS caches a graph per new shape
         dead = since_fired > dead_window
         loss = fvu
         if args.aux_k and dead.any():
@@ -207,7 +208,7 @@ def train(args):
         mu_e /= n_e
         for x in batches(*eval_args, shuffle=False, **eval_kw):
             recon, (v, i), _ = sae(x)
-            fires.index_add_(0, i[v > 0], torch.ones_like(v[v > 0]))
+            fires.scatter_add_(0, i.flatten(), (v.flatten() > 0).float())
             se += (x - recon).pow(2).sum().item()
             sv += (x - mu_e).pow(2).sum().item()
     return sae, {"fvu_eval": se / sv, "fires": fires.cpu().numpy(), "train_log": log, "lr": lr,
