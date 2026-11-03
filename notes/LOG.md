@@ -382,3 +382,24 @@ Data `synth-base`: d = 256, 4,096 point features, p_i ∝ i^−1.5 (top 5 capped
 - **No real-vs-Gaussian contrast:** the Gaussian twin behaves almost identically (it over-concentrates the bulk somewhat more at k = 8–16: γ(11–100) 1.41/0.97 vs 0.95/0.71). With 32 of 4,096 features active in 256 dims, the planted data is close to Gaussian from the SAE's view. Stage 2 must lower mean_active and M/d.
 - **Feature matching:** ≤ 51% of live latents match a planted feature at cos > 0.7 (8–13% at k = 4–32), covering 134–520 of 4,096 features. Features are not recoverable in this regime (heavy superposition plus anisotropic directions), so the allocation-law test also needs the sparser regime.
 - Engineering: the k = 1/2 runs grew the MPS process to 17 GB; `train_sae.py` now calls `torch.mps.empty_cache()` every 200 steps (no numerical effect), after which runs went from ~0.4 s/step to ~0.03 s/step.
+
+## 2026-11-03 — Review check 1: PCA d-sweep of the law γ = 1 − ln k / ln d (`results/review/dsweep.json`)
+
+Gemma-2-2b L12 activations projected onto their top-d′ principal components, d′ ∈ {256, 512, 1024, 2304} (2304 = the original space, rotated). TopK width 8,192, k ∈ {8, 32}, 4 epochs over 1M tokens (eval 100k), seed 0. Basis γ = slope of log diag(UᵀC_dec U) on log λ_Σ; the d′/8 window scales with d′.
+
+| d′ | k | law | basis γ (ranks 1–d′/8) | basis γ (1–50) | rank γ (6–50) | top-10 overlap | live | FVU |
+|---|---|---|---|---|---|---|---|---|
+| 256 | 8 | 0.625 | 0.329 | 0.379 | 0.483 | 0.73 | 8082 | 0.315 |
+| 256 | 32 | 0.375 | 0.315 | 0.358 | 0.467 | 0.73 | 8192 | 0.214 |
+| 512 | 8 | 0.667 | 0.439 | 0.419 | 0.480 | 0.77 | 7263 | 0.372 |
+| 512 | 32 | 0.444 | 0.382 | 0.336 | 0.473 | 0.57 | 8192 | 0.262 |
+| 1024 | 8 | 0.700 | 0.585 | 0.537 | 0.584 | 0.81 | 5506 | 0.441 |
+| 1024 | 32 | 0.500 | 0.460 | 0.343 | 0.459 | 0.61 | 8192 | 0.331 |
+| 2304 | 8 | 0.731 | 0.697 | 0.606 | 0.658 | 0.82 | 4782 | 0.513 |
+| 2304 | 32 | 0.552 | 0.519 | 0.400 | 0.492 | 0.70 | 8192 | 0.403 |
+
+- **Budget control passes.** At d′ = 2304, basis γ(1–d′/8) is 0.697 (k = 8) and 0.519 (k = 32), against 0.73 and 0.51 from the 28.5M-token GPU runs at L13. The 1M-token budget reproduces γ at full dimension, so the smaller-d′ numbers aren't a training artefact (smaller d′ trains more easily: FVU falls with d′).
+- **The d-law fails.** The law predicts a k-gap γ(8) − γ(32) = ln 4 / ln d′ that shrinks slowly from 0.25 (d′ = 256) to 0.18 (d′ = 2304). Measured, the gap grows from 0.01 to 0.18: 0.014, 0.057, 0.125, 0.178. At d′ = 256 the two k values give the same γ. The law and the data agree only at d′ = 2304, the dimension where the law was found. The fixed rank window (6–50) shows the same pattern (gap 0.02, 0.01, 0.13, 0.17).
+- Level: k = 32 sits 0.03–0.06 under the law at every d′; k = 8 sits 0.03 under at 2304 but 0.30 under at 256. γ rises with d′ at fixed k, but in a way the law does not predict.
+- Caveat: PCA truncation is not a model with smaller d. It keeps the same features, squeezed into fewer dimensions (more superposition per dimension, and the dropped variance becomes reconstruction error). A cross-model d-test (Pythia-70m d = 512: γ 0.33 primary vs law 0.444, close to the d′ = 512 k = 32 value 0.38) points the same way, but it confounds d with the model.
+- **Consequence for the write-up:** do not restructure around log_d(d/k). Keep it as an empirical fit at d = 2304 for our TopK recipe (γ = 1.016 − 0.094·log₂k), and report that the dependence on k vanishes when the same activations live in fewer dimensions. Review point 6 (d_eff without dim 1170) is moot because the law fails.
