@@ -336,3 +336,29 @@ Dropping tokens with the top 0.1% of |x₁₁₇₀| (threshold 256) or the top 
 2. **Not an estimator artifact:** real activations give a smooth γ(L0) law, width-stable γ, and far less over-concentration in the bulk than Σ-matched Gaussian or scrambled data; the nulls do none of these.
 3. **Not frequency-driven allocation as written, not feature splitting, not massive activations.**
 4. **Open:** what about mid-stack activations (beyond Σ, beyond dim 1170) makes the SAE concentrate its cloud relative to the Gaussian expectation, and why the size of that effect depends on the recipe (JumpReLU/Gemma Scope 0.65 vs TopK 0.51 at L13). Phase 3 (planted ground truth with known Σ and controllable non-Gaussian structure — sparse features, manifolds, heavy tails) is now the right tool: it can test which structure reproduces (i) γ = 1 at k = 1, (ii) the −0.1/doubling law, (iii) real-vs-Gaussian bulk spreading.
+
+## 2026-11-03 — External review and first checks (`experiments/review_checks.py` → `results/review/checks.json`)
+
+A review (pasted into the session) argued: (1) our layer-13 TopK γ(k) fits a zero-parameter law γ = 1 − ln k / ln d (max gap 0.023 by its reading); (2) "decoder slope ≈ γ × Σ slope" is an identity, and C_dec ∝ Σ^γ must be tested as a matrix statement (rotate into Σ's eigenbasis; principal angles); (3) "γ depends on L0 almost alone" contradicts the layer effect; check Gemma Scope's measured L0 per layer; (4) null confounds: alive/duplicate counts, scrambled destroys Σ, width drift could be estimation (subsample 1m); (5) wording: r = 0.5–0.8 is moderate, frequency test is "underdetermined", not "not supported". Points 2, 3 and 5 are accepted as stated; the write-up needs reframing.
+
+**1. Law γ = 1 − ln k / ln d (rank-window γ, ranks 11–150 Gemma):**
+- Our TopK, Gemma L13 (d = 2304): gaps +0.034, −0.018, +0.003, +0.001, +0.023, −0.014, −0.020 at k = 1…128. Fits.
+- Gemma Scope L12 (JumpReLU): above the law at every L0, by +0.04 to +0.13 (larger at low L0). Same shape, recipe-dependent offset.
+- Pythia L3 (d = 512, k = 32, law 0.444): 0.21–0.23 (ranks 3–25), 0.32–0.34 (6–50), 0.42–0.43 (11–100). Matches only in the deepest window; the primary misses by −0.11. Rank windows are not comparable across d (11–150 is 0.4–6.5% of d = 2304; 6–50 is 1–10% of d = 512), so this is not yet a clean test of the ln d denominator. The PCA d-sweep and the d = 256 synthetic run are.
+
+**2. Matrix test of C_dec ∝ Σ^γ (`geometry.basis_gamma`) — partly fails:**
+- Gemma Scope L12, ranks 101–1000 (bulk): basis-matched γ 0.25–0.64, R² 0.94–0.99 for all 28 SAEs. The bulk of the decoder covariance is co-diagonal with Σ and scales as a power of it.
+- Ranks 2–150 (top): holds only at low L0. L0 ≤ ~85: basis γ 0.36–0.78, R² 0.91–0.97, close to the law (L0 = 41: 0.510 vs 0.514). L0 ≥ ~150: basis γ collapses to ≈ 0 (R² 0.01–0.8) while the rank-window γ stays 0.28–0.43. Top-10 subspace overlap falls from 0.57 (L0 = 12) to 0.09–0.13 (L0 ≥ 270); random ≈ 0.004.
+- So at high L0 the decoder spectrum still decays like a power law, but its leading directions are not Σ's leading directions: "Σ raised to a power" is the wrong description of the top of the spectrum there. The rank-window ratio hid this, because it compares two spectra sorted independently.
+- Pythia real: basis γ −0.04 to 0.03 (ranks 2–50), 0.21 (6–50), 0.36–0.41 (11–100); top-10 overlap 0.25. Σ's top direction carries 36% of Pythia's variance and the decoders do not follow it.
+- Nulls: Pythia Gaussian has negative basis γ in the top ranges and top-10 overlap ≈ 0.00–0.09 (it avoids Σ's leading directions) but overlap50 0.60–0.78 (it piles into ranks ~10–50). Local Gemma Gaussian nulls: top-10 overlap 0.44–0.57 at layers 0–7, 0.13–0.17 at layers 13–24.
+
+**3. Null confounds:**
+- Alive: GPU-queue Gaussian and scrambled SAEs have 0–1 dead latents of 16k/65k; real data has 2–1,385. Pythia nulls: all alive. Local Gemma nulls: all alive. Near-duplicate fraction (cos > 0.5) ≤ 0.004 for every null and every real run. "Real spreads decoders out" is not "more latents survive"; if anything the nulls keep more.
+- Subsampling: 1m-wide decoders cut to 16k random rows move toward the 16k SAEs in the deep window (1m L0 = 19, ranks 101–1000: full −0.503, subsampled −0.544, real 16k at L0 = 22 −0.650; 1m L0 = 73: −0.402 → −0.461 vs −0.519 at 16k L0 = 82). Estimation (rows per dimension) accounts for roughly 30–50% of the deep-window width drift; the rest is geometry. Top windows move ≤ 0.04.
+
+**Revised claims (to carry into the write-up):**
+- Replace "decoder slope ≈ γ × Σ slope" (identity) with the matrix statement and its limits: C_dec ∝ Σ^γ holds in the bulk at all L0 and in the top only at low L0.
+- The candidate headline is γ ≈ log_d(d/k) for our TopK; Gemma Scope sits above it by a recipe-dependent offset. Not established until the d-sweep.
+- "γ depends on L0 almost alone" → "at layer 12, across widths". The layer term stays open until measured L0 per layer is checked.
+- Frequency-allocation test → "underdetermined"; the scrambled null destroys Σ (say so); r = 0.5–0.8 is "moderate".
