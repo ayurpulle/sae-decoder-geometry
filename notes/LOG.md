@@ -362,3 +362,23 @@ A review (pasted into the session) argued: (1) our layer-13 TopK γ(k) fits a ze
 - The candidate headline is γ ≈ log_d(d/k) for our TopK; Gemma Scope sits above it by a recipe-dependent offset. Not established until the d-sweep.
 - "γ depends on L0 almost alone" → "at layer 12, across widths". The layer term stays open until measured L0 per layer is checked.
 - Frequency-allocation test → "underdetermined"; the scrambled null destroys Σ (say so); r = 0.5–0.8 is "moderate".
+
+## 2026-11-03 — Phase 3 stage 1: planted data, d = 256 (`results/phase3/saes_p3.json`)
+
+Data `synth-base`: d = 256, 4,096 point features, p_i ∝ i^−1.5 (top 5 capped at 0.5), 32 active per token, direction anisotropy β = 1 (Σ slope ≈ −1.0), noise 0.05. TopK width 4,096, k = 1…64, 2 epochs over 5.5M tokens, seed 0, real vs Gaussian twin.
+
+| k | 1 | 2 | 4 | 8 | 16 | 32 | 64 |
+|---|---|---|---|---|---|---|---|
+| law 1 − ln k / ln 256 | 1.00 | 0.88 | 0.75 | 0.63 | 0.50 | 0.38 | 0.25 |
+| planted, rank γ (ranks 6–50) | 1.55* | 1.45* | 0.88 | 0.86 | 0.54 | 0.37 | 0.20 |
+| Gaussian twin, rank γ | 1.70* | 1.67 | 0.89 | 0.64 | 0.42 | 0.31 | 0.23 |
+| planted, basis γ (ranks 6–50) | 1.81 | 1.52 | 0.88 | 0.85 | 0.56 | 0.13 | −0.09 |
+| planted, top-10 overlap with Σ | 0.96 | 0.98 | 0.88 | 0.81 | 0.59 | 0.16 | 0.07 |
+| planted, live latents | 453 | 973 | 3702 | 3763 | 4001 | 4096 | 4096 |
+\* fewer than 1,000 live latents.
+
+- Law: close at k = 16–64; the fit over k ≥ 4 is 1.30 − 0.184·log₂k (R² 0.955), steeper than 1/log₂256 = 0.125.
+- **Top-subspace decoupling reproduces at the same k/d as Gemma Scope.** Top-10 overlap collapses between k = 16 and 32 (k/d 0.06–0.12) here, and between L0 ≈ 150 and 270 (k/d 0.065–0.12) for Gemma Scope L12. Basis γ in the top ranges goes to ≈ 0 at the same point. Candidate regularity: decoders track Σ's leading directions only while k/d ≲ 0.06.
+- **No real-vs-Gaussian contrast:** the Gaussian twin behaves almost identically (it over-concentrates the bulk somewhat more at k = 8–16: γ(11–100) 1.41/0.97 vs 0.95/0.71). With 32 of 4,096 features active in 256 dims, the planted data is close to Gaussian from the SAE's view. Stage 2 must lower mean_active and M/d.
+- **Feature matching:** ≤ 51% of live latents match a planted feature at cos > 0.7 (8–13% at k = 4–32), covering 134–520 of 4,096 features. Features are not recoverable in this regime (heavy superposition plus anisotropic directions), so the allocation-law test also needs the sparser regime.
+- Engineering: the k = 1/2 runs grew the MPS process to 17 GB; `train_sae.py` now calls `torch.mps.empty_cache()` every 200 steps (no numerical effect), after which runs went from ~0.4 s/step to ~0.03 s/step.
