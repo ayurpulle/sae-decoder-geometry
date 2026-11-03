@@ -174,7 +174,8 @@ def train(args):
             pre_dead = pre.masked_fill(~dead, -torch.inf)
             kk = min(args.aux_k, int(dead.sum()))
             va, ia = pre_dead.topk(kk, dim=-1)
-            aux_recon = (torch.relu(va).unsqueeze(-1) * sae.W_dec[ia]).sum(1)
+            # Dense product: gathering W_dec[ia] would materialise batch x aux_k x d floats (19 GB at d=2304).
+            aux_recon = torch.zeros_like(pre).scatter_(-1, ia, torch.relu(va)) @ sae.W_dec
             aux = (err.detach() - aux_recon).pow(2).sum(-1).mean() / err.detach().pow(2).sum(-1).mean()
             loss = loss + aux / 32
         opt.zero_grad(set_to_none=True)
