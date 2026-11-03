@@ -411,3 +411,29 @@ All 135 Gemma Scope 16k residual SAEs (26 layers) measured on the same 32,736 to
 - **Measured/named L0 has its own mid-stack hump.** Median ratio by layer: 0.92–0.98 at layers 0–4, 1.00 at 6–7, rising to 1.08–1.11 at layers 10–15 (peak 1.11 at L13), back to 0.97–1.01 at layers 20–25. Within a layer the spread across L0 variants is ≤ ±0.1. Mid-stack SAEs fire ~10% more on our tokens than their names say.
 - **Re-interpolating at measured L0 strengthens the mid-stack γ peak slightly; it does not explain it.** Since γ falls with L0, the named L0s understated mid-stack density, so at matched true L0 mid-stack γ is a little higher: peak-minus-edges in the primary window 0.189 → 0.208 (L0 = 40), 0.133 → 0.155 (L0 = 70), 0.083 → 0.097 (L0 = 140). Largest per-layer shift 0.023 in any window/L0; r(named, measured profile) ≥ 0.99 everywhere. Peak layers unchanged (14–15 in the top windows, 5–12 in the bulk), except ranks 4–50 at L0 = 140, where the profile is nearly flat and the argmax moves from layer 3 to 14.
 - Claim update: "γ depends on L0 almost alone" stays qualified to "at layer 12, across widths". Across layers there is a real, L0-independent mid-stack γ excess of 0.10–0.21; an L0 mismatch is not the cause (review point 3 closed).
+
+## 2026-11-03 — Phase 3 stage 2: sparse planted features (`results/phase3/saes_p3s2.json`, `stage2_alloc.json`)
+
+Data (`experiments/phase3_stage2.py`): d = 256, M = 512 features, 4 active per token, p_i ∝ i^−1.5 (top capped at 0.5), isotropic random directions (β = 0), noise 0.05; Σ slope −1.18 to −1.30 in the three windows, set by the frequencies rather than by direction anisotropy. `s2-point`: point features; `s2-circle`: every feature a circle in span(u_i, v_i). TopK width 4,096, k = 1…32, 2 epochs over 5.5M tokens, seed 0, real vs Gaussian twin. With near-orthogonal directions, a cloud of n_i latents per feature has eigenvalues ∝ n_i, so γ should equal the allocation exponent c in n_i ∝ p_i^c. Prediction for circles at k = 1 (our derivation): tiling a circle with n directions leaves error ∝ n^−2, b = 2, c = 1/(1+b) = 1/3. For points: one latent per feature, c ≈ 0.
+
+γ, ranks 5–50 (alive latents; matched = best feature score > 0.7):
+
+| k | 1 | 2 | 4 | 8 | 16 | 32 |
+|---|---|---|---|---|---|---|
+| circle, real | 0.32 | 0.21 | 0.19 | 0.12 | 0.08 | 0.08 |
+| circle, Gaussian twin | 1.46* | 1.33 | 0.88 | 0.58 | 0.42 | 0.31 |
+| circle, c (all covered features) | 0.33 | 0.29 | 0.26 | 0.21 | 0.28 | 0.35 |
+| circle, c (top 50 features) | 0.30 | 0.32 | 0.23 | 0.11 | 0.07 | −0.01 |
+| point, real | 0.30* | 0.20 | 0.16 | 0.06 | 0.04 | 0.06 |
+| point, Gaussian twin | 1.25* | 1.20 | 0.88 | 0.64 | 0.45 | 0.33 |
+| point, c (top 50 features) | 0.46* | 0.44 | 0.11 | −0.02 | −0.14 | −0.14 |
+\* fewer than 1,000 alive latents (circle Gaussian k = 1: 399; point k = 1: 527 real, 339 Gaussian).
+
+- **Real-vs-Gaussian contrast reproduced, and larger than in Gemma.** Planted sparse structure gives γ 0.04–0.32; the Gaussian twin with the same Σ gives 0.31–1.46. Fits over k with ≥ 1,000 alive: Gaussian γ = 1.35–1.45 − 0.22–0.25·log₂k (R² 0.93–0.97); real γ = 0.22–0.29 − 0.04–0.05·log₂k (R² 0.80–0.90). Gemma (TopK, L13: 1.016 − 0.094·log₂k) and stage 1 (1.30 − 0.184·log₂k) sit between the two. Real activations look intermediate between "Gaussian with Σ" and "sparse recoverable features".
+- **The allocation law's prediction holds at k = 1 for circles, and γ equals c there.** c over all covered features is 0.334 (prediction 1/3); over the top 50 it is 0.30; γ is 0.35 / 0.32 / 0.32 in the three windows. This is the first measurement in the project where γ and the frequency-allocation exponent are the same number, and where that number was predicted beforehand.
+- **As k grows, allocation to frequent features flattens, and γ falls with it.** Circles, top 50: c 0.30 → 0.32 → 0.23 → 0.11 → 0.07 → −0.01; γ 0.32 → 0.08. Top-5 circles get 11–25 latents at k = 1 and 6–9 at k ≥ 8. Candidate mechanism (interpretation): once several latents can be active per feature, two or three latents combine to reconstruct any point on a circle, so a circle no longer needs a tiling, b grows, c → 0. In this regime the γ(k) law comes out of allocation. Points: c ≈ 0 for k ≥ 8 as predicted; at k = 1–2 the top points get 4–7 latents (one latent must cover co-active pairs).
+- **The Gaussian twin has a steep γ(k) law with no features at all**, so the Gemma k-law is not by itself evidence for allocation. In stage 2 the real k-slope (−0.04) is far shallower than the Gaussian one (−0.22).
+- **Junk latents:** 330–2,550 alive latents score < 0.3 against every feature. Their median firing is ~20× below matched latents' and they hold little feature energy (pilot: median 7% in the best feature), so they are fitting the noise. They add a near-isotropic floor: γ over matched latents only is 0.12–0.24 for circles and 0.15–0.26 for points, and for points it stays at ~0.15 where c ≈ 0, so matched-only γ ≠ c for points at high k (unexplained; top points still have 1–2 latents, and with M/d = 2 the directions are not exactly orthogonal).
+- Caveats: one seed; one width (8 latents per feature); circles occupy 1,024 dimensions' worth of planes in d = 256, so they overlap; matching threshold 0.7.
+
+**Consequence for the frequency-allocation hypothesis:** no longer just "underdetermined". In a regime with recoverable features it produces γ, matches its zero-parameter prediction at k = 1, and gives a k-dependence through the flattening of allocation. But the same data shows that a Gaussian produces a larger γ and a steeper k-law without any features. Working hypothesis for Gemma: γ mixes a Gaussian-like contribution (high, steep in k) and a feature-allocation contribution (low, ≈ c); the relative weight would be set by how recoverable the features are. Testable next: interpolate stage 1 ↔ stage 2 (mean_active, M/d) and check whether γ and its k-slope move together between the two endpoints.
