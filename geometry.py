@@ -126,3 +126,44 @@ def slope_from_eigenvalues(eig: np.ndarray, fit_range: tuple[int, int]) -> dict:
     """Refit an already-computed spectrum on another range (for fit-range robustness checks)."""
     slope, intercept, r2 = _fit(np.asarray(eig), fit_range)
     return {"fit_range": list(fit_range), "slope": slope, "intercept": intercept, "r2": r2}
+
+
+def cloud_cov(W, mask=None, normalize: bool = False) -> np.ndarray:
+    """Centred covariance (ddof=1, float64) of the decoder rows, accumulated in chunks like _eigvals."""
+    d = W.shape[1]
+    s, G, n = np.zeros(d), np.zeros((d, d)), 0
+    for i in range(0, W.shape[0], CHUNK):
+        c = np.asarray(W[i:i + CHUNK], dtype=np.float64)
+        if mask is not None:
+            c = c[mask[i:i + CHUNK]]
+        if normalize:
+            c = c / np.linalg.norm(c, axis=1, keepdims=True)
+        s += c.sum(0)
+        G += c.T @ c
+        n += len(c)
+    return (G - np.outer(s, s) / n) / (n - 1)
+
+
+def basis_gamma(C_dec: np.ndarray, Sigma: np.ndarray, rank_ranges=((1, 150),), subspace_dims=(10, 50)) -> dict:
+    """Test C_dec ∝ Sigma^gamma as a matrix statement, without rank windows on two separately sorted spectra.
+
+    Rotates C_dec into Sigma's eigenbasis U (descending eigenvalues lam) and regresses
+    log diag(U^T C_dec U) on log lam over each 0-based [lo, hi) rank range -> gamma, R^2.
+    Alignment diagnostics: share of ||U^T C_dec U||_F^2 on the diagonal (1 = perfectly co-diagonal; a random
+    basis gives about 1/d), and, for each m in subspace_dims, the mean squared cosine of the principal angles
+    between the top-m eigenvector subspaces of C_dec and Sigma (1 = same subspace; random ≈ m/d).
+    """
+    lam, U = np.linalg.eigh(Sigma)
+    lam, U = lam[::-1], U[:, ::-1]
+    D = U.T @ C_dec @ U
+    dg = np.diag(D)
+    _, Vd = np.linalg.eigh(C_dec)
+    Vd = Vd[:, ::-1]
+    out = {"diag_share": float((dg ** 2).sum() / (D ** 2).sum()),
+           "subspace_overlap": {m: float((np.linalg.norm(U[:, :m].T @ Vd[:, :m]) ** 2) / m) for m in subspace_dims},
+           "fits": []}
+    for lo, hi in rank_ranges:
+        ok = (dg[lo:hi] > 0) & (lam[lo:hi] > 0)
+        r = linregress(np.log(lam[lo:hi][ok]), np.log(dg[lo:hi][ok]))
+        out["fits"].append({"rank_range": [lo, hi], "gamma": float(r.slope), "r2": float(r.rvalue ** 2)})
+    return out
