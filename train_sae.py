@@ -186,6 +186,8 @@ def train(args):
         sched.step()
         sae.renorm()
         step += 1
+        if dev == "mps" and step % 200 == 0:
+            torch.mps.empty_cache()  # MPS's caching allocator otherwise grows without bound on some runs
         if step % 500 == 0 or step == n_steps or step == 50:
             log.append({"step": step, "fvu": fvu.item(), "dead_frac": dead.float().mean().item()})
             print(f"[{args.cond} w{args.width} s{args.seed}] step {step}/{n_steps} fvu {fvu.item():.4f} "
