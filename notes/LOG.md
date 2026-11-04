@@ -437,3 +437,22 @@ Data (`experiments/phase3_stage2.py`): d = 256, M = 512 features, 4 active per t
 - Caveats: one seed; one width (8 latents per feature); circles occupy 1,024 dimensions' worth of planes in d = 256, so they overlap; matching threshold 0.7.
 
 **Consequence for the frequency-allocation hypothesis:** no longer just "underdetermined". In a regime with recoverable features it produces γ, matches its zero-parameter prediction at k = 1, and gives a k-dependence through the flattening of allocation. But the same data shows that a Gaussian produces a larger γ and a steeper k-law without any features. Working hypothesis for Gemma: γ mixes a Gaussian-like contribution (high, steep in k) and a feature-allocation contribution (low, ≈ c); the relative weight would be set by how recoverable the features are. Testable next: interpolate stage 1 ↔ stage 2 (mean_active, M/d) and check whether γ and its k-slope move together between the two endpoints.
+
+## Phase 3, interpolation: dense-to-sparse sweep (2026-11-04)
+
+Script `experiments/phase3_interp.py`, summary `experiments/phase3_interp_summary.py` → `results/phase3/interp_summary.{json,png}`, per-run analysis `results/phase3/saes_p3i.json`. Point features, β = 0, d = 256, p_i ∝ i^-1.5, noise 0.05; (M, active) = (512, 4) [stage 2], (1024, 8), (2048, 16), (4096, 32). TopK width 4096, k ∈ {4, 8, 16, 32, 64}, real vs Gaussian twin, 2 epochs over 6M tokens, seed 0. γ in the primary window (ranks 6–50), fit on log2 k over runs with ≥ 1000 alive latents. (The Mac slept overnight on battery: data generation took 1.5–4 h instead of ~70 s; a `caffeinate -i -w` hold fixed it. Results are unaffected.)
+
+| data (M, active) | real A | real per-doubling | R² | Gaussian A | Gaussian per-doubling | matched frac (k=8) |
+|---|---|---|---|---|---|---|
+| 512, 4 | 0.144 | −0.015 | 0.27 | 1.198 | −0.178 | 0.18 |
+| 1024, 8 | 0.548 | −0.078 | 0.92 | 1.167 | −0.175 | 0.27 |
+| 2048, 16 | 1.170 | −0.176 | 0.96 | 1.389 | −0.210 | 0.29 |
+| 4096, 32 | 2.107 | −0.314 | 0.97 | 1.597 | −0.224 | 0.14 |
+| stage 1 (4096, 32, β = 1) | 1.302 | −0.184 | 0.95 | 1.161 | −0.166 | 0.11 |
+| Gemma L13 TopK | 1.016 | −0.094 | | | | |
+
+- **Density moves real γ monotonically from the allocation regime to Gaussian-like and beyond.** Real intercept 0.14 → 0.55 → 1.17 → 2.11. Real reaches its twin near (2048, 16) and overshoots it at (4096, 32): 2.11 vs 1.60. With crowded directions at the same density (stage 1, β = 1), real sits back near its twin (1.30 vs 1.16), so direction crowding, not density, is what pins real to the Gaussian value.
+- **Every planted fit lies on one ray: per-doubling ≈ −0.15 × intercept.** −s/A = 0.14–0.15 for all four real densities above the sparsest, all four twins, and both stage-1 conditions; the sparsest real fit (0.11) is noise-dominated (R² 0.27). Equivalently γ(k) ≈ A·(1 − log2 k / log2 k0) with k0 ≈ 2^6.7 ≈ 100 throughout: density, direction crowding and real-vs-Gaussian change the amplitude A only, never the k at which γ would reach 0.
+- **The path does not pass near Gemma.** Gemma's −s/A = 0.093 (k0 ≈ 2^10.8 ≈ 1800) is off the planted ray. The planted run nearest in intercept, (2048, 16) at 1.17, falls about twice as fast with k (−0.176 vs −0.094). No density of this generator reproduces Gemma's (intercept, slope) pair.
+- Blend hypothesis: half supported. The density-driven move from allocation (γ ≈ c) to Gaussian-like (γ ≈ 1+) is real and monotone. But γ's k-dependence is governed by a separate scale k0 that density does not touch; at d = 256, width 4096 it is ~100, in Gemma ~1800. Candidates for what sets k0: d, SAE width, or the training recipe. The PCA d-sweep argues against d alone, since Gemma truncated to d′ = 256 had an almost flat k-gap (0.014), not the planted one.
+- Caveats: one seed, d = 256 only, one window. matched frac falls at (4096, 32) because features are no longer recoverable (M/d = 16).
