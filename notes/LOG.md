@@ -456,3 +456,21 @@ Script `experiments/phase3_interp.py`, summary `experiments/phase3_interp_summar
 - **The path does not pass near Gemma.** Gemma's −s/A = 0.093 (k0 ≈ 2^10.8 ≈ 1800) is off the planted ray. The planted run nearest in intercept, (2048, 16) at 1.17, falls about twice as fast with k (−0.176 vs −0.094). No density of this generator reproduces Gemma's (intercept, slope) pair.
 - Blend hypothesis: half supported. The density-driven move from allocation (γ ≈ c) to Gaussian-like (γ ≈ 1+) is real and monotone. But γ's k-dependence is governed by a separate scale k0 that density does not touch; at d = 256, width 4096 it is ~100, in Gemma ~1800. Candidates for what sets k0: d, SAE width, or the training recipe. The PCA d-sweep argues against d alone, since Gemma truncated to d′ = 256 had an almost flat k-gap (0.014), not the planted one.
 - Caveats: one seed, d = 256 only, one window. matched frac falls at (4096, 32) because features are no longer recoverable (M/d = 16).
+
+## Phase 3, width sweep: does SAE width set k0? (2026-11-04)
+
+Script `experiments/phase3_width.py` (runs in `cache/saes_p3w`, analysis `results/phase3/saes_p3w.json`), summary `experiments/phase3_width_summary.py` → `results/phase3/width_summary.{json,png}`. Data fixed at i-m2048-a16 (M = 2048, 16 active, β = 0, d = 256; the density whose intercept is nearest Gemma's). Widths 1024–16384 (4096 reused from saes_p3i), k ∈ {4, …, 64}, real vs Gaussian twin, seed 0. γ in ranks 6–50; fits use runs with ≥ 250 alive latents (all qualified). log2 k0 = A / −s.
+
+| width | real A | real s | real log2 k0 | Gaussian A | Gaussian s | Gaussian log2 k0 |
+|---|---|---|---|---|---|---|
+| 1024 | 1.315 | −0.207 | 6.34 | 2.511 | −0.424 | 5.92 (R² 0.76) |
+| 2048 | 1.324 | −0.208 | 6.37 | 1.736 | −0.275 | 6.31 |
+| 4096 | 1.170 | −0.176 | 6.63 | 1.389 | −0.210 | 6.62 |
+| 8192 | 1.018 | −0.148 | 6.87 | 1.212 | −0.176 | 6.89 |
+| 16384 | 0.866 | −0.122 | 7.11 | 1.080 | −0.159 | 6.77 |
+| Gemma L13 TopK, 16k | 1.016 | −0.094 | 10.8 | | | |
+
+- **Width moves k0, but slowly.** Real log2 k0 rises ≈ 0.25 per doubling of width from 2048 to 16384 (6.37 → 7.11). At Gemma's width (16k) it is 7.1 against Gemma's 10.8; closing that gap at this rate would take ~15 more doublings. The Gaussian twin rises with the real data up to 8192, then levels off (6.77 at 16384).
+- **Width tilts γ(k) instead of shifting it.** Wider SAEs lower γ at small k (real k = 4: 0.97 → 0.67) and barely change it at k ≥ 16 (0.35–0.45 at k = 16, 0.17–0.19 at k = 64). So intercept and slope both shrink: at 8192 the intercept matches Gemma's (1.02) but the slope is −0.148; at 16384 the slope is closer (−0.122) but the intercept has dropped to 0.87. No width reproduces Gemma's pair.
+- Conclusion: width is a minor contributor to the k-scale. Most of the gap to Gemma has to come from d, the data, or the recipe. Next: planted d-sweep at fixed density and width.
+- Caveats: one seed. Gemma's fit uses ranks 11–150 and k = 1–128 at d = 2304; the planted fits use ranks 6–50 and k = 4–64 at d = 256, so k0 values are not strictly comparable across the two.
