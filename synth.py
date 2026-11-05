@@ -4,7 +4,9 @@ train_sae.py (real / gaussian / scrambled) runs on them unchanged.
 Each token is a sparse sum of features plus optional isotropic noise:
     x = sum_i  a_i * m_i * (cos(theta_i) u_i + sin(theta_i) v_i)  +  noise * N(0, I_d)
   a_i ~ Bernoulli(p_i), p_i = c * i^-(1+alpha) capped at P_MAX, c chosen so E[sum_i a_i] = mean_active.
-  m_i  magnitude: |N(0,1)| (tail="normal") or lognormal(0, 1) (tail="lognormal"), times scale_i = 1.
+  m_i  magnitude: |N(0,1)| (tail="normal") or lognormal(0, 1) (tail="lognormal"), times scale_i: 1 by default;
+       with --var_slope tau, scale_i is set so feature i's variance Var(a_i m_i scale_i) ∝ i^-tau exactly, whatever
+       p_i (including features at the P_MAX cap), rescaled so the total feature variance is unchanged.
   point feature:    theta_i = 0, so the token moves along +u_i only.
   manifold feature: theta_i ~ U(0, 2 pi) per token, a circle in span(u_i, v_i) (frac_manifold of features).
   directions: u_i, v_i = normalize(Q (s * g)), g ~ N(0, I_d), s_j = j^(-beta/2), Q a random rotation, so
@@ -38,6 +40,17 @@ def feature_probs(M, alpha, mean_active):
     return np.minimum(lo * raw, P_MAX)
 
 
+def feature_scales(p, tail, var_slope):
+    """Per-feature magnitude scale giving feature variances ∝ i^-var_slope (None: all ones)."""
+    if var_slope is None:
+        return np.ones_like(p)
+    m1, m2 = (math.sqrt(2 / math.pi), 1.0) if tail == "normal" else (math.exp(0.5), math.exp(2.0))
+    var = p * m2 - (p * m1) ** 2
+    target = np.arange(1, len(p) + 1, dtype=np.float64) ** -var_slope
+    target *= var.sum() / target.sum()
+    return np.sqrt(target / var)
+
+
 def directions(M, d, beta, rng):
     Q, _ = np.linalg.qr(rng.standard_normal((d, d)))
     s = np.arange(1, d + 1, dtype=np.float64) ** (-beta / 2)
@@ -61,12 +74,14 @@ def main():
     ap.add_argument("--frac_manifold", type=float, default=0.0)
     ap.add_argument("--tail", choices=["normal", "lognormal"], default="normal")
     ap.add_argument("--noise", type=float, default=0.05)
+    ap.add_argument("--var_slope", type=float, default=None, help="feature variance ∝ i^-var_slope via magnitudes")
     ap.add_argument("--seed", type=int, default=0)
     args = ap.parse_args()
 
     rng = np.random.default_rng(args.seed)
     dev = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
     p = feature_probs(args.M, args.alpha, args.mean_active)
+    scale = feature_scales(p, args.tail, args.var_slope)
     U, V = directions(args.M, args.d, args.beta, rng)
     is_manifold = np.zeros(args.M, dtype=bool)
     is_manifold[rng.choice(args.M, int(round(args.frac_manifold * args.M)), replace=False)] = True
@@ -78,6 +93,7 @@ def main():
     gdev = "cuda" if dev == "cuda" else "cpu"
     gen = torch.Generator(device=gdev).manual_seed(args.seed)
     pt = torch.tensor(p, dtype=torch.float32, device=dev)
+    sc = torch.tensor(scale, dtype=torch.float32, device=dev)
     Ut = torch.tensor(U, dtype=torch.float32, device=dev)
     Vt = torch.tensor(V, dtype=torch.float32, device=dev)
     man = torch.tensor(is_manifold, device=dev)
@@ -89,7 +105,7 @@ def main():
         z = torch.randn(b, args.M, generator=gen, device=gdev).to(dev)
         m = z.abs() if args.tail == "normal" else torch.exp(z)
         theta = torch.rand(b, args.M, generator=gen, device=gdev).to(dev) * (2 * math.pi) * man
-        coef = a * m
+        coef = a * m * sc
         x = (coef * torch.cos(theta)) @ Ut + (coef * torch.sin(theta)) @ Vt
         if args.noise:
             x = x + args.noise * torch.randn(b, args.d, generator=gen, device=gdev).to(dev)
@@ -104,7 +120,7 @@ def main():
     mean = s / n
     cov = (G - n * np.outer(mean, mean)) / (n - 1)
     np.savez(out / "stats.npz", mean=mean, cov=cov, n=n)
-    np.savez(out / "truth.npz", U=U, V=V, p=p, is_manifold=is_manifold)
+    np.savez(out / "truth.npz", U=U, V=V, p=p, scale=scale, is_manifold=is_manifold)
     json.dump(vars(args) | {"P_MAX": P_MAX, "measured_mean_active": act_count / n, "seconds": time.time() - t0,
                             "p_top5": p[:5].tolist(), "p_min": float(p.min())},
               open(out / "config.json", "w"), indent=1)

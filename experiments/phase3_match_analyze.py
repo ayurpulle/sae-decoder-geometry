@@ -4,7 +4,9 @@ one, and gamma(k) = A + s·log2 k fits per (data, cond, seed, window), with log2
 Windows (0-based, as everywhere): (3, 50), (10, 150), (30, 450) = Gemma's GPU-queue windows, ranks 4-50, 11-150,
 31-450; and (54, 461) = ranks d/43 .. d/5, the d-scaled window of the planted d-sweep. Stores decoder and Sigma
 eigenvalues so the W_dec files never need copying off the pod. Writes results/phase3/gemma_match.json.
+Usage: python experiments/phase3_match_analyze.py [--group saes_p3g] [--out gemma_match]
 """
+import argparse
 import glob
 import json
 import subprocess
@@ -23,8 +25,12 @@ MIN_ALIVE = 1000
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--group", default="saes_p3g")
+    ap.add_argument("--out", default="gemma_match")
+    args = ap.parse_args()
     sig, rows = {}, []
-    for tj in sorted(glob.glob(str(ROOT / "cache" / "saes_p3g" / "*" / "train.json"))):
+    for tj in sorted(glob.glob(str(ROOT / "cache" / args.group / "*" / "train.json"))):
         rd = Path(tj).parent
         info = json.load(open(tj))
         c = info["config"]
@@ -63,7 +69,7 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     json.dump({"git": gh, "windows": WINDOWS, "min_alive": MIN_ALIVE,
                "sigma_eigenvalues": {m: e[:600].tolist() for m, e in sig.items()}, "rows": rows, "fits": fits},
-              open(out / "gemma_match.json", "w"), indent=1, default=float)
+              open(out / f"{args.out}.json", "w"), indent=1, default=float)
 
 
 if __name__ == "__main__":
