@@ -522,3 +522,35 @@ Design: Gemma's d = 2304 and width 16384; point features, β = 0, α = 0.5, nois
 - **Real-vs-Gaussian:** twins over-concentrate in the bulk at every density (γ 0.8–3.1 vs real 0.12–1.28), as in Gemma's deep windows and every earlier planted run.
 - **Verdict:** partial. In the one window where the comparison is valid, planted data at Gemma's d and width puts k0 in Gemma's range (9–15 vs 13), so the k-scale gap from the d = 256 sweeps is mostly a d-and-width effect. The comparison where Gemma's law is cleanest (ranks 11–150) cannot be made with this generator, because its Σ is not a power law there.
 - **Next (if pursued):** remove the plateau so Σ is a power law from rank 1. That means p_1 < P_MAX: steeper α or lower density, or power-law magnitudes scale_i. Then rerun the three densities in ranks 11–150 with more tokens (e.g. 30M) so small-k SAEs are not mostly dead. Cost ≈ 3–5 GPU-hours on an A100.
+
+## Phase 3, power-law-Σ planted check on GPU (2026-11-05)
+
+Scripts `experiments/phase3_powerlaw.py` (job), `experiments/phase3_match_analyze.py --group saes_p3p --out powerlaw_match` (on the pod → `results/phase3/powerlaw_match.{json,log}`), `experiments/phase3_match_summary.py --inp powerlaw_match --out powerlaw_summary --prefix p2304` → `results/phase3/powerlaw_summary.{json,png}`. Run on Runpod pod `f4suh4m1j1o0jd` (A100 SXM 80GB, secure cloud US-MD-1, $1.79/h, 13:56–17:33 UTC, ≈ 3.6 h, ≈ $6.50; billing read $4.83 at termination and lags; pod terminated and confirmed gone). Per-run `train.json` and `fires.npy` copied to `cache/saes_p3p`; decoders stayed on the pod.
+
+Design: as the matched check (d = 2304, width 16384, point features, β = 0, α = 0.5, noise 0.05; (M, active) = (2d, d/64), (4d, d/32), (8d, d/16); k ∈ {4, …, 128}), with two changes. (1) `synth.py --var_slope 1.0` sets per-feature magnitudes so feature variance ∝ i^-1, which removes the P_MAX plateau: Σ slopes are −0.95 / −0.90 / −0.82 / −0.80 in ranks 4–50 / 11–150 / 31–450 / 55–461 at every density (Gemma −0.98 / −0.95 / −0.75 / −0.71), so every window is valid. (2) 12M tokens × 3 epochs (vs 6M × 2). Seed 0 at all densities, Gaussian twin of (4d, d/32), seed 1 at (8d, d/16) (auto-picked: lowest RMS vs Gemma in ranks 11–150).
+
+| real γ, ranks 11–150 | k = 4 | 8 | 16 | 32 | 64 | 128 | RMS vs Gemma |
+|---|---|---|---|---|---|---|---|
+| (2d, d/64) | 0.13 | 0.19 | 0.86 | 0.40 | 0.27 | 0.11 | 0.42 |
+| (4d, d/32) | 0.17 | 0.08 | 0.15 | 0.26 | 0.23 | 0.09 | 0.50 |
+| (8d, d/16), 2 seeds | 0.36 | 0.46 | 0.42 | 0.42 | 0.41 | 0.36 | 0.27 |
+| Gaussian twin (4d, d/32) | 1.86 | 1.20 | 0.57 | 0.61 | 0.52 | 0.45 | 0.51 |
+| Gemma L13 TopK | 0.82 | 0.73 | 0.67 | 0.51 (k = 40) | | 0.35 | |
+
+| real γ, ranks 31–450 | k = 4 | 8 | 16 | 32 | 64 | 128 | RMS vs Gemma |
+|---|---|---|---|---|---|---|---|
+| (2d, d/64) | 0.25 | 0.25 | 0.33 | 0.28 | 0.24 | 0.21 | 0.49 |
+| (4d, d/32) | 0.23 | 0.19 | 0.22 | 0.22 | 0.26 | 0.20 | 0.53 |
+| (8d, d/16), 2 seeds | 0.44 | 0.88 ± 0.18 | 0.80 | 0.67 | 0.55 | 0.38 | 0.23 |
+| Gaussian twin (4d, d/32) | 2.90 | 2.17 | 1.93 | 1.72 | 1.02 | 0.73 | 1.26 |
+| Gemma L13 TopK | 0.92 | 0.80 | 0.79 | 0.60 (k = 40) | | 0.51 | |
+
+Alive latents (of 16384), real, k = 4 / 8 / 16 / 32 / 64 / 128: (2d) 4729 / 4772 / 6000 / 11454 / 12674 / 14519; (4d) 9069 / 8422 / 7465 / 9853 / 12478 / 13216; (8d) 5070 / 4177 (seed 1: 1860) / 11580 / 11376 / 12098 / 13656. Gemma k = 4 / 8 / 16: 3732 / 6469 / 14472. FVU at k = 4: 0.53 / 0.60 / 0.69.
+
+- **Gemma's cleanest law (ranks 11–150, γ = 1.016 − 0.094·log2 k, R² 0.994) is not reproduced.** With Σ matched to Gemma's, real planted γ in ranks 11–150 is flat in k at every density: 0.1–0.3 with no trend at (2d) and (4d) (one outlier at (2d), k = 16), and 0.36–0.46 at (8d) (2 seeds, sd ≤ 0.02). Best RMS against Gemma is 0.27.
+- **Planted decoders are much flatter than Σ.** γ ≈ 0.1–0.3 at the two sparser densities in every window means the decoder spectrum carries only a fraction of Σ's anisotropy. Planted features are random directions, so a dictionary that recovers them is close to isotropic whatever their variances. Gemma's γ of 0.35–1.0 needs decoders that inherit much more of Σ.
+- **Only the densest setting, in the wide windows, looks like Gemma.** (8d, d/16), ranks 31–450, falls from 0.88 at k = 8 to 0.38 at k = 128: fit over k ≥ 8 A = 1.28, s = −0.124 per doubling, R² 0.98, log2 k0 = 10.3, against Gemma's A = 1.08, s = −0.083, log2 k0 = 13.0 (k = 4–128). Its k = 4 point (0.44) breaks the trend, and k = 8 varies across seeds (alive latents 4177 vs 1860).
+- **The Gaussian twin now matches Gemma's Gaussian twin in shape.** In ranks 31–450 it falls 2.90 → 0.73 (Gemma's Gaussian: 2.20 → 0.70), and in ranks 11–150 1.86 → 0.45 (Gemma: 1.23 → 0.38). With Σ a power law, the Gaussian null behaves like Gemma's null; what does not carry over is the real-data curve.
+- **Dead latents remain a confound at small k.** Doubling tokens and adding an epoch helped FVU (k = 4 at (2d): 0.53 vs 0.64), but real runs at k ≤ 8 still keep only 1,900–9,100 latents alive.
+- **Verdict: negative for this generator family.** At Gemma's d, width and Σ, planted point features with frequency-driven allocation do not produce Gemma's γ(k) in ranks 11–150, and produce it only partly (densest setting, wide windows, k ≥ 8) elsewhere. The k-scale result of the matched check (k0 in Gemma's range at Gemma's d and width) survives only in the wide windows. Gemma's higher γ in the top window points to structure the planted family lacks: feature directions that are not isotropic random (e.g. correlated or clustered), which is what Phase 4 tests.
+- Caveats: one data family (point features, β = 0, α = 0.5, var ∝ i^-1); seed 1 only at (8d); one Gaussian twin; alive fractions at small k are low.

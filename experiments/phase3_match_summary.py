@@ -1,13 +1,15 @@
 """Summarise the Gemma-matched planted check (d = 2304, width 16384): planted gamma(k) per density, condition and
 window against Gemma L13 TopK 16k (results/gpu/analysis.json, section B, 2 seeds).
 
-Reads results/phase3/gemma_match.json (phase3_match_analyze.py on the pod). Seeds are averaged where there are
+Reads results/phase3/{--inp}.json (phase3_match_analyze.py on the pod; default gemma_match, or powerlaw_match with
+--prefix p2304 for the power-law-Sigma generator). Seeds are averaged where there are
 several (stage 2 density). Distance to Gemma = RMS of gamma differences over k in {4, 8, 16, 40, 128}, with the planted
 gamma at k = 40 interpolated linearly in log2 k between k = 32 and 64. Also refits gamma(k) on the mostly-alive runs
 (k >= 32, >= 10k of 16384 latents alive in every real run). Also records Sigma's eigen-slope per window: with
 P_MAX = 0.5 the top 25-101 features saturate at d = 2304, Sigma is flat over the top ranks and gamma there is a ratio
-over a near-zero denominator; the d-scaled window (ranks 55-461) is the clean one. Writes results/phase3/match_summary.{json,png}.
+over a near-zero denominator; the d-scaled window (ranks 55-461) is the clean one. Writes results/phase3/{--out}.{json,png} (default match_summary).
 """
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -26,9 +28,7 @@ WINDOWS = {"(3, 50)": "ranks 4–50", "(10, 150)": "ranks 11–150", "(30, 450)"
 GEMMA_W = {"(54, 461)": "(30, 450)"}  # Gemma was not analysed in the d-scaled window; compare with its nearest
 K = [4, 8, 16, 32, 64, 128]
 GEMMA_K = [4, 8, 16, 40, 128]
-DENS = ["g2304-m4608-a36", "g2304-m9216-a72", "g2304-m18432-a144"]
-LABEL = {"g2304-m4608-a36": "2d feat, d/64 active", "g2304-m9216-a72": "4d feat, d/32 active",
-         "g2304-m18432-a144": "8d feat, d/16 active"}
+SUFFIX = {"m4608-a36": "2d feat, d/64 active", "m9216-a72": "4d feat, d/32 active", "m18432-a144": "8d feat, d/16 active"}
 
 
 def at(g, k):
@@ -40,7 +40,15 @@ def at(g, k):
 
 
 def main():
-    m = json.load(open(OUT / "gemma_match.json"))
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--inp", default="gemma_match")
+    ap.add_argument("--out", default="match_summary")
+    ap.add_argument("--prefix", default="g2304", help="g2304 (default generator) or p2304 (--var_slope 1)")
+    ap.add_argument("--title", default="Planted point features at Gemma's d = 2304, width 16384 vs Gemma L13 TopK 16k")
+    args = ap.parse_args()
+    DENS = [f"{args.prefix}-{x}" for x in SUFFIX]
+    LABEL = {f"{args.prefix}-{x}": v for x, v in SUFFIX.items()}
+    m = json.load(open(OUT / f"{args.inp}.json"))
     gem = json.load(open(ROOT / "results" / "gpu" / "analysis.json"))["B"]
     out = {"gemma": {}, "planted": {}, "sigma_slope": {}}
     sig_g = json.load(open(ROOT / "results" / "gpu" / "sigma.json"))["blocks.13.hook_resid_post"]["eigenvalues"]
@@ -61,6 +69,8 @@ def main():
         for n in DENS:
             for cond in ["real", "gaussian"]:
                 rs = [r for r in m["rows"] if r["data"] == n and r["cond"] == cond]
+                if not rs:
+                    continue
                 gam, sd, alive = {}, {}, {}
                 for k in K:
                     v = [r["gamma"][w] for r in rs if r["k"] == k and w in r["gamma"]]
@@ -82,13 +92,15 @@ def main():
                       + (f"{lr.intercept:6.3f}  {lr.slope:+.3f}" if lr else ""))
         print(f"{'Gemma L13 TopK':<18} {'real':<9} {GEMMA_W.get(w, w):<10} "
               + " ".join(f"k={k}:{g_real[k]:.3f}" for k in GEMMA_K))
-    json.dump(out, open(OUT / "match_summary.json", "w"), indent=1, default=float)
+    json.dump(out, open(OUT / f"{args.out}.json", "w"), indent=1, default=float)
 
     fig, ax = plt.subplots(1, 4, figsize=(18, 4.4), sharey=True)
     cols = dict(zip(DENS, plt.cm.viridis([0.1, 0.5, 0.85])))
     for a, (w, wl) in zip(ax, WINDOWS.items()):
         for n in DENS:
             for cond, ls in [("real", "-"), ("gaussian", "--")]:
+                if f"{n}|{cond}|{w}" not in out["planted"]:
+                    continue
                 g = out["planted"][f"{n}|{cond}|{w}"]["gamma"]
                 ks = sorted(g)
                 a.plot(np.log2(ks), [g[k] for k in ks], ls, marker="o", ms=3, color=cols[n],
@@ -103,9 +115,9 @@ def main():
         a.set_xlabel("log₂ k")
     ax[0].set_ylabel("γ = decoder slope / Σ slope")
     ax[0].legend(fontsize=6)
-    fig.suptitle("Planted point features at Gemma's d = 2304, width 16384 vs Gemma L13 TopK 16k")
+    fig.suptitle(args.title)
     fig.tight_layout()
-    fig.savefig(OUT / "match_summary.png", dpi=150)
+    fig.savefig(OUT / f"{args.out}.png", dpi=150)
 
 
 if __name__ == "__main__":
