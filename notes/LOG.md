@@ -474,3 +474,25 @@ Script `experiments/phase3_width.py` (runs in `cache/saes_p3w`, analysis `result
 - **Width tilts γ(k) instead of shifting it.** Wider SAEs lower γ at small k (real k = 4: 0.97 → 0.67) and barely change it at k ≥ 16 (0.35–0.45 at k = 16, 0.17–0.19 at k = 64). So intercept and slope both shrink: at 8192 the intercept matches Gemma's (1.02) but the slope is −0.148; at 16384 the slope is closer (−0.122) but the intercept has dropped to 0.87. No width reproduces Gemma's pair.
 - Conclusion: width is a minor contributor to the k-scale. Most of the gap to Gemma has to come from d, the data, or the recipe. Next: planted d-sweep at fixed density and width.
 - Caveats: one seed. Gemma's fit uses ranks 11–150 and k = 1–128 at d = 2304; the planted fits use ranks 6–50 and k = 4–64 at d = 256, so k0 values are not strictly comparable across the two.
+
+## Phase 3, d-sweep: does d set k0? (2026-11-05)
+
+Script `experiments/phase3_dsweep.py` (runs in `cache/saes_p3d`), summary `experiments/phase3_dsweep_summary.py` → `results/phase3/dsweep_summary.{json,png}`. Density fixed as ratios to d, matching i-m2048-a16: M = 8d point features, d/16 active, β = 0, p_i ∝ i^-1.5, noise 0.05 per coordinate. Two arms: width = 16d (d = 64…512) and width 4096 (d = 128…1024); d = 256 reused from saes_p3i. k ∈ {4, …, 64}, real vs Gaussian twin, seed 0; all runs ≥ 1000 alive. γ in a rank window scaled with d, ranks d/43 … d/5 (6–51 at d = 256). The fixed window ranks 6–50 is unusable away from d = 256: at d = 64 it spans nearly the whole spectrum, and at d = 1024 the real fit is flat at γ ≈ 2 (R² 0.77).
+
+Real, scaled window (log2 k0 = A / −s):
+
+| d | width | A | s | R² | log2 k0 | Gaussian log2 k0 |
+|---|---|---|---|---|---|---|
+| 64 | 1024 | 0.44 | −0.065 | 0.74 | 6.83 | 6.33 |
+| 128 | 2048 | 0.74 | −0.114 | 0.89 | 6.47 | 6.45 |
+| 128 | 4096 | 0.61 | −0.088 | 0.94 | 6.98 | 6.38 |
+| 256 | 4096 | 1.12 | −0.168 | 0.96 | 6.65 | 6.57 |
+| 512 | 4096 | 1.68 | −0.243 | 0.98 | 6.92 | 6.80 |
+| 512 | 8192 | 1.50 | −0.215 | 0.96 | 6.98 | 7.67 |
+| 1024 | 4096 | 2.08 | −0.258 | 0.99 | 8.05 | 7.37 |
+
+- **At fixed density ratios, d sets the amplitude A, and k0 barely moves.** A rises steadily with d (0.44 → 2.08 from d = 64 to 1024). log2 k0 stays at 6.5–7.0 from d = 64 to 512 and reaches 8.05 only at d = 1024. Fit over all runs: +0.24 per doubling of d (fixed-width arm alone: +0.35), driven mostly by the d = 1024 point. So k0 is set in absolute k (≈ 100–250), not as a fraction of d.
+- **Extrapolated to Gemma's d and width, the planted k-scale reaches log2 k0 ≈ 8.3–8.6.** That is 7.7–8.1 at d = 2304 from the d trend, plus ≈ 0.5 for width 4096 → 16k from the width sweep.
+- **Gemma's own k0 depends on the window and the k range** (refit from `results/gpu/analysis.json` B, TopK L13 16k): ranks 4–50: 9.2 (k = 1–128) / 8.9 (k = 4–40); ranks 11–150: 10.8 / 10.9; ranks 31–450: 9.4 (R² 0.76) / 12.1. The window closest to the planted scaled one (ranks 54–461 at d = 2304) is ranks 31–450, where k0 is the least stable.
+- **Synthesis.** Across all Phase 3 sweeps, γ(k) ≈ A · (1 − log2 k / log2 k0). Density and d set A. k0 is ≈ 2^6.6 at d = 256, width 4096 for every density, and rises slowly with width (+0.25 per doubling) and with d (+0.24–0.35 per doubling). Together, d and width carry the planted k0 to ≈ 8.5 at Gemma's settings, against Gemma's 9–12. They account for part of Gemma's slow decline with k, possibly most of it in the top window, but not robustly in the bulk window. Gemma's intercept 1.02 is below the planted A at d ≥ 512 (1.5–2.1), so in this family a Gemma-like intercept needs lower density than M = 8d, d/16 active. Earlier sweeps showed density moves A without moving k0.
+- Caveats: one seed; one data family (point features, β = 0, α = 0.5); the d trend rests mostly on one point (d = 1024, width 4096 = 4d); Gaussian twins are noisier (log2 k0 6.3–7.7).
