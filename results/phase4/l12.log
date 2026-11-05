@@ -1,0 +1,38 @@
+L12 16k L0=82: (16384, 2304)
+A kmeans    K=64    {'K_nonempty': 64, 'largest': 411, 'median': 249.0, 'singletons': 0, 'frac_in_largest': 0.02508544921875, 'zipf_top_half': -0.14286470341411087, 'seconds': 6.1}
+A ward      K=64    {'K_nonempty': 64, 'largest': 3813, 'median': 124.5, 'singletons': 0, 'frac_in_largest': 0.23272705078125, 'zipf_top_half': -0.9077961764736324, 'seconds': 117.8}
+A average   K=64    {'K_nonempty': 64, 'largest': 2748, 'median': 124.5, 'singletons': 1, 'frac_in_largest': 0.167724609375, 'zipf_top_half': -0.8151888097574561, 'seconds': 376.9}
+A spectral  K=64    {'K_nonempty': 64, 'largest': 541, 'median': 254.5, 'singletons': 0, 'frac_in_largest': 0.03302001953125, 'zipf_top_half': -0.2537835538003749, 'seconds': 315.1}
+A agreement K=64: kmeans~ward 0.03/0.29, kmeans~average 0.08/0.29, kmeans~spectral 0.15/0.39, kmeans~kmeans_s1 0.17/0.40, kmeans~kmeans_s2 0.16/0.41, ward~average 0.02/0.32, ward~spectral 0.05/0.35, ward~kmeans_s1 0.03/0.28, ward~kmeans_s2 0.03/0.29, average~spectral 0.10/0.35, average~kmeans_s1 0.09/0.29, average~kmeans_s2 0.08/0.29, spectral~kmeans_s1 0.14/0.38, spectral~kmeans_s2 0.14/0.39, kmeans_s1~kmeans_s2 0.16/0.40
+A kmeans    K=256   {'K_nonempty': 256, 'largest': 160, 'median': 60.5, 'singletons': 0, 'frac_in_largest': 0.009765625, 'zipf_top_half': -0.20250272040385373, 'seconds': 0.6}
+A ward      K=256   {'K_nonempty': 256, 'largest': 1908, 'median': 44.5, 'singletons': 0, 'frac_in_largest': 0.116455078125, 'zipf_top_half': -0.5268600556402424, 'seconds': 93.7}
+A average   K=256   {'K_nonempty': 256, 'largest': 908, 'median': 33.0, 'singletons': 1, 'frac_in_largest': 0.055419921875, 'zipf_top_half': -0.7629797310772224, 'seconds': 358.4}
+A spectral  K=256   {'K_nonempty': 256, 'largest': 180, 'median': 60.0, 'singletons': 0, 'frac_in_largest': 0.010986328125, 'zipf_top_half': -0.20818942982663308, 'seconds': 1269.5}
+A agreement K=256: kmeans~ward 0.03/0.44, kmeans~average 0.08/0.46, kmeans~spectral 0.12/0.51, kmeans~kmeans_s1 0.11/0.49, kmeans~kmeans_s2 0.11/0.49, ward~average 0.05/0.53, ward~spectral 0.05/0.52, ward~kmeans_s1 0.03/0.44, ward~kmeans_s2 0.03/0.45, average~spectral 0.10/0.53, average~kmeans_s1 0.09/0.46, average~kmeans_s2 0.08/0.46, spectral~kmeans_s1 0.12/0.51, spectral~kmeans_s2 0.12/0.52, kmeans_s1~kmeans_s2 0.11/0.49
+A kmeans    K=1024  {'K_nonempty': 1024, 'largest': 61, 'median': 14.0, 'singletons': 6, 'frac_in_largest': 0.00372314453125, 'zipf_top_half': -0.3075066625589655, 'seconds': 1.7}
+A ward      K=1024  {'K_nonempty': 1024, 'largest': 297, 'median': 14.0, 'singletons': 0, 'frac_in_largest': 0.01812744140625, 'zipf_top_half': -0.34559569261146966, 'seconds': 93.6}
+A average   K=1024  {'K_nonempty': 1024, 'largest': 288, 'median': 10.0, 'singletons': 2, 'frac_in_largest': 0.017578125, 'zipf_top_half': -0.624754348170993, 'seconds': 350.5}
+A agreement K=1024: kmeans~ward 0.07/0.66, kmeans~average 0.09/0.66, kmeans~kmeans_s1 0.08/0.65, kmeans~kmeans_s2 0.08/0.65, ward~average 0.14/0.76, ward~kmeans_s1 0.07/0.66, ward~kmeans_s2 0.07/0.66, average~kmeans_s1 0.09/0.66, average~kmeans_s2 0.08/0.65, kmeans_s1~kmeans_s2 0.08/0.65
+B gemma_16k_L0_82    K=256   share 0.068 (3, 50): C -0.414 B -0.712 W -0.298 expl 0.21 (10, 150): C -0.420 B -0.804 W -0.335 expl 0.11 (30, 450): C -0.427 B None W -0.394 expl 0.06 (100, 1000): C -0.519 B None W -0.503 expl 0.04
+B gemma_16k_L0_82    K=1024  share 0.138 (3, 50): C -0.414 B -0.603 W -0.302 expl 0.27 (10, 150): C -0.420 B -0.64 W -0.332 expl 0.19 (30, 450): C -0.427 B -0.671 W -0.391 expl 0.14 (100, 1000): C -0.519 B -1.277 W -0.503 expl 0.12
+B isotropic_16k      K=256   share 0.021 (3, 50): C -0.024 B -0.099 W -0.024 expl 0.03 (10, 150): C -0.052 B -0.252 W -0.051 expl 0.03 (30, 450): C -0.113 B None W -0.113 expl 0.02 (100, 1000): C -0.232 B None W -0.233 expl 0.02
+B isotropic_16k      K=1024  share 0.074 (3, 50): C -0.024 B -0.068 W -0.025 expl 0.09 (10, 150): C -0.052 B -0.149 W -0.052 expl 0.08 (30, 450): C -0.113 B -0.373 W -0.116 expl 0.08 (100, 1000): C -0.232 B -1.083 W -0.238 expl 0.08
+B topk_w4096_real    K=64    share 0.041 (3, 50): C -0.415 B -0.756 W -0.333 expl 0.09 (10, 150): C -0.498 B None W -0.461 expl 0.05 (30, 450): C -0.531 B None W -0.517 expl 0.03 (100, 1000): C -0.721 B None W -0.717 expl 0.02
+B topk_w4096_real    K=256   share 0.099 (3, 50): C -0.415 B -0.585 W -0.318 expl 0.17 (10, 150): C -0.498 B -0.606 W -0.449 expl 0.12 (30, 450): C -0.531 B None W -0.511 expl 0.09 (100, 1000): C -0.721 B None W -0.719 expl 0.07
+B topk_w4096_gaussian K=64    share 0.043 (3, 50): C -0.390 B -0.961 W -0.323 expl 0.09 (10, 150): C -0.716 B None W -0.672 expl 0.04 (30, 450): C -0.799 B None W -0.786 expl 0.02 (100, 1000): C -0.842 B None W -0.842 expl 0.02
+B topk_w4096_gaussian K=256   share 0.097 (3, 50): C -0.390 B -0.689 W -0.324 expl 0.15 (10, 150): C -0.716 B -0.847 W -0.662 expl 0.10 (30, 450): C -0.799 B None W -0.777 expl 0.07 (100, 1000): C -0.842 B None W -0.847 expl 0.07
+B gemma ward     K=256 share 0.067 (3, 50): expl 0.20 (10, 150): expl 0.12 (30, 450): expl 0.07 (100, 1000): expl 0.04
+B gemma average  K=256 share 0.051 (3, 50): expl 0.12 (10, 150): expl 0.07 (30, 450): expl 0.05 (100, 1000): expl 0.04
+B gemma spectral K=256 share 0.071 (3, 50): expl 0.20 (10, 150): expl 0.12 (30, 450): expl 0.07 (100, 1000): expl 0.05
+C 16k   L0=82  K=63    slope -0.950 (null +0.013±0.070, z -13.8) r -0.50
+C 16k   L0=82  K=255   slope -0.135 (null +0.038±0.042, z -4.1) r -0.10
+C 16k   L0=82  K=1023  slope +0.042 (null +0.092±0.028, z -1.8) r +0.03
+C 32k   L0=76  K=127   slope -0.572 (null +0.016±0.069, z -8.5) r -0.21
+C 32k   L0=76  K=511   slope -0.610 (null +0.047±0.036, z -18.5) r -0.33
+C 32k   L0=76  K=2044  slope -0.008 (null +0.115±0.023, z -5.4) r -0.00
+C 65k   L0=72  K=253   slope -1.518 (null +0.027±0.058, z -26.8) r -0.49
+C 65k   L0=72  K=1014  slope -0.179 (null +0.067±0.031, z -8.0) r -0.09
+C 65k   L0=72  K=4058  slope +0.209 (null +0.159±0.019, z 2.7) r +0.11
+C 131k  L0=67  K=486   slope -0.832 (null +0.033±0.042, z -20.8) r -0.30
+C 131k  L0=67  K=1946  slope +0.285 (null +0.102±0.027, z 6.8) r +0.14
+C 131k  L0=67  K=7785  slope +0.279 (null +0.205±0.015, z 5.0) r +0.13

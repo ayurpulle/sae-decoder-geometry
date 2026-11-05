@@ -554,3 +554,71 @@ Alive latents (of 16384), real, k = 4 / 8 / 16 / 32 / 64 / 128: (2d) 4729 / 4772
 - **Dead latents remain a confound at small k.** Doubling tokens and adding an epoch helped FVU (k = 4 at (2d): 0.53 vs 0.64), but real runs at k ≤ 8 still keep only 1,900–9,100 latents alive.
 - **Verdict: negative for this generator family.** At Gemma's d, width and Σ, planted point features with frequency-driven allocation do not produce Gemma's γ(k) in ranks 11–150, and produce it only partly (densest setting, wide windows, k ≥ 8) elsewhere. The k-scale result of the matched check (k0 in Gemma's range at Gemma's d and width) survives only in the wide windows. Gemma's higher γ in the top window points to structure the planted family lacks: feature directions that are not isotropic random (e.g. correlated or clustered), which is what Phase 4 tests.
 - Caveats: one data family (point features, β = 0, α = 0.5, var ∝ i^-1); seed 1 only at (8d); one Gaussian twin; alive fractions at small k are low.
+
+## Phase 4: cluster structure of Gemma Scope decoder clouds (2026-11-05)
+
+Scripts `experiments/phase4_clusters.py` (stages `l12`, `layers`, `layers_null`) → `results/phase4/{l12,layers,layers_null}.{json,log}`; `experiments/phase4_summary.py` → `results/phase4/summary.{json,png}`. All local (M2 Pro); no GPU.
+
+Gate: the brief makes Phase 4 conditional on Phases 2–3 supporting the theory. They did not in its simple form (Phase 2: the Gaussian null carries much of the slope; Phase 3: planted random directions do not give Gemma's γ(k)). Run on the user's go as a direct measurement of the structure Phase 3 pointed to, not as a confirmation step.
+
+Method: unit decoder rows; spherical k-means (k-means++ init, cosine) unless stated. The centred covariance splits exactly into between-cluster B = Σ n_c (m_c − μ)(m_c − μ)ᵀ / (N − 1) and within-cluster W = C − B. Per window, "explained" = mean of v_jᵀ B v_j / λ_j over C's eigenvectors in the window. Intrinsic dimension = participation ratio of clusters subsampled to 16 latents (PR16, max 15). Covariance-matched null per layer: N(μ, C) of that layer's cloud, rows unit-normalised, same N (its slopes come within 0.02–0.05 of the real ones; row normalisation changes the spectrum slightly).
+
+**A. Clusterings are not stable; the cloud is a continuum at these scales** (layer 12, 16k, L0 = 82). k-means against itself across seeds: ARI 0.08–0.17, NMI 0.40–0.65. Between methods: ARI 0.02–0.15, NMI 0.29–0.76. Ward and average linkage produce giant clusters (23% / 17% of latents in one cluster at K = 64); k-means and spectral give balanced ones. The quantitative statistics below are robust anyway: at K = 256 the fraction of top eigenvalues explained by between-cluster structure is 0.20 / 0.12 / 0.07 / 0.04 (ranks 4–50 / 11–150 / 31–450 / 101–1000) for Ward and spectral against 0.21 / 0.11 / 0.06 / 0.04 for k-means; average linkage gives less (0.12 / 0.07) because of its giant cluster.
+
+**B. Between-cluster structure carries a minority of the top eigenvalues** (layer 12, K = 1024, 16 latents per cluster):
+
+| explained by between-cluster | 4–50 | 11–150 | 31–450 | 101–1000 | trace share |
+|---|---|---|---|---|---|
+| Gemma 16k L0 82 | 0.27 | 0.19 | 0.14 | 0.12 | 0.138 |
+| covariance-matched Gaussian | 0.14 | 0.10 | 0.08 | 0.07 | 0.087 |
+| isotropic unit vectors | 0.09 | 0.08 | 0.08 | 0.08 | 0.074 |
+| our TopK w4096 k40, real (K = 256) | 0.17 | 0.12 | 0.09 | 0.07 | 0.099 |
+| our TopK w4096 k40, Gaussian twin (K = 256) | 0.15 | 0.10 | 0.07 | 0.07 | 0.097 |
+
+- Gemma has about twice the matched cloud's between-cluster share in the top windows, but within-cluster spread still carries most of the slope: in ranks 11–150 C −0.42, W −0.33, B −0.64. The first-order picture (eigenvalues = cluster spikes ∝ n_c) accounts for ≤ 30% of any window; consistent with Test 2 (anisotropy is cloud-wide).
+- Our own TopK SAEs show almost no difference between real and Gaussian-twin training data (0.12 vs 0.10 in ranks 11–150). Gemma Scope (JumpReLU, 16k) has more structure than either; architecture and width differ, so this is not a clean comparison.
+
+**C. The allocation law does not hold per cluster.** Slope of log mean latent frequency on log cluster size (theory: n_c ∝ P_c^(1/(1+b)) ⇒ slope = b > 0), 1M-token frequencies, layer 12 at L0 ≈ 70, against a frequency-permutation null:
+
+| width | 256 per cluster | 64 per cluster | 16 per cluster |
+|---|---|---|---|
+| 16k | −0.95 (z −14) | −0.14 (z −4) | +0.04 (z −2) |
+| 32k | −0.57 (z −9) | −0.61 (z −19) | −0.01 (z −5) |
+| 65k | −1.52 (z −27) | −0.18 (z −8) | +0.21 (z +3) |
+| 131k | −0.83 (z −21) | +0.29 (z +7) | +0.28 (z +5) |
+
+The sign flips with cluster scale. At coarse scales large clusters are made of rarer latents (the opposite of the theory); only at the finest scale and largest widths is the slope positive. Correlations are weak (|r| ≤ 0.5). No single b describes it.
+
+**D/E. Layer profile: cluster structure beyond anisotropy tracks the top-window slope, not the bulk** (16k SAE closest to L0 = 70 per layer; real minus covariance-matched):
+
+| layer | excess between-share (K = 1024) | excess cos to centroid | PR16 real / matched | slope 11–150 | slope 31–450 |
+|---|---|---|---|---|---|
+| 0 | +0.006 | −0.007 | 14.86 / 14.86 | −0.28 | −0.32 |
+| 4 | +0.046 | +0.064 | 14.15 / 14.82 | −0.35 | −0.54 |
+| 13 | +0.054 | +0.079 | 14.10 / 14.84 | −0.43 | −0.42 |
+| 15 | +0.054 | +0.078 | 14.10 / 14.84 | −0.44 | −0.38 |
+| 23 | +0.036 | +0.049 | 14.33 / 14.87 | −0.27 | −0.26 |
+
+Spearman over 26 layers (K = 1024; K = 256 in brackets), slope vs:
+
+| | 4–50 | 11–150 | 31–450 | 101–1000 |
+|---|---|---|---|---|
+| excess between-share | −0.87 (−0.78) | −0.89 (−0.90) | −0.14 (−0.42) | −0.14 (−0.45) |
+| excess cos to centroid | −0.91 (−0.87) | −0.91 (−0.83) | −0.13 (+0.02) | −0.13 (+0.02) |
+| excess PR16 | +0.81 (+0.89) | +0.71 (+0.72) | −0.09 (−0.15) | −0.07 (−0.16) |
+| matched-cloud share | −0.23 (−0.33) | −0.52 (−0.59) | −0.94 (−0.88) | −0.96 (−0.92) |
+
+- **Layer 0 has no cluster structure beyond its covariance.** The excess rises over layers 1–4, plateaus through 4–15, peaks at 13–15, falls to layer 23–24 and jumps again at layer 25, the same shape as the top-window slope.
+- **Mid-stack clusters are lower-dimensional than anisotropy implies** (PR16 up to 0.75 below the matched cloud), the weak form of the brief's "more manifold-like clusters" prediction. At 16 latents they are still close to full-dimensional (14.1 of 15).
+- **The deep-window layer profile is anisotropy alone:** the matched cloud's own share tracks it (ρ −0.88 to −0.96) and the excess does not.
+- Together with Phase 1b's split (top windows peak mid-stack; the bulk is steepest early), this resolves the two layer profiles: the bulk follows Σ-like anisotropy, and the top-window mid-stack peak goes with genuine cluster structure.
+
+**Verdict.**
+- Allocation law per cluster: not supported (sign depends on scale; coarse clusters contradict it).
+- Cluster → eigenvalue map: holds only weakly. Between-cluster structure explains ≤ 27% of the top eigenvalues, roughly twice a covariance-matched cloud's.
+- Middle-layer steepening and clusters: supported for the top windows. Cluster structure beyond anisotropy tracks the top-window slope across layers (ρ ≈ −0.9), with lower intrinsic dimension mid-stack; the bulk windows follow anisotropy alone.
+- This is the structure Phase 3's planted random directions lacked.
+
+Caveats: correlational across layers (26 points along one smooth profile, so effective n is small); one SAE per layer at L0 ≈ 70 (layer 2 at L0 = 53); clusterings themselves are unstable, only their summary statistics are robust; the matched null is approximate (row normalisation); frequencies only at layer 12; our TopK and Gemma Scope differ in architecture and width.
+
+Next (if pursued): plant clustered directions in `synth.py` (features drawn around shared centres) and check whether that restores Gemma's top-window γ(k) in the Phase 3 setup; repeat D/E at other L0s to see whether the excess shrinks with L0 the way the layer profile does (Phase 1b).
