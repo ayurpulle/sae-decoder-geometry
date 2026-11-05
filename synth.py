@@ -74,7 +74,9 @@ def main():
     out = ROOT / "cache" / "acts" / f"synth-{args.name}" / "blocks.0.hook_resid_post"
     out.mkdir(parents=True, exist_ok=True)
     acts = np.lib.format.open_memmap(out / "acts.npy.part", mode="w+", dtype=np.float16, shape=(args.n_tokens, args.d))
-    gen = torch.Generator(device="cpu").manual_seed(args.seed)
+    # On CUDA draw on the GPU (CPU draws dominate at large M); MPS/CPU keep the CPU stream, so earlier data is unchanged.
+    gdev = "cuda" if dev == "cuda" else "cpu"
+    gen = torch.Generator(device=gdev).manual_seed(args.seed)
     pt = torch.tensor(p, dtype=torch.float32, device=dev)
     Ut = torch.tensor(U, dtype=torch.float32, device=dev)
     Vt = torch.tensor(V, dtype=torch.float32, device=dev)
@@ -83,14 +85,14 @@ def main():
     t0 = time.time()
     while n < args.n_tokens:
         b = min(CHUNK, args.n_tokens - n)
-        a = (torch.rand(b, args.M, generator=gen).to(dev) < pt).float()
-        z = torch.randn(b, args.M, generator=gen).to(dev)
+        a = (torch.rand(b, args.M, generator=gen, device=gdev).to(dev) < pt).float()
+        z = torch.randn(b, args.M, generator=gen, device=gdev).to(dev)
         m = z.abs() if args.tail == "normal" else torch.exp(z)
-        theta = torch.rand(b, args.M, generator=gen).to(dev) * (2 * math.pi) * man
+        theta = torch.rand(b, args.M, generator=gen, device=gdev).to(dev) * (2 * math.pi) * man
         coef = a * m
         x = (coef * torch.cos(theta)) @ Ut + (coef * torch.sin(theta)) @ Vt
         if args.noise:
-            x = x + args.noise * torch.randn(b, args.d, generator=gen).to(dev)
+            x = x + args.noise * torch.randn(b, args.d, generator=gen, device=gdev).to(dev)
         acts[n:n + b] = x.cpu().numpy().astype(np.float16)
         s += x.sum(0).cpu().double().numpy()
         G += (x.T @ x).cpu().double().numpy()
