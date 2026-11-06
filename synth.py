@@ -11,6 +11,11 @@ Each token is a sparse sum of features plus optional isotropic noise:
   manifold feature: theta_i ~ U(0, 2 pi) per token, a circle in span(u_i, v_i) (frac_manifold of features).
   directions: u_i, v_i = normalize(Q (s * g)), g ~ N(0, I_d), s_j = j^(-beta/2), Q a random rotation, so
               feature directions favour a power-law set of axes (beta = 0: isotropic). v_i is orthogonalised to u_i.
+  clustered directions (--n_clusters C > 0): features are split evenly at random into C clusters with random unit
+              centres c_j, and u_i = rho c_j + sqrt(1 - rho^2) w_i, where w_i is a random unit vector orthogonal to
+              c_j (rho = --cluster_cos, the exact cosine of every feature to its centre). With --cluster_dim r > 0,
+              w_i lies in a random r-dim subspace per cluster. Drawn from a separate stream (seed + 1000), so
+              datasets without clusters are byte-identical to before.
 Writes cache/acts/synth-<name>/blocks.0.hook_resid_post/{acts.npy (fp16), stats.npz, config.json, truth.npz}.
 Usage: python synth.py --name base --n_tokens 6000000
 """
@@ -62,6 +67,23 @@ def directions(M, d, beta, rng):
     return U, V
 
 
+def cluster_directions(M, d, n_clusters, rho, cdim, seed):
+    """Unit feature directions at exact cosine rho to one of n_clusters random centres; returns (U, assignment)."""
+    rng = np.random.default_rng(seed + 1000)
+    C = rng.standard_normal((n_clusters, d))
+    C /= np.linalg.norm(C, axis=1, keepdims=True)
+    assign = rng.permutation(np.arange(M) % n_clusters)
+    if cdim:
+        B = np.linalg.qr(rng.standard_normal((n_clusters, d, cdim)))[0]  # per-cluster orthonormal basis (d x r)
+        W = np.einsum("mdr,mr->md", B[assign], rng.standard_normal((M, cdim)))
+    else:
+        W = rng.standard_normal((M, d))
+    c = C[assign]
+    W -= (W * c).sum(1, keepdims=True) * c
+    W /= np.linalg.norm(W, axis=1, keepdims=True)
+    return rho * c + math.sqrt(1 - rho ** 2) * W, assign
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--name", required=True)
@@ -75,6 +97,9 @@ def main():
     ap.add_argument("--tail", choices=["normal", "lognormal"], default="normal")
     ap.add_argument("--noise", type=float, default=0.05)
     ap.add_argument("--var_slope", type=float, default=None, help="feature variance ∝ i^-var_slope via magnitudes")
+    ap.add_argument("--n_clusters", type=int, default=0, help="cluster feature directions around this many centres")
+    ap.add_argument("--cluster_cos", type=float, default=0.5, help="cosine of each feature to its cluster centre")
+    ap.add_argument("--cluster_dim", type=int, default=0, help="spread within a random r-dim subspace (0 = full)")
     ap.add_argument("--seed", type=int, default=0)
     args = ap.parse_args()
 
@@ -83,6 +108,11 @@ def main():
     p = feature_probs(args.M, args.alpha, args.mean_active)
     scale = feature_scales(p, args.tail, args.var_slope)
     U, V = directions(args.M, args.d, args.beta, rng)
+    assign = np.full(args.M, -1)
+    if args.n_clusters:
+        U, assign = cluster_directions(args.M, args.d, args.n_clusters, args.cluster_cos, args.cluster_dim, args.seed)
+        V -= (V * U).sum(1, keepdims=True) * U
+        V /= np.linalg.norm(V, axis=1, keepdims=True)
     is_manifold = np.zeros(args.M, dtype=bool)
     is_manifold[rng.choice(args.M, int(round(args.frac_manifold * args.M)), replace=False)] = True
 
@@ -120,7 +150,7 @@ def main():
     mean = s / n
     cov = (G - n * np.outer(mean, mean)) / (n - 1)
     np.savez(out / "stats.npz", mean=mean, cov=cov, n=n)
-    np.savez(out / "truth.npz", U=U, V=V, p=p, scale=scale, is_manifold=is_manifold)
+    np.savez(out / "truth.npz", U=U, V=V, p=p, scale=scale, is_manifold=is_manifold, cluster=assign)
     json.dump(vars(args) | {"P_MAX": P_MAX, "measured_mean_active": act_count / n, "seconds": time.time() - t0,
                             "p_top5": p[:5].tolist(), "p_min": float(p.min())},
               open(out / "config.json", "w"), indent=1)

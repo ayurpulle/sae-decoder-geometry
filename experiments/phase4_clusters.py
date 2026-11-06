@@ -52,7 +52,7 @@ WDEC = ROOT / "cache" / "gemmascope_wdec"
 NULL = ROOT / "cache" / "saes_gemma_null"
 FIRES = ROOT / "results" / "phase1"
 WINDOWS = [(3, 50), (10, 150), (30, 450), (100, 1000)]
-DEV = "mps" if torch.backends.mps.is_available() else "cpu"
+DEV = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
 
 
 def git_hash():
