@@ -622,3 +622,35 @@ Spearman over 26 layers (K = 1024; K = 256 in brackets), slope vs:
 Caveats: correlational across layers (26 points along one smooth profile, so effective n is small); one SAE per layer at L0 ≈ 70 (layer 2 at L0 = 53); clusterings themselves are unstable, only their summary statistics are robust; the matched null is approximate (row normalisation); frequencies only at layer 12; our TopK and Gemma Scope differ in architecture and width.
 
 Next (if pursued): plant clustered directions in `synth.py` (features drawn around shared centres) and check whether that restores Gemma's top-window γ(k) in the Phase 3 setup; repeat D/E at other L0s to see whether the excess shrinks with L0 the way the layer profile does (Phase 1b).
+
+## Phase 3, clustered planted directions on GPU (2026-11-06)
+
+Question: Phase 4 found Gemma's decoder clouds carry cluster structure beyond their covariance, tracking the top-window layer profile. Does planting that structure in the power-law-Σ generator restore Gemma's γ(k) = 1.02 − 0.095·log₂k in ranks 11–150?
+
+Setup (`experiments/phase3_clustered.py`, commit 896435f): same generator as the power-law check (α 0.5, β 0, noise 0.05, `--var_slope 1.0`, 12M tokens × 3 epochs, TopK width 16384, k ∈ {4…128}). Added `--n_clusters M/16 --cluster_cos ρ`: features in clusters of 16, each at exact cosine ρ to a random centre. ρ ∈ {0.4, 0.6} × densities (4d features, d/32 active) and (8d, d/16). 24 SAEs at seed 0, plus seed 1 on the dataset nearest Gemma (8d, ρ 0.6). The ρ = 0 control is the power-law run. Runpod A100 SXM 80GB community pod `z9i10qsguj7upk`, $1.39/h, 10:02–14:06 UTC. Terminated (get-pod 404, list-pods empty). Billed so far $4.43; billing lags, and the runtime implies about $5.70.
+
+Pre-registered pass: ranks 11–150 RMS vs Gemma < 0.15 and per-doubling slope within 0.04 of −0.094.
+
+Real γ(k), ranks 11–150 (`results/phase3/clustered_summary.{json,png}`; Gemma 0.824 / 0.732 / 0.665 / 0.509@k40 / 0.354):
+
+| data | ρ | k=4 | 8 | 16 | 32 | 64 | 128 | mean | RMS vs Gemma | per doubling |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 4d, d/32 | 0 | 0.17 | 0.08 | 0.15 | 0.26 | 0.23 | 0.09 | 0.16 | 0.50 | +0.004 |
+| 4d, d/32 | 0.4 | 0.16 | 0.12 | 0.15 | 0.30 | 0.29 | 0.13 | 0.19 | 0.49 | +0.014 |
+| 4d, d/32 | 0.6 | 0.22 | 0.17 | 0.20 | 0.45 | 0.35 | 0.19 | 0.26 | 0.43 | +0.018 |
+| 8d, d/16 (2 seeds) | 0 | 0.36 | 0.46 | 0.42 | 0.42 | 0.41 | 0.36 | 0.41 | 0.27 | −0.005 |
+| 8d, d/16 | 0.4 | 0.37 | 0.51 | 0.42 | 0.43 | 0.42 | 0.41 | 0.43 | 0.26 | −0.001 |
+| 8d, d/16 (2 seeds) | 0.6 | 0.37 | 0.50 | 0.51 | 0.54 | 0.47 | 0.48 | 0.48 | 0.24 | +0.013 |
+
+- **Fails the pre-registered test on every dataset.** Best RMS is 0.24, against a threshold of 0.15. Per-doubling slopes run −0.016 to +0.026 in every window, against Gemma's −0.095 / −0.103 / −0.083.
+- **Clusters raise γ's level but leave it flat in k**, the outcome named before the run. In ranks 11–150, ρ 0.6 adds +0.07 to +0.10 to the mean γ; seed sd is ≤ 0.035. In ranks 31–450 at 4d the rise is larger: mean 0.22 → 0.30 → 0.44 for ρ 0 / 0.4 / 0.6.
+- Σ's slopes barely move with clustering, by ≤ 0.03 (ranks 11–150: −0.90 → −0.87), as the calibration predicted.
+- **The decoders do carry the cluster structure at 4d, and γ(k) still stays flat.** At 4d, ρ 0.4, the excess between-cluster share over a matched cloud is +0.04 to +0.08 across k, against Gemma's +0.054. Excess cos runs +0.05 to +0.16, against Gemma's +0.079. Yet γ in ranks 11–150 is about 0.19 and flat. Matching Gemma's cluster excess is therefore not sufficient for Gemma's γ(k).
+- At 8d, d/16 (more features than latents), the decoders lose the planted clusters. The excess is about 0 for k ≥ 16, and only k = 4 at ρ 0.6 keeps +0.06. This density was nevertheless closest to Gemma, as in the power-law run.
+
+Verdict: cluster structure in feature directions (balanced clusters of 16, one tightness per dataset) is not the missing ingredient for Gemma's k-dependence. It shifts γ up modestly but does not produce the decline with k. Every planted variant so far (random, Gemma-matched Σ, power-law Σ, clustered) gives a flat γ(k). The k-law seems to need something none of them have: frequency–direction coupling, hierarchical or unbalanced clusters, or structure in how features co-occur.
+
+Caveats:
+- Clusters are balanced, same-tightness and independent of frequency, whereas real clusters vary in size and tightness.
+- Only seed 0 except one dataset; the per-k seed sd reaches 0.08 in ranks 4–50.
+- Ranks 4–50 sit on the P_MAX-saturated top of Σ.
