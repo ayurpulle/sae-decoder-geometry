@@ -10,8 +10,12 @@ Variants (x_hat = z' W' + b_dec):
   C  z' = z, W' = W_dec[perm]                             real codes, decoder rows randomly permuted across latents:
                                                           frequency/co-occurrence-to-direction link removed
   D  independent draws and permuted rows                  both removed
-Per-latent frequency and value quantiles (for B, D) come from the real training split (codestats.npz next to the real
-cache). A and C read real tokens in order, so the last eval_tokens stay the held-out ones; B and D draw fresh tokens.
+  E  independent draws, W' = random unit directions       Gemma Scope's per-latent marginals on a random dictionary
+  F  uniform independent draws, W' = W_dec                Gemma Scope's dictionary with every live latent given the
+                                                          same frequency (mean over live latents, so L0 is kept) and
+                                                          the same value distribution (pooled over firings)
+Per-latent frequency and value quantiles (for B, D, E, F) come from the real training split (codestats.npz next to the real
+cache). A and C read real tokens in order, so the last eval_tokens stay the held-out ones; B, D, E, F draw fresh tokens.
 Usage: python resynth.py --kind A --src cache/acts/gemma-2-2b/blocks.12.hook_resid_post \
            --sae cache/gemmascope/L12/params.npz --name rs12-A --n_tokens 12000000
 """
@@ -91,12 +95,31 @@ def sample_codes(b, freq, quant, gen, gdev, dev):
     return z
 
 
+def uniform_marginals(stats, seed, n=4_000_000):
+    """Every live latent gets the mean live frequency and the pooled (firing-weighted) value quantile function."""
+    f, q = stats["freq"], stats["quantiles"]
+    live = f > 0
+    rng = np.random.default_rng(seed + 4000)
+    lat = rng.choice(len(f), n, p=f / f.sum())
+    pos = rng.random(n) * (Q - 1)
+    lo = pos.astype(int)
+    w = pos - lo
+    v = q[lat, lo] * (1 - w) + q[lat, np.minimum(lo + 1, Q - 1)] * w
+    pooled = np.quantile(v, np.linspace(0, 1, Q))
+    return {"freq": np.where(live, f[live].mean(), 0.0), "quantiles": np.where(live[:, None], pooled[None], 0.0)}
+
+
 def variant(kind, sae, acts, n_tokens, seed, stats, dev):
     """Yield (x_hat chunk, x_real chunk or None) for variant kind."""
     Wd = sae["W_dec"]
     if kind in "CD":
         perm = torch.randperm(len(Wd), generator=torch.Generator().manual_seed(seed + 2000)).to(dev)
         Wd = Wd[perm]
+    if kind == "E":
+        R = torch.randn(Wd.shape, generator=torch.Generator().manual_seed(seed + 3000))
+        Wd = (R / R.norm(dim=1, keepdim=True)).to(dev)
+    if kind == "F":
+        stats = uniform_marginals(stats, seed)
     if kind in "AC":
         for x in real_chunks(acts, 0, n_tokens, dev):
             yield encode(x, sae) @ Wd + sae["b_dec"], x
@@ -119,7 +142,7 @@ def get_stats(src, acts, eval_tokens, sae, dev):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--kind", choices=list("ABCD"), required=True)
+    ap.add_argument("--kind", choices=list("ABCDEF"), required=True)
     ap.add_argument("--src", required=True, help="real activation cache dir (acts.npy)")
     ap.add_argument("--sae", required=True, help="Gemma Scope params.npz")
     ap.add_argument("--name", required=True)
@@ -132,7 +155,7 @@ def main():
     need_real = args.kind in "AC" or not (Path(args.src) / "codestats.npz").exists()
     acts = np.load(Path(args.src) / "acts.npy", mmap_mode="r") if need_real else None
     n = args.n_tokens if acts is None else min(args.n_tokens or len(acts), len(acts))
-    stats = get_stats(args.src, acts, args.eval_tokens, sae, dev) if args.kind in "BD" else None
+    stats = get_stats(args.src, acts, args.eval_tokens, sae, dev) if args.kind in "BDEF" else None
     out = ROOT / "cache" / "acts" / f"synth-{args.name}" / "blocks.0.hook_resid_post"
     out.mkdir(parents=True, exist_ok=True)
     d = sae["W_dec"].shape[1]
