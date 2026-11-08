@@ -654,3 +654,55 @@ Caveats:
 - Clusters are balanced, same-tightness and independent of frequency, whereas real clusters vary in size and tightness.
 - Only seed 0 except one dataset; the per-k seed sd reaches 0.08 in ranks 4–50.
 - Ranks 4–50 sit on the P_MAX-saturated top of Σ.
+
+## Phase 3, resynthesis dissection on GPU (2026-11-08)
+
+Question: every planted generator so far gives a flat γ(k). Which property of real activations produces Gemma's γ(k) law: co-occurrence among features, the link between a feature's statistics and its direction, or neither?
+
+Setup (`resynth.py`, `experiments/resynth_job.py`, commit b189bfe):
+- **Source:** Gemma-2-2B layer 12, 12M Pile tokens (last 500k held out). Codes come from the Gemma Scope 65k L0-72 JumpReLU SAE (measured L0 76.7, 63,650 alive).
+- **Variants:**
+  - **R:** real activations.
+  - **A:** resynthesis z·W_dec + b_dec (FVU vs real 0.215).
+  - **C:** real codes with W_dec rows permuted across latents.
+  - **B:** independent per-latent firing, each latent with its own frequency and its own 64-quantile value distribution (statistics from 4M tokens).
+  - **D:** B and C together.
+- **Training:** TopK width 16384, k ∈ {4…128}, 3 epochs. Seeds 0 and 1 for R and A; seed 0 for B, C and D. 42 SAEs.
+- **Pod:** Runpod A100 SXM 80GB secure pod `idb0vuz4fi99nq`, US-MD-1, $1.79/h. The HF token came from a Runpod secret.
+  - Runpod auto-stopped the pod at 18:24 on 11-07, out of balance. The first pod `pl4s7hkp3qtsc8` (6 Nov, idle, waiting on the HF login) was stopped the same way.
+  - The run was slow because of CPU oversubscription: the pod shows 128 cores under a ~13.6-CPU cgroup quota. R's `--clusters` analysis ran >3.5 h; with threads capped in `gpu/env.sh` it took 2 min.
+  - Restarted 11-08 11:12 and finished about 15:00. Terminated (get-pod 404, list-pods empty).
+  - Billed so far: $15.39 for this pod (the 11-08 bucket lags; the runtime implies about $17) plus $4.79 for the first pod.
+- **Pre-flight check:** the pod's first 200k tokens gave Σ slopes identical to the local L12 cache's first 200k (−0.917 / −0.872 / −0.814 / −0.837).
+
+Pre-registered reading, ranks 11–150, per-doubling slope s from 6 k:
+- Gate: s_R ≤ −0.05, RMS(A−R) ≤ 0.15 and |s_A − s_R| ≤ 0.04.
+- Then retained = s_X/s_A: < 0.5 removes the law, > 0.75 keeps it, partial between.
+
+γ(k), ranks 11–150 (`results/phase3/resynth_summary.{json,png}`):
+
+| variant | k=4 | 8 | 16 | 32 | 64 | 128 | s | retained | s, k ≥ 8 (post hoc) |
+|---|---|---|---|---|---|---|---|---|---|
+| R real L12 (2 seeds) | 0.81 | 0.70 | 0.67 | 0.57 | 0.46 | 0.36 | −0.089 (seeds −0.089, −0.089) | | −0.090 |
+| A resynthesis (2 seeds) | 0.78 | 0.70 | 0.67 | 0.54 | 0.44 | 0.34 | −0.089 (−0.088, −0.090) | 1.00 | −0.095 |
+| C permuted directions | 0.67 | 0.87 | 0.59 | 0.50 | 0.42 | 0.36 | −0.085 | 0.95 keeps | −0.118 |
+| B independent firing | 0.53 | 0.80 | 0.67 | 0.48 | 0.43 | 0.36 | −0.060 | 0.68 partial | −0.111 |
+| D both | 0.55 | 0.85 | 0.66 | 0.52 | 0.45 | 0.35 | −0.067 | 0.76 keeps | −0.122 |
+
+- **The gate passes.** Real L12 shows the law at −0.089 per doubling, close to our L13 result of −0.095. A reproduces it: RMS 0.022 and the same slope.
+- **Pre-registered verdict: C keeps, D keeps (0.76, at the edge), B partial (0.68).**
+- **B's "partial" rests on the k = 4 point.** For k ≥ 16, all five variants lie within about 0.03 of R at every k. The departures are at k = 4 (B, C and D low) and k = 8 (high), each on a single seed.
+  - Leave-one-k-out ranges of s: B [−0.111, −0.041], C [−0.118, −0.063], D [−0.122, −0.044]; R [−0.092, −0.084].
+  - Without k = 4, every variant keeps the law, and B, C and D are steeper than A.
+  - So the data do not separate "partial" from "keeps" for B.
+  - Low k = 4 alive counts are not special to B: R has 4,786 alive and B 4,753.
+- **Read:** the k-law does not need co-occurrence between features, and it does not need the pairing between a feature's frequency or values and its direction. Independent firing with Gemma Scope's per-latent marginals, on Gemma Scope's set of dictionary directions, reproduces it from k = 16 up.
+- Every planted generator lacked two things these variants have: (i) a real dictionary geometry (65k learned directions in 2304 d), and (ii) real heavy-tailed per-latent frequency and value distributions. The law lives in one or both. This run cannot split them. That would take Gemma marginals on random directions, and Gemma directions with uniform marginals.
+- **Cluster excess:** A matches R (+0.03 to +0.07). C and D lose most of it (+0.01 to +0.03) yet keep γ(k), which again says clusters are not what drives the k-law. B sits between.
+- **Ranks 31–450:** A reproduces R less well here (s −0.058 vs −0.082, RMS 0.061). B retains 0.23, C 0.93, D 0.84. B's curve is not monotone (0.59 / 0.92 / 0.69 / 0.64 / 0.71 / 0.63).
+- **Σ slopes, ranks 11–150:** R −0.89, A −0.94, B −0.79, C −0.75, D −0.78. γ normalises by each dataset's own Σ.
+
+Caveats:
+- One seed for B, C and D. The k = 4 and k = 8 points look like optimisation noise but are untested.
+- The Gemma Scope codes are themselves an SAE's view of the data (A's FVU is 0.215).
+- Only layer 12, only width 16384.
