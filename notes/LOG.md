@@ -706,3 +706,45 @@ Caveats:
 - One seed for B, C and D. The k = 4 and k = 8 points look like optimisation noise but are untested.
 - The Gemma Scope codes are themselves an SAE's view of the data (A's FVU is 0.215).
 - Only layer 12, only width 16384.
+
+## Phase 3, split test on GPU (2026-11-09)
+
+Question: the resynthesis showed Gemma Scope's per-latent marginals on Gemma Scope's directions (B) keep the γ(k) law. Which half carries it?
+- E: Gemma Scope marginals (independent firing) on random unit directions.
+- F: Gemma Scope directions, every live latent given the mean frequency and pooled values.
+- B with a second SAE seed.
+Same pipeline as the resynthesis: 12M tokens, TopK w16384, k ∈ {4..128}, 3 epochs, SAE seeds 0, 1 (one data draw per variant). Pre-registered in experiments/resynth_split_job.py: primary fit k 8–128, retained vs A (s_A −0.095), > 0.75 keeps, < 0.5 removes.
+
+Pod r15p06eyda02hl (secure A100 SXM 80GB, US-MD-1, $1.79/h), 30 SAEs in ~3.3 h, cost $4.62. Deleted (get-pod 404, list-pods empty). The aborted community pod dc69s4wix76ubu (no public SSH port) cost $0.32.
+
+Ranks 11–150 (γ, mean of seeds 0, 1):
+
+| variant | Σ slope | k=4 | 8 | 16 | 32 | 64 | 128 | s k8–128 | retained | s all-k | retained |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| R real | −0.89 | 0.81 | 0.70 | 0.67 | 0.57 | 0.46 | 0.36 | −0.090 | | −0.089 | |
+| A resynthesis | −0.94 | 0.78 | 0.70 | 0.67 | 0.54 | 0.44 | 0.34 | −0.095 | 1.00 | −0.089 | 1.00 |
+| B marginals + dirs | −0.79 | 0.53 | 0.79 | 0.68 | 0.48 | 0.43 | 0.36 | −0.111 | 1.17 | −0.060 | 0.68 |
+| E marginals + random dirs | −0.84 | 0.13 | 0.23 | 0.08 | 0.07 | 0.07 | 0.06 | −0.036 | 0.38 | −0.025 | 0.28 |
+| F uniform marginals + dirs | −0.47 | 1.02 | 0.92 | 0.82 | 0.75 | 0.68 | 0.59 | −0.080 | 0.84 | −0.083 | 0.94 |
+
+Verdict (pre-registered): E removes, F keeps → **the dictionary geometry carries the law**. Σ is well conditioned for all three (F's −0.47 is past the −0.3 flag).
+
+Seeds agree closely: per-seed k8 slopes B −0.111/−0.111, E −0.037/−0.034, F −0.080/−0.079. B seed 1 reproduces seed 0 at k=4 (0.524 vs 0.527), so the k=4 dip under independent firing is a property of the data, not SAE optimisation noise (one data draw, so data-draw noise is still untested).
+
+Other windows (not pre-registered as primary):
+- Ranks 4–50: E retained 0.62 and F 0.81 at k8 (E partial).
+- Ranks 31–450: E 0.67 and F 0.87 (E partial).
+So E's removal is cleanest in the main window; in the others it is partial while F keeps everywhere.
+
+What E and F look like:
+- E: γ is near the floor at every k (0.06–0.23). With random directions, the SAE's decoder spectrum is almost flat against a steep Σ, so there is little γ to fall. The law goes with the level.
+- F: every latent is alive at every k (16383–16384) and γ starts at ~1.0 at k=4. Uniform frequencies don't stop γ falling at roughly A's rate.
+- Cluster excess share: E ≈ 0, F 0.036 → 0.001 (A 0.072 → 0.026).
+
+Interpretation: what makes the decoder spectrum follow Σ, and then flatten with k at the observed rate, is the geometry of Gemma Scope's directions. The frequency allocation (who fires how often) isn't needed: with frequencies made uniform, the law stays. This argues against the frequency-driven-allocation hypothesis for this phenomenon, at least at L12 w16384.
+
+Caveats:
+- One data draw per variant; two SAE seeds.
+- E's low γ means "removes" partly reflects a floor effect, not only a lost slope.
+- F changes Σ (−0.47 vs −0.94), so F's γ is measured against a flatter target.
+- Layer 12 and width 16384 only; the Gemma Scope codes are themselves an SAE's view (A's FVU 0.215).
