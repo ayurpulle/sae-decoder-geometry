@@ -741,7 +741,7 @@ What E and F look like:
 - F: every latent is alive at every k (16383–16384) and γ starts at ~1.0 at k=4. Uniform frequencies don't stop γ falling at roughly A's rate.
 - Cluster excess share: E ≈ 0, F 0.036 → 0.001 (A 0.072 → 0.026).
 
-Interpretation: what makes the decoder spectrum follow Σ, and then flatten with k at the observed rate, is the geometry of Gemma Scope's directions. The frequency allocation (who fires how often) isn't needed: with frequencies made uniform, the law stays. This argues against the frequency-driven-allocation hypothesis for this phenomenon, at least at L12 w16384.
+Interpretation: what makes the decoder spectrum follow Σ, and then flatten with k at the observed rate, is the geometry of Gemma Scope's directions. Heterogeneous firing frequencies in the generating codes aren't needed: with them made uniform, the law stays. (The trained SAE's own latent frequencies can still differ; this tests the data's frequency structure, not the SAE's allocation.) This argues against data-frequency structure as the driver, at least at L12 w16384.
 
 Caveats:
 - One data draw per variant; two SAE seeds.
