@@ -800,3 +800,50 @@ The doc (claude.ai artifact 1sjdrStUPDhczw8sH2R7Xc, now rev 45) and paper/writeu
 - Added: limits of the matrix test (diagonal share 0.60–0.76, no finite-sample benchmark, basis γ 0.08–0.12 below rank γ), the γ(k) fit's R² in all four windows (0.95, 0.99, 0.76, 0.36), live-count bias, the 200-document Σ caveat, a related-work section, and raw-unit retention for the resynthesis.
 - Moved the planted sweeps to an appendix. Replaced the internal Phase labels, made "the paper" read "Li et al.", and added the arXiv:2505.00190 authors (Peter and Søgaard, 2025).
 - doc2tex.py: merges split bold runs, keeps trailing full stops out of exponents, turns "Appendix:" headings into \appendix, and uses a smaller font for very wide tables.
+
+## Second external review: local checks (2026-11-10)
+
+A second review of the revised write-up confirmed the first round's fixes. It found the new headline "covariance, not specific directions" too strong and asked for three local checks. I re-verified its claims:
+- G refit over k = 16–128 retains 0.44 of D's decline (γ and raw), against 0.75–0.76 over k = 8–128 (raw 0.7501, at the cut). The k = 8→16 drop carries G's "keeps".
+- An exactly isotropic unit cloud measures γ = 0.06 at n = 16,384, 0.08 at 8,192 and 0.10 at 4,786 (against E's Σ), so E's 0.06–0.08 is indistinguishable from zero anisotropy. The live-count bias is downward at high γ and upward near γ = 0.
+- Our 65k real SAEs: layer 13 tops real γ only in ranks 11–150 (0.387) and 101–1000; not in 4–50 (0.305/0.291/0.375) or 31–450 (0.497/0.489/0.292). At 16k it tops three of four windows.
+- Also found: the Gaussian null's layer-13 dip and the real-minus-Gaussian gap's layer-13 maximum hold in the two top windows only, not in 31–450 or 101–1000 (where layer 3's gap is largest), at both widths.
+- Layer 13, k = 8–128: the Gaussian null's γ decline in ranks 11–150 is −0.088 per doubling against real −0.097, though not monotone. In ranks 4–50 it is flat (+0.006) and far lower (0.16–0.28 against 0.32–0.73).
+
+Local checks (`experiments/review2_checks.py` → `results/review/review2_checks.json`):
+
+1. **Matrix-test benchmark** (Gemma Scope L12 16k, n = 16,384). For each SAE, an exact Σ^γ unit cloud with γ = that SAE's bulk basis γ, and a null with the decoder's own eigenvalues in a random basis.
+
+| L0 | real diag share | exact | random | real top-10 overlap | exact | random | real basis-γ R² (1–150 / 10–150 / 100–1000) | random R² |
+|---|---|---|---|---|---|---|---|---|
+| 22 | 0.62 | 0.95 | 0.24 | 0.51 | 0.98 | 0.00 | 0.96 / 0.95 / 0.99 | ≤ 0.01 |
+| 41 | 0.65 | 0.93 | 0.36 | 0.41 | 0.97 | 0.01 | 0.95 / 0.94 / 0.98 | 0.00 |
+| 82 | 0.69 | 0.91 | 0.48 | 0.32 | 0.96 | 0.00 | 0.93 / 0.91 / 0.97 | ≤ 0.02 |
+| 176 | 0.74 | 0.89 | 0.59 | 0.15 | 0.91 | 0.00 | 0.53 / 0.69 / 0.97 | ≤ 0.01 |
+| 445 | 0.72 | 0.89 | 0.62 | 0.11 | 0.86 | 0.00 | 0.01 / 0.05 / 0.94 | 0.00 |
+
+What the benchmark shows:
+- The basis-γ R² is not automatic: the decoder spectrum in a random basis gives R² ≈ 0.
+- The law is only approximate. Real decoders are much less co-diagonal with Σ than an exact Σ^γ cloud of the same size (0.62–0.74 against 0.89–0.95). The random-basis diagonal share rises as the cloud flattens, so at high L0 the real value is close to the random one.
+- The top-subspace decoupling at high L0 is far beyond finite-sample effects.
+
+2. **Σ from more documents (layer 12 only; the other layers kept only their 200k-token covariance).**
+
+| window | paper Σ (200k) | first 200k of the 1M cache | even docs (500k) | odd docs (500k) | all 1M |
+|---|---|---|---|---|---|
+| ranks 4–50 | −0.917 | −0.917 | −0.944 | −0.946 | −0.946 |
+| ranks 11–150 | −0.872 | −0.872 | −0.882 | −0.883 | −0.883 |
+| ranks 31–450 | −0.814 | −0.814 | −0.731 | −0.732 | −0.732 |
+| ranks 101–1000 | −0.836 | −0.837 | −0.717 | −0.719 | −0.717 |
+
+- The halves agree to 0.002, so 500k tokens has converged.
+- The 200k Σ is too steep in the bulk windows by 0.08–0.12, so every bulk-window γ computed against it (Gemma Scope analyses, the 26-layer Σ profile, bulk basis γ) is 10–17% too low at layer 12.
+- Top windows move by ≤ 0.03.
+- Our own SAEs' γ (GPU runs, resynthesis) used their training data's Σ (≥ 10M tokens) and is unaffected.
+
+3. **Gemma Scope L12 γ(L0) law at a fixed 16,384 decoder rows (mean of 4 draws).**
+- Ranks 11–150: 1.245 − 0.114·log₂ L0 (R² 0.984) becomes 1.207 − 0.110·log₂ L0 (R² 0.981).
+- Ranks 4–50: −0.108 → −0.109. Ranks 31–450: −0.071 → −0.068. Ranks 101–1000: −0.046 → −0.047 (R² 0.65 → 0.81).
+- The law survives the live-count correction.
+
+Not done: rescoring our real-data layer-13 k sweep at a fixed live count. Those decoders were never copied off the H100 pod, so it needs a GPU retrain.
