@@ -886,3 +886,4 @@ Doc now at rev 50; paper/writeup.tex and the PDF are regenerated.
 - Top-10 overlap 0.62 → 0.12 (exact 0.92–0.99).
 - Bulk basis γ 0.81 / 0.70 / 0.57 / 0.43 / 0.37 (R² 0.95–0.99).
 - Basis γ in ranks 10–150 now sits 0.01–0.04 below rank γ at low L0 (0.71 against 0.72 at L0 = 22). The 0.08–0.12 gap was mostly the 200k Σ.
+- Write-up updated with the 1M-token Σ (doc rev 53; LaTeX and PDF regenerated, 20 pages). Changes: the opening summary (layer-profile r +0.75–0.92), the Σ layer profile and a "Why 1M tokens" paragraph, the matrix-test limits (1M benchmark), the layer-12 law (1.229 − 0.112, and bulk slopes), mid-stack γ (0.44 / 0.64 / 0.48, now also peaking in the bulk), the summary table rows, the Figure 3 caption (still drawn with the 200k Σ), and the open questions (Σ convergence; why the bulk inherits more of Σ).
