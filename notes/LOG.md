@@ -792,3 +792,11 @@ What this means:
 - What still separates real from null data is the level (γ near or above 1 for nulls at small k) and the bulk windows, as before, not the k-slope in ranks 11–150.
 
 Caveats: one seed, one layer, one width; G is at the threshold; H's SAEs fit poorly, so its γ reflects a Gaussian-like regime rather than dictionary recovery.
+
+## Write-up revised after external review (2026-11-10)
+
+The doc (claude.ai artifact 1sjdrStUPDhczw8sH2R7Xc, now rev 45) and paper/writeup.tex were revised to match the review and the matched-covariance control.
+- Withdrawn: "directions, not frequencies". Narrowed: "not an artifact" (now scoped to bulk windows, k ≤ 16 and layers 3 and 23), "width-stable" (Pythia only), and "confirmed on planted data" (points give the same γ as circles; added the point-c and all-covered-c rows).
+- Added: limits of the matrix test (diagonal share 0.60–0.76, no finite-sample benchmark, basis γ 0.08–0.12 below rank γ), the γ(k) fit's R² in all four windows (0.95, 0.99, 0.76, 0.36), live-count bias, the 200-document Σ caveat, a related-work section, and raw-unit retention for the resynthesis.
+- Moved the planted sweeps to an appendix. Replaced the internal Phase labels, made "the paper" read "Li et al.", and added the arXiv:2505.00190 authors (Peter and Søgaard, 2025).
+- doc2tex.py: merges split bold runs, keeps trailing full stops out of exponents, turns "Appendix:" headings into \appendix, and uses a smaller font for very wide tables.

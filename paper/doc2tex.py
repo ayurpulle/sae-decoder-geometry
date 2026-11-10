@@ -35,7 +35,8 @@ def math_inner(s):
 def protect(s):
     """Turn caret/underscore notation and the other math-like spans into protected math."""
     s = s.replace("⁻¹", O + "^{-1}" + C)
-    s = re.sub(r"([A-Za-zΣλ0-9]+ᵢ?)\^([−\-]?[A-Za-zγ0-9.]+(?:–[0-9.]+)?)",
+    # exponent: optional sign, a token, a decimal part only if digits follow, an optional range (never a full stop)
+    s = re.sub(r"([A-Za-zΣλ0-9]+ᵢ?)\^([−\-]?[A-Za-zγ0-9]+(?:\.[0-9]+)?(?:–[0-9]+(?:\.[0-9]+)?)?)",
                lambda m: O + math_inner(m.group(1)) + "^{" + math_inner(m.group(2)) + "}" + C, s)
     s = s.replace("λ_Σ", O + r"\lambda_\Sigma" + C)
     s = s.replace("log_d(d/k)", O + r"\log_d(d/k)" + C)
@@ -67,6 +68,15 @@ def tex_text(s):
     return r
 
 
+def merge_bold(s):
+    """Join bold runs the doc splits into adjacent pieces: \\textbf{Wh}\\textbf{ich} -> \\textbf{Which}."""
+    while True:
+        t = re.sub(r"\\textbf\{([^{}]*)\}\\textbf\{", r"\\textbf{\1", s)
+        if t == s:
+            return s
+        s = t
+
+
 def inline(el):
     """LaTeX for an element's inline content."""
     parts = [tex_text(el.text or "")]
@@ -93,7 +103,7 @@ def inline(el):
 
 
 def cell_tex(cell):
-    return r" \newline ".join(inline(p) for p in cell if p.tag == "paragraph")
+    return r" \newline ".join(merge_bold(inline(p)) for p in cell if p.tag == "paragraph")
 
 
 def table(el):
@@ -124,7 +134,8 @@ def table(el):
                        for j, m in enumerate(maxlen))
         head = body[:2] if header else []
         rest = body[2:] if header else body
-        size = r"\small" if ncol <= 5 else r"\footnotesize\setlength{\tabcolsep}{4pt}"
+        size = (r"\small" if ncol <= 5 else r"\footnotesize\setlength{\tabcolsep}{4pt}" if ncol <= 9
+                else r"\scriptsize\setlength{\tabcolsep}{2.5pt}")
         return "\n".join(["{" + size, r"\begin{xltabular}{\textwidth}{" + spec + "}", r"\toprule", *head,
                           r"\endhead", r"\bottomrule", r"\endlastfoot", *rest, r"\end{xltabular}}", ""])
     spec = "".join("r" if numeric[j] else "l" for j in range(ncol))
@@ -151,10 +162,12 @@ def block(el):
         media = [block(m) for m in el.iter("media")]
         if media:  # figures sit inside otherwise-empty paragraphs
             return "".join(media)
-        body = inline(el).strip()
+        body = merge_bold(inline(el)).strip()
         if not body:
             return ""
         h = el.get("heading")
+        if h == "2" and body.startswith("Appendix: "):
+            return "\\appendix\n\\section{" + body.removeprefix("Appendix: ").capitalize() + "}\n"
         if h == "2":
             return r"\section{" + body + "}\n"
         if h == "3":
