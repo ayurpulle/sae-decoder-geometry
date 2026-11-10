@@ -847,3 +847,14 @@ What the benchmark shows:
 - The law survives the live-count correction.
 
 Not done: rescoring our real-data layer-13 k sweep at a fixed live count. Those decoders were never copied off the H100 pod, so it needs a GPU retrain.
+
+## Write-up revised after the second review (2026-11-10)
+
+Doc now at rev 50; paper/writeup.tex and the PDF are regenerated.
+- New title and lead: decoder spectra largely inherit Σ in ranks 11–150; real data differs in ranks 4–50, at small k and in the bulk.
+- The two regularities (top-window γ(L0) and the bulk matrix form) are stated separately in the abstract and the mechanism section.
+- G is read as "half to three-quarters of the decline" (0.44 over k 16–128, 0.75 over k 8–128); H is called a restatement of the Gaussian null.
+- E is described as at the isotropic floor, and the live-count bias direction is corrected.
+- The matrix-test benchmark, the 200k-Σ bulk bias and the fixed-n L0 law are added.
+- The mid-stack real-γ peak fails the window rule at 65k; the null dip and the gap maximum hold in the top windows only.
+- The hypothesis table moved to a "Summary of hypotheses" section before the open questions. The Figure 2 caption and the notebook reference are fixed, and the open questions are updated, including a systematic literature search.

@@ -15,7 +15,7 @@
 \setlist{itemsep=0.3em}
 \renewcommand{\arraystretch}{1.15}
 
-\title{SAE decoder geometry: where the galaxy-scale power law comes from}
+\title{SAE decoder spectra largely inherit the activation covariance}
 \author{Ayur Pulle}
 \date{November 2026}
 
@@ -23,33 +23,12 @@
 \maketitle
 
 \begin{abstract}
-The power-law eigenspectrum of SAE decoder directions reported by Li, Michaud et al. (2024) is real, but it is not a fixed property of a layer. Across the bulk of the spectrum, the decoder cloud's covariance is close to the activation covariance raised to a power $\gamma$, and $\gamma$ falls as L0 rises: $\gamma$ $\approx$ 1 with one active latent per token, about 0.1 lower per doubling of L0 in Gemma-2-2B. That decline is not specific to real data. SAEs trained on a Gaussian with the same covariance show it at large k, and so do SAEs trained on resynthesised data whose dictionary matches only the covariance of Gemma Scope's. What separates real activations from such nulls is $\gamma$'s level at small k and in the bulk of the spectrum, not its k-slope. On planted data with recoverable circle features, $\gamma$ matches the frequency-allocation exponent at k = 1, but point features give the same $\gamma$, so $\gamma$ alone does not identify allocation.
+The power-law eigenspectrum of SAE decoder directions reported by Li, Michaud et al. (2024) is real, and in the top $\sim$150 directions most of it is inherited from the activation covariance $\Sigma$. We measure the decoder's eigen-slope relative to $\Sigma$'s as $\gamma$. In ranks 11--150 at layer 13, an SAE trained on a Gaussian with the same $\Sigma$ reproduces real $\gamma$ at k $\ge$ 40, and a decline over k = 8--128 of similar size ($-$0.088 against $-$0.097 per doubling). A dictionary drawn to match only the covariance of Gemma Scope's directions gives about half to three-quarters of the decline under Gemma Scope's firing statistics. Real activations differ from such nulls in the top 50 directions, at small k, and above all in the bulk of the spectrum (ranks 31--1000), where the nulls pile decoders into $\Sigma$'s top subspace. Two regularities are kept apart below. In ranks 11--150, $\gamma$ is about 1 with one active latent per token and falls about 0.1 per doubling of L0 in Gemma-2-2B. In ranks 101--1000, the decoder covariance is approximately $\Sigma^{\gamma}$ as a matrix, though much less co-diagonal with $\Sigma$ than an exact $\Sigma^{\gamma}$ cloud. Frequency-driven allocation fits planted circle features at k = 1 but does not separate them from point features.
 \end{abstract}
 
 \section{Verdict}
 
-We asked whether the power-law eigenspectrum of SAE decoder directions is predicted by frequency-driven latent allocation (slope $\approx$ (1+$\alpha$)/(1+b), Michaud, Gorton, McGrath 2025) or is an estimator artifact. Neither answer holds cleanly. The spectrum is not a pure artifact: in the bulk windows, at small k, and at layers 3 and 23, SAEs trained on real activations differ from SAEs trained on a Gaussian with the same covariance. But at Li et al.'s operating point (top window, layer 13, k $\ge$ 40) the Gaussian null gives nearly the same $\gamma$, and $\gamma$'s decline with k is reproduced by data that matches only the covariance. Allocation fits planted circle features at k = 1 but does not distinguish them from point features, and it fails per decoder cluster on Gemma. The mid-stack peak in the top windows goes with cluster structure beyond what the covariance implies.
-
-{\small
-\begin{xltabular}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-\toprule
-\textbf{Hypothesis} & \textbf{Verdict} & \textbf{Deciding evidence} \\
-\midrule
-\endhead
-\bottomrule
-\endlastfoot
-Li et al.'s finding: power-law spectrum, steepest mid-stack & Real, revised & Reproduced to 0.02\%. The exponent depends on L0, layer and rank window; the mid-stack peak is in the top $\sim$150 directions only \\
-Pure estimator artifact & Not supported, within limits & Real data differs from $\Sigma$-matched Gaussian and scrambled nulls in the bulk windows (ranks 31--1000: $\gamma$ 0.29--0.81 against 1.1--2.7), at k $\le$ 16, and at layers 3 and 23. At layer 13, 16k, ranks 11--150 and k $\ge$ 40 the Gaussian null nearly matches (0.536 against 0.509 at k = 40). Width stability holds for Pythia, not for our Gemma runs \\
-Frequency-driven latent allocation & Not supported on Gemma; consistent with planted circles at k = 1, but not diagnostic & On Gemma, latent frequencies (not the theory's feature frequencies) stay at $-$0.6 to $-$0.8 while the slope moves from $-$0.24 to $-$0.75, and per decoder cluster mean latent frequency falls with cluster size at coarse scales (slope $-$0.6 to $-$1.5), the opposite of the prediction. On planted circles at k = 1, c = 0.334 over all covered features (predicted 1/3) and $\gamma$ = 0.32, but point features (predicted c $\approx$ 0) give the same $\gamma$ (0.30) \\
-Gemma Scope's specific directions carry the $\gamma$(k) decline & Withdrawn & Uniform-frequency resynthesis keeps the decline in $\gamma$ units (0.84) but not in raw decoder-slope units (0.42), and its $\Sigma$ is the dictionary's own covariance. Directions drawn from a Gaussian with Gemma Scope's decoder covariance keep the decline (retained 0.75--0.76 with Gemma Scope's firing statistics, about 1.5 with uniform firing, at a fixed live count) \\
-Feature splitting (near-duplicate clusters) & Ruled out & Removing near-duplicates, up to a third of latents, changes the slope by $\le$ 0.01 in 22 SAEs \\
-Massive-activation tokens drive the mid-stack peak & Ruled out & Dropping the top 0.1\% or 1\% of tokens on dim 1170 changes $\gamma$ by $\le$ 0.005 \\
-Inheritance from the activation covariance $\Sigma$ with exponent $\gamma$(L0) & Supported in the bulk; in the top directions only at low L0 & In $\Sigma$'s eigenbasis the decoder covariance follows $\Sigma^{\gamma}$ over ranks 101--1000 at every L0 (R$^2$ 0.94--0.99, diagonal share 0.60--0.76, no finite-sample benchmark). Rank-window $\gamma$ in ranks 11--150 is 1.03 at k = 1 and falls about 0.1 per doubling of L0 in two SAE recipes \\
-Zero-parameter law $\gamma$ = 1 $-$ ln k / ln d & Not supported & Fits at d = 2304, but with the same activations projected to d$'$ = 256 the gap between k = 8 and k = 32 is 0.01, against 0.25 predicted \\
-Mismatched L0 drives the mid-stack peak & Ruled out & Measured L0 runs up to 11\% above the SAE names mid-stack; correcting for it raises the peak slightly (0.19 $\to$ 0.21) \\
-\end{xltabular}}
-
-Because $\gamma$ is defined as the ratio of the two slopes, Li et al.'s $-$0.47 at layer 12 equals $\Sigma$'s slope there ($-$0.87) times $\gamma$ $\approx$ 0.54 by construction. The substantive claim is the matrix test in the mechanism section: the decoder cloud is aligned with $\Sigma$'s eigenbasis, and its variances follow $\Sigma$'s eigenvalues to the power $\gamma$. That test is weaker than it looks (see its limits there).
+We asked whether the power-law eigenspectrum of SAE decoder directions is predicted by frequency-driven latent allocation (slope $\approx$ (1+$\alpha$)/(1+b), Michaud, Gorton, McGrath 2025) or is an estimator artifact. The best-supported answer is a third one: in ranks 11--150 the spectrum is mostly $\Sigma$ passed through the SAE objective, so in that window the slope Li et al. reported is largely set by the activation covariance and L0. It is not a pure artifact: real activations differ from $\Sigma$-matched nulls in ranks 4--50, at small k, and most of all in the bulk windows. Allocation fits planted circles at k = 1 but does not distinguish them from point features, and it fails per decoder cluster on Gemma. The mid-stack peak in the top windows goes with cluster structure beyond what the covariance implies; it holds for Gemma Scope and our 16k SAEs but, by our window rule, not for our 65k SAEs. A table near the end summarises every hypothesis tested.
 
 \section{Related work}
 
@@ -57,7 +36,7 @@ Li, Michaud et al. (2024) reported the power-law spectrum of SAE decoder directi
 
 \section{Reproduction}
 
-We reproduced Li et al.'s slopes to within 0.02\% at layers 0, 12 and 24 of Gemma-2-2B, using the computation in its released notebook. In the table below, "Paper" is Li et al.'s value.
+We reproduced Li et al.'s slopes to within 0.02\% at layers 0, 12 and 24 of Gemma-2-2B, using the computation in Li et al.'s released notebook (below). In the table, "Paper" is Li et al.'s value.
 
 The original computation, from \path{galaxy/PointCloudStructure_Galaxy.ipynb} in ejmichaud/feature-geometry:
 
@@ -104,7 +83,7 @@ Across 288 existing Gemma Scope SAEs, the slope is set mainly by L0 (average act
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{phase1/slope_vs_layer_matched_l0.png}
-\caption{Decoder eigen slope against layer, interpolated to L0 = 20, 40, 70 and 140, at 16k and 65k, in four rank windows; stars mark the paper's own SAEs.}
+\caption{Decoder eigen slope against layer, interpolated to L0 = 20, 40, 70 and 140, at 16k and 65k, in four rank windows; stars mark the SAEs Li et al. used.}
 \end{figure}
 
 \section{Real data against nulls: where they differ}
@@ -143,7 +122,7 @@ We trained identical TopK SAEs on three inputs: real activations; a Gaussian N($
 
 \section{The mechanism: $\Sigma$ raised to a sparsity-set power}
 
-In $\Sigma$'s eigenbasis, the decoder cloud's variances scale as $\Sigma$'s eigenvalues to a power $\gamma$, and $\gamma$ is set by L0: $\gamma$ $\approx$ 1 at L0 = 1, falling about 0.1 per doubling. This holds across the bulk of the spectrum at every L0, and in the top directions only at low L0.
+Two regularities, measured in different regions. In the top window (ranks 11--150), rank-window $\gamma$, the ratio of the two sorted spectra's slopes, is about 1 at L0 = 1 and falls about 0.1 per doubling of L0. In the bulk (ranks 101--1000), the statement holds approximately as a matrix one: in $\Sigma$'s eigenbasis, the decoder cloud's variances scale as $\Sigma$'s eigenvalues to a power $\gamma$ at every L0; in the top directions this holds only at low L0. The equation below summarises both, but its two halves come from different ranks.
 
 \[
 \lambda_i^{\mathrm{dec}} \propto \left(\lambda_i^{\Sigma}\right)^{\gamma(L_0)}, \qquad \gamma \approx \gamma_1 - c \, \log_2 L_0
@@ -151,9 +130,11 @@ In $\Sigma$'s eigenbasis, the decoder cloud's variances scale as $\Sigma$'s eige
 
 \textbf{The matrix test.} Two slopes can agree by coincidence, so we tested the statement as a matrix one. We rotated the decoder covariance into $\Sigma$'s eigenbasis, checked how close to diagonal it is there, regressed its log diagonal on log $\lambda_\Sigma$, and measured the overlap of the two top eigenvector subspaces. Over ranks 101--1000 the power law holds at every L0 (R$^2$ 0.94--0.99). In the top directions it holds only up to L0 $\approx$ 85. Above that, $\gamma$ measured in the basis drops to about 0 and the overlap of the two top-10 subspaces falls to 0.09--0.13: the decoders stop tracking $\Sigma$'s leading directions. Planted data shows the same decoupling at the same ratio k/d $\approx$ 0.06--0.12. Pythia-70m's decoders ignore $\Sigma$'s top direction, which carries 36\% of the variance.
 
-\textbf{Limits of the matrix test.} An R$^2$ of 0.94--0.99 between two smooth decreasing sequences is high almost by default. The diagonal share of the rotated decoder covariance is only 0.60--0.76 for the layer-12 16k SAEs, and we have no benchmark for what a finite sample from an exact $\Sigma^{\gamma}$ cloud would give. The test and the law also cover different regions. The 0.1-per-doubling law is rank-window $\gamma$ in ranks 11--150, while the matrix test holds at every L0 only in ranks 101--1000. Even at low L0, basis $\gamma$ sits 0.08--0.12 below rank $\gamma$ (0.65 against 0.73 at L0 = 22).
+\textbf{Limits of the matrix test.} We benchmarked it on the layer-12 16k SAEs against two synthetic clouds of the same size (16,384 unit rows): an exact $\Sigma^{\gamma}$ cloud, and the decoder's own eigenvalues in a random basis. The R$^2$ is not automatic: in a random basis it is about 0, against 0.93--0.99 for the real decoders at L0 $\le$ 82, and 0.94--0.97 in ranks 101--1000 at every L0. But the law is only approximate. The rotated decoder covariance puts 0.62--0.74 of its weight on the diagonal, against 0.89--0.95 for an exact $\Sigma^{\gamma}$ cloud and 0.24--0.62 for the random basis; at high L0 the real value is close to the random one. The top-10 subspace overlap falls from 0.51 to 0.11 as L0 rises, while an exact cloud keeps 0.86--0.98, so the decoupling is not a sampling effect. The test and the law also cover different regions: the 0.1-per-doubling law is rank-window $\gamma$ in ranks 11--150, while the matrix test holds at every L0 only in ranks 101--1000, and even at low L0 basis $\gamma$ sits 0.08--0.12 below rank $\gamma$ (0.65 against 0.73 at L0 = 22). The bulk basis $\gamma$ also inherits the 200k-token $\Sigma$'s bias (next paragraph).
 
-\textbf{$\Sigma$ already carries the layer profile.} We measured $\Sigma$ at all 26 Gemma layers (200k tokens). Its slope reproduces the decoder profile window for window, including the reversal: a mid-stack hump in the top windows ($-$0.72 at layer 0 to $-$0.93 at layer 14) and an early-layer peak in the bulk ($-$1.15 at layers 2--6). Decoder slope correlates moderately with $\Sigma$ slope across layers (r = +0.5 to +0.8), and $\gamma$ = decoder slope / $\Sigma$ slope averages 0.53 at L0 = 40 and 0.45 at L0 = 70 in every window. One caveat: 200k tokens at context 1,024 is about 200 documents, and we have not checked the bulk windows on a split half or on more documents.
+\textbf{$\Sigma$ already carries the layer profile.} We measured $\Sigma$ at all 26 Gemma layers (200k tokens). Its slope reproduces the decoder profile window for window, including the reversal: a mid-stack hump in the top windows ($-$0.72 at layer 0 to $-$0.93 at layer 14) and an early-layer peak in the bulk ($-$1.15 at layers 2--6). Decoder slope correlates moderately with $\Sigma$ slope across layers (r = +0.5 to +0.8), and $\gamma$ = decoder slope / $\Sigma$ slope averages 0.53 at L0 = 40 and 0.45 at L0 = 70 in every window.
+
+\textbf{The 200k-token $\Sigma$ is too steep in the bulk.} 200k tokens at context 1,024 is about 200 documents. At layer 12, $\Sigma$ from 1M tokens, or from either half of them split by document, is flatter in the bulk windows (ranks 31--450: $-$0.73 against $-$0.81; ranks 101--1000: $-$0.72 against $-$0.84), and the two halves agree to 0.002. The top windows move by at most 0.03. So every bulk-window $\gamma$ computed against the 200k $\Sigma$ (the Gemma Scope analyses, this layer profile, the bulk basis $\gamma$) is 10--17\% too low at layer 12, and the bulk part of the layer profile is uncertain. Our own SAEs' $\gamma$ used each training set's $\Sigma$ (at least 10M tokens) and is unaffected. Only layer 12 could be rechecked locally.
 
 \begin{figure}[!htbp]
 \centering
@@ -161,7 +142,7 @@ In $\Sigma$'s eigenbasis, the decoder cloud's variances scale as $\Sigma$'s eige
 \caption{$\Sigma$ eigen slope against the decoder slope across the 26 layers (top), their scatter (middle), and $\gamma$ by layer (bottom), in four rank windows.}
 \end{figure}
 
-\textbf{At layer 12, $\gamma$ depends on L0 almost alone.} Across all 28 layer-12 Gemma Scope SAEs (16k to 1m), $\gamma$ = 1.245 $-$ 0.114 $\cdot$ log$_2$ L0, R$^2$ = 0.984; the width spread at fixed L0 is $\le$ 0.07 against an L0-driven range of 0.58. Across layers this does not hold: at fixed L0, $\gamma$ still varies with layer (see the mid-stack section).
+\textbf{At layer 12, $\gamma$ depends on L0 almost alone.} Across all 28 layer-12 Gemma Scope SAEs (16k to 1m), $\gamma$ = 1.245 $-$ 0.114 $\cdot$ log$_2$ L0 in ranks 11--150, R$^2$ = 0.984; the width spread at fixed L0 is $\le$ 0.07 against an L0-driven range of 0.58. Rescored on 16,384 random decoder rows per SAE, so every width has the same number of points, it is 1.207 $-$ 0.110 $\cdot$ log$_2$ L0 (R$^2$ 0.981). Across layers this does not hold: at fixed L0, $\gamma$ still varies with layer (see the mid-stack section).
 
 \begin{figure}[!htbp]
 \centering
@@ -187,7 +168,7 @@ Gaussian N($\mu$, $\Sigma$) & 1.248 & 1.292 & 1.231 & 0.826 & 0.448 & 0.536 & 0.
 
 Real data follows $\gamma$ = 1.016 $-$ 0.094 $\cdot$ log$_2$ k (R$^2$ = 0.994). The functional form matches Gemma Scope's; the intercept depends on the training recipe. The fit holds in the two top windows (R$^2$ 0.95 in ranks 4--50, 0.99 in 11--150) but not in the deeper two (0.76 and 0.36). By our own rule it is therefore a top-window law. The Gaussian null does not follow it at small k: it sits near 1.25 for k $\le$ 4, then drops abruptly, and it is not monotone (0.448 at k = 16, 0.536 at k = 40), which we have not traced. At k $\ge$ 40 it is close to real data. At k $\le$ 8 most latents die (672 of 16,384 alive at k = 1), so only the top windows are well defined there.
 
-\textbf{Live-count bias.} Measured $\gamma$ is biased toward flat when the cloud has few points next to d. In simulation, a cloud with true $\gamma$ = 0.5 measures 0.32 at 672 points, 0.41 at 4,786 and 0.47 at 16,384. The live count rises with k, so at small k this bias works against the decline: the true fall from k = 1 is likely steeper than measured. In the resynthesis control, where every SAE had at least 13,400 live latents at k $\ge$ 8, rescoring on a fixed 8,192 latents lowered $\gamma$ by 0.02--0.07 but moved the k-slopes by at most 0.002. The real-data k sweep has not been rescored.
+\textbf{Live-count bias.} Measured $\gamma$ depends on how many points the cloud has next to d. A finite cloud adds sampling spread to every eigenvalue, which pulls a high $\gamma$ down and pushes a $\gamma$ near zero up. In simulation at d = 2,304, a cloud with true $\gamma$ = 0.5 measures 0.32 at 672 points, 0.41 at 4,786 and 0.47 at 16,384, while an exactly isotropic cloud measures 0.10 at 4,786 points and 0.06 at 16,384. The live count rises with k (672 at k = 1 here), so at small k the bias works against the decline: the true fall from k = 1 is likely steeper than measured. Rescoring the 28 Gemma Scope layer-12 SAEs on a fixed 16,384 rows leaves their L0 law almost unchanged (above), and in the resynthesis control a fixed 8,192 live latents moved the k-slopes by at most 0.002. Our real-data k sweep has not been rescored, because its decoders were not kept.
 
 \textbf{An empirical fit, not a zero-parameter law.} The fit lies within 0.034 of 1 $-$ ln k / ln d with d = 2304 at every k, which suggested $\gamma$ = $\log_d(d/k)$. A dimension sweep rules that out. We projected the same layer-12 activations onto their top d$'$ principal components and trained at k = 8 and k = 32. The gap between the two k values is 0.01, 0.06, 0.13 and 0.18 at d$'$ = 256, 512, 1024 and 2304, where the law predicts 0.25, 0.22, 0.20 and 0.18. The d$'$ = 2304 control reproduces the long GPU runs (0.70 vs 0.73 at k = 8; 0.52 vs 0.51 at k = 32), so the training budget is adequate. Truncation squeezes the same features into fewer dimensions, so it is not the same as a model with smaller d; Pythia (d = 512, $\gamma$ 0.33 against 0.44 predicted) points the same way. We report the k-law as an empirical fit at d = 2304.
 
@@ -253,7 +234,7 @@ The latent-frequency curve is not a single power law: piecewise exponents run fr
 
 \section{The mid-stack effect}
 
-At fixed L0, $\gamma$ itself rises toward the middle of the stack, and $\Sigma$ does not explain that rise: a Gaussian with the same $\Sigma$ moves the opposite way.
+At fixed L0, $\gamma$ itself rises toward the middle of the stack in the top windows, and $\Sigma$ does not explain that rise: there, a Gaussian with the same $\Sigma$ moves the opposite way.
 
 For Gemma Scope (65k, L0 = 40, ranks 11--150), $\gamma$ is about 0.40 at layers 0--3, about 0.65 at layers 12--16 and about 0.43 at layers 23--24. None of $\Sigma$'s shape statistics track this (top-eigenvalue share r = $-$0.01, participation ratio r = $-$0.33).
 
@@ -284,8 +265,8 @@ Gaussian N($\mu$, $\Sigma$), 65k & 0.562 & 0.485 & 0.663 \\
 \end{figure}
 
 \begin{itemize}
-\item The Gaussian null dips at layer 13 in every width and window. The real-minus-Gaussian gap is largest at layer 13 in all four width $\times$ window cells, the most robust form of the effect.
-\item Real $\gamma$ itself peaks clearly at 16k but only weakly at 65k, and our TopK peak (0.51) is smaller than Gemma Scope's JumpReLU peak (0.65). The size of the effect depends on the SAE recipe.
+\item In the two top windows (ranks 4--50 and 11--150), the Gaussian null dips at layer 13 and the real-minus-Gaussian gap is largest at layer 13, at both widths. In the bulk windows neither holds: the null is flat across these layers and layer 3's gap is largest.
+\item Real $\gamma$ itself peaks at layer 13 in three of four windows at 16k, but only in two at 65k (ranks 11--150 and 101--1000; in ranks 4--50 it is 0.305, 0.291 and 0.375 at layers 3, 13 and 23, and in 31--450 0.497, 0.489 and 0.292). By our window rule the peak in real $\gamma$ holds at 16k but not at 65k. Our TopK peak (0.51 at 16k) is also smaller than Gemma Scope's JumpReLU peak (0.65): the size of the effect depends on the SAE recipe.
 \item In an earlier comparison over seven layers, the gap between Gemma Scope's $\gamma$ and short Gaussian-null TopK runs (width 4,096, 3M tokens) tracked the kurtosis of the massive-activation dimension (r = 0.93). That comparison mixes recipes and is not the equal-budget one in the table, and seven points on one smooth profile give a weak correlation. Removing those tokens, or the latents aligned with them, changes nothing, so the heavy tail at most marks the mid-stack regime; it does not cause the effect.
 \end{itemize}
 
@@ -301,7 +282,7 @@ The planted experiments left a gap: random planted directions give decoders much
 
 \textbf{Caveats.} Clusterings themselves are unstable: k-means against itself across seeds gives an adjusted Rand index of only 0.08--0.17, and methods agree no better. The cloud is a continuum at these scales, and only the summary statistics are robust across methods. The layer result is a correlation over 26 points on one smooth profile. The matched cloud reproduces the real spectrum within 0.02--0.05 in slope. Frequencies were measured only at layer 12.
 
-\section{Resynthesis: covariance, not specific directions}
+\section{Resynthesis: how much the covariance explains}
 
 Planted data never reproduced Gemma's $\gamma$(k) in ranks 11--150, so we built test data from Gemma itself. We encoded 12M layer-12 tokens with the Gemma Scope 65k JumpReLU SAE (L0 $\approx$ 72), resynthesised activations from its codes, and broke one ingredient at a time. Every variant trained the same TopK SAEs as the real-data baseline: width 16k, k = 4--128, 3 epochs, 500k held-out tokens. About 72 SAEs on A100s.
 
@@ -332,7 +313,7 @@ Retained is a variant's per-doubling slope divided by A's, in two units: $\gamma
 
 \textbf{The split was inconclusive.} The rule fixed before the second run read the split in $\gamma$ units: if E keeps and F removes, the firing statistics carry the law; if E removes and F keeps, the dictionary's directions do. In $\gamma$ units E removes (0.38) and F keeps (0.84), with per-seed slopes within 0.003 of each other. But $\gamma$ divides by each variant's own $\Sigma$ slope, and uniform firing halves F's ($-$0.47 against $-$0.94). In raw decoder-slope units F retains only 0.42 and E 0.34, so both remove. F is also close to circular. With uniform firing, F's $\Sigma$ is essentially the Gemma Scope dictionary's own covariance (its slope, $-$0.469, matches the decoder cloud's $-$0.4684 in the reproduction), so at low k the new SAE relearns a subsample of that dictionary and $\gamma$ starts near 1.
 
-Caveats. E's removal is partly a floor effect: on random isotropic directions $\gamma$ sits at 0.06--0.23 at every k, with little left to fall, like the planted random-direction data. In ranks 4--50 and 31--450, E is partial in $\gamma$ units (0.62 and 0.67). There is one data draw per variant, and only layer 12 at width 16k.
+Caveats. E's $\gamma$ of 0.06--0.08 at k $\ge$ 16 is what an exactly isotropic cloud measures at these sizes (0.06 at 16,384 points, 0.10 at 4,786), so on random isotropic directions the decoders show no anisotropy at all: E's "removes" is a floor, not a lost slope. In ranks 4--50 and 31--450, E is partial in $\gamma$ units (0.62 and 0.67). There is one data draw per variant, and only layer 12 at width 16k.
 
 \textbf{Matched-covariance control.} To separate Gemma Scope's specific directions from their second-order geometry, we drew unit directions from a Gaussian with the mean and covariance of Gemma Scope's decoder rows. We resynthesised with them under Gemma Scope's firing statistics (G, compared with D) and under uniform firing (H, compared with F), retraining D and F alongside. Each SAE was scored on 8,192 randomly chosen live latents (mean of 4 draws), which fixes the live count across k and variants, in both units. The rule, fixed before the run: a variant keeps the decline if it retains at least 0.75 in both units and removes it below 0.5 in both; if H keeps, F's $\gamma$(k) needs only the dictionary's covariance.
 
@@ -352,20 +333,48 @@ F: uniform firing, Gemma Scope rows & $-$0.469 & 0.849 & 0.756 & 0.683 & 0.614 &
 H: uniform firing, Gaussian-matched directions & $-$0.460 & 1.226 & 1.202 & 1.069 & 0.911 & 0.781 & 1.52 & 1.49 \\
 \end{xltabular}}
 
-\textbf{Both keep, so the covariance suffices.} D and F reproduce their earlier $\gamma$ exactly. G only just keeps (raw 0.750, at the cut) and is not monotone (0.436 at k = 32, 0.453 at k = 64): a Gaussian dictionary with Gemma Scope's covariance gives most, not all, of D's decline. H is the telling case. Its $\gamma$ starts above 1 (1.23 at k = 8) and falls, the same shape as the Gaussian N($\mu$, $\Sigma$) null on real activations. Its SAEs recover little (FVU 0.67 at k = 8, against 0.50 for F), because 72 random directions firing together make data close to Gaussian. So a decline of $\gamma$ with k at roughly Gemma's rate appears in data that matches only $\Sigma$, including near-Gaussian data. The decline is not by itself evidence of structure in Gemma Scope's directions, and the earlier reading, "directions, not frequencies", is withdrawn. One seed, one layer and one width.
+\textbf{By the rule both keep, but G's pass is fragile.} D and F reproduce their earlier $\gamma$ exactly. G retains 0.76 in $\gamma$ units and 0.7501 in raw units over k = 8--128, at the cut, on one seed and one draw of directions. Its curve is nearly flat after k = 16 (0.545, 0.436, 0.453, 0.392), so its slope comes from the drop between k = 8 and 16; refitted over k = 16--128 it retains 0.44 of D's decline, which would count as removing it. The supported reading is that a dictionary matching only the covariance of Gemma Scope's directions gives about half to three-quarters of D's decline under Gemma Scope's firing statistics. H adds no independent evidence. Its $\gamma$ starts above 1 (1.23 at k = 8) and falls like the Gaussian N($\mu$, $\Sigma$) null on real activations, and its SAEs recover little (FVU 0.67 at k = 8, against 0.50 for F), because 72 random directions firing together make near-Gaussian data. Together with the Gaussian null, this says that much of $\gamma$'s decline with k in ranks 11--150 needs only $\Sigma$. How much of the rest depends on Gemma Scope's specific directions is not settled by one seed at one layer and width. The earlier reading, "directions, not frequencies", stays withdrawn.
+
+\section{Summary of hypotheses}
+
+{\small
+\begin{xltabular}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Hypothesis} & \textbf{Verdict} & \textbf{Deciding evidence} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+Li et al.'s finding: power-law spectrum, steepest mid-stack & Real, revised & Reproduced to 0.02\%. The exponent depends on L0, layer and rank window; the mid-stack peak is in the top $\sim$150 directions only \\
+The top-window spectrum is inherited from $\Sigma$ & Largely supported in ranks 11--150; not in ranks 4--50 & At layer 13 a $\Sigma$-matched Gaussian null gives $\gamma$ within 0.03 of real at k $\ge$ 40, and a decline over k = 8--128 of $-$0.088 against $-$0.097 per doubling. A covariance-matched dictionary gives about half to three-quarters of D's decline. In ranks 4--50 the null is flat in k and far lower \\
+Pure estimator artifact & Not supported, within limits & Real data differs from $\Sigma$-matched Gaussian and scrambled nulls in the bulk windows (ranks 31--1000: $\gamma$ 0.29--0.81 against 1.1--2.7), in ranks 4--50, at k $\le$ 16, and at layers 3 and 23. Width stability holds for Pythia, not for our Gemma runs \\
+Frequency-driven latent allocation & Not supported on Gemma; consistent with planted circles at k = 1, but not diagnostic & On Gemma, latent frequencies (not the theory's feature frequencies) stay at $-$0.6 to $-$0.8 while the slope moves from $-$0.24 to $-$0.75, and per decoder cluster mean latent frequency falls with cluster size at coarse scales (slope $-$0.6 to $-$1.5), the opposite of the prediction. On planted circles at k = 1, c = 0.334 over all covered features (predicted 1/3) and $\gamma$ = 0.32, but point features (predicted c $\approx$ 0) give the same $\gamma$ (0.30) \\
+Gemma Scope's specific directions carry the $\gamma$(k) decline & Withdrawn; partly open & Uniform-frequency resynthesis keeps the decline in $\gamma$ units (0.84) but not in raw units (0.42), and its $\Sigma$ is the dictionary's own covariance. Covariance-matched directions retain 0.44--0.76 of D's decline depending on the k range (one seed, one draw) \\
+Feature splitting (near-duplicate clusters) & Ruled out & Removing near-duplicates, up to a third of latents, changes the slope by $\le$ 0.01 in 22 SAEs \\
+Massive-activation tokens drive the mid-stack peak & Ruled out & Dropping the top 0.1\% or 1\% of tokens on dim 1170 changes $\gamma$ by $\le$ 0.005 \\
+Decoder covariance $\propto$ $\Sigma^{\gamma}$ as a matrix & Approximate, in the bulk; in the top directions only at low L0 & In $\Sigma$'s eigenbasis the decoder covariance follows $\Sigma^{\gamma}$ over ranks 101--1000 at every L0 (R$^2$ 0.94--0.99; a random basis gives about 0), but its diagonal share is 0.62--0.74 against 0.89--0.95 for an exact $\Sigma^{\gamma}$ cloud of the same size \\
+$\gamma$ falls about 0.1 per doubling of L0 & Supported in ranks 11--150 & 1.245 $-$ 0.114 $\cdot$ log$_2$ L0 across 28 Gemma Scope SAEs (1.207 $-$ 0.110 at a fixed 16,384 rows); 1.016 $-$ 0.094 $\cdot$ log$_2$ k for our TopK SAEs. Fails the window rule in the deeper windows \\
+Zero-parameter law $\gamma$ = 1 $-$ ln k / ln d & Not supported & Fits at d = 2304, but with the same activations projected to d$'$ = 256 the gap between k = 8 and k = 32 is 0.01, against 0.25 predicted \\
+Mismatched L0 drives the mid-stack peak & Ruled out & Measured L0 runs up to 11\% above the SAE names mid-stack; correcting for it raises the peak slightly (0.19 $\to$ 0.21) \\
+Mid-stack peak in real $\gamma$ & Holds for Gemma Scope and our 16k SAEs; fails the window rule at 65k & Layer 13 tops real $\gamma$ in 3 of 4 windows at 16k and 2 of 4 at 65k; the real-minus-Gaussian gap peaks at layer 13 in the top windows at both widths \\
+\end{xltabular}}
+
+Because $\gamma$ is defined as the ratio of the two slopes, Li et al.'s $-$0.47 at layer 12 equals $\Sigma$'s slope there ($-$0.87) times $\gamma$ $\approx$ 0.54 by construction. The matrix test is the stronger form of the claim, and it holds only approximately (see its limits in the mechanism section).
 
 \section{Open questions and next steps}
 
-The $\Sigma^{\gamma}$ law is measured but not derived, and its matrix test is weaker than its R$^2$ suggests. Allocation fits planted circles at k = 1 but does not distinguish them from points, and it fails per cluster on Gemma. $\gamma$'s decline with k is reproduced by data matching only $\Sigma$, so it is not by itself a signature of structure; the real-versus-null differences lie in $\gamma$'s level at small k and in the bulk windows. The mid-stack top-window effect goes with cluster structure beyond anisotropy, but only as a correlation across layers, and planting balanced clusters does not reproduce Gemma's $\gamma$(k).
+The $\Sigma^{\gamma}$ law is measured but not derived, and the matrix-test benchmark shows it is only approximate. Allocation fits planted circles at k = 1 but does not distinguish them from points, and it fails per cluster on Gemma. Much of $\gamma$'s decline with k in ranks 11--150 needs only $\Sigma$, so it is not by itself a signature of structure; the clearest real-versus-null differences are in ranks 4--50, at small k and in the bulk windows. The mid-stack top-window effect goes with cluster structure beyond anisotropy, but only as a correlation across layers, and planting balanced clusters does not reproduce Gemma's $\gamma$(k).
 
 \begin{enumerate}
-\item \textbf{What separates real from null $\gamma$, if not the k-slope?} The resynthesis control shows the decline needs only the dictionary's covariance. The informative differences are $\gamma$'s level at small k and the bulk windows. Compare real and covariance-matched dictionaries there, at a fixed live count, across layers, widths and L0s, with several seeds, and rescore the real-data k sweep at a fixed live count.
-\item \textbf{Is the matrix test informative?} Benchmark the diagonal share and the basis-$\gamma$ fit against finite samples drawn from an exact $\Sigma^{\gamma}$ cloud, and check $\Sigma$'s bulk slopes on more documents.
-\item \textbf{Are our 65k runs undertrained?} Real $\gamma$ drifts with width in our Gemma runs but barely in Gemma Scope's. Retrain at 65k with more tokens before reading width effects.
+\item \textbf{What separates real from null $\gamma$, if not the k-slope?} Compare real and covariance-matched dictionaries in ranks 4--50, at small k and in the bulk, at a fixed live count, across layers, widths and L0s, with several seeds and draws of directions. Rescoring our real-data k sweep at a fixed live count needs a GPU retrain, since its decoders were not kept.
+\item \textbf{Do the bulk-window results survive a better $\Sigma$?} At layer 12 the 200k-token $\Sigma$ is too steep in the bulk by 0.08--0.12. Recompute $\Sigma$ from at least 500k tokens at every layer, then redo the 26-layer profile and the Gemma Scope bulk $\gamma$.
+\item \textbf{What is off-diagonal in the decoder covariance?} In $\Sigma$'s eigenbasis it puts only 0.62--0.74 of its weight on the diagonal, against 0.89--0.95 for an exact $\Sigma^{\gamma}$ cloud. Characterise the off-diagonal part, for instance against the cluster structure.
+\item \textbf{Are our 65k runs undertrained?} Real $\gamma$ drifts with width in our Gemma runs but barely in Gemma Scope's. Retrain at 65k with more tokens before reading width effects or the 65k mid-stack result.
 \item \textbf{Does allocation scale with manifold dimension?} The same tiling argument predicts c = m/(m+2) for m-dimensional manifold features: 1/3 for circles, 1/2 for spheres. A test needs a statistic that separates tiling from point features, which $\gamma$ does not, plus more seeds and a width ladder.
 \item \textbf{What makes the k-law depend on dimension?} The k-dependence vanished under PCA truncation but not in d = 256 planted data. Compare natural activations from models of different width, or planted data swept over d at fixed sparsity.
 \item \textbf{Why does the mid-stack effect depend on the recipe} (JumpReLU 0.65 vs TopK 0.51 at layer 13)? Needs a few GPU-hours of JumpReLU training at matched L0.
 \item \textbf{Can $\gamma$(L0) be derived?} A theory should give $\gamma$ = 1 at L0 = 1, the decline with L0, and the Gaussian's steeper decline at small k.
+\item \textbf{A systematic literature search} for prior results relating SAE or dictionary-learning spectra to the data covariance; the related-work section here is not one.
 \end{enumerate}
 
 \section{Methods, code and compute}
