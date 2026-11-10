@@ -1,0 +1,38 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+W1110 14:33:53.664000 67466 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights:   0%|          | 1/288 [00:13<1:04:00, 13.38s/it]Loading weights:  74%|███████▎  | 212/288 [00:13<00:03, 21.21it/s]Loading weights:  86%|████████▌ | 247/288 [00:15<00:01, 20.92it/s]Loading weights:  91%|█████████▏| 263/288 [00:16<00:01, 21.48it/s]Loading weights:  95%|█████████▍| 273/288 [00:16<00:00, 21.53it/s]Loading weights:  97%|█████████▋| 280/288 [00:17<00:00, 20.81it/s]Loading weights: 100%|██████████| 288/288 [00:17<00:00, 16.68it/s]
+'The read operation timed out' thrown while requesting GET https://huggingface.co/datasets/monology/pile-uncopyrighted/resolve/3be90335b66f24456a5d6659d9c8d208c0357119/train/24.jsonl.zst
+Retrying in 1s [Retry 1/5].
+'The read operation timed out' thrown while requesting GET https://huggingface.co/datasets/monology/pile-uncopyrighted/resolve/3be90335b66f24456a5d6659d9c8d208c0357119/train/06.jsonl.zst
+Retrying in 1s [Retry 1/5].
+'The read operation timed out' thrown while requesting GET https://huggingface.co/datasets/monology/pile-uncopyrighted/resolve/3be90335b66f24456a5d6659d9c8d208c0357119/train/21.jsonl.zst
+Retrying in 1s [Retry 1/5].
+'The read operation timed out' thrown while requesting GET https://huggingface.co/datasets/monology/pile-uncopyrighted/resolve/3be90335b66f24456a5d6659d9c8d208c0357119/train/28.jsonl.zst
+Retrying in 1s [Retry 1/5].
+'The read operation timed out' thrown while requesting GET https://huggingface.co/datasets/monology/pile-uncopyrighted/resolve/3be90335b66f24456a5d6659d9c8d208c0357119/train/05.jsonl.zst
+Retrying in 1s [Retry 1/5].
+'The read operation timed out' thrown while requesting GET https://huggingface.co/datasets/monology/pile-uncopyrighted/resolve/3be90335b66f24456a5d6659d9c8d208c0357119/train/03.jsonl.zst
+Retrying in 1s [Retry 1/5].
+'The read operation timed out' thrown while requesting GET https://huggingface.co/datasets/monology/pile-uncopyrighted/resolve/3be90335b66f24456a5d6659d9c8d208c0357119/train/00.jsonl.zst
+Retrying in 1s [Retry 1/5].
+53,196 tokens  243s
+102,300 tokens  419s
+151,404 tokens  564s
+200,508 tokens  868s
+253,704 tokens  990s
+302,808 tokens  1083s
+351,912 tokens  1277s
+401,016 tokens  1434s
+450,120 tokens  1505s
+503,316 tokens  1581s
+552,420 tokens  1686s
+601,524 tokens  1758s
+650,628 tokens  1840s
+703,824 tokens  1921s
+752,928 tokens  2025s
+802,032 tokens  2158s
+851,136 tokens  2554s
+900,240 tokens  2951s
+953,436 tokens  3377s
+1,002,540 tokens  3742s
+done 1002540 tokens 26 layers 3748s

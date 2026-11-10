@@ -858,3 +858,31 @@ Doc now at rev 50; paper/writeup.tex and the PDF are regenerated.
 - The matrix-test benchmark, the 200k-Σ bulk bias and the fixed-n L0 law are added.
 - The mid-stack real-γ peak fails the window rule at 65k; the null dip and the gap maximum hold in the top windows only.
 - The hypothesis table moved to a "Summary of hypotheses" section before the open questions. The Figure 2 caption and the notebook reference are fixed, and the open questions are updated, including a systematic literature search.
+
+## Σ recomputed from 1M tokens at all 26 layers (2026-11-10)
+
+`experiments/test1_sigma_layers.py --dtype float16 --n_tokens 1000000 --tag 1m` (local M2 Pro, 3,748 s). Output: `results/test1/sigma_gemma-2-2b_1m.npz` (1.1 GB, gitignored), `sigma_eigenvalues_1m.npy`, `sigma_gemma-2-2b_1m.json`. Comparison by `experiments/review3_sigma1m.py` → `results/test1/sigma_1m_compare.json`. Matrix benchmark with 1M Σ: `review2_checks.py matrix1m`.
+
+**Σ slope, 1M against 200k.**
+- Mean shifts by window: +0.010 (ranks 4–50), +0.042 (11–150), +0.103 (31–450), +0.142 (101–1000). The largest shifts are 0.10 at layers 22–23 in the top windows and 0.14–0.24 at layer 0 in the bulk.
+- The profile shapes survive. Top windows: −0.73 at layer 0, steepest −0.94 at layer 13. Bulk early-layer peak: ranks 31–450 average −0.85 over layers 2–6 against −0.74 elsewhere; ranks 101–1000 steepest −1.03 at layer 4.
+
+**Layer profile (decoder slope against Σ slope across 26 layers).**
+- Correlations strengthen everywhere: r +0.54–0.79 becomes +0.75–0.92.
+- Mean γ at L0 = 40 is 0.51–0.56 in the top windows and 0.60–0.68 in the bulk (was ≈ 0.53 everywhere). At L0 = 70 it is 0.43–0.47 and 0.53–0.61. "γ is the same in every window" no longer holds: bulk γ is higher.
+
+**Mid-stack γ (Gemma Scope 65k, L0 = 40; layers 0–3 / 12–16 / 23–24).**
+- Ranks 11–150: 0.44 / 0.64 / 0.48 (was 0.41 / 0.65 / 0.43).
+- Bulk: 0.55 / 0.65 / 0.45 (ranks 31–450) and 0.58 / 0.72 / 0.50 (ranks 101–1000). Gemma Scope γ now also peaks mid-stack in the bulk.
+
+**Layer-12 γ(L0) law.**
+- Ranks 4–50: 1.137 − 0.105.
+- Ranks 11–150: 1.229 − 0.112 (R² 0.984).
+- Ranks 31–450: 1.075 − 0.079.
+- Ranks 101–1000: 1.021 − 0.053 (R² 0.65).
+
+**Matrix test (layer-12 16k) with 1M Σ.**
+- Diagonal share 0.73–0.77 (exact Σ^γ cloud 0.90–0.98; random basis 0.24–0.62).
+- Top-10 overlap 0.62 → 0.12 (exact 0.92–0.99).
+- Bulk basis γ 0.81 / 0.70 / 0.57 / 0.43 / 0.37 (R² 0.95–0.99).
+- Basis γ in ranks 10–150 now sits 0.01–0.04 below rank γ at low L0 (0.71 against 0.72 at L0 = 22). The 0.08–0.12 gap was mostly the 200k Σ.

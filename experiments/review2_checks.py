@@ -8,7 +8,7 @@
    documents (1,023 tokens each), and all 1M; plus the 200k Sigma used in the paper.
 3. fixedn: the layer-12 gamma(L0) law for the 28 Gemma Scope SAEs, rescored on 16,384 random decoder rows
    (mean of 4 draws) so every width has the same number of points.
-Writes results/review/review2_checks.json.  Usage: python experiments/review2_checks.py [matrix|sigma|fixedn ...]
+Writes results/review/review2_checks.json.  Usage: python experiments/review2_checks.py [matrix|matrix1m|sigma|fixedn ...]
 """
 import json
 import sys
@@ -27,6 +27,7 @@ RANGES = ((1, 150), (10, 150), (100, 1000))
 OUT = ROOT / "results" / "review" / "review2_checks.json"
 WDEC = ROOT / "cache" / "gemmascope_wdec"
 SIGMA_FILE = ROOT / "results" / "test1" / "sigma_gemma-2-2b.npz"
+SIGMA_1M = ROOT / "results" / "test1" / "sigma_gemma-2-2b_1m.npz"  # matrix1m: the same benchmark with 1M-token Sigma
 DOC = 1023  # tokens per document (context 1024, BOS dropped)
 N_FIX, N_DRAWS = 16384, 4
 
@@ -41,8 +42,8 @@ def unit_cloud(rng, U, var, n):
     return X / np.linalg.norm(X, axis=1, keepdims=True)
 
 
-def matrix_check():
-    Sig = np.load(SIGMA_FILE, mmap_mode="r")["cov"][12].astype(np.float64)
+def matrix_check(sigma_file=SIGMA_FILE):
+    Sig = np.load(sigma_file, mmap_mode="r")["cov"][12].astype(np.float64)
     lam, U = np.linalg.eigh(Sig)
     lam, U = lam[::-1], U[:, ::-1]
     rng = np.random.default_rng(0)
@@ -135,7 +136,7 @@ def main():
     res = json.load(open(OUT)) if OUT.exists() else {}
     for w in which:
         print(f"== {w}", flush=True)
-        res[w] = {"matrix": matrix_check, "sigma": sigma_check, "fixedn": fixedn_check}[w]()
+        res[w] = {"matrix": matrix_check, "matrix1m": lambda: matrix_check(SIGMA_1M), "sigma": sigma_check, "fixedn": fixedn_check}[w]()
         OUT.parent.mkdir(parents=True, exist_ok=True)
         json.dump(res, open(OUT, "w"), indent=1, default=float)
 

@@ -7,3 +7,4 @@ __pycache__/
 results/*.log
 .DS_Store
 .git_hash
+results/test1/sigma_gemma-2-2b_1m.npz
