@@ -748,3 +748,47 @@ Caveats:
 - E's low γ means "removes" partly reflects a floor effect, not only a lost slope.
 - F changes Σ (−0.47 vs −0.94), so F's γ is measured against a flatter target.
 - Layer 12 and width 16384 only; the Gemma Scope codes are themselves an SAE's view (A's FVU 0.215).
+
+## Phase 3, matched-covariance control on GPU (2026-11-10)
+
+Why: an external review of the write-up raised three problems with the split test.
+- In raw decoder-slope units, F retains 0.42 (E 0.34), so "directions, not frequencies" flips.
+- F is near-circular: with uniform firing, F's Σ is the dictionary's own covariance (F's Σ slope −0.469 against the Gemma Scope L12 decoder's −0.4684).
+- Measured γ is biased by the live-latent count. Simulated: a true γ = 0.5 cloud measures 0.32 at n = 672, 0.41 at 4,786 and 0.47 at 16,384 (reproduced here).
+
+Control (pre-registered in experiments/control_job.py, commit 11ae9f8):
+- G: Gemma Scope marginals on unit directions drawn from a Gaussian with W_dec rows' mean and covariance (compare D).
+- H: uniform marginals on the same Gaussian-matched directions (compare F).
+- D and F were retrained as references.
+- Seed 0, k 8–128, TopK w16384, 12M tokens, 3 epochs.
+- Primary scoring: 8,192 random live latents per SAE (mean of 4 draws), in γ and raw units. A variant keeps the law if retained ≥ 0.75 in both units.
+- Local Σ check (results/resynth/control_check.json), ranks 11–150: G −0.769 (D −0.780 on the pod), H −0.453 (F −0.464).
+
+Pod wul64qzwixgr2g: secure A100 SXM 80GB, US-MD-1, $1.79/h, 10:46–13:25 UTC (about $4.70; billing showed $2.96 while still catching up). Deleted: get-pod 404, list-pods empty.
+
+Ranks 11–150, fixed-n γ:
+
+| variant | Σ slope | k=8 | 16 | 32 | 64 | 128 | s γ | s raw | FVU k8 → k128 |
+|---|---|---|---|---|---|---|---|---|---|
+| D Gemma marginals, Gemma rows permuted | −0.780 | 0.838 | 0.637 | 0.487 | 0.425 | 0.327 | −0.123 | +0.096 | 0.42 → 0.18 |
+| G Gemma marginals, Gaussian-matched dirs | −0.770 | 0.814 | 0.545 | 0.436 | 0.453 | 0.392 | −0.094 | +0.072 | 0.40 → 0.19 |
+| F uniform marginals, Gemma rows | −0.469 | 0.849 | 0.756 | 0.683 | 0.614 | 0.531 | −0.078 | +0.037 | 0.50 → 0.31 |
+| H uniform marginals, Gaussian-matched dirs | −0.460 | 1.226 | 1.202 | 1.069 | 0.911 | 0.781 | −0.118 | +0.054 | 0.67 → 0.41 |
+
+Retained (fixed-n; full-live in brackets):
+- G/D: 0.76 γ, 0.75 raw (0.78, 0.77).
+- H/F: 1.52 γ, 1.49 raw (1.49, 1.46).
+
+Pre-registered verdict: both keep. Reading: the dictionary's covariance suffices; Gemma Scope's specific directions are not needed.
+
+Checks:
+- D and F reproduce their earlier full-live γ exactly (max diff 0.000).
+- Live-count bias on the slopes is negligible here: fixed-n minus full-live s γ is −0.001 (D) and +0.002 (F). The bias lowers levels (by 0.02–0.07 in γ) but barely moves slopes, since every SAE here has ≥ 13,400 live latents at k ≥ 8. The real-data runs (R: 9,121 live at k = 8, 4,786 at k = 4) are more exposed and weren't rescored.
+
+What this means:
+- G only just keeps (raw retained 0.750, right at the cut), and its γ is not monotone (0.436 at k = 32, 0.453 at k = 64). A Gaussian dictionary with Gemma Scope's covariance gives most, not all, of D's decline.
+- H is the telling case. Its γ sits above 1 at low k (1.23 at k = 8) and falls, the same shape as the Gaussian N(μ, Σ) null on real layer-13 activations (1.25 at small k, falling to 0.38). With 65k Gaussian-drawn directions and uniform firing, the data is close to Gaussian, and the SAE recovers little of the dictionary (FVU 0.67 at k = 8). So H "keeps the law" the way a Gaussian null does.
+- Together: a decline of γ with k at roughly the observed rate is produced by data that only matches Σ, including near-Gaussian data. The γ(k) decline is not, by itself, evidence of structure in Gemma Scope's directions. The split test's "directions, not frequencies" is withdrawn. What is left: covariance, not specific directions, sets the decline in these resynthesised data, and its rate does not separate structured from near-Gaussian data.
+- What still separates real from null data is the level (γ near or above 1 for nulls at small k) and the bulk windows, as before, not the k-slope in ranks 11–150.
+
+Caveats: one seed, one layer, one width; G is at the threshold; H's SAEs fit poorly, so its γ reflects a Gaussian-like regime rather than dictionary recovery.

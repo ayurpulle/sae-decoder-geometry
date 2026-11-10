@@ -1,0 +1,423 @@
+c6653c636265d79afe674d906ab3cd5a  cache/gemmascope/L12/params.npz
+c90da82142ed86e4536b09880a370b4c  cache/acts/gemma-2-2b/blocks.12.hook_resid_post/codestats.npz
+threads 13
+done synth-rs12-H: 12,000,000 tokens, fvu vs real nan, 650s
+[real w16384 s0] step 50/8421 fvu 0.9541 dead 0.000 2s
+[real w16384 s0] step 500/8421 fvu 0.8419 dead 0.000 12s
+[real w16384 s0] step 1000/8421 fvu 0.7559 dead 0.000 24s
+[real w16384 s0] step 1500/8421 fvu 0.7240 dead 0.000 34s
+[real w16384 s0] step 2000/8421 fvu 0.7149 dead 0.000 45s
+[real w16384 s0] step 2500/8421 fvu 0.7079 dead 0.000 56s
+[real w16384 s0] step 3000/8421 fvu 0.6967 dead 0.000 66s
+[real w16384 s0] step 3500/8421 fvu 0.6876 dead 0.000 77s
+[real w16384 s0] step 4000/8421 fvu 0.6870 dead 0.000 87s
+[real w16384 s0] step 4500/8421 fvu 0.6926 dead 0.000 98s
+[real w16384 s0] step 5000/8421 fvu 0.6847 dead 0.000 108s
+[real w16384 s0] step 5500/8421 fvu 0.6787 dead 0.000 118s
+[real w16384 s0] step 6000/8421 fvu 0.6660 dead 0.000 129s
+[real w16384 s0] step 6500/8421 fvu 0.6736 dead 0.000 140s
+[real w16384 s0] step 7000/8421 fvu 0.6709 dead 0.000 150s
+[real w16384 s0] step 7500/8421 fvu 0.6685 dead 0.000 160s
+[real w16384 s0] step 8000/8421 fvu 0.6683 dead 0.000 170s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-H__blocks.0.hook_resid_post__real__w16384__k8__s0 fvu_eval 0.6727340147519439
+[real w16384 s0] step 50/8421 fvu 0.9203 dead 0.000 2s
+[real w16384 s0] step 500/8421 fvu 0.8047 dead 0.000 13s
+[real w16384 s0] step 1000/8421 fvu 0.7210 dead 0.000 25s
+[real w16384 s0] step 1500/8421 fvu 0.6871 dead 0.000 37s
+[real w16384 s0] step 2000/8421 fvu 0.6747 dead 0.000 48s
+[real w16384 s0] step 2500/8421 fvu 0.6639 dead 0.000 60s
+[real w16384 s0] step 3000/8421 fvu 0.6524 dead 0.000 72s
+[real w16384 s0] step 3500/8421 fvu 0.6452 dead 0.000 83s
+[real w16384 s0] step 4000/8421 fvu 0.6431 dead 0.000 95s
+[real w16384 s0] step 4500/8421 fvu 0.6437 dead 0.000 106s
+[real w16384 s0] step 5000/8421 fvu 0.6380 dead 0.000 118s
+[real w16384 s0] step 5500/8421 fvu 0.6337 dead 0.000 129s
+[real w16384 s0] step 6000/8421 fvu 0.6229 dead 0.000 141s
+[real w16384 s0] step 6500/8421 fvu 0.6274 dead 0.000 152s
+[real w16384 s0] step 7000/8421 fvu 0.6258 dead 0.000 164s
+[real w16384 s0] step 7500/8421 fvu 0.6196 dead 0.000 175s
+[real w16384 s0] step 8000/8421 fvu 0.6194 dead 0.000 186s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-H__blocks.0.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.6239370824632859
+[real w16384 s0] step 50/8421 fvu 0.8665 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.7469 dead 0.000 15s
+[real w16384 s0] step 1000/8421 fvu 0.6717 dead 0.000 29s
+[real w16384 s0] step 1500/8421 fvu 0.6350 dead 0.000 43s
+[real w16384 s0] step 2000/8421 fvu 0.6207 dead 0.000 57s
+[real w16384 s0] step 2500/8421 fvu 0.6077 dead 0.000 70s
+[real w16384 s0] step 3000/8421 fvu 0.5974 dead 0.000 84s
+[real w16384 s0] step 3500/8421 fvu 0.5889 dead 0.000 98s
+[real w16384 s0] step 4000/8421 fvu 0.5868 dead 0.000 111s
+[real w16384 s0] step 4500/8421 fvu 0.5858 dead 0.000 125s
+[real w16384 s0] step 5000/8421 fvu 0.5785 dead 0.000 138s
+[real w16384 s0] step 5500/8421 fvu 0.5750 dead 0.000 152s
+[real w16384 s0] step 6000/8421 fvu 0.5671 dead 0.000 166s
+[real w16384 s0] step 6500/8421 fvu 0.5701 dead 0.000 179s
+[real w16384 s0] step 7000/8421 fvu 0.5686 dead 0.000 192s
+[real w16384 s0] step 7500/8421 fvu 0.5620 dead 0.000 206s
+[real w16384 s0] step 8000/8421 fvu 0.5607 dead 0.000 219s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-H__blocks.0.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.5647202985547272
+[real w16384 s0] step 50/8421 fvu 0.7888 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.6682 dead 0.000 20s
+[real w16384 s0] step 1000/8421 fvu 0.6022 dead 0.000 38s
+[real w16384 s0] step 1500/8421 fvu 0.5657 dead 0.000 55s
+[real w16384 s0] step 2000/8421 fvu 0.5523 dead 0.000 73s
+[real w16384 s0] step 2500/8421 fvu 0.5383 dead 0.000 91s
+[real w16384 s0] step 3000/8421 fvu 0.5275 dead 0.000 109s
+[real w16384 s0] step 3500/8421 fvu 0.5203 dead 0.000 127s
+[real w16384 s0] step 4000/8421 fvu 0.5173 dead 0.000 145s
+[real w16384 s0] step 4500/8421 fvu 0.5162 dead 0.000 162s
+[real w16384 s0] step 5000/8421 fvu 0.5083 dead 0.000 180s
+[real w16384 s0] step 5500/8421 fvu 0.5048 dead 0.000 198s
+[real w16384 s0] step 6000/8421 fvu 0.4980 dead 0.000 216s
+[real w16384 s0] step 6500/8421 fvu 0.5011 dead 0.000 233s
+[real w16384 s0] step 7000/8421 fvu 0.4998 dead 0.000 251s
+[real w16384 s0] step 7500/8421 fvu 0.4937 dead 0.000 268s
+[real w16384 s0] step 8000/8421 fvu 0.4906 dead 0.000 286s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-H__blocks.0.hook_resid_post__real__w16384__k64__s0 fvu_eval 0.49402275894593606
+[real w16384 s0] step 50/8421 fvu 0.6955 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.5698 dead 0.000 28s
+[real w16384 s0] step 1000/8421 fvu 0.5148 dead 0.000 54s
+[real w16384 s0] step 1500/8421 fvu 0.4816 dead 0.000 80s
+[real w16384 s0] step 2000/8421 fvu 0.4681 dead 0.000 106s
+[real w16384 s0] step 2500/8421 fvu 0.4542 dead 0.000 132s
+[real w16384 s0] step 3000/8421 fvu 0.4442 dead 0.000 158s
+[real w16384 s0] step 3500/8421 fvu 0.4366 dead 0.000 184s
+[real w16384 s0] step 4000/8421 fvu 0.4346 dead 0.000 210s
+[real w16384 s0] step 4500/8421 fvu 0.4327 dead 0.000 236s
+[real w16384 s0] step 5000/8421 fvu 0.4259 dead 0.000 261s
+[real w16384 s0] step 5500/8421 fvu 0.4233 dead 0.000 287s
+[real w16384 s0] step 6000/8421 fvu 0.4168 dead 0.000 313s
+[real w16384 s0] step 6500/8421 fvu 0.4187 dead 0.000 339s
+[real w16384 s0] step 7000/8421 fvu 0.4175 dead 0.000 365s
+[real w16384 s0] step 7500/8421 fvu 0.4109 dead 0.000 391s
+[real w16384 s0] step 8000/8421 fvu 0.4087 dead 0.000 416s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-H__blocks.0.hook_resid_post__real__w16384__k128__s0 fvu_eval 0.4109423562093225
+rs12-H       k128  s0 alive 16384  ranks 11-150: gamma full 0.823, fixed-n 0.781
+rs12-H       k16   s0 alive 16384  ranks 11-150: gamma full 1.241, fixed-n 1.202
+rs12-H       k32   s0 alive 16384  ranks 11-150: gamma full 1.104, fixed-n 1.069
+rs12-H       k64   s0 alive 16384  ranks 11-150: gamma full 0.949, fixed-n 0.911
+rs12-H       k8    s0 alive 16384  ranks 11-150: gamma full 1.271, fixed-n 1.226
+VARIANT DONE H
+done synth-rs12-G: 12,000,000 tokens, fvu vs real nan, 644s
+[real w16384 s0] step 50/8421 fvu 0.7998 dead 0.000 8s
+[real w16384 s0] step 500/8421 fvu 0.5620 dead 0.000 29s
+[real w16384 s0] step 1000/8421 fvu 0.4823 dead 0.000 51s
+[real w16384 s0] step 1500/8421 fvu 0.4730 dead 0.000 74s
+[real w16384 s0] step 2000/8421 fvu 0.4747 dead 0.003 101s
+[real w16384 s0] step 2500/8421 fvu 0.4425 dead 0.014 128s
+[real w16384 s0] step 3000/8421 fvu 0.4486 dead 0.019 150s
+[real w16384 s0] step 3500/8421 fvu 0.4682 dead 0.007 167s
+[real w16384 s0] step 4000/8421 fvu 0.4107 dead 0.006 183s
+[real w16384 s0] step 4500/8421 fvu 0.4159 dead 0.004 200s
+[real w16384 s0] step 5000/8421 fvu 0.4243 dead 0.006 216s
+[real w16384 s0] step 5500/8421 fvu 0.4215 dead 0.005 232s
+[real w16384 s0] step 6000/8421 fvu 0.4193 dead 0.004 249s
+[real w16384 s0] step 6500/8421 fvu 0.3893 dead 0.002 265s
+[real w16384 s0] step 7000/8421 fvu 0.4091 dead 0.003 282s
+[real w16384 s0] step 7500/8421 fvu 0.4212 dead 0.003 298s
+[real w16384 s0] step 8000/8421 fvu 0.4170 dead 0.004 314s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-G__blocks.0.hook_resid_post__real__w16384__k8__s0 fvu_eval 0.39962768128141596
+[real w16384 s0] step 50/8421 fvu 0.7398 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.5157 dead 0.000 14s
+[real w16384 s0] step 1000/8421 fvu 0.4217 dead 0.000 26s
+[real w16384 s0] step 1500/8421 fvu 0.4016 dead 0.000 38s
+[real w16384 s0] step 2000/8421 fvu 0.4000 dead 0.000 51s
+[real w16384 s0] step 2500/8421 fvu 0.3694 dead 0.000 66s
+[real w16384 s0] step 3000/8421 fvu 0.3755 dead 0.001 84s
+[real w16384 s0] step 3500/8421 fvu 0.3933 dead 0.001 101s
+[real w16384 s0] step 4000/8421 fvu 0.3467 dead 0.001 119s
+[real w16384 s0] step 4500/8421 fvu 0.3519 dead 0.001 136s
+[real w16384 s0] step 5000/8421 fvu 0.3595 dead 0.002 154s
+[real w16384 s0] step 5500/8421 fvu 0.3557 dead 0.002 178s
+[real w16384 s0] step 6000/8421 fvu 0.3542 dead 0.001 197s
+[real w16384 s0] step 6500/8421 fvu 0.3285 dead 0.001 214s
+[real w16384 s0] step 7000/8421 fvu 0.3454 dead 0.001 232s
+[real w16384 s0] step 7500/8421 fvu 0.3554 dead 0.001 249s
+[real w16384 s0] step 8000/8421 fvu 0.3526 dead 0.002 266s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-G__blocks.0.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.33594293414296145
+[real w16384 s0] step 50/8421 fvu 0.6804 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4775 dead 0.000 16s
+[real w16384 s0] step 1000/8421 fvu 0.3803 dead 0.000 31s
+[real w16384 s0] step 1500/8421 fvu 0.3529 dead 0.000 45s
+[real w16384 s0] step 2000/8421 fvu 0.3427 dead 0.000 60s
+[real w16384 s0] step 2500/8421 fvu 0.3093 dead 0.000 75s
+[real w16384 s0] step 3000/8421 fvu 0.3089 dead 0.000 89s
+[real w16384 s0] step 3500/8421 fvu 0.3216 dead 0.000 104s
+[real w16384 s0] step 4000/8421 fvu 0.2815 dead 0.000 121s
+[real w16384 s0] step 4500/8421 fvu 0.2843 dead 0.000 138s
+[real w16384 s0] step 5000/8421 fvu 0.2909 dead 0.000 157s
+[real w16384 s0] step 5500/8421 fvu 0.2883 dead 0.000 176s
+[real w16384 s0] step 6000/8421 fvu 0.2853 dead 0.000 196s
+[real w16384 s0] step 6500/8421 fvu 0.2663 dead 0.000 215s
+[real w16384 s0] step 7000/8421 fvu 0.2805 dead 0.000 234s
+[real w16384 s0] step 7500/8421 fvu 0.2906 dead 0.000 254s
+[real w16384 s0] step 8000/8421 fvu 0.2858 dead 0.000 273s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-G__blocks.0.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.27383135370433564
+[real w16384 s0] step 50/8421 fvu 0.6114 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4341 dead 0.000 20s
+[real w16384 s0] step 1000/8421 fvu 0.3490 dead 0.000 39s
+[real w16384 s0] step 1500/8421 fvu 0.3224 dead 0.000 58s
+[real w16384 s0] step 2000/8421 fvu 0.3107 dead 0.000 76s
+[real w16384 s0] step 2500/8421 fvu 0.2783 dead 0.000 95s
+[real w16384 s0] step 3000/8421 fvu 0.2739 dead 0.000 114s
+[real w16384 s0] step 3500/8421 fvu 0.2815 dead 0.000 132s
+[real w16384 s0] step 4000/8421 fvu 0.2436 dead 0.000 151s
+[real w16384 s0] step 4500/8421 fvu 0.2428 dead 0.000 170s
+[real w16384 s0] step 5000/8421 fvu 0.2444 dead 0.000 188s
+[real w16384 s0] step 5500/8421 fvu 0.2397 dead 0.000 206s
+[real w16384 s0] step 6000/8421 fvu 0.2350 dead 0.000 225s
+[real w16384 s0] step 6500/8421 fvu 0.2173 dead 0.000 244s
+[real w16384 s0] step 7000/8421 fvu 0.2268 dead 0.000 263s
+[real w16384 s0] step 7500/8421 fvu 0.2342 dead 0.000 282s
+[real w16384 s0] step 8000/8421 fvu 0.2282 dead 0.000 303s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-G__blocks.0.hook_resid_post__real__w16384__k64__s0 fvu_eval 0.21888828390171106
+[real w16384 s0] step 50/8421 fvu 0.5401 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.3783 dead 0.000 28s
+[real w16384 s0] step 1000/8421 fvu 0.3102 dead 0.000 55s
+[real w16384 s0] step 1500/8421 fvu 0.2894 dead 0.000 82s
+[real w16384 s0] step 2000/8421 fvu 0.2797 dead 0.000 109s
+[real w16384 s0] step 2500/8421 fvu 0.2514 dead 0.000 136s
+[real w16384 s0] step 3000/8421 fvu 0.2475 dead 0.000 163s
+[real w16384 s0] step 3500/8421 fvu 0.2541 dead 0.000 189s
+[real w16384 s0] step 4000/8421 fvu 0.2204 dead 0.000 228s
+[real w16384 s0] step 4500/8421 fvu 0.2192 dead 0.000 255s
+[real w16384 s0] step 5000/8421 fvu 0.2199 dead 0.000 281s
+[real w16384 s0] step 5500/8421 fvu 0.2150 dead 0.000 308s
+[real w16384 s0] step 6000/8421 fvu 0.2090 dead 0.000 335s
+[real w16384 s0] step 6500/8421 fvu 0.1935 dead 0.000 361s
+[real w16384 s0] step 7000/8421 fvu 0.2007 dead 0.000 387s
+[real w16384 s0] step 7500/8421 fvu 0.2056 dead 0.000 414s
+[real w16384 s0] step 8000/8421 fvu 0.2000 dead 0.000 440s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-G__blocks.0.hook_resid_post__real__w16384__k128__s0 fvu_eval 0.19156092498034014
+rs12-G       k128  s0 alive 16384  ranks 11-150: gamma full 0.410, fixed-n 0.392
+rs12-G       k16   s0 alive 14858  ranks 11-150: gamma full 0.571, fixed-n 0.545
+rs12-G       k32   s0 alive 15755  ranks 11-150: gamma full 0.458, fixed-n 0.436
+rs12-G       k64   s0 alive 16359  ranks 11-150: gamma full 0.476, fixed-n 0.453
+rs12-G       k8    s0 alive 14316  ranks 11-150: gamma full 0.837, fixed-n 0.814
+rs12-H       k128  s0 alive 16384  ranks 11-150: gamma full 0.823, fixed-n 0.781
+rs12-H       k16   s0 alive 16384  ranks 11-150: gamma full 1.241, fixed-n 1.202
+rs12-H       k32   s0 alive 16384  ranks 11-150: gamma full 1.104, fixed-n 1.069
+rs12-H       k64   s0 alive 16384  ranks 11-150: gamma full 0.949, fixed-n 0.911
+rs12-H       k8    s0 alive 16384  ranks 11-150: gamma full 1.271, fixed-n 1.226
+VARIANT DONE G
+done synth-rs12-F: 12,000,000 tokens, fvu vs real nan, 636s
+[real w16384 s0] step 50/8421 fvu 0.9535 dead 0.000 8s
+[real w16384 s0] step 500/8421 fvu 0.7659 dead 0.000 29s
+[real w16384 s0] step 1000/8421 fvu 0.6378 dead 0.000 50s
+[real w16384 s0] step 1500/8421 fvu 0.5894 dead 0.000 68s
+[real w16384 s0] step 2000/8421 fvu 0.5707 dead 0.000 89s
+[real w16384 s0] step 2500/8421 fvu 0.5599 dead 0.000 110s
+[real w16384 s0] step 3000/8421 fvu 0.5454 dead 0.000 126s
+[real w16384 s0] step 3500/8421 fvu 0.5360 dead 0.000 136s
+[real w16384 s0] step 4000/8421 fvu 0.5254 dead 0.000 147s
+[real w16384 s0] step 4500/8421 fvu 0.5267 dead 0.000 157s
+[real w16384 s0] step 5000/8421 fvu 0.5202 dead 0.000 168s
+[real w16384 s0] step 5500/8421 fvu 0.5129 dead 0.000 178s
+[real w16384 s0] step 6000/8421 fvu 0.5079 dead 0.000 189s
+[real w16384 s0] step 6500/8421 fvu 0.5102 dead 0.000 199s
+[real w16384 s0] step 7000/8421 fvu 0.5046 dead 0.000 209s
+[real w16384 s0] step 7500/8421 fvu 0.4971 dead 0.000 220s
+[real w16384 s0] step 8000/8421 fvu 0.5012 dead 0.000 230s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-F__blocks.0.hook_resid_post__real__w16384__k8__s0 fvu_eval 0.5014617996569428
+[real w16384 s0] step 50/8421 fvu 0.9196 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.7348 dead 0.000 14s
+[real w16384 s0] step 1000/8421 fvu 0.6129 dead 0.000 25s
+[real w16384 s0] step 1500/8421 fvu 0.5571 dead 0.000 37s
+[real w16384 s0] step 2000/8421 fvu 0.5350 dead 0.000 49s
+[real w16384 s0] step 2500/8421 fvu 0.5182 dead 0.000 60s
+[real w16384 s0] step 3000/8421 fvu 0.5039 dead 0.000 72s
+[real w16384 s0] step 3500/8421 fvu 0.4943 dead 0.000 83s
+[real w16384 s0] step 4000/8421 fvu 0.4872 dead 0.000 95s
+[real w16384 s0] step 4500/8421 fvu 0.4840 dead 0.000 106s
+[real w16384 s0] step 5000/8421 fvu 0.4748 dead 0.000 118s
+[real w16384 s0] step 5500/8421 fvu 0.4707 dead 0.000 129s
+[real w16384 s0] step 6000/8421 fvu 0.4633 dead 0.000 141s
+[real w16384 s0] step 6500/8421 fvu 0.4648 dead 0.000 152s
+[real w16384 s0] step 7000/8421 fvu 0.4616 dead 0.000 164s
+[real w16384 s0] step 7500/8421 fvu 0.4559 dead 0.000 175s
+[real w16384 s0] step 8000/8421 fvu 0.4564 dead 0.000 187s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-F__blocks.0.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.4568856675228141
+[real w16384 s0] step 50/8421 fvu 0.8660 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.6935 dead 0.000 16s
+[real w16384 s0] step 1000/8421 fvu 0.5819 dead 0.000 30s
+[real w16384 s0] step 1500/8421 fvu 0.5232 dead 0.000 43s
+[real w16384 s0] step 2000/8421 fvu 0.4970 dead 0.000 57s
+[real w16384 s0] step 2500/8421 fvu 0.4772 dead 0.000 71s
+[real w16384 s0] step 3000/8421 fvu 0.4622 dead 0.000 85s
+[real w16384 s0] step 3500/8421 fvu 0.4522 dead 0.000 98s
+[real w16384 s0] step 4000/8421 fvu 0.4447 dead 0.000 113s
+[real w16384 s0] step 4500/8421 fvu 0.4419 dead 0.000 126s
+[real w16384 s0] step 5000/8421 fvu 0.4313 dead 0.000 140s
+[real w16384 s0] step 5500/8421 fvu 0.4286 dead 0.000 154s
+[real w16384 s0] step 6000/8421 fvu 0.4200 dead 0.000 168s
+[real w16384 s0] step 6500/8421 fvu 0.4199 dead 0.000 182s
+[real w16384 s0] step 7000/8421 fvu 0.4186 dead 0.000 195s
+[real w16384 s0] step 7500/8421 fvu 0.4138 dead 0.000 209s
+[real w16384 s0] step 8000/8421 fvu 0.4127 dead 0.000 223s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-F__blocks.0.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.4127754582883231
+[real w16384 s0] step 50/8421 fvu 0.7889 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.6337 dead 0.000 20s
+[real w16384 s0] step 1000/8421 fvu 0.5413 dead 0.000 38s
+[real w16384 s0] step 1500/8421 fvu 0.4828 dead 0.000 56s
+[real w16384 s0] step 2000/8421 fvu 0.4543 dead 0.000 74s
+[real w16384 s0] step 2500/8421 fvu 0.4331 dead 0.000 92s
+[real w16384 s0] step 3000/8421 fvu 0.4178 dead 0.000 110s
+[real w16384 s0] step 3500/8421 fvu 0.4067 dead 0.000 128s
+[real w16384 s0] step 4000/8421 fvu 0.3989 dead 0.000 146s
+[real w16384 s0] step 4500/8421 fvu 0.3959 dead 0.000 164s
+[real w16384 s0] step 5000/8421 fvu 0.3842 dead 0.000 182s
+[real w16384 s0] step 5500/8421 fvu 0.3829 dead 0.000 200s
+[real w16384 s0] step 6000/8421 fvu 0.3745 dead 0.000 219s
+[real w16384 s0] step 6500/8421 fvu 0.3731 dead 0.000 237s
+[real w16384 s0] step 7000/8421 fvu 0.3730 dead 0.000 256s
+[real w16384 s0] step 7500/8421 fvu 0.3677 dead 0.000 274s
+[real w16384 s0] step 8000/8421 fvu 0.3657 dead 0.000 292s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-F__blocks.0.hook_resid_post__real__w16384__k64__s0 fvu_eval 0.36604820714348785
+[real w16384 s0] step 50/8421 fvu 0.6964 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.5515 dead 0.000 28s
+[real w16384 s0] step 1000/8421 fvu 0.4798 dead 0.000 54s
+[real w16384 s0] step 1500/8421 fvu 0.4283 dead 0.000 80s
+[real w16384 s0] step 2000/8421 fvu 0.4020 dead 0.000 107s
+[real w16384 s0] step 2500/8421 fvu 0.3807 dead 0.000 133s
+[real w16384 s0] step 3000/8421 fvu 0.3658 dead 0.000 159s
+[real w16384 s0] step 3500/8421 fvu 0.3547 dead 0.000 185s
+[real w16384 s0] step 4000/8421 fvu 0.3468 dead 0.000 212s
+[real w16384 s0] step 4500/8421 fvu 0.3435 dead 0.000 238s
+[real w16384 s0] step 5000/8421 fvu 0.3325 dead 0.000 264s
+[real w16384 s0] step 5500/8421 fvu 0.3304 dead 0.000 290s
+[real w16384 s0] step 6000/8421 fvu 0.3240 dead 0.000 316s
+[real w16384 s0] step 6500/8421 fvu 0.3218 dead 0.000 343s
+[real w16384 s0] step 7000/8421 fvu 0.3207 dead 0.000 369s
+[real w16384 s0] step 7500/8421 fvu 0.3151 dead 0.000 395s
+[real w16384 s0] step 8000/8421 fvu 0.3135 dead 0.000 421s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-F__blocks.0.hook_resid_post__real__w16384__k128__s0 fvu_eval 0.3132364690153349
+rs12-F       k128  s0 alive 16384  ranks 11-150: gamma full 0.592, fixed-n 0.531
+rs12-F       k16   s0 alive 16384  ranks 11-150: gamma full 0.821, fixed-n 0.756
+rs12-F       k32   s0 alive 16384  ranks 11-150: gamma full 0.748, fixed-n 0.683
+rs12-F       k64   s0 alive 16384  ranks 11-150: gamma full 0.677, fixed-n 0.614
+rs12-F       k8    s0 alive 16384  ranks 11-150: gamma full 0.919, fixed-n 0.849
+rs12-G       k128  s0 alive 16384  ranks 11-150: gamma full 0.410, fixed-n 0.392
+rs12-G       k16   s0 alive 14858  ranks 11-150: gamma full 0.571, fixed-n 0.545
+rs12-G       k32   s0 alive 15755  ranks 11-150: gamma full 0.458, fixed-n 0.436
+rs12-G       k64   s0 alive 16359  ranks 11-150: gamma full 0.476, fixed-n 0.453
+rs12-G       k8    s0 alive 14316  ranks 11-150: gamma full 0.837, fixed-n 0.814
+rs12-H       k128  s0 alive 16384  ranks 11-150: gamma full 0.823, fixed-n 0.781
+rs12-H       k16   s0 alive 16384  ranks 11-150: gamma full 1.241, fixed-n 1.202
+rs12-H       k32   s0 alive 16384  ranks 11-150: gamma full 1.104, fixed-n 1.069
+rs12-H       k64   s0 alive 16384  ranks 11-150: gamma full 0.949, fixed-n 0.911
+rs12-H       k8    s0 alive 16384  ranks 11-150: gamma full 1.271, fixed-n 1.226
+VARIANT DONE F
+done synth-rs12-D: 12,000,000 tokens, fvu vs real nan, 649s
+[real w16384 s0] step 50/8421 fvu 0.8021 dead 0.000 8s
+[real w16384 s0] step 500/8421 fvu 0.5636 dead 0.000 29s
+[real w16384 s0] step 1000/8421 fvu 0.4850 dead 0.000 52s
+[real w16384 s0] step 1500/8421 fvu 0.4800 dead 0.003 76s
+[real w16384 s0] step 2000/8421 fvu 0.4859 dead 0.012 103s
+[real w16384 s0] step 2500/8421 fvu 0.4533 dead 0.027 130s
+[real w16384 s0] step 3000/8421 fvu 0.4624 dead 0.020 153s
+[real w16384 s0] step 3500/8421 fvu 0.4844 dead 0.006 169s
+[real w16384 s0] step 4000/8421 fvu 0.4285 dead 0.007 186s
+[real w16384 s0] step 4500/8421 fvu 0.4337 dead 0.005 202s
+[real w16384 s0] step 5000/8421 fvu 0.4437 dead 0.009 219s
+[real w16384 s0] step 5500/8421 fvu 0.4385 dead 0.007 235s
+[real w16384 s0] step 6000/8421 fvu 0.4375 dead 0.005 252s
+[real w16384 s0] step 6500/8421 fvu 0.4086 dead 0.004 269s
+[real w16384 s0] step 7000/8421 fvu 0.4286 dead 0.004 285s
+[real w16384 s0] step 7500/8421 fvu 0.4405 dead 0.006 301s
+[real w16384 s0] step 8000/8421 fvu 0.4363 dead 0.008 318s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-D__blocks.0.hook_resid_post__real__w16384__k8__s0 fvu_eval 0.41785225553527444
+[real w16384 s0] step 50/8421 fvu 0.7429 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.5128 dead 0.000 14s
+[real w16384 s0] step 1000/8421 fvu 0.4222 dead 0.000 26s
+[real w16384 s0] step 1500/8421 fvu 0.4056 dead 0.000 38s
+[real w16384 s0] step 2000/8421 fvu 0.4055 dead 0.000 53s
+[real w16384 s0] step 2500/8421 fvu 0.3762 dead 0.001 71s
+[real w16384 s0] step 3000/8421 fvu 0.3828 dead 0.004 88s
+[real w16384 s0] step 3500/8421 fvu 0.4014 dead 0.003 106s
+[real w16384 s0] step 4000/8421 fvu 0.3562 dead 0.003 124s
+[real w16384 s0] step 4500/8421 fvu 0.3602 dead 0.003 141s
+[real w16384 s0] step 5000/8421 fvu 0.3671 dead 0.003 158s
+[real w16384 s0] step 5500/8421 fvu 0.3648 dead 0.002 176s
+[real w16384 s0] step 6000/8421 fvu 0.3619 dead 0.003 194s
+[real w16384 s0] step 6500/8421 fvu 0.3367 dead 0.002 211s
+[real w16384 s0] step 7000/8421 fvu 0.3526 dead 0.002 228s
+[real w16384 s0] step 7500/8421 fvu 0.3644 dead 0.002 246s
+[real w16384 s0] step 8000/8421 fvu 0.3587 dead 0.004 263s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-D__blocks.0.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.3439635746065098
+[real w16384 s0] step 50/8421 fvu 0.6814 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4771 dead 0.000 16s
+[real w16384 s0] step 1000/8421 fvu 0.3765 dead 0.000 30s
+[real w16384 s0] step 1500/8421 fvu 0.3488 dead 0.000 44s
+[real w16384 s0] step 2000/8421 fvu 0.3394 dead 0.000 59s
+[real w16384 s0] step 2500/8421 fvu 0.3079 dead 0.000 73s
+[real w16384 s0] step 3000/8421 fvu 0.3087 dead 0.000 88s
+[real w16384 s0] step 3500/8421 fvu 0.3216 dead 0.000 105s
+[real w16384 s0] step 4000/8421 fvu 0.2823 dead 0.000 124s
+[real w16384 s0] step 4500/8421 fvu 0.2849 dead 0.000 143s
+[real w16384 s0] step 5000/8421 fvu 0.2898 dead 0.001 163s
+[real w16384 s0] step 5500/8421 fvu 0.2868 dead 0.000 182s
+[real w16384 s0] step 6000/8421 fvu 0.2836 dead 0.000 202s
+[real w16384 s0] step 6500/8421 fvu 0.2638 dead 0.001 221s
+[real w16384 s0] step 7000/8421 fvu 0.2774 dead 0.000 241s
+[real w16384 s0] step 7500/8421 fvu 0.2866 dead 0.001 260s
+[real w16384 s0] step 8000/8421 fvu 0.2815 dead 0.001 280s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-D__blocks.0.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.2696390149183075
+[real w16384 s0] step 50/8421 fvu 0.6130 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4343 dead 0.000 20s
+[real w16384 s0] step 1000/8421 fvu 0.3446 dead 0.000 39s
+[real w16384 s0] step 1500/8421 fvu 0.3155 dead 0.000 57s
+[real w16384 s0] step 2000/8421 fvu 0.3031 dead 0.000 76s
+[real w16384 s0] step 2500/8421 fvu 0.2701 dead 0.000 94s
+[real w16384 s0] step 3000/8421 fvu 0.2648 dead 0.000 113s
+[real w16384 s0] step 3500/8421 fvu 0.2707 dead 0.000 131s
+[real w16384 s0] step 4000/8421 fvu 0.2346 dead 0.000 150s
+[real w16384 s0] step 4500/8421 fvu 0.2338 dead 0.000 168s
+[real w16384 s0] step 5000/8421 fvu 0.2351 dead 0.000 187s
+[real w16384 s0] step 5500/8421 fvu 0.2298 dead 0.000 206s
+[real w16384 s0] step 6000/8421 fvu 0.2259 dead 0.000 226s
+[real w16384 s0] step 6500/8421 fvu 0.2090 dead 0.000 247s
+[real w16384 s0] step 7000/8421 fvu 0.2180 dead 0.000 268s
+[real w16384 s0] step 7500/8421 fvu 0.2252 dead 0.000 288s
+[real w16384 s0] step 8000/8421 fvu 0.2199 dead 0.000 310s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-D__blocks.0.hook_resid_post__real__w16384__k64__s0 fvu_eval 0.21064181405925286
+[real w16384 s0] step 50/8421 fvu 0.5407 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.3799 dead 0.000 28s
+[real w16384 s0] step 1000/8421 fvu 0.3079 dead 0.000 56s
+[real w16384 s0] step 1500/8421 fvu 0.2841 dead 0.000 82s
+[real w16384 s0] step 2000/8421 fvu 0.2739 dead 0.000 109s
+[real w16384 s0] step 2500/8421 fvu 0.2428 dead 0.000 136s
+[real w16384 s0] step 3000/8421 fvu 0.2372 dead 0.000 163s
+[real w16384 s0] step 3500/8421 fvu 0.2405 dead 0.000 190s
+[real w16384 s0] step 4000/8421 fvu 0.2076 dead 0.000 217s
+[real w16384 s0] step 4500/8421 fvu 0.2055 dead 0.000 243s
+[real w16384 s0] step 5000/8421 fvu 0.2053 dead 0.000 270s
+[real w16384 s0] step 5500/8421 fvu 0.1988 dead 0.000 296s
+[real w16384 s0] step 6000/8421 fvu 0.1930 dead 0.000 323s
+[real w16384 s0] step 6500/8421 fvu 0.1776 dead 0.000 350s
+[real w16384 s0] step 7000/8421 fvu 0.1840 dead 0.000 377s
+[real w16384 s0] step 7500/8421 fvu 0.1886 dead 0.000 403s
+[real w16384 s0] step 8000/8421 fvu 0.1835 dead 0.000 430s
+saved /workspace/SAE/cache/saes_ctl/synth-rs12-D__blocks.0.hook_resid_post__real__w16384__k128__s0 fvu_eval 0.17548924625732165
+rs12-D       k128  s0 alive 16380  ranks 11-150: gamma full 0.349, fixed-n 0.327
+rs12-D       k16   s0 alive 13898  ranks 11-150: gamma full 0.660, fixed-n 0.637
+rs12-D       k32   s0 alive 14875  ranks 11-150: gamma full 0.516, fixed-n 0.487
+rs12-D       k64   s0 alive 16256  ranks 11-150: gamma full 0.448, fixed-n 0.425
+rs12-D       k8    s0 alive 13422  ranks 11-150: gamma full 0.852, fixed-n 0.838
+rs12-F       k128  s0 alive 16384  ranks 11-150: gamma full 0.592, fixed-n 0.531
+rs12-F       k16   s0 alive 16384  ranks 11-150: gamma full 0.821, fixed-n 0.756
+rs12-F       k32   s0 alive 16384  ranks 11-150: gamma full 0.748, fixed-n 0.683
+rs12-F       k64   s0 alive 16384  ranks 11-150: gamma full 0.677, fixed-n 0.614
+rs12-F       k8    s0 alive 16384  ranks 11-150: gamma full 0.919, fixed-n 0.849
+rs12-G       k128  s0 alive 16384  ranks 11-150: gamma full 0.410, fixed-n 0.392
+rs12-G       k16   s0 alive 14858  ranks 11-150: gamma full 0.571, fixed-n 0.545
+rs12-G       k32   s0 alive 15755  ranks 11-150: gamma full 0.458, fixed-n 0.436
+rs12-G       k64   s0 alive 16359  ranks 11-150: gamma full 0.476, fixed-n 0.453
+rs12-G       k8    s0 alive 14316  ranks 11-150: gamma full 0.837, fixed-n 0.814
+rs12-H       k128  s0 alive 16384  ranks 11-150: gamma full 0.823, fixed-n 0.781
+rs12-H       k16   s0 alive 16384  ranks 11-150: gamma full 1.241, fixed-n 1.202
+rs12-H       k32   s0 alive 16384  ranks 11-150: gamma full 1.104, fixed-n 1.069
+rs12-H       k64   s0 alive 16384  ranks 11-150: gamma full 0.949, fixed-n 0.911
+rs12-H       k8    s0 alive 16384  ranks 11-150: gamma full 1.271, fixed-n 1.226
+VARIANT DONE D
+CONTROL DONE
+JOB_EXIT 0
