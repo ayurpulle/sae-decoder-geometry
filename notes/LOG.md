@@ -887,3 +887,10 @@ Doc now at rev 50; paper/writeup.tex and the PDF are regenerated.
 - Bulk basis γ 0.81 / 0.70 / 0.57 / 0.43 / 0.37 (R² 0.95–0.99).
 - Basis γ in ranks 10–150 now sits 0.01–0.04 below rank γ at low L0 (0.71 against 0.72 at L0 = 22). The 0.08–0.12 gap was mostly the 200k Σ.
 - Write-up updated with the 1M-token Σ (doc rev 53; LaTeX and PDF regenerated, 20 pages). Changes: the opening summary (layer-profile r +0.75–0.92), the Σ layer profile and a "Why 1M tokens" paragraph, the matrix-test limits (1M benchmark), the layer-12 law (1.229 − 0.112, and bulk slopes), mid-stack γ (0.44 / 0.64 / 0.48, now also peaking in the bulk), the summary table rows, the Figure 3 caption (still drawn with the 200k Σ), and the open questions (Σ convergence; why the bulk inherits more of Σ).
+
+## 2026-11-10 — Figures redrawn with the 1M-token Σ
+
+- `experiments/test1_sigma_plot.py 1m` and `experiments/test1b_gamma_l0.py 1m` (new optional tag argument; outputs suffixed `_1m`, the 200k outputs left untouched because other scripts read `gamma_l0_L12.json`).
+- New: `results/test1/sigma_vs_decoder_layers_1m.png`, `sigma_slopes_1m.json`, `gamma_l0_L12_1m.{png,json}`.
+- Numbers reproduce `sigma_1m_compare.json`: layer-profile r +0.75 to +0.92; L12 law 1.229 − 0.112·log2 L0 (ranks 11–150), 1.137 − 0.105 (4–50), 1.075 − 0.079 (31–450), 1.021 − 0.053 (101–1000, R² 0.65).
+- Write-up doc rev 57: Figures 3 and 4 replaced, captions and the "Why 1M tokens" paragraph updated, the redraw item removed from open questions. `paper/doc2tex.py` maps the new blobs; LaTeX/PDF regenerated.
