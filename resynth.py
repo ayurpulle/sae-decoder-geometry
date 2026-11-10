@@ -14,8 +14,12 @@ Variants (x_hat = z' W' + b_dec):
   F  uniform independent draws, W' = W_dec                Gemma Scope's dictionary with every live latent given the
                                                           same frequency (mean over live latents, so L0 is kept) and
                                                           the same value distribution (pooled over firings)
-Per-latent frequency and value quantiles (for B, D, E, F) come from the real training split (codestats.npz next to the real
-cache). A and C read real tokens in order, so the last eval_tokens stay the held-out ones; B, D, E, F draw fresh tokens.
+  G  independent draws, W' = Gaussian-matched directions  Gemma Scope's marginals on unit directions drawn from a
+                                                          Gaussian with the mean and covariance of W_dec's rows (the
+                                                          dictionary's second-order geometry only; compare with D)
+  H  uniform independent draws, W' = Gaussian-matched     F's marginals on G's directions (compare with F)
+Per-latent frequency and value quantiles (for B, D-H) come from the real training split (codestats.npz next to the real
+cache). A and C read real tokens in order, so the last eval_tokens stay the held-out ones; B, D-H draw fresh tokens.
 Usage: python resynth.py --kind A --src cache/acts/gemma-2-2b/blocks.12.hook_resid_post \
            --sae cache/gemmascope/L12/params.npz --name rs12-A --n_tokens 12000000
 """
@@ -109,6 +113,16 @@ def uniform_marginals(stats, seed, n=4_000_000):
     return {"freq": np.where(live, f[live].mean(), 0.0), "quantiles": np.where(live[:, None], pooled[None], 0.0)}
 
 
+def gaussian_dictionary(Wd, seed):
+    """Unit directions drawn from a Gaussian with the mean and covariance (ddof 1) of Wd's rows, one per row."""
+    W = Wd.cpu().double()
+    mu, C = W.mean(0), torch.cov(W.T)
+    lam, U = torch.linalg.eigh(C)
+    Z = torch.randn(W.shape, generator=torch.Generator().manual_seed(seed + 5000), dtype=torch.float64)
+    R = mu + Z @ (U * lam.clamp(min=0).sqrt()).T
+    return (R / R.norm(dim=1, keepdim=True)).float()
+
+
 def variant(kind, sae, acts, n_tokens, seed, stats, dev):
     """Yield (x_hat chunk, x_real chunk or None) for variant kind."""
     Wd = sae["W_dec"]
@@ -118,7 +132,9 @@ def variant(kind, sae, acts, n_tokens, seed, stats, dev):
     if kind == "E":
         R = torch.randn(Wd.shape, generator=torch.Generator().manual_seed(seed + 3000))
         Wd = (R / R.norm(dim=1, keepdim=True)).to(dev)
-    if kind == "F":
+    if kind in "GH":
+        Wd = gaussian_dictionary(Wd, seed).to(dev)
+    if kind in "FH":
         stats = uniform_marginals(stats, seed)
     if kind in "AC":
         for x in real_chunks(acts, 0, n_tokens, dev):
@@ -142,7 +158,7 @@ def get_stats(src, acts, eval_tokens, sae, dev):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--kind", choices=list("ABCDEF"), required=True)
+    ap.add_argument("--kind", choices=list("ABCDEFGH"), required=True)
     ap.add_argument("--src", required=True, help="real activation cache dir (acts.npy)")
     ap.add_argument("--sae", required=True, help="Gemma Scope params.npz")
     ap.add_argument("--name", required=True)
@@ -155,7 +171,7 @@ def main():
     need_real = args.kind in "AC" or not (Path(args.src) / "codestats.npz").exists()
     acts = np.load(Path(args.src) / "acts.npy", mmap_mode="r") if need_real else None
     n = args.n_tokens if acts is None else min(args.n_tokens or len(acts), len(acts))
-    stats = get_stats(args.src, acts, args.eval_tokens, sae, dev) if args.kind in "BDEF" else None
+    stats = get_stats(args.src, acts, args.eval_tokens, sae, dev) if args.kind in "BDEFGH" else None
     out = ROOT / "cache" / "acts" / f"synth-{args.name}" / "blocks.0.hook_resid_post"
     out.mkdir(parents=True, exist_ok=True)
     d = sae["W_dec"].shape[1]
