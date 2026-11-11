@@ -1,0 +1,377 @@
+[2026-11-11T01:34:33Z] [launcher] job experiments/r2_job_real.py | max_hours 30 (108000s) | grace 20 min | pod c13cm09747g37y | python /workspace/SAE/.venv/bin/python 
+[2026-11-11T01:34:33Z] [launcher] watchdog pid 569
+[2026-11-11T01:34:33Z] [watchdog] watchdog up (pid 569): deadline 2026-11-12T07:34:33Z, idle guard <5% for 1800s, check every 60s
+[2026-11-11T01:34:33Z] [launcher] job pid 575
+[2026-11-11 01:34:40] job real: git bf13f5682f295bc0036369f1e4f58c286c44f6f7, code sha256 a43632b816d2, out /workspace/SAE/results/r2, 533705 GB free
+[2026-11-11 01:35:25] Q2: layer 13 k sweep (42 SAEs)
+[2026-11-11 01:35:25] collect layer 13 (533702 GB free)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:04<00:08,  4.14s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:11<00:05,  5.91s/it]Fetching 3 files: 100%|██████████| 3/3 [00:12<00:00,  3.64s/it]Fetching 3 files: 100%|██████████| 3/3 [00:12<00:00,  4.07s/it]
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights:   0%|          | 1/288 [00:00<00:47,  6.05it/s]Loading weights:  15%|█▍        | 42/288 [00:00<00:01, 192.12it/s]Loading weights:  23%|██▎       | 67/288 [00:00<00:01, 202.88it/s]Loading weights:  31%|███▏      | 90/288 [00:00<00:00, 211.27it/s]Loading weights:  39%|███▉      | 113/288 [00:00<00:00, 215.52it/s]Loading weights:  47%|████▋     | 136/288 [00:00<00:00, 173.30it/s]Loading weights:  55%|█████▍    | 158/288 [00:00<00:00, 179.63it/s]Loading weights:  65%|██████▍   | 187/288 [00:00<00:00, 207.38it/s]Loading weights:  73%|███████▎  | 210/288 [00:01<00:00, 173.16it/s]Loading weights:  80%|███████▉  | 230/288 [00:01<00:00, 177.14it/s]Loading weights:  87%|████████▋ | 250/288 [00:01<00:00, 182.26it/s]Loading weights:  94%|█████████▍| 270/288 [00:01<00:00, 183.09it/s]Loading weights: 100%|██████████| 288/288 [00:01<00:00, 182.90it/s]
+114,576 tokens  19s
+212,784 tokens  27s
+310,992 tokens  35s
+409,200 tokens  43s
+507,408 tokens  51s
+605,616 tokens  58s
+703,824 tokens  67s
+802,032 tokens  75s
+900,240 tokens  83s
+1,014,816 tokens  92s
+1,113,024 tokens  100s
+1,211,232 tokens  108s
+1,309,440 tokens  116s
+1,407,648 tokens  125s
+1,505,856 tokens  132s
+1,604,064 tokens  140s
+1,702,272 tokens  149s
+1,800,480 tokens  156s
+1,915,056 tokens  166s
+2,013,264 tokens  174s
+2,111,472 tokens  182s
+2,209,680 tokens  190s
+2,307,888 tokens  198s
+2,406,096 tokens  206s
+2,504,304 tokens  214s
+2,602,512 tokens  222s
+2,700,720 tokens  230s
+2,815,296 tokens  241s
+2,913,504 tokens  249s
+3,011,712 tokens  258s
+3,109,920 tokens  266s
+3,208,128 tokens  274s
+3,306,336 tokens  282s
+3,404,544 tokens  290s
+3,502,752 tokens  298s
+3,600,960 tokens  306s
+3,715,536 tokens  315s
+3,813,744 tokens  323s
+3,911,952 tokens  331s
+4,010,160 tokens  339s
+4,108,368 tokens  347s
+4,206,576 tokens  354s
+4,304,784 tokens  362s
+4,402,992 tokens  370s
+4,501,200 tokens  378s
+4,615,776 tokens  387s
+4,713,984 tokens  395s
+4,812,192 tokens  403s
+4,910,400 tokens  412s
+5,008,608 tokens  420s
+5,106,816 tokens  427s
+5,205,024 tokens  436s
+5,303,232 tokens  444s
+5,401,440 tokens  452s
+5,516,016 tokens  461s
+5,614,224 tokens  470s
+5,712,432 tokens  478s
+5,810,640 tokens  488s
+5,908,848 tokens  497s
+6,007,056 tokens  507s
+6,105,264 tokens  516s
+6,203,472 tokens  525s
+6,301,680 tokens  534s
+6,416,256 tokens  545s
+6,514,464 tokens  553s
+6,612,672 tokens  562s
+6,710,880 tokens  570s
+6,809,088 tokens  579s
+6,907,296 tokens  588s
+7,005,504 tokens  596s
+7,103,712 tokens  605s
+7,201,920 tokens  613s
+7,300,128 tokens  622s
+7,414,704 tokens  632s
+7,512,912 tokens  641s
+7,611,120 tokens  649s
+7,709,328 tokens  658s
+7,807,536 tokens  665s
+7,905,744 tokens  674s
+8,003,952 tokens  682s
+8,102,160 tokens  691s
+8,200,368 tokens  699s
+8,314,944 tokens  708s
+8,413,152 tokens  717s
+8,511,360 tokens  725s
+8,609,568 tokens  733s
+8,707,776 tokens  741s
+8,805,984 tokens  750s
+8,904,192 tokens  758s
+9,002,400 tokens  767s
+9,100,608 tokens  775s
+9,215,184 tokens  785s
+9,313,392 tokens  793s
+9,411,600 tokens  802s
+9,509,808 tokens  810s
+9,608,016 tokens  819s
+9,706,224 tokens  827s
+9,804,432 tokens  834s
+9,902,640 tokens  844s
+10,000,000 tokens  852s
+done 10000000 2304 854s
+[2026-11-11 01:51:02] train Q2 gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k8__s0
+[real w16384 s0] step 50/6957 fvu 0.8957 dead 0.000 4s
+[real w16384 s0] step 500/6957 fvu 0.5748 dead 0.000 20s
+[real w16384 s0] step 1000/6957 fvu 0.4783 dead 0.543 48s
+[real w16384 s0] step 1500/6957 fvu 0.5095 dead 0.651 75s
+[real w16384 s0] step 2000/6957 fvu 0.4785 dead 0.734 103s
+[real w16384 s0] step 2500/6957 fvu 0.4660 dead 0.766 130s
+[real w16384 s0] step 3000/6957 fvu 0.4614 dead 0.777 158s
+[real w16384 s0] step 3500/6957 fvu 0.4144 dead 0.772 186s
+[real w16384 s0] step 4000/6957 fvu 0.4630 dead 0.755 213s
+[real w16384 s0] step 4500/6957 fvu 0.4534 dead 0.726 240s
+[real w16384 s0] step 5000/6957 fvu 0.4492 dead 0.679 267s
+[real w16384 s0] step 5500/6957 fvu 0.4558 dead 0.641 295s
+[real w16384 s0] step 6000/6957 fvu 0.4529 dead 0.590 322s
+[real w16384 s0] step 6500/6957 fvu 0.4505 dead 0.574 349s
+saved /workspace/SAE/cache/saes_r2/gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k8__s0 fvu_eval 0.4506301531928865
+[2026-11-11 01:57:26] train Q2 gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k8__s0
+[gaussian w16384 s0] step 50/6957 fvu 0.9381 dead 0.000 2s
+[gaussian w16384 s0] step 500/6957 fvu 0.7441 dead 0.000 16s
+[gaussian w16384 s0] step 1000/6957 fvu 0.7277 dead 0.016 40s
+[gaussian w16384 s0] step 1500/6957 fvu 0.7258 dead 0.019 64s
+[gaussian w16384 s0] step 2000/6957 fvu 0.7213 dead 0.006 89s
+[2026-11-11 01:59:27] scored gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k8__s0: live 6507, fvu 0.451, L0 8.0, primary window (10, 150) gamma full 0.730 fixed-n 0.730 [120s]
+[gaussian w16384 s0] step 2500/6957 fvu 0.7190 dead 0.002 113s
+[gaussian w16384 s0] step 3000/6957 fvu 0.7175 dead 0.001 137s
+[gaussian w16384 s0] step 3500/6957 fvu 0.7155 dead 0.001 162s
+[gaussian w16384 s0] step 4000/6957 fvu 0.7132 dead 0.001 186s
+[gaussian w16384 s0] step 4500/6957 fvu 0.7132 dead 0.001 210s
+[gaussian w16384 s0] step 5000/6957 fvu 0.7116 dead 0.001 234s
+[gaussian w16384 s0] step 5500/6957 fvu 0.7117 dead 0.001 259s
+[gaussian w16384 s0] step 6000/6957 fvu 0.7103 dead 0.002 283s
+[gaussian w16384 s0] step 6500/6957 fvu 0.7073 dead 0.004 307s
+[gaussian w16384 s0] step 6957/6957 fvu 0.7081 dead 0.009 329s
+saved /workspace/SAE/cache/saes_r2/gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k8__s0 fvu_eval 0.707518868320391
+[2026-11-11 02:03:13] train Q2 gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k16__s0
+[real w16384 s0] step 50/6957 fvu 0.8393 dead 0.000 10s
+[2026-11-11T02:03:35Z] [watchdog] heartbeat: GPU 0%, idle 60s, 485T free, 1770 min to deadline
+[real w16384 s0] step 500/6957 fvu 0.5134 dead 0.000 40s
+[real w16384 s0] step 1000/6957 fvu 0.4128 dead 0.000 72s
+[real w16384 s0] step 1500/6957 fvu 0.4362 dead 0.000 103s
+[2026-11-11 02:05:16] scored gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k8__s0: live 14424, fvu 0.708, L0 8.0, primary window (10, 150) gamma full 0.831 fixed-n 0.832 [123s]
+[real w16384 s0] step 2000/6957 fvu 0.4017 dead 0.002 144s
+[real w16384 s0] step 2500/6957 fvu 0.3888 dead 0.007 178s
+[real w16384 s0] step 3000/6957 fvu 0.3813 dead 0.009 207s
+[real w16384 s0] step 3500/6957 fvu 0.3391 dead 0.005 235s
+[real w16384 s0] step 4000/6957 fvu 0.3830 dead 0.002 263s
+[real w16384 s0] step 4500/6957 fvu 0.3738 dead 0.003 292s
+[real w16384 s0] step 5000/6957 fvu 0.3706 dead 0.003 320s
+[real w16384 s0] step 5500/6957 fvu 0.3795 dead 0.002 349s
+[real w16384 s0] step 6000/6957 fvu 0.3768 dead 0.002 377s
+[real w16384 s0] step 6500/6957 fvu 0.3762 dead 0.002 405s
+saved /workspace/SAE/cache/saes_r2/gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.37739257252305763
+[2026-11-11 02:10:37] train Q2 gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k16__s0
+[gaussian w16384 s0] step 50/6957 fvu 0.8922 dead 0.000 3s
+[gaussian w16384 s0] step 500/6957 fvu 0.6881 dead 0.000 18s
+[gaussian w16384 s0] step 1000/6957 fvu 0.6690 dead 0.000 35s
+[gaussian w16384 s0] step 1500/6957 fvu 0.6652 dead 0.000 52s
+[gaussian w16384 s0] step 2000/6957 fvu 0.6576 dead 0.000 71s
+[gaussian w16384 s0] step 2500/6957 fvu 0.6520 dead 0.000 95s
+[2026-11-11 02:12:39] scored gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k16__s0: live 14514, fvu 0.377, L0 16.0, primary window (10, 150) gamma full 0.673 fixed-n 0.654 [122s]
+[gaussian w16384 s0] step 3000/6957 fvu 0.6489 dead 0.000 121s
+[gaussian w16384 s0] step 3500/6957 fvu 0.6446 dead 0.000 147s
+[gaussian w16384 s0] step 4000/6957 fvu 0.6416 dead 0.001 173s
+[gaussian w16384 s0] step 4500/6957 fvu 0.6414 dead 0.001 199s
+[gaussian w16384 s0] step 5000/6957 fvu 0.6393 dead 0.001 226s
+[gaussian w16384 s0] step 5500/6957 fvu 0.6403 dead 0.002 252s
+[gaussian w16384 s0] step 6000/6957 fvu 0.6389 dead 0.003 278s
+[gaussian w16384 s0] step 6500/6957 fvu 0.6353 dead 0.003 305s
+[gaussian w16384 s0] step 6957/6957 fvu 0.6361 dead 0.013 329s
+saved /workspace/SAE/cache/saes_r2/gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k16__s0 fvu_eval 0.635652557471694
+[2026-11-11 02:16:22] train Q2 gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k24__s0
+[real w16384 s0] step 50/6957 fvu 0.7993 dead 0.000 10s
+[real w16384 s0] step 500/6957 fvu 0.4808 dead 0.000 42s
+[real w16384 s0] step 1000/6957 fvu 0.3762 dead 0.000 75s
+[real w16384 s0] step 1500/6957 fvu 0.3965 dead 0.000 105s
+[2026-11-11 02:18:30] scored gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k16__s0: live 14472, fvu 0.636, L0 16.0, primary window (10, 150) gamma full 0.452 fixed-n 0.464 [128s]
+[real w16384 s0] step 2000/6957 fvu 0.3606 dead 0.000 140s
+[real w16384 s0] step 2500/6957 fvu 0.3450 dead 0.002 176s
+[real w16384 s0] step 3000/6957 fvu 0.3390 dead 0.003 206s
+[real w16384 s0] step 3500/6957 fvu 0.2996 dead 0.002 237s
+[real w16384 s0] step 4000/6957 fvu 0.3383 dead 0.001 267s
+[real w16384 s0] step 4500/6957 fvu 0.3310 dead 0.002 297s
+[real w16384 s0] step 5000/6957 fvu 0.3257 dead 0.001 327s
+[real w16384 s0] step 5500/6957 fvu 0.3347 dead 0.001 357s
+[real w16384 s0] step 6000/6957 fvu 0.3326 dead 0.001 387s
+[real w16384 s0] step 6500/6957 fvu 0.3319 dead 0.001 417s
+saved /workspace/SAE/cache/saes_r2/gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k24__s0 fvu_eval 0.33461201731096646
+[2026-11-11 02:24:00] train Q2 gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k24__s0
+[gaussian w16384 s0] step 50/6957 fvu 0.8551 dead 0.000 3s
+[gaussian w16384 s0] step 500/6957 fvu 0.6506 dead 0.000 20s
+[gaussian w16384 s0] step 1000/6957 fvu 0.6275 dead 0.000 39s
+[gaussian w16384 s0] step 1500/6957 fvu 0.6175 dead 0.000 58s
+[gaussian w16384 s0] step 2000/6957 fvu 0.6082 dead 0.000 77s
+[gaussian w16384 s0] step 2500/6957 fvu 0.6029 dead 0.000 96s
+[2026-11-11 02:26:03] scored gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k24__s0: live 15468, fvu 0.335, L0 24.0, primary window (10, 150) gamma full 0.582 fixed-n 0.559 [124s]
+[gaussian w16384 s0] step 3000/6957 fvu 0.6005 dead 0.000 115s
+[gaussian w16384 s0] step 3500/6957 fvu 0.5971 dead 0.000 134s
+[gaussian w16384 s0] step 4000/6957 fvu 0.5939 dead 0.000 153s
+[gaussian w16384 s0] step 4500/6957 fvu 0.5932 dead 0.000 173s
+[gaussian w16384 s0] step 5000/6957 fvu 0.5911 dead 0.000 192s
+[gaussian w16384 s0] step 5500/6957 fvu 0.5919 dead 0.000 212s
+[gaussian w16384 s0] step 6000/6957 fvu 0.5905 dead 0.000 232s
+[gaussian w16384 s0] step 6500/6957 fvu 0.5866 dead 0.000 253s
+[gaussian w16384 s0] step 6957/6957 fvu 0.5879 dead 0.000 276s
+saved /workspace/SAE/cache/saes_r2/gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k24__s0 fvu_eval 0.5869836864408235
+[2026-11-11 02:28:51] train Q2 gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k32__s0
+[real w16384 s0] step 50/6957 fvu 0.7680 dead 0.000 10s
+[real w16384 s0] step 500/6957 fvu 0.4607 dead 0.000 44s
+[real w16384 s0] step 1000/6957 fvu 0.3535 dead 0.000 78s
+[real w16384 s0] step 1500/6957 fvu 0.3714 dead 0.000 110s
+[2026-11-11 02:30:46] scored gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k24__s0: live 16300, fvu 0.587, L0 24.0, primary window (10, 150) gamma full 0.550 fixed-n 0.558 [115s]
+[real w16384 s0] step 2000/6957 fvu 0.3337 dead 0.000 145s
+[real w16384 s0] step 2500/6957 fvu 0.3172 dead 0.000 178s
+[real w16384 s0] step 3000/6957 fvu 0.3118 dead 0.000 209s
+[real w16384 s0] step 3500/6957 fvu 0.2725 dead 0.000 241s
+[real w16384 s0] step 4000/6957 fvu 0.3095 dead 0.000 273s
+[2026-11-11T02:33:37Z] [watchdog] heartbeat: GPU 0%, idle 60s, 484T free, 1740 min to deadline
+[real w16384 s0] step 4500/6957 fvu 0.3022 dead 0.000 305s
+[real w16384 s0] step 5000/6957 fvu 0.2976 dead 0.000 336s
+[real w16384 s0] step 5500/6957 fvu 0.3069 dead 0.000 368s
+[real w16384 s0] step 6000/6957 fvu 0.3052 dead 0.000 399s
+[real w16384 s0] step 6500/6957 fvu 0.3043 dead 0.000 431s
+saved /workspace/SAE/cache/saes_r2/gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.3071701902340117
+[2026-11-11 02:36:43] train Q2 gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k32__s0
+[gaussian w16384 s0] step 50/6957 fvu 0.8239 dead 0.000 3s
+[gaussian w16384 s0] step 500/6957 fvu 0.6207 dead 0.000 22s
+[gaussian w16384 s0] step 1000/6957 fvu 0.5934 dead 0.000 43s
+[gaussian w16384 s0] step 1500/6957 fvu 0.5814 dead 0.000 64s
+[gaussian w16384 s0] step 2000/6957 fvu 0.5729 dead 0.000 85s
+[2026-11-11 02:38:36] scored gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k32__s0: live 15937, fvu 0.307, L0 32.0, primary window (10, 150) gamma full 0.545 fixed-n 0.519 [112s]
+[gaussian w16384 s0] step 2500/6957 fvu 0.5678 dead 0.000 106s
+[gaussian w16384 s0] step 3000/6957 fvu 0.5660 dead 0.000 127s
+[gaussian w16384 s0] step 3500/6957 fvu 0.5626 dead 0.000 148s
+[gaussian w16384 s0] step 4000/6957 fvu 0.5599 dead 0.000 169s
+[gaussian w16384 s0] step 4500/6957 fvu 0.5597 dead 0.000 190s
+[gaussian w16384 s0] step 5000/6957 fvu 0.5578 dead 0.000 212s
+[gaussian w16384 s0] step 5500/6957 fvu 0.5585 dead 0.000 233s
+[gaussian w16384 s0] step 6000/6957 fvu 0.5575 dead 0.000 254s
+[gaussian w16384 s0] step 6500/6957 fvu 0.5540 dead 0.000 275s
+[gaussian w16384 s0] step 6957/6957 fvu 0.5545 dead 0.000 294s
+saved /workspace/SAE/cache/saes_r2/gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k32__s0 fvu_eval 0.5538662330737556
+[2026-11-11 02:41:53] train Q2 gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k48__s0
+[real w16384 s0] step 50/6957 fvu 0.7204 dead 0.000 10s
+[real w16384 s0] step 500/6957 fvu 0.4344 dead 0.000 46s
+[real w16384 s0] step 1000/6957 fvu 0.3265 dead 0.000 85s
+[2026-11-11 02:43:48] scored gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k32__s0: live 16384, fvu 0.554, L0 32.0, primary window (10, 150) gamma full 0.561 fixed-n 0.565 [115s]
+[real w16384 s0] step 1500/6957 fvu 0.3396 dead 0.000 120s
+[real w16384 s0] step 2000/6957 fvu 0.3027 dead 0.000 159s
+[real w16384 s0] step 2500/6957 fvu 0.2846 dead 0.000 191s
+[real w16384 s0] step 3000/6957 fvu 0.2804 dead 0.000 218s
+[real w16384 s0] step 3500/6957 fvu 0.2416 dead 0.000 244s
+[real w16384 s0] step 4000/6957 fvu 0.2757 dead 0.000 271s
+[real w16384 s0] step 4500/6957 fvu 0.2686 dead 0.000 298s
+[real w16384 s0] step 5000/6957 fvu 0.2640 dead 0.000 326s
+[real w16384 s0] step 5500/6957 fvu 0.2723 dead 0.000 354s
+[real w16384 s0] step 6000/6957 fvu 0.2710 dead 0.000 383s
+[real w16384 s0] step 6500/6957 fvu 0.2707 dead 0.000 411s
+saved /workspace/SAE/cache/saes_r2/gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k48__s0 fvu_eval 0.2729167513139569
+[2026-11-11 02:49:49] train Q2 gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k48__s0
+[gaussian w16384 s0] step 50/6957 fvu 0.7734 dead 0.000 3s
+[gaussian w16384 s0] step 500/6957 fvu 0.5739 dead 0.000 25s
+[gaussian w16384 s0] step 1000/6957 fvu 0.5428 dead 0.000 50s
+[gaussian w16384 s0] step 1500/6957 fvu 0.5321 dead 0.000 75s
+[2026-11-11 02:51:38] scored gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k48__s0: live 16355, fvu 0.273, L0 48.0, primary window (10, 150) gamma full 0.485 fixed-n 0.460 [110s]
+[gaussian w16384 s0] step 2000/6957 fvu 0.5241 dead 0.000 100s
+[gaussian w16384 s0] step 2500/6957 fvu 0.5195 dead 0.000 125s
+[gaussian w16384 s0] step 3000/6957 fvu 0.5180 dead 0.000 150s
+[gaussian w16384 s0] step 3500/6957 fvu 0.5152 dead 0.000 175s
+[gaussian w16384 s0] step 4000/6957 fvu 0.5129 dead 0.000 203s
+[gaussian w16384 s0] step 4500/6957 fvu 0.5127 dead 0.000 237s
+[gaussian w16384 s0] step 5000/6957 fvu 0.5115 dead 0.000 270s
+[gaussian w16384 s0] step 5500/6957 fvu 0.5122 dead 0.000 303s
+[gaussian w16384 s0] step 6000/6957 fvu 0.5112 dead 0.000 337s
+[gaussian w16384 s0] step 6500/6957 fvu 0.5074 dead 0.000 371s
+[gaussian w16384 s0] step 6957/6957 fvu 0.5084 dead 0.000 403s
+saved /workspace/SAE/cache/saes_r2/gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k48__s0 fvu_eval 0.5074719767197565
+[2026-11-11 02:56:50] train Q2 gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k64__s0
+[real w16384 s0] step 50/6957 fvu 0.6847 dead 0.000 14s
+[real w16384 s0] step 500/6957 fvu 0.4167 dead 0.000 67s
+[2026-11-11 02:58:42] scored gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k48__s0: live 16384, fvu 0.507, L0 48.0, primary window (10, 150) gamma full 0.498 fixed-n 0.502 [112s]
+[real w16384 s0] step 1000/6957 fvu 0.3099 dead 0.000 139s
+[real w16384 s0] step 1500/6957 fvu 0.3210 dead 0.000 209s
+[real w16384 s0] step 2000/6957 fvu 0.2841 dead 0.000 285s
+[real w16384 s0] step 2500/6957 fvu 0.2664 dead 0.000 344s
+[2026-11-11T03:03:40Z] [watchdog] heartbeat: GPU 100%, idle 0s, 483T free, 1710 min to deadline
+[real w16384 s0] step 3000/6957 fvu 0.2628 dead 0.000 415s
+[real w16384 s0] step 3500/6957 fvu 0.2248 dead 0.000 478s
+[real w16384 s0] step 4000/6957 fvu 0.2563 dead 0.000 539s
+[real w16384 s0] step 4500/6957 fvu 0.2498 dead 0.000 592s
+[real w16384 s0] step 5000/6957 fvu 0.2458 dead 0.000 652s
+[real w16384 s0] step 5500/6957 fvu 0.2524 dead 0.000 715s
+[real w16384 s0] step 6000/6957 fvu 0.2515 dead 0.000 778s
+[real w16384 s0] step 6500/6957 fvu 0.2510 dead 0.000 842s
+saved /workspace/SAE/cache/saes_r2/gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k64__s0 fvu_eval 0.2527542328910768
+[2026-11-11 03:12:09] train Q2 gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k64__s0
+[gaussian w16384 s0] step 50/6957 fvu 0.7341 dead 0.000 7s
+[gaussian w16384 s0] step 500/6957 fvu 0.5384 dead 0.000 53s
+[2026-11-11 03:14:00] scored gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k64__s0: live 16377, fvu 0.253, L0 64.0, primary window (10, 150) gamma full 0.438 fixed-n 0.419 [111s]
+[gaussian w16384 s0] step 1000/6957 fvu 0.5067 dead 0.000 104s
+[gaussian w16384 s0] step 1500/6957 fvu 0.4962 dead 0.000 153s
+[gaussian w16384 s0] step 2000/6957 fvu 0.4893 dead 0.000 214s
+[gaussian w16384 s0] step 2500/6957 fvu 0.4853 dead 0.000 274s
+[gaussian w16384 s0] step 3000/6957 fvu 0.4842 dead 0.000 334s
+[gaussian w16384 s0] step 3500/6957 fvu 0.4818 dead 0.000 393s
+[gaussian w16384 s0] step 4000/6957 fvu 0.4798 dead 0.000 445s
+[gaussian w16384 s0] step 4500/6957 fvu 0.4796 dead 0.000 506s
+[gaussian w16384 s0] step 5000/6957 fvu 0.4781 dead 0.000 566s
+[gaussian w16384 s0] step 5500/6957 fvu 0.4790 dead 0.000 627s
+[gaussian w16384 s0] step 6000/6957 fvu 0.4779 dead 0.000 678s
+[gaussian w16384 s0] step 6500/6957 fvu 0.4743 dead 0.000 737s
+[gaussian w16384 s0] step 6957/6957 fvu 0.4751 dead 0.000 793s
+saved /workspace/SAE/cache/saes_r2/gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k64__s0 fvu_eval 0.47425629217483384
+[2026-11-11 03:25:42] train Q2 gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k128__s0
+[real w16384 s0] step 50/6957 fvu 0.6004 dead 0.000 17s
+[2026-11-11 03:27:28] scored gemma-2-2b__blocks.13.hook_resid_post__gaussian__w16384__k64__s0: live 16384, fvu 0.474, L0 64.0, primary window (10, 150) gamma full 0.464 fixed-n 0.466 [107s]
+[real w16384 s0] step 500/6957 fvu 0.3714 dead 0.000 116s
+[real w16384 s0] step 1000/6957 fvu 0.2726 dead 0.000 225s
+[real w16384 s0] step 1500/6957 fvu 0.2809 dead 0.000 281s
+[real w16384 s0] step 2000/6957 fvu 0.2481 dead 0.000 340s
+[real w16384 s0] step 2500/6957 fvu 0.2317 dead 0.000 392s
+[real w16384 s0] step 3000/6957 fvu 0.2279 dead 0.000 437s
+[2026-11-11T03:33:42Z] [watchdog] heartbeat: GPU 47%, idle 0s, 482T free, 1680 min to deadline
+[real w16384 s0] step 3500/6957 fvu 0.1929 dead 0.000 483s
+[real w16384 s0] step 4000/6957 fvu 0.2192 dead 0.000 529s
+[real w16384 s0] step 4500/6957 fvu 0.2128 dead 0.000 574s
+[real w16384 s0] step 5000/6957 fvu 0.2094 dead 0.000 619s
+[real w16384 s0] step 5500/6957 fvu 0.2145 dead 0.000 665s
+[real w16384 s0] step 6000/6957 fvu 0.2121 dead 0.000 711s
+[real w16384 s0] step 6500/6957 fvu 0.2110 dead 0.000 756s
+Traceback (most recent call last):
+  File "/workspace/SAE/train_sae.py", line 349, in <module>
+    main()
+  File "/workspace/SAE/train_sae.py", line 330, in main
+    sae, info = train(args)
+                ^^^^^^^^^^^
+  File "/workspace/SAE/train_sae.py", line 297, in train
+    recon, (v, i), _ = sae(x)
+                       ^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/SAE/train_sae.py", line 67, in forward
+    return (v.unsqueeze(-1) * self.W_dec[i]).sum(1) + self.b_dec, (v, i), pre
+            ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 9.00 GiB. GPU 0 has a total capacity of 31.37 GiB of which 7.71 GiB is free. Including non-PyTorch memory, this process has 23.66 GiB memory in use. Of the allocated memory 13.74 GiB is allocated by PyTorch, and 9.60 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Traceback (most recent call last):
+  File "/workspace/SAE/experiments/r2_job_real.py", line 335, in <module>
+    main()
+  File "/workspace/SAE/experiments/r2_job_real.py", line 315, in main
+    layer_block(scorer, "Q2", Q2_LAYER, q2, keep=True)
+  File "/workspace/SAE/experiments/r2_job_real.py", line 287, in layer_block
+    run(scorer, "Q5" if r[1] == "sparse" else step, *r)
+  File "/workspace/SAE/experiments/r2_job_real.py", line 234, in run
+    py(ROOT / "train_sae.py", "--model", MODEL, "--hook", hook(layer), "--cond", cond, "--width", WIDTH, "--k", k,
+  File "/workspace/SAE/experiments/r2_common.py", line 41, in py
+    subprocess.run([sys.executable, "-u", *map(str, args)], check=True, cwd=ROOT, env=os.environ)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/workspace/SAE/.venv/bin/python', '-u', '/workspace/SAE/train_sae.py', '--model', 'gemma-2-2b', '--hook', 'blocks.13.hook_resid_post', '--cond', 'real', '--width', '16384', '--k', '128', '--tokens', '10000000', '--eval_tokens', '500000', '--epochs', '3', '--seed', '0', '--out', 'cache/saes_r2']' returned non-zero exit status 1.
+[2026-11-11T03:39:10Z] [launcher] wrote results/r2/r2_job_real.FAILED: exit_code=1 reason=job exited 1
+[2026-11-11T03:39:10Z] [launcher] grace period 20 min before stopping the pod: pull results now (gpu/pull_r2.sh)
+[2026-11-11T03:59:13Z] [launcher] STOPPING POD (c13cm09747g37y): job finished (status=FAILED)
+[2026-11-11T03:59:13Z] [launcher] terminated via REST v2 action

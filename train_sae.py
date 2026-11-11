@@ -13,6 +13,22 @@ fresh samples for gaussian.
 --drop_dim D --drop_frac f drops tokens whose |x_D| exceeds the (1-f) quantile of the first training chunk
 (e.g. Gemma's massive-activation dimension 1170), in training and eval; real/scrambled only.
 On CUDA, chunks move to the GPU and shuffling/scrambling run there; the CPU/MPS path is unchanged.
+--whiten_ridge r (real data only; off by default, and with it off nothing below changes): train on whitened inputs
+    x_w = (Sigma + eps I)^{-1/2} (x - mu),   eps = r * mean eigenvalue of Sigma,
+with mu, Sigma from stats.npz (all cached tokens). The constant input scale is then computed from x_w's own mean (0)
+and covariance, so E||c x_w||^2 = d as for every other run, and W_dec lives in whitened space. Map a decoder row w
+back with w (Sigma + eps I)^{1/2} (whiten_mats). Eval FVU and firing counts are in whitened space.
+--cond sparse (off unless chosen; other conditions are unchanged): a sparse covariance-matched null,
+    x = mu + s A,   A = R Sigma^{1/2}  (M x d),
+R (M x d) = Q from the reduced QR of an M x d standard-normal matrix (numpy default_rng(5_000_000 + data_seed)), so
+R^T R = I_d; Sigma^{1/2} the symmetric PSD root of stats.npz's cov. s has i.i.d. entries: nonzero with probability
+p = L / M, nonzero values N(0, 1) / sqrt(p) (zero mean, variance 1/p), so E[s] = 0, Cov(s) = I_M and
+Cov(x) = Sigma^{1/2} R^T R Sigma^{1/2} = Sigma exactly in expectation; mu and Sigma are those the gaussian cond uses.
+--sparse_M (65536 sources), --sparse_L (64 expected active per token), --data_seed (dictionary and token streams;
+separate from --seed, which sets only the SAE init). Tokens are drawn per batch on the GPU (CPU generator off CUDA):
+training epoch e uses seed 7_000_000 + 1000 * data_seed + e, eval 9_000_000 + 1000 * data_seed (held out), and a 1M-token
+check sample 8_000_000 + 1000 * data_seed whose covariance eigenvalues and relative Frobenius error against Sigma
+are written to train.json ("sparse"). Like gaussian, it runs from stats.npz alone.
 """
 import argparse
 import json
@@ -111,6 +127,49 @@ def batches(cond, acts, lo, hi, stats, seed, d, batch, scale, dev, shuffle=True,
         del x
 
 
+def whiten_mats(cov, ridge):
+    """(Sigma + eps I)^{-1/2}, (Sigma + eps I)^{1/2} and eps = ridge * mean eigenvalue, all float64."""
+    lam, U = np.linalg.eigh(cov)
+    lam = np.clip(lam, 0, None)
+    eps = ridge * lam.mean()
+    return (U / np.sqrt(lam + eps)) @ U.T, (U * np.sqrt(lam + eps)) @ U.T, float(eps)
+
+
+def sparse_dictionary(cov, M, data_seed):
+    """A = R Sigma^{1/2} (float32, M x d) for --cond sparse; deterministic in (cov, M, data_seed), any device."""
+    lam, U = np.linalg.eigh(cov)
+    root = (U * np.sqrt(np.clip(lam, 0, None))) @ U.T
+    R, _ = np.linalg.qr(np.random.default_rng(5_000_000 + data_seed).standard_normal((M, cov.shape[0])))
+    return (R @ root).astype(np.float32)
+
+
+def sparse_batches(sp, n, batch, seed, scale, dev):
+    """n // batch batches of x = (mu + s A) * scale for --cond sparse (see docstring)."""
+    gdev = "cuda" if dev == "cuda" else "cpu"
+    gen = torch.Generator(device=gdev).manual_seed(seed)
+    A, mu, p = sp["A"], sp["mu"], sp["p"]
+    M, d = A.shape
+    for _ in range(n // batch):
+        r, c = (torch.rand(batch, M, generator=gen, device=gdev) < p).nonzero(as_tuple=True)
+        v = torch.randn(len(r), generator=gen, device=gdev) / math.sqrt(p)
+        x = torch.zeros(batch, d, device=dev).index_add_(0, r.to(dev), A[c.to(dev)] * v.to(dev)[:, None])
+        yield (x + mu) * scale
+
+
+def sparse_check(sp, cov, data_seed, dev, n=1_000_000, batch=4096):
+    """Covariance of an n-token check sample (raw units, float64): eigenvalues and relative Frobenius error."""
+    d = cov.shape[0]
+    s, G, k = np.zeros(d), np.zeros((d, d)), 0
+    for x in sparse_batches(sp, n, batch, 8_000_000 + 1000 * data_seed, 1.0, dev):
+        x = x.double() if dev == "cuda" else x.cpu().double()
+        s += x.sum(0).cpu().numpy()
+        G += (x.T @ x).cpu().numpy()
+        k += len(x)
+    C = (G - np.outer(s, s) / k) / (k - 1)
+    return {"n": k, "eigenvalues": np.sort(np.linalg.eigvalsh(C))[::-1].tolist(),
+            "rel_frob_err": float(np.linalg.norm(C - cov) / np.linalg.norm(cov))}
+
+
 def git_hash():
     try:
         return subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True,
@@ -130,11 +189,33 @@ def train(args):
         acts = np.load(act_dir / "acts.npy", mmap_mode="r")
         n_total, d = acts.shape
     else:  # stats-only directory: Gaussian null can run from (mean, cov) alone
-        assert args.cond == "gaussian", f"{act_dir} has no acts.npy; only --cond gaussian can run from stats"
+        assert args.cond in ("gaussian", "sparse"), f"{act_dir} has no acts.npy; only gaussian/sparse run from stats"
         acts, d = None, len(stats["mean"])
         n_total = args.tokens + args.eval_tokens
     n_train = min(args.tokens, n_total - args.eval_tokens)
+    wt = None
+    if args.whiten_ridge is not None:  # whitened inputs (see docstring); wt stays None otherwise
+        assert args.cond == "real" and args.drop_dim is None, "--whiten_ridge applies to real data without --drop_dim"
+        P, _, eps = whiten_mats(stats["cov"], args.whiten_ridge)
+        wt = {"mu": torch.tensor(stats["mean"], dtype=torch.float32, device=dev),
+              "P": torch.tensor(P, dtype=torch.float32, device=dev), "eps": eps}
+        stats = {"mean": np.zeros(d), "cov": P @ stats["cov"] @ P, "n": stats["n"]}
     scale = math.sqrt(d / (np.trace(stats["cov"]) + stats["mean"] @ stats["mean"]))
+    bscale = scale if wt is None else 1.0  # whitening needs raw-unit batches; it applies `scale` itself
+
+    def feed(gen):
+        return gen if wt is None else (((x - wt["mu"]) @ wt["P"]) * scale for x in gen)
+
+    sp, sp_info = None, {}
+    if args.cond == "sparse":  # sparse covariance-matched null (see docstring); sp stays None otherwise
+        p_act = args.sparse_L / args.sparse_M
+        sp = {"A": torch.tensor(sparse_dictionary(stats["cov"], args.sparse_M, args.data_seed), device=dev),
+              "mu": torch.tensor(stats["mean"], dtype=torch.float32, device=dev), "p": p_act}
+        sp_info = {"sparse": {"M": args.sparse_M, "L": args.sparse_L, "p": p_act, "data_seed": args.data_seed,
+                              "values": "N(0,1)/sqrt(p)", "dict_seed": 5_000_000 + args.data_seed,
+                              "train_seed": f"7_000_000 + 1000*{args.data_seed} + epoch",
+                              "eval_seed": 9_000_000 + 1000 * args.data_seed,
+                              "check": sparse_check(sp, stats["cov"], args.data_seed, dev)}}
     drop = None
     if args.drop_dim is not None:
         assert args.cond != "gaussian", "--drop_dim applies to real/scrambled data"
@@ -155,8 +236,11 @@ def train(args):
     log = []
     def stream():
         for epoch in range(args.epochs):
-            yield from batches(args.cond, acts, 0, n_train, stats, args.seed + 1000 * epoch, d, args.batch, scale,
-                               dev, drop=drop)
+            if sp is not None:
+                yield from sparse_batches(sp, n_train, args.batch, 7_000_000 + 1000 * args.data_seed + epoch, scale, dev)
+                continue
+            yield from feed(batches(args.cond, acts, 0, n_train, stats, args.seed + 1000 * epoch, d, args.batch,
+                                    bscale, dev, drop=drop))
 
     for x in stream():
         if step >= n_steps:
@@ -198,30 +282,33 @@ def train(args):
     log.append({"step": step, "fvu": fvu.item(), "dead_frac": dead.float().mean().item()})
 
     # Eval: FVU and per-latent firing counts on held-out / fresh data. Two passes over the same eval stream (seeded): mean first, then errors and firings.
-    eval_args = (args.cond, acts, n_train, n_train + args.eval_tokens, stats, 10_000 + args.seed, d, 8192, scale, dev)
+    eval_args = (args.cond, acts, n_train, n_train + args.eval_tokens, stats, 10_000 + args.seed, d, 8192, bscale, dev)
     eval_kw = {"drop": drop}
     fires = torch.zeros(args.width, device=dev)
     se, sv, mu_e, n_e = 0.0, 0.0, torch.zeros(d, device=dev), 0
     with torch.no_grad():
-        for x in batches(*eval_args, shuffle=False, **eval_kw):
+        for x in (feed(batches(*eval_args, shuffle=False, **eval_kw)) if sp is None else
+                  sparse_batches(sp, args.eval_tokens, 8192, 9_000_000 + 1000 * args.data_seed, scale, dev)):
             mu_e += x.sum(0)
             n_e += len(x)
         mu_e /= n_e
-        for x in batches(*eval_args, shuffle=False, **eval_kw):
+        for x in (feed(batches(*eval_args, shuffle=False, **eval_kw)) if sp is None else
+                  sparse_batches(sp, args.eval_tokens, 8192, 9_000_000 + 1000 * args.data_seed, scale, dev)):
             recon, (v, i), _ = sae(x)
             fires.scatter_add_(0, i.flatten(), (v.flatten() > 0).float())
             se += (x - recon).pow(2).sum().item()
             sv += (x - mu_e).pow(2).sum().item()
     return sae, {"fvu_eval": se / sv, "fires": fires.cpu().numpy(), "train_log": log, "lr": lr,
                  "n_train_tokens": step * args.batch, "n_eval_tokens": n_e, "input_scale": scale, "seconds": time.time() - t0,
-                 "device": dev, "drop_threshold": drop[1] if drop else None}
+                 "device": dev, "drop_threshold": drop[1] if drop else None} | (
+                 {"whiten": {"ridge": args.whiten_ridge, "eps": wt["eps"]}} if wt else {}) | sp_info
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="pythia-70m")
     ap.add_argument("--hook", default="blocks.3.hook_resid_post")
-    ap.add_argument("--cond", choices=["real", "gaussian", "scrambled"], default="real")
+    ap.add_argument("--cond", choices=["real", "gaussian", "scrambled", "sparse"], default="real")
     ap.add_argument("--width", type=int, default=4096)
     ap.add_argument("--k", type=int, default=32)
     ap.add_argument("--tokens", type=int, default=19_000_000)
@@ -235,16 +322,26 @@ def main():
     ap.add_argument("--epochs", type=int, default=1)
     ap.add_argument("--drop_dim", type=int, default=None)
     ap.add_argument("--drop_frac", type=float, default=0.001)
+    ap.add_argument("--whiten_ridge", type=float, default=None, help="train on whitened inputs (see docstring)")
+    ap.add_argument("--sparse_M", type=int, default=65536, help="--cond sparse: number of sources")
+    ap.add_argument("--sparse_L", type=float, default=64, help="--cond sparse: expected active sources per token")
+    ap.add_argument("--data_seed", type=int, default=0, help="--cond sparse: dictionary and token-stream seed")
     args = ap.parse_args()
     sae, info = train(args)
     name = f"{args.model}__{args.hook}__{args.cond}__w{args.width}__k{args.k}__s{args.seed}"
     if args.drop_dim is not None:
         name += f"__drop{args.drop_dim}q{args.drop_frac:g}"
+    if args.whiten_ridge is not None:
+        name += "__white"
+    if args.cond == "sparse":
+        name += f"__ds{args.data_seed}"
     out = ROOT / args.out / name
     out.mkdir(parents=True, exist_ok=True)
     np.save(out / "W_dec.npy", sae.W_dec.detach().cpu().numpy())
     np.save(out / "fires.npy", info.pop("fires"))
-    json.dump({"config": vars(args) | {"git_hash": git_hash()}} | info, open(out / "train.json", "w"), indent=1)
+    cfg = {k: v for k, v in vars(args).items() if not (k == "whiten_ridge" and v is None)  # off: config as before
+           and not (k in ("sparse_M", "sparse_L", "data_seed") and args.cond != "sparse")}
+    json.dump({"config": cfg | {"git_hash": git_hash()}} | info, open(out / "train.json", "w"), indent=1)
     print("saved", out, "fvu_eval", info["fvu_eval"])
 
 

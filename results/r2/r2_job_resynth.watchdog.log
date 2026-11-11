@@ -1,0 +1,19 @@
+[2026-11-10T17:14:53Z] [watchdog] watchdog up (pid 883): deadline 2026-11-11T05:14:53Z, idle guard <5% for 1800s, check every 60s
+[2026-11-10T17:43:54Z] [watchdog] heartbeat: GPU 99%, idle 0s, 35G free, 690 min to deadline
+[2026-11-10T18:13:56Z] [watchdog] heartbeat: GPU 99%, idle 0s, 34G free, 660 min to deadline
+[2026-11-10T18:43:57Z] [watchdog] heartbeat: GPU 0%, idle 60s, 34G free, 630 min to deadline
+[2026-11-10T19:13:58Z] [watchdog] heartbeat: GPU 100%, idle 0s, 33G free, 600 min to deadline
+[2026-11-10T19:43:59Z] [watchdog] heartbeat: GPU 100%, idle 0s, 32G free, 570 min to deadline
+[2026-11-10T20:14:01Z] [watchdog] heartbeat: GPU 99%, idle 0s, 31G free, 540 min to deadline
+[2026-11-10T20:44:02Z] [watchdog] heartbeat: GPU 100%, idle 0s, 31G free, 510 min to deadline
+[2026-11-10T21:14:04Z] [watchdog] heartbeat: GPU 100%, idle 0s, 30G free, 480 min to deadline
+[2026-11-10T21:44:05Z] [watchdog] heartbeat: GPU 99%, idle 0s, 29G free, 450 min to deadline
+[2026-11-10T22:14:07Z] [watchdog] heartbeat: GPU 0%, idle 60s, 28G free, 420 min to deadline
+[2026-11-10T22:44:09Z] [watchdog] heartbeat: GPU 55%, idle 0s, 28G free, 390 min to deadline
+[2026-11-10T23:14:10Z] [watchdog] heartbeat: GPU 99%, idle 0s, 27G free, 360 min to deadline
+[2026-11-10T23:44:11Z] [watchdog] heartbeat: GPU 99%, idle 0s, 26G free, 330 min to deadline
+[2026-11-11T00:14:12Z] [watchdog] heartbeat: GPU 48%, idle 0s, 25G free, 300 min to deadline
+[2026-11-11T00:44:15Z] [watchdog] heartbeat: GPU 99%, idle 0s, 25G free, 270 min to deadline
+[2026-11-11T01:14:16Z] [watchdog] heartbeat: GPU 99%, idle 0s, 24G free, 240 min to deadline
+[2026-11-11T01:44:17Z] [watchdog] heartbeat: GPU 100%, idle 0s, 23G free, 210 min to deadline
+[2026-11-11T02:14:19Z] [watchdog] heartbeat: GPU 100%, idle 0s, 22G free, 180 min to deadline

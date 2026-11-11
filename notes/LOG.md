@@ -887,3 +887,186 @@ Doc now at rev 50; paper/writeup.tex and the PDF are regenerated.
 - Bulk basis γ 0.81 / 0.70 / 0.57 / 0.43 / 0.37 (R² 0.95–0.99).
 - Basis γ in ranks 10–150 now sits 0.01–0.04 below rank γ at low L0 (0.71 against 0.72 at L0 = 22). The 0.08–0.12 gap was mostly the 200k Σ.
 - Write-up updated with the 1M-token Σ (doc rev 53; LaTeX and PDF regenerated, 20 pages). Changes: the opening summary (layer-profile r +0.75–0.92), the Σ layer profile and a "Why 1M tokens" paragraph, the matrix-test limits (1M benchmark), the layer-12 law (1.229 − 0.112, and bulk slopes), mid-stack γ (0.44 / 0.64 / 0.48, now also peaking in the bulk), the summary table rows, the Figure 3 caption (still drawn with the 200k Σ), and the open questions (Σ convergence; why the bulk inherits more of Σ).
+
+## Local analyses, batch A (2026-11-10)
+
+Scripts `experiments/review4_*.py`; outputs in `results/review/`. Each script's docstring states its analysis choices, written before the results.
+
+**Li et al. Sec 5.1 protocol (`review4_li_protocol.py` → `li_protocol.json`).** The released notebook has no activation-spectrum code. Its decoder fit is ranks 11–150 of the full centred covariance, and the "100 PCs, top-100 fit" in the text equals ranks 1–100 of the full spectrum: the randomized PCA solver moves the slope by 0.005. Li's SAE (L12 65k L0 72) has decoder slope −0.462 (ranks 1–100) and −0.468 (11–150).
+- L12, 1M tokens, ranks 1–100. Raw centred −0.923, uncentred −1.031 (top eigenvalue 36% of the trace), unit-norm tokens −0.880, unit-norm uncentred −1.012, correlation matrix −0.446.
+- Token count, random draws, ranks 1–100: −0.63 (256 tokens), −0.78 (1,024), −0.88 (4,096), −0.92 (65,536).
+- SAE codes (8,192 tokens, measured L0 75.8): −0.987; binary firing indicators −0.668.
+- 26 layers, 32,736 tokens, Li's SAEs: the activation spectrum is steeper than the decoder at 26/26 layers under raw, unit-norm and correlation preprocessing, in ranks 1–100 and 11–150. The 1M Σ agrees.
+- Only the per-dimension-standardised 1M-token correlation matrix at L12 is level (γ 1.03 in ranks 1–100, 0.96 in 11–150).
+- Li's "activations decay much slower" could not be reproduced under any protocol tried. γ < 1 is robust to centring, normalisation, token count, window, layer, and to taking SAE codes as "activations".
+
+**Cross-layer r with autocorrelation (`review4_layer_r_ci.py` → `layer_r_ci.json`).** Effective n = 4.8–8.4 of 26 layers (Bartlett). L0 40 and 70 in the top windows hold up. For example, 16k L0 40 ranks 11–150 gives r 0.922, n_eff 6.5, p 0.003, CI [0.50, 0.99], phase-surrogate p < 1e-4, block-bootstrap CI [0.77, 0.99].
+- Ranks 101–1000 at 16k: phase p 0.08–0.18. At L0 140 r is 0.37–0.81, with every p > 0.13 (n_eff Fisher, phase and circular-shift).
+- Circular shift has a resolution of 1/26; p = 0.038 is its floor.
+- Cluster Spearman: the top-window excess share and cos (−0.83 to −0.91) survive, with n_eff 9–10, phase p ≤ 0.0004 and shift p 0.038. The bulk-window ρ are not significant.
+
+**Causal layer table (`review4_causal_layers.py` → `causal_layers.json`).** 16k, ranks 11–150 raw decoder slopes: real −0.290/−0.481/−0.292 against Σ-only Gaussian −0.424/−0.505/−0.507 at L3/13/23.
+
+**Scrambled null at L23.** diag(Σ) is not a small denominator at L23: in ranks 11–150 it is −0.905 against Σ's −0.749. The scrambled γ of 1.08 there comes from a steep scrambled decoder (−0.976). Marginal kurtosis does not explain it either: L23's high-variance coordinates are the least heavy-tailed of the three layers (median excess kurtosis 0.12 in ranks 11–150). The cause remains unexplained.
+
+**Live-count bias (`review4_live_count.py` → `live_count.json`).** Unit-norm Gaussian clouds with covariance Σ₁₃^g, ranks 11–150:
+- True γ 1.0 measures 0.741 at n = 672, 0.861 at 2,000, 0.928 at 4,786 and 0.974 at 16,384. True 0.5 measures 0.29 at 672 (the log said 0.32).
+- The measured k = 1 value of 1.034 (672 live) corrects to 1.25. "γ ≈ 1 at L0 = 1" does not survive.
+- Corrected real γ(k) runs 1.25, 1.04, 0.92, 0.80, 0.71, 0.56, 0.41 (k 1–128). The fit is 1.18 − 0.115 log₂k (R² 0.98), against the measured 1.016 − 0.094.
+- Gaussian-null k ≤ 4 values correct to 1.36–1.47.
+
+**Log-only numbers.**
+- Pythia L3 top eigenvalue: 35.8% of the trace.
+- A: RMS vs R 0.0218 (`resynth_summary.json`); FVU 0.2115 in the local recomputation (`resynth/check.json`). The 0.215 in the log is the pod value, which is not on this machine.
+- Near-duplicate fraction: the GPU-run decoders are not on this machine, so it cannot be recomputed for those runs. Over the 36 SAEs that are local (Pythia L3, local Gemma nulls) it reaches 0.78% (Pythia real w1024, seed 2); 2 of 36 exceed 0.4%, and the nulls max out at 0.29%.
+
+## Local analyses, batch C (2026-11-10)
+
+Five scripts, `experiments/review5_*.py`, write to `results/review/` (`.json` + `.log`). Analysis choices are fixed in each docstring. All TopK numbers use live rows; Gemma Scope numbers use all rows (see 4). Several results go against one or both drafts; they are marked **against**.
+
+**1. Li et al.'s ordering at 26 layers on the 1M Σ (`review5_li_ordering.py` → `li_ordering_1m.json`).** Decoders are 65k at Li's per-layer L0 and 16k at L0 ≈ 40. Activation spectra are raw Σ, the correlation matrix, and raw uncentred.
+- Raw Σ (and uncentred): steeper than both decoders at **26/26** layers, ranks 1–100 and 11–150 (γ 0.26–0.60).
+- **Against both drafts:** with the correlation matrix, Li's ordering (activations flatter) **holds** at layers 11–14 for Li's own SAEs: **4/26** in ranks 1–100 and 2/26 (L13, 14) in 11–150. Against 16k L0 ≈ 40 it holds at **9/26** (layers 10–18) in ranks 1–100 and 8/26 in 11–150. Max γ is 1.15 (65k) and 1.28 (16k).
+- "Activations steeper at all 26 layers under standardised preprocessing" was a 32,736-token artefact. L12 reproduces review4 (corr −0.446 against decoder −0.462).
+- Li's decoder fit is ranks 11–150 (notebook [10:150]); the activation-vs-feature comparison in Li's text uses ranks 1–100. The SAE's release name says L0 72; its L0 measured on our tokens is 75.8.
+
+**2. Cluster correlation (`review5_cluster_partial.py` → `cluster_partial.json`).** 32 Spearman cells, each with n_eff, phase and shift p-values. Partial correlations control for the 1M Σ slope, for the matched cloud's between-share, and for both.
+- The headline cells (K1024, excess share and cos, ranks 4–50 and 11–150; ρ −0.87 to −0.91) survive Σ: partial ρ −0.63 to −0.78, phase p 0.006–0.030, shift p 0.038 (its floor).
+- **Against thesis A:** controlling for Σ and matched share together gives partial ρ −0.40 to −0.58. The phase p for excess share is then 0.06–0.08 (not significant); for excess cos it is 0.009–0.043.
+- Each excess statistic itself correlates with Σ's slope (ρ ≈ −0.80).
+- At K256 the excess share in ranks 4–50 does not survive Σ (−0.64, phase p 0.07); its shift p is 0.31 even unconditioned.
+- Bulk windows: raw ρ at K256 is −0.42 and −0.45 (excess share), not significant (phase p 0.58–0.59).
+
+**3. thesis B regressions (`review5_regression.py` → `regression_ci.json`).** Layer-clustered bootstrap, B = 2000. Point estimates reproduce `thesisB_numbers.json`.
+- All 288 SAEs, ranks 11–150: drop-L0 0.654 [0.586, 0.747], drop-layer 0.255 [0.174, 0.314], drop-width 0.001 [0.000, 0.004], b 0.081 [0.069, 0.092]. In ranks 101–1000, layer dominates: 0.615 [0.527, 0.663] against 0.279 [0.229, 0.361].
+- **Against thesis B:** with named L0 30–150 (n = 154) the ranking reverses in every window. Ranks 11–150: drop-L0 0.380 [0.289, 0.504], drop-layer 0.472 [0.352, 0.562]; layer > L0 in 75% of replicates. Ranks 4–50: 0.412 vs 0.455 (58%). Ranks 31–450 and 101–1000: 100%.
+- L0 share of the Li L12–L24 contrast (reported 0.214, ranks 11–150): 0.27 at L0 72, 0.36 at 124, 0.31 at 94.4, and 0.26/0.35 from OLS ladder fits. The additive pooled-b model gives 0.30 [0.25, 0.34]; 16k ladders give 0.40/0.45. **Range 0.26–0.45** (0.26–0.36 using 65k interpolation only), so not "about a quarter". Other windows: 4–50 0.23–0.50; 31–450 0.18–0.30; 101–1000 0.17–0.28.
+
+**4. Live-row convention (`review5_live_rows.py` → `live_rows.json`).**
+- Code: Gemma Scope spectra use **all rows** (phase1b, width ladder). Our TopK spectra use **live rows only** (gpu_summarize, control_analyze, test1c_null_saes, r2_common).
+- **Against both drafts:** thesis B (Setup and Methods) says dead rows are included with no TopK exception. Thesis A line 60 says live rows for every spectrum, but Gemma Scope uses all rows.
+- Gemma Scope L12 (22 SAEs, up to 13.9% dead on 1M tokens): live − all is ≤ 0.006 (4–50), 0.003 (11–150), 0.005 (31–450), 0.013 (101–1000).
+- Local TopK: Pythia (≤ 4 dead) changes by ≤ 0.0003. d-sweep k = 8 (Gemma L12 PCA, 33–42% dead): live-only is steeper by 0.064–0.067 (4–50), 0.088–0.092 (11–150), 0.10–0.13 (31–450), 0.19–0.22 (101–1000).
+- GPU runs, dead counts only (decoders not local): k sweep k = 16 has 1,786–2,019 dead (11–12%); k ≤ 8 has 9,902–15,965 dead; real 65k L13 k = 40 has 1,196–1,563 dead. **Fig. 1c of thesis B, and the k sweep below k = 40, compare a live-row TopK convention with an all-row Gemma Scope convention**, and the local TopK evidence says this can matter by about 0.1 when a third of the rows are dead. It cannot be quantified for the GPU runs without their decoders.
+
+**5. Regime confound, local SAEs (`review5_regime.py` → `regime.json`).** Pythia L3 k32 (real / Gaussian / scrambled × 1k/4k/16k × 3 seeds) and the Gemma k40 w4096 nulls (L12 real vs Gaussian; Gaussian at 7 other layers).
+- FVU: Pythia real 0.11–0.14, Gaussian 0.22–0.24, scrambled 0.37–0.41. Gemma L12 real 0.49, Gaussian 0.62 (800k tokens); Gaussian nulls at other layers 0.48–0.57.
+- Near-duplicates (pre-stated prediction (i) **fails**): the nulls have *fewer* near-duplicates than real. Pythia nn-cos q99 is 0.42–0.46 real, 0.29–0.33 Gaussian, 0.24–0.33 scrambled; fraction above 0.5 is 0.17–0.43% real and ≤ 0.16% for the nulls. Gemma: 0 above 0.5 for real and every null.
+- Merge test (prediction (ii) **fails**): at any tau (0.5/0.7/0.9) it removes ≤ 0.39% of rows and moves no slope by more than 0.003 in any SAE.
+- Matrix test: null decoders sit closer to Σ's axes than real. Diag share is 0.95–0.97 for Pythia Gaussian vs 0.80–0.83 real, and 0.87 Gemma L12 Gaussian vs 0.82 real (Gemma nulls 0.87–0.94). Null bulk γ is 1.2–3.7 against Σ, real 0.50–0.76. Scrambled is 0.93–0.99 diagonal against diag(Σ).
+- So the null bulk comes from a Σ^γ-like cloud with a steep exponent, not from near-duplicate collapse. The random-basis benchmark is weak at Pythia d = 512 (0.33–0.70) because Σ's top eigenvalue holds 36% of the trace.
+- **Against thesis A (Sec. 4.1, "the same holds in a second model"):** in Pythia ranks 11–150 the Gaussian null is −0.60 to −0.62 against real −0.38 to −0.41, i.e. 1.5–1.6× steeper. Only ranks 4–50 agree (−0.27 to −0.37 vs −0.31 to −0.32). Likewise Gemma L12 w4096: −0.716 vs −0.498 in ranks 11–150.
+
+## Round-2 GPU queue launched (2026-11-10)
+
+Jobs (pre-registered in their docstrings): `experiments/r2_job_resynth.py` (D and G, three data draws x two SAE seeds, k 8-128), `experiments/r2_job_real.py` (layer-13 k sweep real/Gaussian/sparse null; real vs nulls at 8 layers; whitened baseline at layer 12), `experiments/r2_job_models.py` (GPT-2 small at 12 layers; Gemma-2-9b Sigma and Gemma Scope 9b decoders with out-of-sample predictions). Launcher `gpu/run_job.sh` with `gpu/watchdog.sh`: the pod stops itself after the job, at a hard time limit, or after 30 idle minutes.
+
+- Pod `71pxexi9pc87hf` (A100 SXM 80GB, secure, $1.79/h, 90 GB container disk, no volume), created 17:06 UTC after nine capacity refusals. Runs the resynthesis job since 17:14 UTC, limit 12 h. Gemma Scope L12 params were downloaded on the pod from the hub (sha256 matches the local file); codestats pushed from `results/resynth/codestats_L12_pod.npz`.
+- Pre-flight on the pod: `runpodctl` 1.14 rejects the pod-scoped key (Unauthorized) and REST v1 returns 403; REST v2 and GraphQL reads succeed, so the stop chain should land on those.
+- Reproduction check passed on the first comparable run: D, data seed 0, SAE seed 0, k = 16 gives fixed-n gamma 0.637 (control run: 0.637).
+- Results are pulled every five minutes into `results/r2/`.
+
+### Round-2 GPU status (2026-11-11, 03:00 UTC)
+
+- Resynthesis job (D and G, 84 SAEs) finished 02:23 UTC on the A100 pod; all results pulled to `results/r2/`. The pod
+  stopped itself and was then terminated. About 9.6 h at $1.79/h, roughly $17.
+- The GPT-2 job meant to follow on that pod never ran: the hand-over script matched processes by pattern, which also
+  matches the tmux server, so it most likely killed its own session. The replacement (`gpu/chain_m2.sh`) kills by pid.
+- Second pod (RTX PRO 4500, $0.72/h, network volume): main job (`r2_job_real.py`) started 01:34 UTC after about two idle
+  hours caused by a dropped setup connection. The GPT-2 part of `r2_job_models.py` (`--skip_m2 --cut`) runs alongside it
+  on the same GPU, log in `/workspace/trial_models.log`. The Gemma-2-9b part (`--skip_m1`, flag added today) is chained
+  to start when the main job ends. `--smoke` of the models job only works on the Mac (it reads local caches).
+
+## Round 2, Q3: resynthesis control G against D with three draws (2026-11-11)
+
+Ran `experiments/r2_resynth_analysis.py` on `results/r2/runs_resynth.jsonl` (84 SAEs: D and G, data draws 0-2, SAE
+seeds 0-1, k 8-128, width 16k, layer 12) -> `results/r2/resynth_analysis.json`. Analysis choices are in the script's
+docstring. It agrees with `summary.json` reading (iv) to 3e-16 on all 224 shared values and on every verdict.
+
+- Pre-registered (k 8-128, fixed 8,192 live latents), G/D retention in gamma / raw slope: ranks 4-50 0.79 / 0.79 keeps;
+  11-150 0.78 / 0.76 keeps (paired bootstrap 95% raw [0.748, 0.779], lower end just under 0.75); 31-450 0.62 / 0.62
+  partial; 101-1000 0.53 / 0.54 partial. Window rule: **mixed** (keeps in the primary window and one other). All three
+  draws give the same verdict in every window. Full live count changes no retention by more than 0.02.
+- Post hoc (k 16-128): 4-50 0.13 and 11-150 0.45 (removes), bulk 0.53 / 0.54 (partial). Leave-one-k-out in 11-150:
+  0.45-0.88.
+- Shape: G drops with D between k = 8 and 16 and then is nearly flat (ranks 4-50 even rises from k = 32 to 64); D falls
+  steadily to k = 128. Seed and draw spread is small (sd of gamma <= 0.014 at any k).
+- Checks: D at draw 0, seed 0 reproduces `results/phase3/control.json` exactly (training was bitwise deterministic;
+  the log shows the dataset was regenerated and retrained); G within 0.0064. No dataset ill-conditioned (Sigma slope
+  in 11-150 -0.77 to -0.79).
+- Against the paper: the single-draw reading "G keeps 0.76, the k decline is not a real-data signature" does not hold
+  as stated. The pre-registered verdict is mixed, and above k = 16 Gemma Scope's own directions, not their covariance,
+  carry most of the decline. thesisA Sec. 5.5, contribution 4, Discussion, Limitations, Conclusion and App. E updated;
+  new Fig. (`paper/figures/make_fig_resynth_r2.py` -> `fig7_resynth_r2.pdf`) and table (`tab_resynth_r2.tex`).
+
+### Round-2 GPU status (2026-11-11, 05:00 UTC)
+
+- Running the GPT-2 job alongside the main job on one 32 GB card was a mistake: the layer-13 k = 128 SAE asked for a
+  9 GiB allocation and ran out of memory at 03:39 UTC. The launcher wrote FAILED and the pod terminated itself after the
+  20-minute grace. State survived on the network volume: 12 main-job rows (layer 13, k 8-64, seed 0, real and Gaussian),
+  5 GPT-2 rows, the layer-13 and GPT-2 layer-6 activation caches. Second pod total: about 4.5 h, $3.2.
+- New pod on the same volume (RTX PRO 4500, $0.72/h) started 04:43 UTC. One job, `experiments/r2_job_all.py`, runs
+  `r2_job_real.py` (resumes from its rows) and then `r2_job_models.py --cut` in sequence under one launcher and
+  watchdog (34 h limit, pod terminates at the end). `gpu/chain_m2.sh` is no longer used. The models job has no resume,
+  so the 5 GPT-2 rows will be repeated: de-duplicate `runs_models.jsonl` by run name (keep last) before summarising.
+
+### Round-2 GPU status (2026-11-11, 07:00 UTC): correction
+
+- The 05:00 entry's cause was wrong. The resumed job, alone on the 32 GB card, hit the same out-of-memory error at the
+  layer-13 k = 128 SAE (9 GiB allocation with 23.7 GiB in use), so that SAE needs about 33 GB whatever else is running.
+- In the same run the Gemma-2-9b check then started, scored 19 of 96 Gemma Scope 9b decoders, and was killed by the
+  30-minute idle-GPU guard during the matrix test (about 12.5 minutes of CPU per decoder at the full-covariance
+  layers). The pod terminated itself around 06:04 UTC. Third pod total: about 1.3 h, $1.
+- Fourth pod: A100 80 GB PCIe, $1.79/h, same volume, started 06:42 UTC. Runs `r2_job_all.py --skip_m2 --cut` (main job,
+  then GPT-2), 22 h limit, idle guard 60 min. The Gemma-2-9b check (`--skip_m1`, resumes from its rows) goes on a 32 GB
+  card afterwards with a longer idle allowance.
+
+### Text revisions and local checks (2026-11-11)
+
+Paper: `paper/thesisA.tex`. No new experiment script; all checks are short read-only recomputations from `results/`
+and `cache/*/train.json`, `cache/acts/*/stats.npz`. Nothing from the running job (`results/r2/runs_real.jsonl`,
+`runs_models.jsonl`, `sigma/`, `models/`, `summary.json`) was used.
+
+- Live rows (43): dead fractions from `live_rows.json`. Real k sweep is 60-96% dead at k <= 8 (672-6,469 live of
+  16,384), the Gaussian null 90-97% at k <= 4; both are 11-12% dead at k = 16; k = 40 SAEs at most 2.4%. A local TopK
+  SAE with 11% dead rows (pca512) already differs by 0.025 between live-row and all-row slopes in ranks 11-150, against
+  <= 0.003 for Gemma Scope with up to 13.9% dead. So TopK slopes at k = 16 carry about 0.025 of convention uncertainty.
+  This goes against the earlier wording that live-row slopes were used only where nearly all latents are live.
+- Live counts at k <= 8 (49): the real-minus-null gamma values there compare clouds 1.5-2.4x apart in size. The
+  model-based correction gives -0.22, -0.42, -0.44, -0.06 against measured -0.21, -0.40, -0.41, -0.09. The whole-sweep
+  fit 1.016 - 0.094 log2 k is gone from the main text.
+- Token counts (22): Pythia SAEs 15M train tokens (one pass), 1M eval, Sigma from 20M; Gemma width-4096 SAEs 0.8M
+  (layer 12, Sigma 1M) or 3M Gaussian samples (7 layers, Sigma 200,508 tokens), 0.2M eval; resynthesis codestats from
+  4M real tokens, 12M synthetic tokens per dataset (0.5M held out, 3 passes), gamma on each dataset's own 12M Sigma.
+- Frequency exponent (57), recomputed from `phase1/freqs_L12.json`: Spearman with decoder slope -0.37 (p 0.09) over 22
+  SAEs, 0.05 over the 18 with L0 <= 181. Within-width L0 trends +0.033 (16k) to -0.043 (131k) per doubling.
+- Audit findings that changed the paper: the random-basis R^2 "at most 0.012" (Sec 5.3) traces to no file. The 200k-Sigma
+  benchmark gives <= 0.002 over ranks 101-1000 and <= 0.018 in any window. The planted per-doubling range was -0.005 to
+  +0.018 for six generators; with the seventh (one seed, 4,608 features) it is -0.009 to +0.018 over k = 4-128, and that
+  generator gives -0.075 over k = 8-128. The Fig. 2 caption's "at most 0.04" is 0.052 at 65k in ranks 4-50.
+- Left open: 12 (split-half Sigma at other layers needs a new 1M-token model pass, about 1 h; the 32,736-token
+  all-layer cache is too small; App A now says convergence was checked at layer 12 only) and 28 (official ICML style
+  file needs the author's approval to download; anonymous author, Impact Statement and no identifying paths are in place).
+
+## 2026-11-11 — Further text revisions (thesisA.tex)
+
+No new experiments. All numbers were recomputed from finished result files (inline scripts); nothing from the running r2 job
+(`runs_real.jsonl`, `runs_models.jsonl`, `sigma/`, `models/`, `summary.json`) was used, and the 8 `%% PENDING-GPU` markers stay.
+- Matrix-test random-basis benchmark: `results/review/review2_checks.json` `matrix1m` (1M Σ, 5 layer-12 16k SAEs) gives max R² 0.0030
+  over ranks 101-1000 and 0.0124 in any window (the 200k block `matrix` gives 0.0023/0.0178). The paper now cites the 1M values only.
+- Dead rows in the layer-13 k sweep (`results/review/live_rows.log` (c), of 16,384): real k=1/2/4/8/16/40 = 96/88/77/60-61/11-12/<1%;
+  Gaussian k=1/2/4/8/16/128 = 97/95/90/12/11/0%. The earlier "60-97% at k<=8" was wrong for the Gaussian k=8 runs.
+- Frequency exponent (`results/phase1/freqs_L12.json`): the earlier 0.05 / +0.033 figures used 17 SAEs (they excluded the 16k L0 176 SAE,
+  measured L0 181.34). On the 18 SAEs with L0 < 270: Spearman(exponent, slope 11-150) 0.137 (p 0.59), with L0 0.13; within-width
+  trends -0.004 (16k), +0.009 (32k), -0.012 (65k), -0.043 (131k). No sign reversal between 16k and 131k. All 22: -0.37 (p 0.09).
+- Planted: five of seven generators ran one seed (`phase3/clustered_summary.json`); m4608 over k=8-128 is -0.07446. The Gemma-matched
+  point-feature run (`phase3/match_summary.json` g2304-m4608-a36, one seed, Σ top plateau) has RMS 0.140 but slope -0.041 over k=4-128,
+  so it fails the slope part of the pass test (within 0.04 of -0.094). It is now mentioned in App F.
+- Layer correlation (`results/review/layer_r_ci.log`): at L0=40 ranks 31-450 are significant (phase p 0.021 at 16k, 0.037 at 65k), so the
+  Sec 4 Σ-decoder correlation meets the primary-plus-two rule at L0=40. At L0=70 they are 0.051/0.058, and 101-1000 gives 0.068-0.127.
+  Sec 5.2 real-minus-Gaussian (`gpu/runs.json` p2): most negative at L13 in all 4 top cells; in the bulk smallest at L13 in 3 of 4 cells,
+  tied in 65k 31-450 (0.4947 vs 0.4946); in ratio units L3 is lowest in 31-450 at both widths.
+- k sweep (`gpu/runs.json` saes_gpu_k): ranks 4-50 over k=8-128: null +0.006/doubling (R² 0.05), real -0.088. Leave-one-k-out in 11-150:
+  null -0.025 to -0.115, real -0.095 to -0.103. Null neighbouring-k changes 0.088/0.154 against seed sd <= 0.006.
+- Massive activations (`gpu/analysis.json` C): max |Δγ| 0.0052 (0.1% drop, ranks 4-50); Sec 6 now says "top 0.1% or 1%", "at most 0.005".
+Build: latexmk exit 0, no undefined references, 13 pages, main text ends on p. 7.

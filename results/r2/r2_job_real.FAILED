@@ -1,0 +1,6 @@
+job=r2_job_real
+status=FAILED
+exit_code=1
+reason=job exited 1
+time=2026-11-11T03:39:10Z
+pod=c13cm09747g37y

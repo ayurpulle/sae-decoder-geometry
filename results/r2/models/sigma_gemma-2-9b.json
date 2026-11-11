@@ -1,0 +1,19 @@
+{
+ "model": "google/gemma-2-9b",
+ "n_tokens_seen": 1002540,
+ "n_layers": 42,
+ "d_model": 3584,
+ "dtype": "bfloat16",
+ "ctx": 1024,
+ "batch": 4,
+ "seed": 0,
+ "bos_dropped": true,
+ "centered": true,
+ "seconds": 311.29149436950684,
+ "dataset": "monology/pile-uncopyrighted",
+ "full_cov_layers": [
+  9,
+  20,
+  31
+ ]
+}

@@ -8,3 +8,15 @@ results/*.log
 .DS_Store
 .git_hash
 results/test1/sigma_gemma-2-2b_1m.npz
+results/r2/dec/
+results/r2/sigma/
+results/r2/*.pid
+results/r2_pull*.log
+paper/build/*
+!paper/build/*.pdf
+paper/icml_style/icml2026.zip
+paper/icml_style/example_paper.pdf
+paper/icml_style/icml_numpapers.pdf
+results/test1/sigma_gemma-2-2b.npz
+results/test1/sigma_gemma-2-2b_val_float32.npz
+results/test1/sigma_gemma-2-2b_val_float16.npz

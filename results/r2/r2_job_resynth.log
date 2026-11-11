@@ -1,0 +1,1730 @@
+[2026-11-10T17:14:53Z] [launcher] job experiments/r2_job_resynth.py | max_hours 12 (43200s) | grace 20 min | pod 71pxexi9pc87hf | python .venv/bin/python 
+[2026-11-10T17:14:53Z] [launcher] watchdog pid 883
+[2026-11-10T17:14:53Z] [launcher] job pid 888
+[2026-11-10T17:14:53Z] [watchdog] watchdog up (pid 883): deadline 2026-11-11T05:14:53Z, idle guard <5% for 1800s, check every 60s
+[2026-11-10 17:14:53] job resynth: git bf13f5682f295bc0036369f1e4f58c286c44f6f7, code sha256 63054a7fd0ed, out /workspace/SAE/results/r2, 93 GB free
+[2026-11-10 17:14:53] generate rs12-D-ds0 (93 GB free)
+done synth-rs12-D-ds0: 12,000,000 tokens, fvu vs real nan, 446s
+[2026-11-10 17:22:25] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k8__s0
+[real w16384 s0] step 50/8421 fvu 0.8021 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.5636 dead 0.000 15s
+[real w16384 s0] step 1000/8421 fvu 0.4850 dead 0.000 28s
+[real w16384 s0] step 1500/8421 fvu 0.4800 dead 0.003 45s
+[real w16384 s0] step 2000/8421 fvu 0.4859 dead 0.012 63s
+[real w16384 s0] step 2500/8421 fvu 0.4533 dead 0.027 81s
+[real w16384 s0] step 3000/8421 fvu 0.4624 dead 0.020 99s
+[real w16384 s0] step 3500/8421 fvu 0.4844 dead 0.006 117s
+[real w16384 s0] step 4000/8421 fvu 0.4285 dead 0.007 136s
+[real w16384 s0] step 4500/8421 fvu 0.4337 dead 0.005 154s
+[real w16384 s0] step 5000/8421 fvu 0.4437 dead 0.009 172s
+[real w16384 s0] step 5500/8421 fvu 0.4385 dead 0.007 190s
+[real w16384 s0] step 6000/8421 fvu 0.4375 dead 0.005 208s
+[real w16384 s0] step 6500/8421 fvu 0.4086 dead 0.004 226s
+[real w16384 s0] step 7000/8421 fvu 0.4286 dead 0.004 244s
+[real w16384 s0] step 7500/8421 fvu 0.4405 dead 0.006 262s
+[real w16384 s0] step 8000/8421 fvu 0.4363 dead 0.008 280s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k8__s0 fvu_eval 0.41785225553527444
+[2026-11-10 17:27:25] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k16__s0
+[real w16384 s0] step 50/8421 fvu 0.7429 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.5128 dead 0.000 16s
+[real w16384 s0] step 1000/8421 fvu 0.4222 dead 0.000 29s
+[real w16384 s0] step 1500/8421 fvu 0.4056 dead 0.000 42s
+[real w16384 s0] step 2000/8421 fvu 0.4055 dead 0.000 59s
+[real w16384 s0] step 2500/8421 fvu 0.3762 dead 0.001 78s
+[real w16384 s0] step 3000/8421 fvu 0.3828 dead 0.004 97s
+[real w16384 s0] step 3500/8421 fvu 0.4014 dead 0.003 115s
+[real w16384 s0] step 4000/8421 fvu 0.3562 dead 0.003 135s
+[real w16384 s0] step 4500/8421 fvu 0.3602 dead 0.003 154s
+[2026-11-10 17:30:15] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k8__s0: live 13422, fvu 0.418, L0 8.0, ranks 11-150 gamma full 0.852 fixed-n 0.838 [171s]
+[real w16384 s0] step 5000/8421 fvu 0.3671 dead 0.003 173s
+[real w16384 s0] step 5500/8421 fvu 0.3648 dead 0.002 191s
+[real w16384 s0] step 6000/8421 fvu 0.3619 dead 0.003 211s
+[real w16384 s0] step 6500/8421 fvu 0.3367 dead 0.002 230s
+[real w16384 s0] step 7000/8421 fvu 0.3526 dead 0.002 249s
+[real w16384 s0] step 7500/8421 fvu 0.3644 dead 0.002 268s
+[real w16384 s0] step 8000/8421 fvu 0.3587 dead 0.004 286s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.3439635746065098
+[2026-11-10 17:32:33] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k24__s0
+[real w16384 s0] step 50/8421 fvu 0.7079 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4904 dead 0.000 17s
+[real w16384 s0] step 1000/8421 fvu 0.3923 dead 0.000 32s
+[real w16384 s0] step 1500/8421 fvu 0.3688 dead 0.000 45s
+[real w16384 s0] step 2000/8421 fvu 0.3642 dead 0.000 60s
+[real w16384 s0] step 2500/8421 fvu 0.3338 dead 0.000 76s
+[real w16384 s0] step 3000/8421 fvu 0.3357 dead 0.000 95s
+[real w16384 s0] step 3500/8421 fvu 0.3506 dead 0.001 115s
+[real w16384 s0] step 4000/8421 fvu 0.3115 dead 0.001 135s
+[real w16384 s0] step 4500/8421 fvu 0.3142 dead 0.001 155s
+[real w16384 s0] step 5000/8421 fvu 0.3194 dead 0.001 175s
+[2026-11-10 17:35:49] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k16__s0: live 13898, fvu 0.344, L0 16.0, ranks 11-150 gamma full 0.660 fixed-n 0.637 [196s]
+[real w16384 s0] step 5500/8421 fvu 0.3175 dead 0.001 195s
+[real w16384 s0] step 6000/8421 fvu 0.3164 dead 0.001 216s
+[real w16384 s0] step 6500/8421 fvu 0.2936 dead 0.001 236s
+[real w16384 s0] step 7000/8421 fvu 0.3091 dead 0.001 255s
+[real w16384 s0] step 7500/8421 fvu 0.3197 dead 0.002 275s
+[real w16384 s0] step 8000/8421 fvu 0.3142 dead 0.003 295s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k24__s0 fvu_eval 0.30103306164284327
+[2026-11-10 17:37:51] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k32__s0
+[real w16384 s0] step 50/8421 fvu 0.6814 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.4771 dead 0.000 18s
+[real w16384 s0] step 1000/8421 fvu 0.3765 dead 0.000 34s
+[real w16384 s0] step 1500/8421 fvu 0.3488 dead 0.000 48s
+[real w16384 s0] step 2000/8421 fvu 0.3394 dead 0.000 64s
+[real w16384 s0] step 2500/8421 fvu 0.3079 dead 0.000 80s
+[real w16384 s0] step 3000/8421 fvu 0.3087 dead 0.000 96s
+[real w16384 s0] step 3500/8421 fvu 0.3216 dead 0.000 115s
+[real w16384 s0] step 4000/8421 fvu 0.2823 dead 0.000 136s
+[real w16384 s0] step 4500/8421 fvu 0.2849 dead 0.000 156s
+[2026-11-10 17:40:46] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k24__s0: live 14325, fvu 0.301, L0 24.0, ranks 11-150 gamma full 0.550 fixed-n 0.523 [175s]
+[real w16384 s0] step 5000/8421 fvu 0.2898 dead 0.001 177s
+[real w16384 s0] step 5500/8421 fvu 0.2868 dead 0.000 198s
+[real w16384 s0] step 6000/8421 fvu 0.2836 dead 0.000 220s
+[real w16384 s0] step 6500/8421 fvu 0.2638 dead 0.001 241s
+[real w16384 s0] step 7000/8421 fvu 0.2774 dead 0.000 262s
+[real w16384 s0] step 7500/8421 fvu 0.2866 dead 0.001 283s
+[real w16384 s0] step 8000/8421 fvu 0.2815 dead 0.001 304s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.2696390149183075
+[2026-11-10 17:43:17] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k48__s0
+[real w16384 s0] step 50/8421 fvu 0.6425 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.4529 dead 0.000 20s
+[2026-11-10T17:43:54Z] [watchdog] heartbeat: GPU 99%, idle 0s, 35G free, 690 min to deadline
+[real w16384 s0] step 1000/8421 fvu 0.3577 dead 0.000 38s
+[real w16384 s0] step 1500/8421 fvu 0.3274 dead 0.000 55s
+[real w16384 s0] step 2000/8421 fvu 0.3156 dead 0.000 73s
+[real w16384 s0] step 2500/8421 fvu 0.2820 dead 0.000 91s
+[real w16384 s0] step 3000/8421 fvu 0.2789 dead 0.000 108s
+[real w16384 s0] step 3500/8421 fvu 0.2875 dead 0.000 126s
+[real w16384 s0] step 4000/8421 fvu 0.2504 dead 0.000 145s
+[real w16384 s0] step 4500/8421 fvu 0.2510 dead 0.000 164s
+[2026-11-10 17:46:10] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k32__s0: live 14875, fvu 0.270, L0 32.0, ranks 11-150 gamma full 0.516 fixed-n 0.487 [173s]
+[real w16384 s0] step 5000/8421 fvu 0.2536 dead 0.000 186s
+[real w16384 s0] step 5500/8421 fvu 0.2491 dead 0.000 207s
+[real w16384 s0] step 6000/8421 fvu 0.2459 dead 0.000 229s
+[real w16384 s0] step 6500/8421 fvu 0.2285 dead 0.000 251s
+[real w16384 s0] step 7000/8421 fvu 0.2392 dead 0.000 273s
+[real w16384 s0] step 7500/8421 fvu 0.2470 dead 0.000 296s
+[real w16384 s0] step 8000/8421 fvu 0.2416 dead 0.000 318s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k48__s0 fvu_eval 0.23179876195078128
+[2026-11-10 17:49:01] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k64__s0
+[real w16384 s0] step 50/8421 fvu 0.6130 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.4343 dead 0.000 22s
+[real w16384 s0] step 1000/8421 fvu 0.3446 dead 0.000 42s
+[real w16384 s0] step 1500/8421 fvu 0.3155 dead 0.000 62s
+[real w16384 s0] step 2000/8421 fvu 0.3031 dead 0.000 82s
+[real w16384 s0] step 2500/8421 fvu 0.2701 dead 0.000 102s
+[real w16384 s0] step 3000/8421 fvu 0.2648 dead 0.000 122s
+[real w16384 s0] step 3500/8421 fvu 0.2707 dead 0.000 141s
+[real w16384 s0] step 4000/8421 fvu 0.2346 dead 0.000 162s
+[real w16384 s0] step 4500/8421 fvu 0.2338 dead 0.000 182s
+[2026-11-10 17:52:05] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k48__s0: live 15923, fvu 0.232, L0 48.0, ranks 11-150 gamma full 0.472 fixed-n 0.447 [185s]
+[real w16384 s0] step 5000/8421 fvu 0.2351 dead 0.000 202s
+[real w16384 s0] step 5500/8421 fvu 0.2298 dead 0.000 223s
+[real w16384 s0] step 6000/8421 fvu 0.2259 dead 0.000 245s
+[real w16384 s0] step 6500/8421 fvu 0.2090 dead 0.000 267s
+[real w16384 s0] step 7000/8421 fvu 0.2180 dead 0.000 289s
+[real w16384 s0] step 7500/8421 fvu 0.2252 dead 0.000 312s
+[real w16384 s0] step 8000/8421 fvu 0.2199 dead 0.000 335s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k64__s0 fvu_eval 0.21064181405925286
+[2026-11-10 17:55:02] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k128__s0
+[real w16384 s0] step 50/8421 fvu 0.5407 dead 0.000 5s
+[real w16384 s0] step 500/8421 fvu 0.3799 dead 0.000 30s
+[real w16384 s0] step 1000/8421 fvu 0.3079 dead 0.000 59s
+[real w16384 s0] step 1500/8421 fvu 0.2841 dead 0.000 86s
+[real w16384 s0] step 2000/8421 fvu 0.2739 dead 0.000 114s
+[real w16384 s0] step 2500/8421 fvu 0.2428 dead 0.000 143s
+[real w16384 s0] step 3000/8421 fvu 0.2372 dead 0.000 171s
+[2026-11-10 17:58:01] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k64__s0: live 16256, fvu 0.211, L0 64.0, ranks 11-150 gamma full 0.448 fixed-n 0.425 [178s]
+[real w16384 s0] step 3500/8421 fvu 0.2405 dead 0.000 199s
+[real w16384 s0] step 4000/8421 fvu 0.2076 dead 0.000 228s
+[real w16384 s0] step 4500/8421 fvu 0.2055 dead 0.000 256s
+[real w16384 s0] step 5000/8421 fvu 0.2053 dead 0.000 284s
+[real w16384 s0] step 5500/8421 fvu 0.1988 dead 0.000 312s
+[real w16384 s0] step 6000/8421 fvu 0.1930 dead 0.000 341s
+[real w16384 s0] step 6500/8421 fvu 0.1776 dead 0.000 369s
+[real w16384 s0] step 7000/8421 fvu 0.1840 dead 0.000 397s
+[real w16384 s0] step 7500/8421 fvu 0.1886 dead 0.000 425s
+[real w16384 s0] step 8000/8421 fvu 0.1835 dead 0.000 454s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k128__s0 fvu_eval 0.17548924625732165
+[2026-11-10 18:03:08] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k8__s1
+[real w16384 s1] step 50/8421 fvu 0.8047 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.5276 dead 0.000 14s
+[real w16384 s1] step 1000/8421 fvu 0.4875 dead 0.000 27s
+[real w16384 s1] step 1500/8421 fvu 0.4948 dead 0.003 45s
+[real w16384 s1] step 2000/8421 fvu 0.4696 dead 0.013 63s
+[real w16384 s1] step 2500/8421 fvu 0.4624 dead 0.034 81s
+[real w16384 s1] step 3000/8421 fvu 0.4652 dead 0.020 99s
+[real w16384 s1] step 3500/8421 fvu 0.4654 dead 0.010 117s
+[real w16384 s1] step 4000/8421 fvu 0.4700 dead 0.006 135s
+[real w16384 s1] step 4500/8421 fvu 0.4479 dead 0.006 154s
+[2026-11-10 18:06:01] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k128__s0: live 16380, fvu 0.175, L0 128.0, ranks 11-150 gamma full 0.349 fixed-n 0.327 [173s]
+[real w16384 s1] step 5000/8421 fvu 0.4634 dead 0.007 171s
+[real w16384 s1] step 5500/8421 fvu 0.4326 dead 0.008 189s
+[real w16384 s1] step 6000/8421 fvu 0.4241 dead 0.008 207s
+[real w16384 s1] step 6500/8421 fvu 0.4253 dead 0.003 224s
+[real w16384 s1] step 7000/8421 fvu 0.4468 dead 0.004 242s
+[real w16384 s1] step 7500/8421 fvu 0.4234 dead 0.007 260s
+[real w16384 s1] step 8000/8421 fvu 0.4071 dead 0.007 278s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k8__s1 fvu_eval 0.41903982232237497
+[2026-11-10 18:08:07] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k16__s1
+[real w16384 s1] step 50/8421 fvu 0.7458 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4780 dead 0.000 15s
+[real w16384 s1] step 1000/8421 fvu 0.4229 dead 0.000 28s
+[real w16384 s1] step 1500/8421 fvu 0.4181 dead 0.000 42s
+[real w16384 s1] step 2000/8421 fvu 0.3924 dead 0.000 58s
+[real w16384 s1] step 2500/8421 fvu 0.3836 dead 0.002 77s
+[real w16384 s1] step 3000/8421 fvu 0.3850 dead 0.003 96s
+[real w16384 s1] step 3500/8421 fvu 0.3868 dead 0.004 115s
+[real w16384 s1] step 4000/8421 fvu 0.3891 dead 0.002 134s
+[real w16384 s1] step 4500/8421 fvu 0.3696 dead 0.002 153s
+[2026-11-10 18:10:53] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k8__s1: live 13406, fvu 0.419, L0 8.0, ranks 11-150 gamma full 0.842 fixed-n 0.828 [166s]
+[real w16384 s1] step 5000/8421 fvu 0.3818 dead 0.003 172s
+[real w16384 s1] step 5500/8421 fvu 0.3573 dead 0.003 191s
+[real w16384 s1] step 6000/8421 fvu 0.3495 dead 0.003 210s
+[real w16384 s1] step 6500/8421 fvu 0.3508 dead 0.002 229s
+[real w16384 s1] step 7000/8421 fvu 0.3674 dead 0.002 248s
+[real w16384 s1] step 7500/8421 fvu 0.3474 dead 0.003 266s
+[real w16384 s1] step 8000/8421 fvu 0.3331 dead 0.002 285s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k16__s1 fvu_eval 0.3434312886779998
+[2026-11-10 18:13:14] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k24__s1
+[real w16384 s1] step 50/8421 fvu 0.7111 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4578 dead 0.000 16s
+[real w16384 s1] step 1000/8421 fvu 0.3934 dead 0.000 31s
+[2026-11-10T18:13:56Z] [watchdog] heartbeat: GPU 99%, idle 0s, 34G free, 660 min to deadline
+[real w16384 s1] step 1500/8421 fvu 0.3805 dead 0.000 45s
+[real w16384 s1] step 2000/8421 fvu 0.3518 dead 0.000 60s
+[real w16384 s1] step 2500/8421 fvu 0.3408 dead 0.000 76s
+[real w16384 s1] step 3000/8421 fvu 0.3396 dead 0.001 95s
+[real w16384 s1] step 3500/8421 fvu 0.3390 dead 0.001 115s
+[real w16384 s1] step 4000/8421 fvu 0.3384 dead 0.000 135s
+[real w16384 s1] step 4500/8421 fvu 0.3239 dead 0.002 155s
+[2026-11-10 18:16:03] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k16__s1: live 13938, fvu 0.343, L0 16.0, ranks 11-150 gamma full 0.668 fixed-n 0.641 [169s]
+[real w16384 s1] step 5000/8421 fvu 0.3327 dead 0.002 175s
+[real w16384 s1] step 5500/8421 fvu 0.3104 dead 0.001 195s
+[real w16384 s1] step 6000/8421 fvu 0.3038 dead 0.002 215s
+[real w16384 s1] step 6500/8421 fvu 0.3061 dead 0.000 235s
+[real w16384 s1] step 7000/8421 fvu 0.3214 dead 0.001 254s
+[real w16384 s1] step 7500/8421 fvu 0.3044 dead 0.002 274s
+[real w16384 s1] step 8000/8421 fvu 0.2911 dead 0.002 294s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k24__s1 fvu_eval 0.3004395053149176
+[2026-11-10 18:18:31] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k32__s1
+[real w16384 s1] step 50/8421 fvu 0.6850 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4445 dead 0.000 17s
+[real w16384 s1] step 1000/8421 fvu 0.3789 dead 0.000 33s
+[real w16384 s1] step 1500/8421 fvu 0.3612 dead 0.000 49s
+[real w16384 s1] step 2000/8421 fvu 0.3287 dead 0.000 64s
+[real w16384 s1] step 2500/8421 fvu 0.3139 dead 0.000 80s
+[real w16384 s1] step 3000/8421 fvu 0.3107 dead 0.000 96s
+[real w16384 s1] step 3500/8421 fvu 0.3090 dead 0.000 115s
+[real w16384 s1] step 4000/8421 fvu 0.3080 dead 0.000 135s
+[real w16384 s1] step 4500/8421 fvu 0.2943 dead 0.000 156s
+[2026-11-10 18:21:26] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k24__s1: live 14431, fvu 0.300, L0 24.0, ranks 11-150 gamma full 0.551 fixed-n 0.525 [175s]
+[real w16384 s1] step 5000/8421 fvu 0.3002 dead 0.000 177s
+[real w16384 s1] step 5500/8421 fvu 0.2799 dead 0.001 197s
+[real w16384 s1] step 6000/8421 fvu 0.2740 dead 0.000 218s
+[real w16384 s1] step 6500/8421 fvu 0.2758 dead 0.000 239s
+[real w16384 s1] step 7000/8421 fvu 0.2883 dead 0.000 260s
+[real w16384 s1] step 7500/8421 fvu 0.2733 dead 0.001 281s
+[real w16384 s1] step 8000/8421 fvu 0.2614 dead 0.001 301s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k32__s1 fvu_eval 0.2695992854616533
+[2026-11-10 18:23:57] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k48__s1
+[real w16384 s1] step 50/8421 fvu 0.6453 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4220 dead 0.000 19s
+[real w16384 s1] step 1000/8421 fvu 0.3589 dead 0.000 37s
+[real w16384 s1] step 1500/8421 fvu 0.3379 dead 0.000 55s
+[real w16384 s1] step 2000/8421 fvu 0.3038 dead 0.000 73s
+[real w16384 s1] step 2500/8421 fvu 0.2865 dead 0.000 91s
+[real w16384 s1] step 3000/8421 fvu 0.2797 dead 0.000 109s
+[real w16384 s1] step 3500/8421 fvu 0.2758 dead 0.000 126s
+[real w16384 s1] step 4000/8421 fvu 0.2718 dead 0.000 145s
+[real w16384 s1] step 4500/8421 fvu 0.2580 dead 0.000 166s
+[2026-11-10 18:26:50] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k32__s1: live 14878, fvu 0.270, L0 32.0, ranks 11-150 gamma full 0.505 fixed-n 0.476 [173s]
+[real w16384 s1] step 5000/8421 fvu 0.2623 dead 0.000 187s
+[real w16384 s1] step 5500/8421 fvu 0.2444 dead 0.000 209s
+[real w16384 s1] step 6000/8421 fvu 0.2371 dead 0.000 231s
+[real w16384 s1] step 6500/8421 fvu 0.2381 dead 0.000 253s
+[real w16384 s1] step 7000/8421 fvu 0.2488 dead 0.000 275s
+[real w16384 s1] step 7500/8421 fvu 0.2356 dead 0.000 297s
+[real w16384 s1] step 8000/8421 fvu 0.2248 dead 0.000 320s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k48__s1 fvu_eval 0.23174655794006546
+[2026-11-10 18:29:43] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k64__s1
+[real w16384 s1] step 50/8421 fvu 0.6157 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4039 dead 0.000 21s
+[real w16384 s1] step 1000/8421 fvu 0.3454 dead 0.000 42s
+[real w16384 s1] step 1500/8421 fvu 0.3253 dead 0.000 62s
+[real w16384 s1] step 2000/8421 fvu 0.2917 dead 0.000 82s
+[real w16384 s1] step 2500/8421 fvu 0.2738 dead 0.000 102s
+[real w16384 s1] step 3000/8421 fvu 0.2656 dead 0.000 122s
+[real w16384 s1] step 3500/8421 fvu 0.2597 dead 0.000 142s
+[real w16384 s1] step 4000/8421 fvu 0.2554 dead 0.000 162s
+[2026-11-10 18:32:43] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k48__s1: live 15828, fvu 0.232, L0 48.0, ranks 11-150 gamma full 0.442 fixed-n 0.421 [181s]
+[real w16384 s1] step 4500/8421 fvu 0.2404 dead 0.000 182s
+[real w16384 s1] step 5000/8421 fvu 0.2432 dead 0.000 203s
+[real w16384 s1] step 5500/8421 fvu 0.2248 dead 0.000 225s
+[real w16384 s1] step 6000/8421 fvu 0.2182 dead 0.000 247s
+[real w16384 s1] step 6500/8421 fvu 0.2179 dead 0.000 270s
+[real w16384 s1] step 7000/8421 fvu 0.2262 dead 0.000 292s
+[real w16384 s1] step 7500/8421 fvu 0.2147 dead 0.000 316s
+[real w16384 s1] step 8000/8421 fvu 0.2046 dead 0.000 339s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k64__s1 fvu_eval 0.21061427732387336
+[2026-11-10 18:35:50] train synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k128__s1
+[real w16384 s1] step 50/8421 fvu 0.5436 dead 0.000 5s
+[real w16384 s1] step 500/8421 fvu 0.3535 dead 0.000 29s
+[real w16384 s1] step 1000/8421 fvu 0.3091 dead 0.000 58s
+[real w16384 s1] step 1500/8421 fvu 0.2939 dead 0.000 86s
+[real w16384 s1] step 2000/8421 fvu 0.2637 dead 0.000 115s
+[real w16384 s1] step 2500/8421 fvu 0.2481 dead 0.000 143s
+[real w16384 s1] step 3000/8421 fvu 0.2394 dead 0.000 171s
+[2026-11-10 18:38:48] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k64__s1: live 16182, fvu 0.211, L0 64.0, ranks 11-150 gamma full 0.434 fixed-n 0.409 [178s]
+[real w16384 s1] step 3500/8421 fvu 0.2318 dead 0.000 199s
+[real w16384 s1] step 4000/8421 fvu 0.2265 dead 0.000 227s
+[real w16384 s1] step 4500/8421 fvu 0.2111 dead 0.000 256s
+[real w16384 s1] step 5000/8421 fvu 0.2118 dead 0.000 284s
+[real w16384 s1] step 5500/8421 fvu 0.1947 dead 0.000 312s
+[real w16384 s1] step 6000/8421 fvu 0.1861 dead 0.000 340s
+[real w16384 s1] step 6500/8421 fvu 0.1846 dead 0.000 368s
+[real w16384 s1] step 7000/8421 fvu 0.1908 dead 0.000 396s
+[real w16384 s1] step 7500/8421 fvu 0.1795 dead 0.000 424s
+[real w16384 s1] step 8000/8421 fvu 0.1704 dead 0.000 452s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k128__s1 fvu_eval 0.17506088465441985
+[2026-11-10T18:43:57Z] [watchdog] heartbeat: GPU 0%, idle 60s, 34G free, 630 min to deadline
+[2026-11-10 18:46:45] scored synth-rs12-D-ds0__blocks.0.hook_resid_post__real__w16384__k128__s1: live 16376, fvu 0.175, L0 128.0, ranks 11-150 gamma full 0.342 fixed-n 0.326 [172s]
+[2026-11-10 18:46:46] deleted /workspace/SAE/cache/acts/synth-rs12-D-ds0/blocks.0.hook_resid_post/acts.npy; 36 GB free
+[2026-11-10 18:46:46] generate rs12-G-ds0 (91 GB free)
+done synth-rs12-G-ds0: 12,000,000 tokens, fvu vs real nan, 447s
+[2026-11-10 18:54:17] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k8__s0
+[real w16384 s0] step 50/8421 fvu 0.7998 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.5624 dead 0.000 14s
+[real w16384 s0] step 1000/8421 fvu 0.4818 dead 0.000 27s
+[real w16384 s0] step 1500/8421 fvu 0.4740 dead 0.001 43s
+[real w16384 s0] step 2000/8421 fvu 0.4740 dead 0.002 61s
+[real w16384 s0] step 2500/8421 fvu 0.4436 dead 0.012 79s
+[real w16384 s0] step 3000/8421 fvu 0.4468 dead 0.020 97s
+[real w16384 s0] step 3500/8421 fvu 0.4684 dead 0.006 115s
+[real w16384 s0] step 4000/8421 fvu 0.4103 dead 0.006 134s
+[real w16384 s0] step 4500/8421 fvu 0.4160 dead 0.006 151s
+[real w16384 s0] step 5000/8421 fvu 0.4253 dead 0.006 169s
+[real w16384 s0] step 5500/8421 fvu 0.4213 dead 0.005 187s
+[real w16384 s0] step 6000/8421 fvu 0.4202 dead 0.003 205s
+[real w16384 s0] step 6500/8421 fvu 0.3896 dead 0.002 223s
+[real w16384 s0] step 7000/8421 fvu 0.4096 dead 0.003 241s
+[real w16384 s0] step 7500/8421 fvu 0.4217 dead 0.003 259s
+[real w16384 s0] step 8000/8421 fvu 0.4186 dead 0.005 276s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k8__s0 fvu_eval 0.40012669086130803
+[2026-11-10 18:59:14] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k16__s0
+[real w16384 s0] step 50/8421 fvu 0.7398 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.5157 dead 0.000 16s
+[real w16384 s0] step 1000/8421 fvu 0.4199 dead 0.000 29s
+[real w16384 s0] step 1500/8421 fvu 0.4025 dead 0.000 42s
+[real w16384 s0] step 2000/8421 fvu 0.3997 dead 0.000 56s
+[real w16384 s0] step 2500/8421 fvu 0.3691 dead 0.000 74s
+[real w16384 s0] step 3000/8421 fvu 0.3758 dead 0.001 93s
+[real w16384 s0] step 3500/8421 fvu 0.3927 dead 0.001 112s
+[real w16384 s0] step 4000/8421 fvu 0.3458 dead 0.001 131s
+[real w16384 s0] step 4500/8421 fvu 0.3507 dead 0.001 150s
+[real w16384 s0] step 5000/8421 fvu 0.3580 dead 0.002 169s
+[2026-11-10 19:02:13] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k8__s0: live 14256, fvu 0.400, L0 8.0, ranks 11-150 gamma full 0.837 fixed-n 0.817 [179s]
+[real w16384 s0] step 5500/8421 fvu 0.3558 dead 0.002 187s
+[real w16384 s0] step 6000/8421 fvu 0.3528 dead 0.001 207s
+[real w16384 s0] step 6500/8421 fvu 0.3279 dead 0.001 226s
+[real w16384 s0] step 7000/8421 fvu 0.3447 dead 0.001 244s
+[real w16384 s0] step 7500/8421 fvu 0.3544 dead 0.001 263s
+[real w16384 s0] step 8000/8421 fvu 0.3506 dead 0.002 282s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.33486609203762885
+[2026-11-10 19:04:17] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k24__s0
+[real w16384 s0] step 50/8421 fvu 0.7056 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4933 dead 0.000 17s
+[real w16384 s0] step 1000/8421 fvu 0.3953 dead 0.000 32s
+[real w16384 s0] step 1500/8421 fvu 0.3695 dead 0.000 46s
+[real w16384 s0] step 2000/8421 fvu 0.3623 dead 0.000 61s
+[real w16384 s0] step 2500/8421 fvu 0.3314 dead 0.000 77s
+[real w16384 s0] step 3000/8421 fvu 0.3333 dead 0.000 93s
+[real w16384 s0] step 3500/8421 fvu 0.3498 dead 0.000 111s
+[real w16384 s0] step 4000/8421 fvu 0.3079 dead 0.000 132s
+[real w16384 s0] step 4500/8421 fvu 0.3121 dead 0.000 151s
+[real w16384 s0] step 5000/8421 fvu 0.3195 dead 0.000 171s
+[2026-11-10 19:07:15] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k16__s0: live 14847, fvu 0.335, L0 16.0, ranks 11-150 gamma full 0.576 fixed-n 0.551 [178s]
+[real w16384 s0] step 5500/8421 fvu 0.3160 dead 0.000 191s
+[real w16384 s0] step 6000/8421 fvu 0.3154 dead 0.001 211s
+[real w16384 s0] step 6500/8421 fvu 0.2940 dead 0.000 231s
+[real w16384 s0] step 7000/8421 fvu 0.3087 dead 0.000 251s
+[real w16384 s0] step 7500/8421 fvu 0.3189 dead 0.001 271s
+[real w16384 s0] step 8000/8421 fvu 0.3147 dead 0.001 290s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k24__s0 fvu_eval 0.3011880898385715
+[2026-11-10 19:09:30] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k32__s0
+[real w16384 s0] step 50/8421 fvu 0.6804 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4768 dead 0.000 18s
+[real w16384 s0] step 1000/8421 fvu 0.3803 dead 0.000 34s
+[real w16384 s0] step 1500/8421 fvu 0.3526 dead 0.000 49s
+[real w16384 s0] step 2000/8421 fvu 0.3427 dead 0.000 65s
+[real w16384 s0] step 2500/8421 fvu 0.3094 dead 0.000 81s
+[real w16384 s0] step 3000/8421 fvu 0.3097 dead 0.000 97s
+[real w16384 s0] step 3500/8421 fvu 0.3225 dead 0.000 114s
+[real w16384 s0] step 4000/8421 fvu 0.2820 dead 0.000 133s
+[real w16384 s0] step 4500/8421 fvu 0.2842 dead 0.000 151s
+[real w16384 s0] step 5000/8421 fvu 0.2907 dead 0.000 172s
+[2026-11-10 19:12:28] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k24__s0: live 15319, fvu 0.301, L0 24.0, ranks 11-150 gamma full 0.476 fixed-n 0.455 [178s]
+[real w16384 s0] step 5500/8421 fvu 0.2872 dead 0.000 193s
+[real w16384 s0] step 6000/8421 fvu 0.2857 dead 0.000 214s
+[real w16384 s0] step 6500/8421 fvu 0.2664 dead 0.000 235s
+[real w16384 s0] step 7000/8421 fvu 0.2807 dead 0.000 256s
+[2026-11-10T19:13:58Z] [watchdog] heartbeat: GPU 100%, idle 0s, 33G free, 600 min to deadline
+[real w16384 s0] step 7500/8421 fvu 0.2900 dead 0.000 276s
+[real w16384 s0] step 8000/8421 fvu 0.2855 dead 0.000 297s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.27341797507938564
+[2026-11-10 19:14:50] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k48__s0
+[real w16384 s0] step 50/8421 fvu 0.6412 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.4532 dead 0.000 20s
+[real w16384 s0] step 1000/8421 fvu 0.3622 dead 0.000 38s
+[real w16384 s0] step 1500/8421 fvu 0.3342 dead 0.000 55s
+[real w16384 s0] step 2000/8421 fvu 0.3224 dead 0.000 73s
+[real w16384 s0] step 2500/8421 fvu 0.2895 dead 0.000 91s
+[real w16384 s0] step 3000/8421 fvu 0.2856 dead 0.000 109s
+[real w16384 s0] step 3500/8421 fvu 0.2949 dead 0.000 127s
+[real w16384 s0] step 4000/8421 fvu 0.2561 dead 0.000 146s
+[real w16384 s0] step 4500/8421 fvu 0.2563 dead 0.000 164s
+[2026-11-10 19:17:46] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k32__s0: live 15815, fvu 0.273, L0 32.0, ranks 11-150 gamma full 0.462 fixed-n 0.442 [175s]
+[real w16384 s0] step 5000/8421 fvu 0.2594 dead 0.000 182s
+[real w16384 s0] step 5500/8421 fvu 0.2551 dead 0.000 202s
+[real w16384 s0] step 6000/8421 fvu 0.2514 dead 0.000 224s
+[real w16384 s0] step 6500/8421 fvu 0.2344 dead 0.000 244s
+[real w16384 s0] step 7000/8421 fvu 0.2451 dead 0.000 266s
+[real w16384 s0] step 7500/8421 fvu 0.2539 dead 0.000 287s
+[real w16384 s0] step 8000/8421 fvu 0.2479 dead 0.000 309s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k48__s0 fvu_eval 0.23766151288117282
+[2026-11-10 19:20:46] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k64__s0
+[real w16384 s0] step 50/8421 fvu 0.6114 dead 0.000 5s
+[real w16384 s0] step 500/8421 fvu 0.4342 dead 0.000 28s
+[real w16384 s0] step 1000/8421 fvu 0.3486 dead 0.000 55s
+[real w16384 s0] step 1500/8421 fvu 0.3222 dead 0.000 83s
+[real w16384 s0] step 2000/8421 fvu 0.3107 dead 0.000 111s
+[real w16384 s0] step 2500/8421 fvu 0.2782 dead 0.000 141s
+[real w16384 s0] step 3000/8421 fvu 0.2738 dead 0.000 166s
+[2026-11-10 19:23:53] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k48__s0: live 16261, fvu 0.238, L0 48.0, ranks 11-150 gamma full 0.463 fixed-n 0.441 [187s]
+[real w16384 s0] step 3500/8421 fvu 0.2811 dead 0.000 188s
+[real w16384 s0] step 4000/8421 fvu 0.2436 dead 0.000 209s
+[real w16384 s0] step 4500/8421 fvu 0.2434 dead 0.000 229s
+[real w16384 s0] step 5000/8421 fvu 0.2447 dead 0.000 249s
+[real w16384 s0] step 5500/8421 fvu 0.2397 dead 0.000 269s
+[real w16384 s0] step 6000/8421 fvu 0.2351 dead 0.000 290s
+[real w16384 s0] step 6500/8421 fvu 0.2180 dead 0.000 311s
+[real w16384 s0] step 7000/8421 fvu 0.2277 dead 0.000 331s
+[real w16384 s0] step 7500/8421 fvu 0.2345 dead 0.000 352s
+[real w16384 s0] step 8000/8421 fvu 0.2288 dead 0.000 373s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k64__s0 fvu_eval 0.21924988392191208
+[2026-11-10 19:27:25] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k128__s0
+[real w16384 s0] step 50/8421 fvu 0.5401 dead 0.000 5s
+[real w16384 s0] step 500/8421 fvu 0.3784 dead 0.000 30s
+[real w16384 s0] step 1000/8421 fvu 0.3102 dead 0.000 58s
+[real w16384 s0] step 1500/8421 fvu 0.2895 dead 0.000 86s
+[real w16384 s0] step 2000/8421 fvu 0.2796 dead 0.000 114s
+[real w16384 s0] step 2500/8421 fvu 0.2514 dead 0.000 142s
+[real w16384 s0] step 3000/8421 fvu 0.2475 dead 0.000 171s
+[2026-11-10 19:30:22] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k64__s0: live 16369, fvu 0.219, L0 64.0, ranks 11-150 gamma full 0.472 fixed-n 0.453 [177s]
+[real w16384 s0] step 3500/8421 fvu 0.2540 dead 0.000 199s
+[real w16384 s0] step 4000/8421 fvu 0.2201 dead 0.000 227s
+[real w16384 s0] step 4500/8421 fvu 0.2193 dead 0.000 255s
+[real w16384 s0] step 5000/8421 fvu 0.2199 dead 0.000 283s
+[real w16384 s0] step 5500/8421 fvu 0.2146 dead 0.000 311s
+[real w16384 s0] step 6000/8421 fvu 0.2084 dead 0.000 340s
+[real w16384 s0] step 6500/8421 fvu 0.1933 dead 0.000 368s
+[real w16384 s0] step 7000/8421 fvu 0.2000 dead 0.000 395s
+[real w16384 s0] step 7500/8421 fvu 0.2051 dead 0.000 423s
+[real w16384 s0] step 8000/8421 fvu 0.1996 dead 0.000 451s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k128__s0 fvu_eval 0.19125361200861427
+[2026-11-10 19:35:26] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k8__s1
+[real w16384 s1] step 50/8421 fvu 0.8039 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.5253 dead 0.000 14s
+[real w16384 s1] step 1000/8421 fvu 0.4814 dead 0.000 27s
+[real w16384 s1] step 1500/8421 fvu 0.4857 dead 0.001 43s
+[real w16384 s1] step 2000/8421 fvu 0.4586 dead 0.003 61s
+[real w16384 s1] step 2500/8421 fvu 0.4498 dead 0.012 79s
+[real w16384 s1] step 3000/8421 fvu 0.4520 dead 0.017 97s
+[real w16384 s1] step 3500/8421 fvu 0.4528 dead 0.009 116s
+[real w16384 s1] step 4000/8421 fvu 0.4504 dead 0.007 133s
+[real w16384 s1] step 4500/8421 fvu 0.4301 dead 0.005 152s
+[real w16384 s1] step 5000/8421 fvu 0.4426 dead 0.004 170s
+[2026-11-10 19:38:26] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k128__s0: live 16384, fvu 0.191, L0 128.0, ranks 11-150 gamma full 0.408 fixed-n 0.389 [180s]
+[real w16384 s1] step 5500/8421 fvu 0.4133 dead 0.004 187s
+[real w16384 s1] step 6000/8421 fvu 0.4042 dead 0.005 205s
+[real w16384 s1] step 6500/8421 fvu 0.4055 dead 0.003 223s
+[real w16384 s1] step 7000/8421 fvu 0.4271 dead 0.002 241s
+[real w16384 s1] step 7500/8421 fvu 0.4024 dead 0.004 258s
+[real w16384 s1] step 8000/8421 fvu 0.3884 dead 0.003 276s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k8__s1 fvu_eval 0.39917185117493775
+[2026-11-10 19:40:23] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k16__s1
+[real w16384 s1] step 50/8421 fvu 0.7440 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4816 dead 0.000 15s
+[real w16384 s1] step 1000/8421 fvu 0.4201 dead 0.000 28s
+[real w16384 s1] step 1500/8421 fvu 0.4152 dead 0.000 42s
+[real w16384 s1] step 2000/8421 fvu 0.3868 dead 0.000 56s
+[real w16384 s1] step 2500/8421 fvu 0.3773 dead 0.000 73s
+[real w16384 s1] step 3000/8421 fvu 0.3790 dead 0.001 92s
+[real w16384 s1] step 3500/8421 fvu 0.3804 dead 0.001 111s
+[real w16384 s1] step 4000/8421 fvu 0.3794 dead 0.001 129s
+[real w16384 s1] step 4500/8421 fvu 0.3619 dead 0.002 149s
+[real w16384 s1] step 5000/8421 fvu 0.3721 dead 0.002 168s
+[2026-11-10 19:43:23] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k8__s1: live 14338, fvu 0.399, L0 8.0, ranks 11-150 gamma full 0.839 fixed-n 0.816 [180s]
+[real w16384 s1] step 5500/8421 fvu 0.3472 dead 0.001 187s
+[real w16384 s1] step 6000/8421 fvu 0.3412 dead 0.002 205s
+[2026-11-10T19:43:59Z] [watchdog] heartbeat: GPU 100%, idle 0s, 32G free, 570 min to deadline
+[real w16384 s1] step 6500/8421 fvu 0.3410 dead 0.001 224s
+[real w16384 s1] step 7000/8421 fvu 0.3578 dead 0.001 243s
+[real w16384 s1] step 7500/8421 fvu 0.3375 dead 0.002 262s
+[real w16384 s1] step 8000/8421 fvu 0.3239 dead 0.002 281s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k16__s1 fvu_eval 0.3339543658640486
+[2026-11-10 19:45:26] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k24__s1
+[real w16384 s1] step 50/8421 fvu 0.7094 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4595 dead 0.000 16s
+[real w16384 s1] step 1000/8421 fvu 0.3940 dead 0.000 31s
+[real w16384 s1] step 1500/8421 fvu 0.3807 dead 0.000 45s
+[real w16384 s1] step 2000/8421 fvu 0.3493 dead 0.000 60s
+[real w16384 s1] step 2500/8421 fvu 0.3378 dead 0.000 74s
+[real w16384 s1] step 3000/8421 fvu 0.3359 dead 0.000 90s
+[real w16384 s1] step 3500/8421 fvu 0.3362 dead 0.000 108s
+[real w16384 s1] step 4000/8421 fvu 0.3361 dead 0.000 126s
+[real w16384 s1] step 4500/8421 fvu 0.3212 dead 0.000 146s
+[real w16384 s1] step 5000/8421 fvu 0.3286 dead 0.001 166s
+[2026-11-10 19:48:23] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k16__s1: live 14885, fvu 0.334, L0 16.0, ranks 11-150 gamma full 0.591 fixed-n 0.563 [177s]
+[real w16384 s1] step 5500/8421 fvu 0.3086 dead 0.001 186s
+[real w16384 s1] step 6000/8421 fvu 0.3027 dead 0.000 205s
+[real w16384 s1] step 6500/8421 fvu 0.3052 dead 0.000 225s
+[real w16384 s1] step 7000/8421 fvu 0.3207 dead 0.000 245s
+[real w16384 s1] step 7500/8421 fvu 0.3029 dead 0.001 265s
+[real w16384 s1] step 8000/8421 fvu 0.2909 dead 0.001 284s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k24__s1 fvu_eval 0.299843547511191
+[2026-11-10 19:50:33] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k32__s1
+[real w16384 s1] step 50/8421 fvu 0.6839 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4453 dead 0.000 17s
+[real w16384 s1] step 1000/8421 fvu 0.3814 dead 0.000 33s
+[real w16384 s1] step 1500/8421 fvu 0.3647 dead 0.000 48s
+[real w16384 s1] step 2000/8421 fvu 0.3294 dead 0.000 64s
+[real w16384 s1] step 2500/8421 fvu 0.3141 dead 0.000 80s
+[real w16384 s1] step 3000/8421 fvu 0.3111 dead 0.000 95s
+[real w16384 s1] step 3500/8421 fvu 0.3098 dead 0.000 111s
+[real w16384 s1] step 4000/8421 fvu 0.3072 dead 0.000 128s
+[real w16384 s1] step 4500/8421 fvu 0.2951 dead 0.000 148s
+[real w16384 s1] step 5000/8421 fvu 0.3000 dead 0.000 166s
+[2026-11-10 19:53:31] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k24__s1: live 15337, fvu 0.300, L0 24.0, ranks 11-150 gamma full 0.481 fixed-n 0.460 [178s]
+[real w16384 s1] step 5500/8421 fvu 0.2808 dead 0.000 187s
+[real w16384 s1] step 6000/8421 fvu 0.2761 dead 0.000 208s
+[real w16384 s1] step 6500/8421 fvu 0.2774 dead 0.000 228s
+[real w16384 s1] step 7000/8421 fvu 0.2914 dead 0.000 249s
+[real w16384 s1] step 7500/8421 fvu 0.2761 dead 0.000 270s
+[real w16384 s1] step 8000/8421 fvu 0.2648 dead 0.000 291s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k32__s1 fvu_eval 0.27277686352041913
+[2026-11-10 19:55:48] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k48__s1
+[real w16384 s1] step 50/8421 fvu 0.6445 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4226 dead 0.000 19s
+[real w16384 s1] step 1000/8421 fvu 0.3634 dead 0.000 37s
+[real w16384 s1] step 1500/8421 fvu 0.3451 dead 0.000 55s
+[real w16384 s1] step 2000/8421 fvu 0.3106 dead 0.000 73s
+[real w16384 s1] step 2500/8421 fvu 0.2938 dead 0.000 91s
+[real w16384 s1] step 3000/8421 fvu 0.2874 dead 0.000 108s
+[real w16384 s1] step 3500/8421 fvu 0.2832 dead 0.000 126s
+[real w16384 s1] step 4000/8421 fvu 0.2796 dead 0.000 143s
+[real w16384 s1] step 4500/8421 fvu 0.2655 dead 0.000 162s
+[2026-11-10 19:58:47] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k32__s1: live 15821, fvu 0.273, L0 32.0, ranks 11-150 gamma full 0.467 fixed-n 0.444 [179s]
+[real w16384 s1] step 5000/8421 fvu 0.2686 dead 0.000 180s
+[real w16384 s1] step 5500/8421 fvu 0.2492 dead 0.000 199s
+[real w16384 s1] step 6000/8421 fvu 0.2433 dead 0.000 218s
+[real w16384 s1] step 6500/8421 fvu 0.2429 dead 0.000 237s
+[real w16384 s1] step 7000/8421 fvu 0.2542 dead 0.000 257s
+[real w16384 s1] step 7500/8421 fvu 0.2400 dead 0.000 279s
+[real w16384 s1] step 8000/8421 fvu 0.2299 dead 0.000 301s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k48__s1 fvu_eval 0.2369465077207822
+[2026-11-10 20:01:14] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k64__s1
+[real w16384 s1] step 50/8421 fvu 0.6147 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4045 dead 0.000 21s
+[real w16384 s1] step 1000/8421 fvu 0.3503 dead 0.000 41s
+[real w16384 s1] step 1500/8421 fvu 0.3328 dead 0.000 61s
+[real w16384 s1] step 2000/8421 fvu 0.2994 dead 0.000 81s
+[real w16384 s1] step 2500/8421 fvu 0.2831 dead 0.000 101s
+[real w16384 s1] step 3000/8421 fvu 0.2762 dead 0.000 121s
+[real w16384 s1] step 3500/8421 fvu 0.2708 dead 0.000 140s
+[real w16384 s1] step 4000/8421 fvu 0.2665 dead 0.000 160s
+[2026-11-10 20:04:15] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k48__s1: live 16251, fvu 0.237, L0 48.0, ranks 11-150 gamma full 0.460 fixed-n 0.440 [181s]
+[real w16384 s1] step 4500/8421 fvu 0.2514 dead 0.000 181s
+[real w16384 s1] step 5000/8421 fvu 0.2531 dead 0.000 200s
+[real w16384 s1] step 5500/8421 fvu 0.2342 dead 0.000 220s
+[real w16384 s1] step 6000/8421 fvu 0.2275 dead 0.000 240s
+[real w16384 s1] step 6500/8421 fvu 0.2269 dead 0.000 260s
+[real w16384 s1] step 7000/8421 fvu 0.2359 dead 0.000 280s
+[real w16384 s1] step 7500/8421 fvu 0.2232 dead 0.000 300s
+[real w16384 s1] step 8000/8421 fvu 0.2125 dead 0.000 320s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k64__s1 fvu_eval 0.21896415777686562
+[2026-11-10 20:07:01] train synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k128__s1
+[real w16384 s1] step 50/8421 fvu 0.5424 dead 0.000 5s
+[real w16384 s1] step 500/8421 fvu 0.3527 dead 0.000 29s
+[real w16384 s1] step 1000/8421 fvu 0.3110 dead 0.000 57s
+[real w16384 s1] step 1500/8421 fvu 0.2987 dead 0.000 86s
+[real w16384 s1] step 2000/8421 fvu 0.2695 dead 0.000 114s
+[real w16384 s1] step 2500/8421 fvu 0.2554 dead 0.000 142s
+[real w16384 s1] step 3000/8421 fvu 0.2488 dead 0.000 170s
+[2026-11-10 20:09:56] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k64__s1: live 16370, fvu 0.219, L0 64.0, ranks 11-150 gamma full 0.474 fixed-n 0.451 [175s]
+[real w16384 s1] step 3500/8421 fvu 0.2432 dead 0.000 199s
+[real w16384 s1] step 4000/8421 fvu 0.2402 dead 0.000 227s
+[real w16384 s1] step 4500/8421 fvu 0.2254 dead 0.000 256s
+[real w16384 s1] step 5000/8421 fvu 0.2272 dead 0.000 284s
+[real w16384 s1] step 5500/8421 fvu 0.2098 dead 0.000 312s
+[real w16384 s1] step 6000/8421 fvu 0.2018 dead 0.000 340s
+[real w16384 s1] step 6500/8421 fvu 0.2008 dead 0.000 369s
+[real w16384 s1] step 7000/8421 fvu 0.2079 dead 0.000 397s
+[2026-11-10T20:14:01Z] [watchdog] heartbeat: GPU 99%, idle 0s, 31G free, 540 min to deadline
+[real w16384 s1] step 7500/8421 fvu 0.1957 dead 0.000 425s
+[real w16384 s1] step 8000/8421 fvu 0.1859 dead 0.000 453s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k128__s1 fvu_eval 0.19118839901929588
+[2026-11-10 20:17:56] scored synth-rs12-G-ds0__blocks.0.hook_resid_post__real__w16384__k128__s1: live 16383, fvu 0.191, L0 128.0, ranks 11-150 gamma full 0.408 fixed-n 0.391 [170s]
+[2026-11-10 20:17:57] deleted /workspace/SAE/cache/acts/synth-rs12-G-ds0/blocks.0.hook_resid_post/acts.npy; 88 GB free
+[2026-11-10 20:17:57] generate rs12-D-ds1 (88 GB free)
+done synth-rs12-D-ds1: 12,000,000 tokens, fvu vs real nan, 442s
+[2026-11-10 20:25:24] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k8__s0
+[real w16384 s0] step 50/8421 fvu 0.8010 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.5469 dead 0.000 14s
+[real w16384 s0] step 1000/8421 fvu 0.5007 dead 0.000 28s
+[real w16384 s0] step 1500/8421 fvu 0.4511 dead 0.003 45s
+[real w16384 s0] step 2000/8421 fvu 0.4769 dead 0.010 63s
+[real w16384 s0] step 2500/8421 fvu 0.4636 dead 0.026 81s
+[real w16384 s0] step 3000/8421 fvu 0.4623 dead 0.018 99s
+[real w16384 s0] step 3500/8421 fvu 0.4407 dead 0.007 117s
+[real w16384 s0] step 4000/8421 fvu 0.4521 dead 0.006 136s
+[real w16384 s0] step 4500/8421 fvu 0.4321 dead 0.004 154s
+[real w16384 s0] step 5000/8421 fvu 0.4487 dead 0.010 171s
+[real w16384 s0] step 5500/8421 fvu 0.4427 dead 0.007 189s
+[real w16384 s0] step 6000/8421 fvu 0.4347 dead 0.007 208s
+[real w16384 s0] step 6500/8421 fvu 0.4395 dead 0.004 226s
+[real w16384 s0] step 7000/8421 fvu 0.4299 dead 0.005 244s
+[real w16384 s0] step 7500/8421 fvu 0.4313 dead 0.004 261s
+[real w16384 s0] step 8000/8421 fvu 0.4267 dead 0.008 279s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k8__s0 fvu_eval 0.4156951019194792
+[2026-11-10 20:30:23] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k16__s0
+[real w16384 s0] step 50/8421 fvu 0.7397 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4953 dead 0.000 16s
+[real w16384 s0] step 1000/8421 fvu 0.4348 dead 0.000 29s
+[real w16384 s0] step 1500/8421 fvu 0.3811 dead 0.000 42s
+[real w16384 s0] step 2000/8421 fvu 0.3978 dead 0.000 58s
+[real w16384 s0] step 2500/8421 fvu 0.3843 dead 0.001 77s
+[real w16384 s0] step 3000/8421 fvu 0.3827 dead 0.002 96s
+[real w16384 s0] step 3500/8421 fvu 0.3636 dead 0.003 115s
+[real w16384 s0] step 4000/8421 fvu 0.3738 dead 0.003 135s
+[real w16384 s0] step 4500/8421 fvu 0.3556 dead 0.003 154s
+[real w16384 s0] step 5000/8421 fvu 0.3701 dead 0.003 173s
+[2026-11-10 20:33:19] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k8__s0: live 13324, fvu 0.416, L0 8.0, ranks 11-150 gamma full 0.829 fixed-n 0.816 [176s]
+[real w16384 s0] step 5500/8421 fvu 0.3671 dead 0.003 191s
+[real w16384 s0] step 6000/8421 fvu 0.3598 dead 0.004 211s
+[real w16384 s0] step 6500/8421 fvu 0.3646 dead 0.001 230s
+[real w16384 s0] step 7000/8421 fvu 0.3548 dead 0.002 249s
+[real w16384 s0] step 7500/8421 fvu 0.3559 dead 0.003 267s
+[real w16384 s0] step 8000/8421 fvu 0.3520 dead 0.004 286s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.34226199178518885
+[2026-11-10 20:35:31] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k24__s0
+[real w16384 s0] step 50/8421 fvu 0.7048 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4721 dead 0.000 17s
+[real w16384 s0] step 1000/8421 fvu 0.4030 dead 0.000 32s
+[real w16384 s0] step 1500/8421 fvu 0.3475 dead 0.000 46s
+[real w16384 s0] step 2000/8421 fvu 0.3574 dead 0.000 61s
+[real w16384 s0] step 2500/8421 fvu 0.3423 dead 0.000 76s
+[real w16384 s0] step 3000/8421 fvu 0.3376 dead 0.000 95s
+[real w16384 s0] step 3500/8421 fvu 0.3205 dead 0.000 115s
+[real w16384 s0] step 4000/8421 fvu 0.3285 dead 0.001 136s
+[real w16384 s0] step 4500/8421 fvu 0.3122 dead 0.001 156s
+[2026-11-10 20:38:25] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k16__s0: live 13887, fvu 0.342, L0 16.0, ranks 11-150 gamma full 0.649 fixed-n 0.627 [174s]
+[real w16384 s0] step 5000/8421 fvu 0.3232 dead 0.001 175s
+[real w16384 s0] step 5500/8421 fvu 0.3207 dead 0.001 195s
+[real w16384 s0] step 6000/8421 fvu 0.3142 dead 0.001 216s
+[real w16384 s0] step 6500/8421 fvu 0.3197 dead 0.001 236s
+[real w16384 s0] step 7000/8421 fvu 0.3117 dead 0.001 255s
+[real w16384 s0] step 7500/8421 fvu 0.3116 dead 0.002 275s
+[real w16384 s0] step 8000/8421 fvu 0.3095 dead 0.002 295s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k24__s0 fvu_eval 0.30007606912796103
+[2026-11-10 20:40:49] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k32__s0
+[real w16384 s0] step 50/8421 fvu 0.6792 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4587 dead 0.000 18s
+[real w16384 s0] step 1000/8421 fvu 0.3875 dead 0.000 34s
+[real w16384 s0] step 1500/8421 fvu 0.3286 dead 0.000 49s
+[real w16384 s0] step 2000/8421 fvu 0.3344 dead 0.000 65s
+[real w16384 s0] step 2500/8421 fvu 0.3166 dead 0.000 81s
+[real w16384 s0] step 3000/8421 fvu 0.3099 dead 0.000 97s
+[real w16384 s0] step 3500/8421 fvu 0.2926 dead 0.000 115s
+[real w16384 s0] step 4000/8421 fvu 0.2986 dead 0.000 137s
+[real w16384 s0] step 4500/8421 fvu 0.2824 dead 0.000 158s
+[2026-11-10 20:43:44] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k24__s0: live 14291, fvu 0.300, L0 24.0, ranks 11-150 gamma full 0.548 fixed-n 0.520 [175s]
+[real w16384 s0] step 5000/8421 fvu 0.2917 dead 0.000 178s
+[2026-11-10T20:44:02Z] [watchdog] heartbeat: GPU 100%, idle 0s, 31G free, 510 min to deadline
+[real w16384 s0] step 5500/8421 fvu 0.2890 dead 0.000 199s
+[real w16384 s0] step 6000/8421 fvu 0.2825 dead 0.001 221s
+[real w16384 s0] step 6500/8421 fvu 0.2875 dead 0.000 242s
+[real w16384 s0] step 7000/8421 fvu 0.2801 dead 0.001 263s
+[real w16384 s0] step 7500/8421 fvu 0.2810 dead 0.001 283s
+[real w16384 s0] step 8000/8421 fvu 0.2778 dead 0.002 304s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.2695388545599737
+[2026-11-10 20:46:16] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k48__s0
+[real w16384 s0] step 50/8421 fvu 0.6392 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.4361 dead 0.000 20s
+[real w16384 s0] step 1000/8421 fvu 0.3678 dead 0.000 38s
+[real w16384 s0] step 1500/8421 fvu 0.3090 dead 0.000 54s
+[real w16384 s0] step 2000/8421 fvu 0.3100 dead 0.000 72s
+[real w16384 s0] step 2500/8421 fvu 0.2893 dead 0.000 90s
+[real w16384 s0] step 3000/8421 fvu 0.2796 dead 0.000 107s
+[real w16384 s0] step 3500/8421 fvu 0.2611 dead 0.000 125s
+[real w16384 s0] step 4000/8421 fvu 0.2645 dead 0.000 144s
+[real w16384 s0] step 4500/8421 fvu 0.2484 dead 0.000 162s
+[2026-11-10 20:49:03] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k32__s0: live 14835, fvu 0.270, L0 32.0, ranks 11-150 gamma full 0.515 fixed-n 0.488 [167s]
+[real w16384 s0] step 5000/8421 fvu 0.2557 dead 0.000 183s
+[real w16384 s0] step 5500/8421 fvu 0.2524 dead 0.000 205s
+[real w16384 s0] step 6000/8421 fvu 0.2457 dead 0.000 228s
+[real w16384 s0] step 6500/8421 fvu 0.2490 dead 0.000 250s
+[real w16384 s0] step 7000/8421 fvu 0.2409 dead 0.000 273s
+[real w16384 s0] step 7500/8421 fvu 0.2414 dead 0.000 296s
+[real w16384 s0] step 8000/8421 fvu 0.2383 dead 0.001 319s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k48__s0 fvu_eval 0.23101217714863195
+[2026-11-10 20:52:01] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k64__s0
+[real w16384 s0] step 50/8421 fvu 0.6096 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.4177 dead 0.000 22s
+[real w16384 s0] step 1000/8421 fvu 0.3544 dead 0.000 42s
+[real w16384 s0] step 1500/8421 fvu 0.2970 dead 0.000 62s
+[real w16384 s0] step 2000/8421 fvu 0.2970 dead 0.000 82s
+[real w16384 s0] step 2500/8421 fvu 0.2763 dead 0.000 102s
+[real w16384 s0] step 3000/8421 fvu 0.2653 dead 0.000 122s
+[real w16384 s0] step 3500/8421 fvu 0.2455 dead 0.000 142s
+[real w16384 s0] step 4000/8421 fvu 0.2473 dead 0.000 162s
+[2026-11-10 20:54:49] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k48__s0: live 15860, fvu 0.231, L0 48.0, ranks 11-150 gamma full 0.473 fixed-n 0.444 [169s]
+[real w16384 s0] step 4500/8421 fvu 0.2309 dead 0.000 182s
+[real w16384 s0] step 5000/8421 fvu 0.2360 dead 0.000 203s
+[real w16384 s0] step 5500/8421 fvu 0.2320 dead 0.000 224s
+[real w16384 s0] step 6000/8421 fvu 0.2247 dead 0.000 246s
+[real w16384 s0] step 6500/8421 fvu 0.2275 dead 0.000 269s
+[real w16384 s0] step 7000/8421 fvu 0.2202 dead 0.000 291s
+[real w16384 s0] step 7500/8421 fvu 0.2195 dead 0.000 314s
+[real w16384 s0] step 8000/8421 fvu 0.2167 dead 0.000 338s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k64__s0 fvu_eval 0.20985980288535813
+[2026-11-10 20:58:05] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k128__s0
+[real w16384 s0] step 50/8421 fvu 0.5378 dead 0.000 5s
+[real w16384 s0] step 500/8421 fvu 0.3657 dead 0.000 31s
+[real w16384 s0] step 1000/8421 fvu 0.3169 dead 0.000 59s
+[real w16384 s0] step 1500/8421 fvu 0.2670 dead 0.000 86s
+[real w16384 s0] step 2000/8421 fvu 0.2676 dead 0.000 115s
+[real w16384 s0] step 2500/8421 fvu 0.2486 dead 0.000 143s
+[real w16384 s0] step 3000/8421 fvu 0.2379 dead 0.000 171s
+[2026-11-10 21:01:00] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k64__s0: live 16237, fvu 0.210, L0 64.0, ranks 11-150 gamma full 0.445 fixed-n 0.421 [175s]
+[real w16384 s0] step 3500/8421 fvu 0.2188 dead 0.000 200s
+[real w16384 s0] step 4000/8421 fvu 0.2186 dead 0.000 229s
+[real w16384 s0] step 4500/8421 fvu 0.2027 dead 0.000 257s
+[real w16384 s0] step 5000/8421 fvu 0.2054 dead 0.000 285s
+[real w16384 s0] step 5500/8421 fvu 0.1998 dead 0.000 313s
+[real w16384 s0] step 6000/8421 fvu 0.1915 dead 0.000 341s
+[real w16384 s0] step 6500/8421 fvu 0.1929 dead 0.000 369s
+[real w16384 s0] step 7000/8421 fvu 0.1852 dead 0.000 397s
+[real w16384 s0] step 7500/8421 fvu 0.1832 dead 0.000 425s
+[real w16384 s0] step 8000/8421 fvu 0.1806 dead 0.000 453s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k128__s0 fvu_eval 0.17444477934262662
+[2026-11-10 21:06:09] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k8__s1
+[real w16384 s1] step 50/8421 fvu 0.8100 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.5478 dead 0.000 14s
+[real w16384 s1] step 1000/8421 fvu 0.5132 dead 0.000 27s
+[real w16384 s1] step 1500/8421 fvu 0.4956 dead 0.001 45s
+[real w16384 s1] step 2000/8421 fvu 0.4816 dead 0.010 63s
+[real w16384 s1] step 2500/8421 fvu 0.4854 dead 0.034 81s
+[real w16384 s1] step 3000/8421 fvu 0.4581 dead 0.022 100s
+[real w16384 s1] step 3500/8421 fvu 0.4593 dead 0.011 118s
+[real w16384 s1] step 4000/8421 fvu 0.4571 dead 0.005 135s
+[real w16384 s1] step 4500/8421 fvu 0.4463 dead 0.006 154s
+[real w16384 s1] step 5000/8421 fvu 0.4405 dead 0.006 172s
+[2026-11-10 21:09:04] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k128__s0: live 16383, fvu 0.174, L0 128.0, ranks 11-150 gamma full 0.329 fixed-n 0.315 [175s]
+[real w16384 s1] step 5500/8421 fvu 0.4258 dead 0.009 189s
+[real w16384 s1] step 6000/8421 fvu 0.4214 dead 0.008 207s
+[real w16384 s1] step 6500/8421 fvu 0.4281 dead 0.005 225s
+[real w16384 s1] step 7000/8421 fvu 0.4329 dead 0.005 243s
+[real w16384 s1] step 7500/8421 fvu 0.4450 dead 0.006 260s
+[real w16384 s1] step 8000/8421 fvu 0.4300 dead 0.007 278s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k8__s1 fvu_eval 0.4166666855814259
+[2026-11-10 21:11:08] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k16__s1
+[real w16384 s1] step 50/8421 fvu 0.7514 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4965 dead 0.000 15s
+[real w16384 s1] step 1000/8421 fvu 0.4453 dead 0.000 28s
+[real w16384 s1] step 1500/8421 fvu 0.4208 dead 0.000 42s
+[real w16384 s1] step 2000/8421 fvu 0.4029 dead 0.000 58s
+[real w16384 s1] step 2500/8421 fvu 0.4040 dead 0.001 77s
+[real w16384 s1] step 3000/8421 fvu 0.3787 dead 0.003 96s
+[real w16384 s1] step 3500/8421 fvu 0.3814 dead 0.005 114s
+[real w16384 s1] step 4000/8421 fvu 0.3780 dead 0.003 133s
+[real w16384 s1] step 4500/8421 fvu 0.3690 dead 0.003 153s
+[2026-11-10 21:13:56] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k8__s1: live 13412, fvu 0.417, L0 8.0, ranks 11-150 gamma full 0.818 fixed-n 0.805 [168s]
+[real w16384 s1] step 5000/8421 fvu 0.3646 dead 0.004 172s
+[2026-11-10T21:14:04Z] [watchdog] heartbeat: GPU 100%, idle 0s, 30G free, 480 min to deadline
+[real w16384 s1] step 5500/8421 fvu 0.3517 dead 0.004 190s
+[real w16384 s1] step 6000/8421 fvu 0.3486 dead 0.004 209s
+[real w16384 s1] step 6500/8421 fvu 0.3518 dead 0.002 228s
+[real w16384 s1] step 7000/8421 fvu 0.3557 dead 0.002 247s
+[real w16384 s1] step 7500/8421 fvu 0.3649 dead 0.003 266s
+[real w16384 s1] step 8000/8421 fvu 0.3535 dead 0.003 285s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k16__s1 fvu_eval 0.34192377386325645
+[2026-11-10 21:16:15] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k24__s1
+[real w16384 s1] step 50/8421 fvu 0.7174 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4764 dead 0.000 16s
+[real w16384 s1] step 1000/8421 fvu 0.4148 dead 0.000 31s
+[real w16384 s1] step 1500/8421 fvu 0.3816 dead 0.000 46s
+[real w16384 s1] step 2000/8421 fvu 0.3606 dead 0.000 61s
+[real w16384 s1] step 2500/8421 fvu 0.3576 dead 0.000 77s
+[real w16384 s1] step 3000/8421 fvu 0.3350 dead 0.000 96s
+[real w16384 s1] step 3500/8421 fvu 0.3340 dead 0.001 116s
+[real w16384 s1] step 4000/8421 fvu 0.3310 dead 0.001 136s
+[real w16384 s1] step 4500/8421 fvu 0.3233 dead 0.001 156s
+[2026-11-10 21:19:06] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k16__s1: live 13877, fvu 0.342, L0 16.0, ranks 11-150 gamma full 0.659 fixed-n 0.633 [170s]
+[real w16384 s1] step 5000/8421 fvu 0.3197 dead 0.002 176s
+[real w16384 s1] step 5500/8421 fvu 0.3067 dead 0.002 196s
+[real w16384 s1] step 6000/8421 fvu 0.3042 dead 0.002 216s
+[real w16384 s1] step 6500/8421 fvu 0.3085 dead 0.001 236s
+[real w16384 s1] step 7000/8421 fvu 0.3125 dead 0.001 256s
+[real w16384 s1] step 7500/8421 fvu 0.3195 dead 0.002 276s
+[real w16384 s1] step 8000/8421 fvu 0.3096 dead 0.002 295s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k24__s1 fvu_eval 0.29981310130097333
+[2026-11-10 21:21:34] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k32__s1
+[real w16384 s1] step 50/8421 fvu 0.6913 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4611 dead 0.000 17s
+[real w16384 s1] step 1000/8421 fvu 0.3969 dead 0.000 33s
+[real w16384 s1] step 1500/8421 fvu 0.3608 dead 0.000 48s
+[real w16384 s1] step 2000/8421 fvu 0.3363 dead 0.000 64s
+[real w16384 s1] step 2500/8421 fvu 0.3303 dead 0.000 79s
+[real w16384 s1] step 3000/8421 fvu 0.3065 dead 0.000 95s
+[real w16384 s1] step 3500/8421 fvu 0.3035 dead 0.000 114s
+[real w16384 s1] step 4000/8421 fvu 0.3003 dead 0.000 133s
+[real w16384 s1] step 4500/8421 fvu 0.2917 dead 0.000 154s
+[2026-11-10 21:24:24] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k24__s1: live 14315, fvu 0.300, L0 24.0, ranks 11-150 gamma full 0.546 fixed-n 0.517 [170s]
+[real w16384 s1] step 5000/8421 fvu 0.2882 dead 0.000 175s
+[real w16384 s1] step 5500/8421 fvu 0.2769 dead 0.000 196s
+[real w16384 s1] step 6000/8421 fvu 0.2724 dead 0.000 217s
+[real w16384 s1] step 6500/8421 fvu 0.2763 dead 0.000 237s
+[real w16384 s1] step 7000/8421 fvu 0.2793 dead 0.001 258s
+[real w16384 s1] step 7500/8421 fvu 0.2851 dead 0.001 279s
+[real w16384 s1] step 8000/8421 fvu 0.2772 dead 0.001 300s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k32__s1 fvu_eval 0.26779608264533866
+[2026-11-10 21:26:58] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k48__s1
+[real w16384 s1] step 50/8421 fvu 0.6510 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4405 dead 0.000 19s
+[real w16384 s1] step 1000/8421 fvu 0.3777 dead 0.000 37s
+[real w16384 s1] step 1500/8421 fvu 0.3397 dead 0.000 55s
+[real w16384 s1] step 2000/8421 fvu 0.3122 dead 0.000 72s
+[real w16384 s1] step 2500/8421 fvu 0.3037 dead 0.000 90s
+[real w16384 s1] step 3000/8421 fvu 0.2774 dead 0.000 108s
+[real w16384 s1] step 3500/8421 fvu 0.2719 dead 0.000 126s
+[real w16384 s1] step 4000/8421 fvu 0.2671 dead 0.000 143s
+[2026-11-10 21:29:44] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k32__s1: live 14837, fvu 0.268, L0 32.0, ranks 11-150 gamma full 0.503 fixed-n 0.472 [166s]
+[real w16384 s1] step 4500/8421 fvu 0.2575 dead 0.000 163s
+[real w16384 s1] step 5000/8421 fvu 0.2529 dead 0.000 185s
+[real w16384 s1] step 5500/8421 fvu 0.2417 dead 0.000 207s
+[real w16384 s1] step 6000/8421 fvu 0.2366 dead 0.000 229s
+[real w16384 s1] step 6500/8421 fvu 0.2396 dead 0.000 251s
+[real w16384 s1] step 7000/8421 fvu 0.2417 dead 0.000 273s
+[real w16384 s1] step 7500/8421 fvu 0.2453 dead 0.000 296s
+[real w16384 s1] step 8000/8421 fvu 0.2386 dead 0.001 319s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k48__s1 fvu_eval 0.23071596555491525
+[2026-11-10 21:32:43] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k64__s1
+[real w16384 s1] step 50/8421 fvu 0.6209 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4215 dead 0.000 21s
+[real w16384 s1] step 1000/8421 fvu 0.3633 dead 0.000 41s
+[real w16384 s1] step 1500/8421 fvu 0.3263 dead 0.000 61s
+[real w16384 s1] step 2000/8421 fvu 0.2997 dead 0.000 81s
+[real w16384 s1] step 2500/8421 fvu 0.2901 dead 0.000 100s
+[real w16384 s1] step 3000/8421 fvu 0.2633 dead 0.000 120s
+[real w16384 s1] step 3500/8421 fvu 0.2564 dead 0.000 139s
+[real w16384 s1] step 4000/8421 fvu 0.2497 dead 0.000 159s
+[2026-11-10 21:35:34] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k48__s1: live 15850, fvu 0.231, L0 48.0, ranks 11-150 gamma full 0.454 fixed-n 0.428 [171s]
+[real w16384 s1] step 4500/8421 fvu 0.2401 dead 0.000 179s
+[real w16384 s1] step 5000/8421 fvu 0.2338 dead 0.000 199s
+[real w16384 s1] step 5500/8421 fvu 0.2236 dead 0.000 220s
+[real w16384 s1] step 6000/8421 fvu 0.2177 dead 0.000 242s
+[real w16384 s1] step 6500/8421 fvu 0.2201 dead 0.000 264s
+[real w16384 s1] step 7000/8421 fvu 0.2216 dead 0.000 286s
+[real w16384 s1] step 7500/8421 fvu 0.2235 dead 0.000 309s
+[real w16384 s1] step 8000/8421 fvu 0.2175 dead 0.000 333s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k64__s1 fvu_eval 0.2099654659976887
+[2026-11-10 21:38:44] train synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k128__s1
+[real w16384 s1] step 50/8421 fvu 0.5484 dead 0.000 5s
+[real w16384 s1] step 500/8421 fvu 0.3691 dead 0.000 29s
+[real w16384 s1] step 1000/8421 fvu 0.3236 dead 0.000 57s
+[real w16384 s1] step 1500/8421 fvu 0.2939 dead 0.000 86s
+[real w16384 s1] step 2000/8421 fvu 0.2700 dead 0.000 114s
+[real w16384 s1] step 2500/8421 fvu 0.2612 dead 0.000 142s
+[2026-11-10 21:41:35] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k64__s1: live 16237, fvu 0.210, L0 64.0, ranks 11-150 gamma full 0.434 fixed-n 0.411 [171s]
+[real w16384 s1] step 3000/8421 fvu 0.2352 dead 0.000 170s
+[real w16384 s1] step 3500/8421 fvu 0.2280 dead 0.000 198s
+[real w16384 s1] step 4000/8421 fvu 0.2207 dead 0.000 226s
+[real w16384 s1] step 4500/8421 fvu 0.2101 dead 0.000 254s
+[real w16384 s1] step 5000/8421 fvu 0.2036 dead 0.000 282s
+[real w16384 s1] step 5500/8421 fvu 0.1924 dead 0.000 309s
+[2026-11-10T21:44:05Z] [watchdog] heartbeat: GPU 99%, idle 0s, 29G free, 450 min to deadline
+[real w16384 s1] step 6000/8421 fvu 0.1854 dead 0.000 337s
+[real w16384 s1] step 6500/8421 fvu 0.1861 dead 0.000 365s
+[real w16384 s1] step 7000/8421 fvu 0.1857 dead 0.000 392s
+[real w16384 s1] step 7500/8421 fvu 0.1873 dead 0.000 420s
+[real w16384 s1] step 8000/8421 fvu 0.1808 dead 0.000 448s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k128__s1 fvu_eval 0.17432763688687616
+[2026-11-10 21:49:29] scored synth-rs12-D-ds1__blocks.0.hook_resid_post__real__w16384__k128__s1: live 16377, fvu 0.174, L0 128.0, ranks 11-150 gamma full 0.339 fixed-n 0.326 [166s]
+[2026-11-10 21:49:30] deleted /workspace/SAE/cache/acts/synth-rs12-D-ds1/blocks.0.hook_resid_post/acts.npy; 31 GB free
+[2026-11-10 21:49:30] generate rs12-G-ds1 (86 GB free)
+done synth-rs12-G-ds1: 12,000,000 tokens, fvu vs real nan, 449s
+[2026-11-10 21:57:03] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k8__s0
+[real w16384 s0] step 50/8421 fvu 0.7985 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.5434 dead 0.000 14s
+[real w16384 s0] step 1000/8421 fvu 0.4942 dead 0.000 27s
+[real w16384 s0] step 1500/8421 fvu 0.4412 dead 0.000 41s
+[real w16384 s0] step 2000/8421 fvu 0.4633 dead 0.004 59s
+[real w16384 s0] step 2500/8421 fvu 0.4489 dead 0.012 77s
+[real w16384 s0] step 3000/8421 fvu 0.4455 dead 0.015 95s
+[real w16384 s0] step 3500/8421 fvu 0.4248 dead 0.006 113s
+[real w16384 s0] step 4000/8421 fvu 0.4351 dead 0.006 132s
+[real w16384 s0] step 4500/8421 fvu 0.4112 dead 0.005 150s
+[real w16384 s0] step 5000/8421 fvu 0.4284 dead 0.006 168s
+[real w16384 s0] step 5500/8421 fvu 0.4240 dead 0.006 185s
+[real w16384 s0] step 6000/8421 fvu 0.4142 dead 0.005 204s
+[real w16384 s0] step 6500/8421 fvu 0.4217 dead 0.003 222s
+[real w16384 s0] step 7000/8421 fvu 0.4095 dead 0.003 239s
+[real w16384 s0] step 7500/8421 fvu 0.4116 dead 0.003 257s
+[real w16384 s0] step 8000/8421 fvu 0.4098 dead 0.004 275s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k8__s0 fvu_eval 0.39703869780633866
+[2026-11-10 22:01:58] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k16__s0
+[real w16384 s0] step 50/8421 fvu 0.7369 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4938 dead 0.000 16s
+[real w16384 s0] step 1000/8421 fvu 0.4311 dead 0.000 29s
+[real w16384 s0] step 1500/8421 fvu 0.3786 dead 0.000 42s
+[real w16384 s0] step 2000/8421 fvu 0.3930 dead 0.000 56s
+[real w16384 s0] step 2500/8421 fvu 0.3769 dead 0.000 72s
+[real w16384 s0] step 3000/8421 fvu 0.3749 dead 0.001 91s
+[real w16384 s0] step 3500/8421 fvu 0.3571 dead 0.001 110s
+[real w16384 s0] step 4000/8421 fvu 0.3665 dead 0.002 130s
+[real w16384 s0] step 4500/8421 fvu 0.3480 dead 0.002 148s
+[2026-11-10 22:04:48] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k8__s0: live 14316, fvu 0.397, L0 8.0, ranks 11-150 gamma full 0.830 fixed-n 0.809 [170s]
+[real w16384 s0] step 5000/8421 fvu 0.3626 dead 0.001 167s
+[real w16384 s0] step 5500/8421 fvu 0.3583 dead 0.001 186s
+[real w16384 s0] step 6000/8421 fvu 0.3516 dead 0.001 205s
+[real w16384 s0] step 6500/8421 fvu 0.3557 dead 0.001 224s
+[real w16384 s0] step 7000/8421 fvu 0.3455 dead 0.001 243s
+[real w16384 s0] step 7500/8421 fvu 0.3466 dead 0.001 262s
+[real w16384 s0] step 8000/8421 fvu 0.3434 dead 0.001 280s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.3339447469799117
+[2026-11-10 22:07:00] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k24__s0
+[real w16384 s0] step 50/8421 fvu 0.7021 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4728 dead 0.000 17s
+[real w16384 s0] step 1000/8421 fvu 0.4053 dead 0.000 31s
+[real w16384 s0] step 1500/8421 fvu 0.3478 dead 0.000 45s
+[real w16384 s0] step 2000/8421 fvu 0.3568 dead 0.000 60s
+[real w16384 s0] step 2500/8421 fvu 0.3385 dead 0.000 74s
+[real w16384 s0] step 3000/8421 fvu 0.3337 dead 0.000 90s
+[real w16384 s0] step 3500/8421 fvu 0.3166 dead 0.000 108s
+[real w16384 s0] step 4000/8421 fvu 0.3251 dead 0.000 128s
+[real w16384 s0] step 4500/8421 fvu 0.3088 dead 0.000 148s
+[2026-11-10 22:09:49] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k16__s0: live 14862, fvu 0.334, L0 16.0, ranks 11-150 gamma full 0.571 fixed-n 0.545 [169s]
+[real w16384 s0] step 5000/8421 fvu 0.3213 dead 0.001 167s
+[real w16384 s0] step 5500/8421 fvu 0.3183 dead 0.001 187s
+[real w16384 s0] step 6000/8421 fvu 0.3114 dead 0.001 208s
+[real w16384 s0] step 6500/8421 fvu 0.3165 dead 0.000 228s
+[real w16384 s0] step 7000/8421 fvu 0.3092 dead 0.000 247s
+[real w16384 s0] step 7500/8421 fvu 0.3111 dead 0.001 267s
+[real w16384 s0] step 8000/8421 fvu 0.3096 dead 0.001 287s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k24__s0 fvu_eval 0.2989973654866614
+[2026-11-10 22:12:09] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k32__s0
+[real w16384 s0] step 50/8421 fvu 0.6773 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4591 dead 0.000 18s
+[real w16384 s0] step 1000/8421 fvu 0.3923 dead 0.000 34s
+[real w16384 s0] step 1500/8421 fvu 0.3326 dead 0.000 49s
+[real w16384 s0] step 2000/8421 fvu 0.3371 dead 0.000 65s
+[real w16384 s0] step 2500/8421 fvu 0.3170 dead 0.000 81s
+[real w16384 s0] step 3000/8421 fvu 0.3099 dead 0.000 97s
+[real w16384 s0] step 3500/8421 fvu 0.2930 dead 0.000 113s
+[2026-11-10T22:14:07Z] [watchdog] heartbeat: GPU 0%, idle 60s, 28G free, 420 min to deadline
+[real w16384 s0] step 4000/8421 fvu 0.2990 dead 0.000 131s
+[real w16384 s0] step 4500/8421 fvu 0.2829 dead 0.000 149s
+[real w16384 s0] step 5000/8421 fvu 0.2932 dead 0.000 170s
+[2026-11-10 22:15:08] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k24__s0: live 15359, fvu 0.299, L0 24.0, ranks 11-150 gamma full 0.483 fixed-n 0.463 [179s]
+[real w16384 s0] step 5500/8421 fvu 0.2903 dead 0.000 190s
+[real w16384 s0] step 6000/8421 fvu 0.2850 dead 0.000 212s
+[real w16384 s0] step 6500/8421 fvu 0.2893 dead 0.000 232s
+[real w16384 s0] step 7000/8421 fvu 0.2816 dead 0.000 253s
+[real w16384 s0] step 7500/8421 fvu 0.2823 dead 0.000 274s
+[real w16384 s0] step 8000/8421 fvu 0.2809 dead 0.001 295s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.2722096676913379
+[2026-11-10 22:17:28] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k48__s0
+[real w16384 s0] step 50/8421 fvu 0.6383 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.4363 dead 0.000 20s
+[real w16384 s0] step 1000/8421 fvu 0.3729 dead 0.000 38s
+[real w16384 s0] step 1500/8421 fvu 0.3152 dead 0.000 55s
+[real w16384 s0] step 2000/8421 fvu 0.3174 dead 0.000 73s
+[real w16384 s0] step 2500/8421 fvu 0.2962 dead 0.000 91s
+[real w16384 s0] step 3000/8421 fvu 0.2862 dead 0.000 109s
+[real w16384 s0] step 3500/8421 fvu 0.2671 dead 0.000 126s
+[real w16384 s0] step 4000/8421 fvu 0.2704 dead 0.000 145s
+[real w16384 s0] step 4500/8421 fvu 0.2527 dead 0.000 162s
+[2026-11-10 22:20:25] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k32__s0: live 15785, fvu 0.272, L0 32.0, ranks 11-150 gamma full 0.456 fixed-n 0.435 [177s]
+[real w16384 s0] step 5000/8421 fvu 0.2603 dead 0.000 181s
+[real w16384 s0] step 5500/8421 fvu 0.2570 dead 0.000 199s
+[real w16384 s0] step 6000/8421 fvu 0.2489 dead 0.000 219s
+[real w16384 s0] step 6500/8421 fvu 0.2528 dead 0.000 240s
+[real w16384 s0] step 7000/8421 fvu 0.2451 dead 0.000 259s
+[real w16384 s0] step 7500/8421 fvu 0.2450 dead 0.000 280s
+[real w16384 s0] step 8000/8421 fvu 0.2424 dead 0.000 302s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k48__s0 fvu_eval 0.23538240611380362
+[2026-11-10 22:22:55] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k64__s0
+[real w16384 s0] step 50/8421 fvu 0.6084 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.4181 dead 0.000 22s
+[real w16384 s0] step 1000/8421 fvu 0.3591 dead 0.000 42s
+[real w16384 s0] step 1500/8421 fvu 0.3030 dead 0.000 62s
+[real w16384 s0] step 2000/8421 fvu 0.3050 dead 0.000 82s
+[real w16384 s0] step 2500/8421 fvu 0.2847 dead 0.000 102s
+[real w16384 s0] step 3000/8421 fvu 0.2744 dead 0.000 123s
+[real w16384 s0] step 3500/8421 fvu 0.2550 dead 0.000 143s
+[real w16384 s0] step 4000/8421 fvu 0.2569 dead 0.000 163s
+[2026-11-10 22:25:54] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k48__s0: live 16270, fvu 0.235, L0 48.0, ranks 11-150 gamma full 0.456 fixed-n 0.438 [179s]
+[real w16384 s0] step 4500/8421 fvu 0.2394 dead 0.000 183s
+[real w16384 s0] step 5000/8421 fvu 0.2452 dead 0.000 203s
+[real w16384 s0] step 5500/8421 fvu 0.2415 dead 0.000 223s
+[real w16384 s0] step 6000/8421 fvu 0.2324 dead 0.000 244s
+[real w16384 s0] step 6500/8421 fvu 0.2354 dead 0.000 265s
+[real w16384 s0] step 7000/8421 fvu 0.2277 dead 0.000 285s
+[real w16384 s0] step 7500/8421 fvu 0.2266 dead 0.000 305s
+[real w16384 s0] step 8000/8421 fvu 0.2243 dead 0.000 326s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k64__s0 fvu_eval 0.2172742446741713
+[2026-11-10 22:28:45] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k128__s0
+[real w16384 s0] step 50/8421 fvu 0.5375 dead 0.000 5s
+[real w16384 s0] step 500/8421 fvu 0.3644 dead 0.000 30s
+[real w16384 s0] step 1000/8421 fvu 0.3195 dead 0.000 59s
+[real w16384 s0] step 1500/8421 fvu 0.2717 dead 0.000 86s
+[real w16384 s0] step 2000/8421 fvu 0.2746 dead 0.000 115s
+[real w16384 s0] step 2500/8421 fvu 0.2577 dead 0.000 143s
+[real w16384 s0] step 3000/8421 fvu 0.2478 dead 0.000 171s
+[2026-11-10 22:31:42] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k64__s0: live 16359, fvu 0.217, L0 64.0, ranks 11-150 gamma full 0.466 fixed-n 0.446 [177s]
+[real w16384 s0] step 3500/8421 fvu 0.2311 dead 0.000 199s
+[real w16384 s0] step 4000/8421 fvu 0.2327 dead 0.000 228s
+[real w16384 s0] step 4500/8421 fvu 0.2166 dead 0.000 257s
+[real w16384 s0] step 5000/8421 fvu 0.2215 dead 0.000 285s
+[real w16384 s0] step 5500/8421 fvu 0.2165 dead 0.000 313s
+[real w16384 s0] step 6000/8421 fvu 0.2073 dead 0.000 342s
+[real w16384 s0] step 6500/8421 fvu 0.2101 dead 0.000 370s
+[real w16384 s0] step 7000/8421 fvu 0.2016 dead 0.000 398s
+[real w16384 s0] step 7500/8421 fvu 0.2000 dead 0.000 426s
+[real w16384 s0] step 8000/8421 fvu 0.1970 dead 0.000 454s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k128__s0 fvu_eval 0.19048885817675815
+[2026-11-10 22:36:50] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k8__s1
+[real w16384 s1] step 50/8421 fvu 0.8081 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.5468 dead 0.000 14s
+[real w16384 s1] step 1000/8421 fvu 0.5096 dead 0.000 26s
+[real w16384 s1] step 1500/8421 fvu 0.4876 dead 0.000 43s
+[real w16384 s1] step 2000/8421 fvu 0.4728 dead 0.003 61s
+[real w16384 s1] step 2500/8421 fvu 0.4723 dead 0.011 79s
+[real w16384 s1] step 3000/8421 fvu 0.4458 dead 0.017 97s
+[real w16384 s1] step 3500/8421 fvu 0.4439 dead 0.009 115s
+[real w16384 s1] step 4000/8421 fvu 0.4384 dead 0.005 133s
+[real w16384 s1] step 4500/8421 fvu 0.4292 dead 0.005 151s
+[real w16384 s1] step 5000/8421 fvu 0.4248 dead 0.007 169s
+[2026-11-10 22:39:49] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k128__s0: live 16384, fvu 0.190, L0 128.0, ranks 11-150 gamma full 0.416 fixed-n 0.395 [179s]
+[real w16384 s1] step 5500/8421 fvu 0.4071 dead 0.006 187s
+[real w16384 s1] step 6000/8421 fvu 0.4035 dead 0.004 205s
+[real w16384 s1] step 6500/8421 fvu 0.4078 dead 0.002 222s
+[real w16384 s1] step 7000/8421 fvu 0.4128 dead 0.003 240s
+[real w16384 s1] step 7500/8421 fvu 0.4217 dead 0.004 258s
+[real w16384 s1] step 8000/8421 fvu 0.4095 dead 0.003 275s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k8__s1 fvu_eval 0.39785258581624294
+[2026-11-10 22:41:46] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k16__s1
+[real w16384 s1] step 50/8421 fvu 0.7490 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.5022 dead 0.000 15s
+[real w16384 s1] step 1000/8421 fvu 0.4439 dead 0.000 28s
+[real w16384 s1] step 1500/8421 fvu 0.4156 dead 0.000 42s
+[real w16384 s1] step 2000/8421 fvu 0.3958 dead 0.000 56s
+[real w16384 s1] step 2500/8421 fvu 0.3942 dead 0.000 73s
+[real w16384 s1] step 3000/8421 fvu 0.3716 dead 0.000 92s
+[real w16384 s1] step 3500/8421 fvu 0.3708 dead 0.001 111s
+[real w16384 s1] step 4000/8421 fvu 0.3686 dead 0.001 129s
+[2026-11-10T22:44:09Z] [watchdog] heartbeat: GPU 55%, idle 0s, 28G free, 390 min to deadline
+[real w16384 s1] step 4500/8421 fvu 0.3592 dead 0.001 149s
+[real w16384 s1] step 5000/8421 fvu 0.3580 dead 0.002 168s
+[2026-11-10 22:44:46] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k8__s1: live 14293, fvu 0.398, L0 8.0, ranks 11-150 gamma full 0.827 fixed-n 0.807 [180s]
+[real w16384 s1] step 5500/8421 fvu 0.3441 dead 0.002 186s
+[real w16384 s1] step 6000/8421 fvu 0.3389 dead 0.001 205s
+[real w16384 s1] step 6500/8421 fvu 0.3423 dead 0.001 224s
+[real w16384 s1] step 7000/8421 fvu 0.3471 dead 0.002 243s
+[real w16384 s1] step 7500/8421 fvu 0.3534 dead 0.002 261s
+[real w16384 s1] step 8000/8421 fvu 0.3441 dead 0.002 280s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k16__s1 fvu_eval 0.333086967322012
+[2026-11-10 22:46:48] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k24__s1
+[real w16384 s1] step 50/8421 fvu 0.7149 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4795 dead 0.000 17s
+[real w16384 s1] step 1000/8421 fvu 0.4148 dead 0.000 31s
+[real w16384 s1] step 1500/8421 fvu 0.3813 dead 0.000 46s
+[real w16384 s1] step 2000/8421 fvu 0.3578 dead 0.000 60s
+[real w16384 s1] step 2500/8421 fvu 0.3532 dead 0.000 75s
+[real w16384 s1] step 3000/8421 fvu 0.3305 dead 0.000 91s
+[real w16384 s1] step 3500/8421 fvu 0.3292 dead 0.000 110s
+[real w16384 s1] step 4000/8421 fvu 0.3262 dead 0.000 128s
+[real w16384 s1] step 4500/8421 fvu 0.3197 dead 0.000 149s
+[real w16384 s1] step 5000/8421 fvu 0.3174 dead 0.000 168s
+[2026-11-10 22:49:48] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k16__s1: live 14795, fvu 0.333, L0 16.0, ranks 11-150 gamma full 0.570 fixed-n 0.546 [180s]
+[real w16384 s1] step 5500/8421 fvu 0.3062 dead 0.000 188s
+[real w16384 s1] step 6000/8421 fvu 0.3013 dead 0.000 208s
+[real w16384 s1] step 6500/8421 fvu 0.3056 dead 0.000 228s
+[real w16384 s1] step 7000/8421 fvu 0.3107 dead 0.000 247s
+[real w16384 s1] step 7500/8421 fvu 0.3158 dead 0.001 267s
+[real w16384 s1] step 8000/8421 fvu 0.3070 dead 0.000 287s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k24__s1 fvu_eval 0.2981885723041566
+[2026-11-10 22:51:58] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k32__s1
+[real w16384 s1] step 50/8421 fvu 0.6894 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4640 dead 0.000 17s
+[real w16384 s1] step 1000/8421 fvu 0.4016 dead 0.000 33s
+[real w16384 s1] step 1500/8421 fvu 0.3652 dead 0.000 49s
+[real w16384 s1] step 2000/8421 fvu 0.3400 dead 0.000 65s
+[real w16384 s1] step 2500/8421 fvu 0.3321 dead 0.000 81s
+[real w16384 s1] step 3000/8421 fvu 0.3063 dead 0.000 97s
+[real w16384 s1] step 3500/8421 fvu 0.3032 dead 0.000 114s
+[real w16384 s1] step 4000/8421 fvu 0.2999 dead 0.000 131s
+[real w16384 s1] step 4500/8421 fvu 0.2919 dead 0.000 151s
+[real w16384 s1] step 5000/8421 fvu 0.2880 dead 0.000 170s
+[2026-11-10 22:54:55] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k24__s1: live 15314, fvu 0.298, L0 24.0, ranks 11-150 gamma full 0.484 fixed-n 0.462 [177s]
+[real w16384 s1] step 5500/8421 fvu 0.2785 dead 0.000 191s
+[real w16384 s1] step 6000/8421 fvu 0.2738 dead 0.000 211s
+[real w16384 s1] step 6500/8421 fvu 0.2774 dead 0.000 232s
+[real w16384 s1] step 7000/8421 fvu 0.2829 dead 0.000 252s
+[real w16384 s1] step 7500/8421 fvu 0.2874 dead 0.000 273s
+[real w16384 s1] step 8000/8421 fvu 0.2797 dead 0.000 294s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k32__s1 fvu_eval 0.27119847557471377
+[2026-11-10 22:57:16] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k48__s1
+[real w16384 s1] step 50/8421 fvu 0.6498 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4423 dead 0.000 19s
+[real w16384 s1] step 1000/8421 fvu 0.3827 dead 0.000 37s
+[real w16384 s1] step 1500/8421 fvu 0.3464 dead 0.000 54s
+[real w16384 s1] step 2000/8421 fvu 0.3193 dead 0.000 72s
+[real w16384 s1] step 2500/8421 fvu 0.3104 dead 0.000 90s
+[real w16384 s1] step 3000/8421 fvu 0.2837 dead 0.000 107s
+[real w16384 s1] step 3500/8421 fvu 0.2783 dead 0.000 125s
+[real w16384 s1] step 4000/8421 fvu 0.2721 dead 0.000 142s
+[real w16384 s1] step 4500/8421 fvu 0.2630 dead 0.000 161s
+[2026-11-10 23:00:08] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k32__s1: live 15764, fvu 0.271, L0 32.0, ranks 11-150 gamma full 0.450 fixed-n 0.430 [172s]
+[real w16384 s1] step 5000/8421 fvu 0.2583 dead 0.000 179s
+[real w16384 s1] step 5500/8421 fvu 0.2473 dead 0.000 199s
+[real w16384 s1] step 6000/8421 fvu 0.2409 dead 0.000 219s
+[real w16384 s1] step 6500/8421 fvu 0.2435 dead 0.000 239s
+[real w16384 s1] step 7000/8421 fvu 0.2472 dead 0.000 258s
+[real w16384 s1] step 7500/8421 fvu 0.2502 dead 0.000 278s
+[real w16384 s1] step 8000/8421 fvu 0.2434 dead 0.000 299s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k48__s1 fvu_eval 0.2355789033517446
+[2026-11-10 23:02:40] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k64__s1
+[real w16384 s1] step 50/8421 fvu 0.6194 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4232 dead 0.000 21s
+[real w16384 s1] step 1000/8421 fvu 0.3684 dead 0.000 41s
+[real w16384 s1] step 1500/8421 fvu 0.3340 dead 0.000 61s
+[real w16384 s1] step 2000/8421 fvu 0.3082 dead 0.000 81s
+[real w16384 s1] step 2500/8421 fvu 0.2990 dead 0.000 102s
+[real w16384 s1] step 3000/8421 fvu 0.2718 dead 0.000 121s
+[real w16384 s1] step 3500/8421 fvu 0.2658 dead 0.000 141s
+[real w16384 s1] step 4000/8421 fvu 0.2590 dead 0.000 161s
+[2026-11-10 23:05:36] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k48__s1: live 16266, fvu 0.236, L0 48.0, ranks 11-150 gamma full 0.448 fixed-n 0.431 [176s]
+[real w16384 s1] step 4500/8421 fvu 0.2498 dead 0.000 181s
+[real w16384 s1] step 5000/8421 fvu 0.2435 dead 0.000 201s
+[real w16384 s1] step 5500/8421 fvu 0.2321 dead 0.000 220s
+[real w16384 s1] step 6000/8421 fvu 0.2256 dead 0.000 240s
+[real w16384 s1] step 6500/8421 fvu 0.2276 dead 0.000 260s
+[real w16384 s1] step 7000/8421 fvu 0.2295 dead 0.000 281s
+[real w16384 s1] step 7500/8421 fvu 0.2319 dead 0.000 302s
+[real w16384 s1] step 8000/8421 fvu 0.2247 dead 0.000 323s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k64__s1 fvu_eval 0.21733658307796327
+[2026-11-10 23:08:28] train synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k128__s1
+[real w16384 s1] step 50/8421 fvu 0.5472 dead 0.000 5s
+[real w16384 s1] step 500/8421 fvu 0.3678 dead 0.000 29s
+[real w16384 s1] step 1000/8421 fvu 0.3263 dead 0.000 57s
+[real w16384 s1] step 1500/8421 fvu 0.3000 dead 0.000 86s
+[real w16384 s1] step 2000/8421 fvu 0.2775 dead 0.000 114s
+[real w16384 s1] step 2500/8421 fvu 0.2699 dead 0.000 142s
+[real w16384 s1] step 3000/8421 fvu 0.2458 dead 0.000 170s
+[2026-11-10 23:11:23] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k64__s1: live 16365, fvu 0.217, L0 64.0, ranks 11-150 gamma full 0.451 fixed-n 0.435 [175s]
+[real w16384 s1] step 3500/8421 fvu 0.2404 dead 0.000 198s
+[real w16384 s1] step 4000/8421 fvu 0.2340 dead 0.000 226s
+[real w16384 s1] step 4500/8421 fvu 0.2244 dead 0.000 255s
+[real w16384 s1] step 5000/8421 fvu 0.2188 dead 0.000 283s
+[real w16384 s1] step 5500/8421 fvu 0.2073 dead 0.000 311s
+[real w16384 s1] step 6000/8421 fvu 0.2007 dead 0.000 339s
+[2026-11-10T23:14:10Z] [watchdog] heartbeat: GPU 99%, idle 0s, 27G free, 360 min to deadline
+[real w16384 s1] step 6500/8421 fvu 0.2016 dead 0.000 367s
+[real w16384 s1] step 7000/8421 fvu 0.2018 dead 0.000 395s
+[real w16384 s1] step 7500/8421 fvu 0.2036 dead 0.000 422s
+[real w16384 s1] step 8000/8421 fvu 0.1965 dead 0.000 450s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k128__s1 fvu_eval 0.18977174503976005
+[2026-11-10 23:19:15] scored synth-rs12-G-ds1__blocks.0.hook_resid_post__real__w16384__k128__s1: live 16382, fvu 0.190, L0 128.0, ranks 11-150 gamma full 0.406 fixed-n 0.387 [166s]
+[2026-11-10 23:19:16] deleted /workspace/SAE/cache/acts/synth-rs12-G-ds1/blocks.0.hook_resid_post/acts.npy; 83 GB free
+[2026-11-10 23:19:16] generate rs12-D-ds2 (83 GB free)
+done synth-rs12-D-ds2: 12,000,000 tokens, fvu vs real nan, 441s
+[2026-11-10 23:26:42] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k8__s0
+[real w16384 s0] step 50/8421 fvu 0.8186 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.5498 dead 0.000 14s
+[real w16384 s0] step 1000/8421 fvu 0.5032 dead 0.000 28s
+[real w16384 s0] step 1500/8421 fvu 0.4789 dead 0.002 45s
+[real w16384 s0] step 2000/8421 fvu 0.4987 dead 0.013 63s
+[real w16384 s0] step 2500/8421 fvu 0.4778 dead 0.035 81s
+[real w16384 s0] step 3000/8421 fvu 0.4585 dead 0.021 99s
+[real w16384 s0] step 3500/8421 fvu 0.4569 dead 0.009 117s
+[real w16384 s0] step 4000/8421 fvu 0.4549 dead 0.007 136s
+[real w16384 s0] step 4500/8421 fvu 0.4614 dead 0.005 154s
+[real w16384 s0] step 5000/8421 fvu 0.4532 dead 0.009 171s
+[real w16384 s0] step 5500/8421 fvu 0.4390 dead 0.006 189s
+[real w16384 s0] step 6000/8421 fvu 0.4253 dead 0.006 208s
+[real w16384 s0] step 6500/8421 fvu 0.4189 dead 0.005 226s
+[real w16384 s0] step 7000/8421 fvu 0.4219 dead 0.004 243s
+[real w16384 s0] step 7500/8421 fvu 0.4206 dead 0.006 261s
+[real w16384 s0] step 8000/8421 fvu 0.4236 dead 0.010 279s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k8__s0 fvu_eval 0.4176631111407846
+[2026-11-10 23:31:41] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k16__s0
+[real w16384 s0] step 50/8421 fvu 0.7611 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.5019 dead 0.000 16s
+[real w16384 s0] step 1000/8421 fvu 0.4364 dead 0.000 29s
+[real w16384 s0] step 1500/8421 fvu 0.4069 dead 0.000 42s
+[real w16384 s0] step 2000/8421 fvu 0.4158 dead 0.000 58s
+[real w16384 s0] step 2500/8421 fvu 0.3979 dead 0.001 77s
+[real w16384 s0] step 3000/8421 fvu 0.3797 dead 0.003 99s
+[real w16384 s0] step 3500/8421 fvu 0.3760 dead 0.003 125s
+[real w16384 s0] step 4000/8421 fvu 0.3770 dead 0.003 146s
+[2026-11-10 23:34:29] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k8__s0: live 13283, fvu 0.418, L0 8.0, ranks 11-150 gamma full 0.831 fixed-n 0.815 [167s]
+[real w16384 s0] step 4500/8421 fvu 0.3802 dead 0.002 165s
+[real w16384 s0] step 5000/8421 fvu 0.3749 dead 0.003 184s
+[real w16384 s0] step 5500/8421 fvu 0.3630 dead 0.003 202s
+[real w16384 s0] step 6000/8421 fvu 0.3526 dead 0.002 222s
+[real w16384 s0] step 6500/8421 fvu 0.3461 dead 0.001 241s
+[real w16384 s0] step 7000/8421 fvu 0.3479 dead 0.002 260s
+[real w16384 s0] step 7500/8421 fvu 0.3463 dead 0.003 278s
+[real w16384 s0] step 8000/8421 fvu 0.3495 dead 0.004 297s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.3441944088597986
+[2026-11-10 23:37:00] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k24__s0
+[real w16384 s0] step 50/8421 fvu 0.7267 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4786 dead 0.000 17s
+[real w16384 s0] step 1000/8421 fvu 0.4066 dead 0.000 32s
+[real w16384 s0] step 1500/8421 fvu 0.3709 dead 0.000 45s
+[real w16384 s0] step 2000/8421 fvu 0.3738 dead 0.000 60s
+[real w16384 s0] step 2500/8421 fvu 0.3535 dead 0.000 75s
+[real w16384 s0] step 3000/8421 fvu 0.3353 dead 0.000 94s
+[real w16384 s0] step 3500/8421 fvu 0.3302 dead 0.000 114s
+[real w16384 s0] step 4000/8421 fvu 0.3298 dead 0.001 134s
+[real w16384 s0] step 4500/8421 fvu 0.3330 dead 0.001 154s
+[2026-11-10 23:39:48] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k16__s0: live 13854, fvu 0.344, L0 16.0, ranks 11-150 gamma full 0.654 fixed-n 0.630 [168s]
+[real w16384 s0] step 5000/8421 fvu 0.3281 dead 0.002 174s
+[real w16384 s0] step 5500/8421 fvu 0.3155 dead 0.002 194s
+[real w16384 s0] step 6000/8421 fvu 0.3067 dead 0.001 214s
+[real w16384 s0] step 6500/8421 fvu 0.3016 dead 0.000 234s
+[real w16384 s0] step 7000/8421 fvu 0.3038 dead 0.001 254s
+[real w16384 s0] step 7500/8421 fvu 0.3014 dead 0.002 274s
+[real w16384 s0] step 8000/8421 fvu 0.3042 dead 0.002 294s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k24__s0 fvu_eval 0.30059502350579065
+[2026-11-10 23:42:16] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k32__s0
+[real w16384 s0] step 50/8421 fvu 0.7004 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4654 dead 0.000 18s
+[real w16384 s0] step 1000/8421 fvu 0.3897 dead 0.000 33s
+[real w16384 s0] step 1500/8421 fvu 0.3513 dead 0.000 48s
+[real w16384 s0] step 2000/8421 fvu 0.3488 dead 0.000 64s
+[real w16384 s0] step 2500/8421 fvu 0.3255 dead 0.000 79s
+[real w16384 s0] step 3000/8421 fvu 0.3073 dead 0.000 95s
+[2026-11-10T23:44:11Z] [watchdog] heartbeat: GPU 99%, idle 0s, 26G free, 330 min to deadline
+[real w16384 s0] step 3500/8421 fvu 0.3008 dead 0.000 113s
+[real w16384 s0] step 4000/8421 fvu 0.2994 dead 0.000 134s
+[real w16384 s0] step 4500/8421 fvu 0.3015 dead 0.000 153s
+[2026-11-10 23:45:09] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k24__s0: live 14381, fvu 0.301, L0 24.0, ranks 11-150 gamma full 0.545 fixed-n 0.520 [173s]
+[real w16384 s0] step 5000/8421 fvu 0.2958 dead 0.000 174s
+[real w16384 s0] step 5500/8421 fvu 0.2841 dead 0.001 195s
+[real w16384 s0] step 6000/8421 fvu 0.2744 dead 0.001 217s
+[real w16384 s0] step 6500/8421 fvu 0.2713 dead 0.000 238s
+[real w16384 s0] step 7000/8421 fvu 0.2725 dead 0.000 258s
+[real w16384 s0] step 7500/8421 fvu 0.2702 dead 0.001 279s
+[real w16384 s0] step 8000/8421 fvu 0.2724 dead 0.001 300s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.26927766068552506
+[2026-11-10 23:47:39] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k48__s0
+[real w16384 s0] step 50/8421 fvu 0.6599 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.4428 dead 0.000 20s
+[real w16384 s0] step 1000/8421 fvu 0.3713 dead 0.000 38s
+[real w16384 s0] step 1500/8421 fvu 0.3317 dead 0.000 55s
+[real w16384 s0] step 2000/8421 fvu 0.3233 dead 0.000 72s
+[real w16384 s0] step 2500/8421 fvu 0.2984 dead 0.000 90s
+[real w16384 s0] step 3000/8421 fvu 0.2778 dead 0.000 107s
+[real w16384 s0] step 3500/8421 fvu 0.2688 dead 0.000 125s
+[real w16384 s0] step 4000/8421 fvu 0.2657 dead 0.000 143s
+[real w16384 s0] step 4500/8421 fvu 0.2658 dead 0.000 162s
+[2026-11-10 23:50:29] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k32__s0: live 14908, fvu 0.269, L0 32.0, ranks 11-150 gamma full 0.518 fixed-n 0.495 [169s]
+[real w16384 s0] step 5000/8421 fvu 0.2587 dead 0.000 183s
+[real w16384 s0] step 5500/8421 fvu 0.2478 dead 0.000 204s
+[real w16384 s0] step 6000/8421 fvu 0.2376 dead 0.000 226s
+[real w16384 s0] step 6500/8421 fvu 0.2346 dead 0.000 248s
+[real w16384 s0] step 7000/8421 fvu 0.2354 dead 0.000 269s
+[real w16384 s0] step 7500/8421 fvu 0.2329 dead 0.000 291s
+[real w16384 s0] step 8000/8421 fvu 0.2346 dead 0.000 314s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k48__s0 fvu_eval 0.2313256663259161
+[2026-11-10 23:53:18] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k64__s0
+[real w16384 s0] step 50/8421 fvu 0.6295 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.4231 dead 0.000 22s
+[real w16384 s0] step 1000/8421 fvu 0.3570 dead 0.000 42s
+[real w16384 s0] step 1500/8421 fvu 0.3185 dead 0.000 61s
+[real w16384 s0] step 2000/8421 fvu 0.3100 dead 0.000 81s
+[real w16384 s0] step 2500/8421 fvu 0.2847 dead 0.000 100s
+[real w16384 s0] step 3000/8421 fvu 0.2634 dead 0.000 120s
+[real w16384 s0] step 3500/8421 fvu 0.2528 dead 0.000 140s
+[real w16384 s0] step 4000/8421 fvu 0.2491 dead 0.000 160s
+[2026-11-10 23:56:06] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k48__s0: live 15947, fvu 0.231, L0 48.0, ranks 11-150 gamma full 0.466 fixed-n 0.439 [167s]
+[real w16384 s0] step 4500/8421 fvu 0.2475 dead 0.000 180s
+[real w16384 s0] step 5000/8421 fvu 0.2408 dead 0.000 200s
+[real w16384 s0] step 5500/8421 fvu 0.2292 dead 0.000 220s
+[real w16384 s0] step 6000/8421 fvu 0.2192 dead 0.000 242s
+[real w16384 s0] step 6500/8421 fvu 0.2154 dead 0.000 264s
+[real w16384 s0] step 7000/8421 fvu 0.2152 dead 0.000 285s
+[real w16384 s0] step 7500/8421 fvu 0.2123 dead 0.000 307s
+[real w16384 s0] step 8000/8421 fvu 0.2137 dead 0.000 329s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k64__s0 fvu_eval 0.21058284081507558
+[2026-11-10 23:59:14] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k128__s0
+[real w16384 s0] step 50/8421 fvu 0.5555 dead 0.000 5s
+[real w16384 s0] step 500/8421 fvu 0.3699 dead 0.000 30s
+[real w16384 s0] step 1000/8421 fvu 0.3186 dead 0.000 59s
+[real w16384 s0] step 1500/8421 fvu 0.2859 dead 0.000 86s
+[real w16384 s0] step 2000/8421 fvu 0.2789 dead 0.000 114s
+[real w16384 s0] step 2500/8421 fvu 0.2558 dead 0.000 142s
+[2026-11-11 00:02:00] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k64__s0: live 16277, fvu 0.211, L0 64.0, ranks 11-150 gamma full 0.454 fixed-n 0.428 [167s]
+[real w16384 s0] step 3000/8421 fvu 0.2367 dead 0.000 170s
+[real w16384 s0] step 3500/8421 fvu 0.2259 dead 0.000 198s
+[real w16384 s0] step 4000/8421 fvu 0.2210 dead 0.000 227s
+[real w16384 s0] step 4500/8421 fvu 0.2177 dead 0.000 255s
+[real w16384 s0] step 5000/8421 fvu 0.2098 dead 0.000 282s
+[real w16384 s0] step 5500/8421 fvu 0.1979 dead 0.000 310s
+[real w16384 s0] step 6000/8421 fvu 0.1874 dead 0.000 338s
+[real w16384 s0] step 6500/8421 fvu 0.1829 dead 0.000 366s
+[real w16384 s0] step 7000/8421 fvu 0.1816 dead 0.000 394s
+[real w16384 s0] step 7500/8421 fvu 0.1777 dead 0.000 421s
+[real w16384 s0] step 8000/8421 fvu 0.1781 dead 0.000 449s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k128__s0 fvu_eval 0.17546135421727307
+[2026-11-11 00:07:13] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k8__s1
+[real w16384 s1] step 50/8421 fvu 0.7993 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.5234 dead 0.000 14s
+[real w16384 s1] step 1000/8421 fvu 0.5097 dead 0.000 26s
+[real w16384 s1] step 1500/8421 fvu 0.4791 dead 0.002 44s
+[real w16384 s1] step 2000/8421 fvu 0.4626 dead 0.012 62s
+[real w16384 s1] step 2500/8421 fvu 0.4732 dead 0.038 81s
+[real w16384 s1] step 3000/8421 fvu 0.4679 dead 0.019 99s
+[real w16384 s1] step 3500/8421 fvu 0.4531 dead 0.009 117s
+[real w16384 s1] step 4000/8421 fvu 0.4517 dead 0.006 135s
+[real w16384 s1] step 4500/8421 fvu 0.4462 dead 0.006 153s
+[2026-11-11 00:10:00] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k128__s0: live 16381, fvu 0.175, L0 128.0, ranks 11-150 gamma full 0.365 fixed-n 0.347 [166s]
+[real w16384 s1] step 5000/8421 fvu 0.4427 dead 0.007 171s
+[real w16384 s1] step 5500/8421 fvu 0.4460 dead 0.009 189s
+[real w16384 s1] step 6000/8421 fvu 0.4175 dead 0.009 207s
+[real w16384 s1] step 6500/8421 fvu 0.4239 dead 0.005 224s
+[real w16384 s1] step 7000/8421 fvu 0.4044 dead 0.004 242s
+[real w16384 s1] step 7500/8421 fvu 0.4330 dead 0.005 260s
+[real w16384 s1] step 8000/8421 fvu 0.4205 dead 0.006 277s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k8__s1 fvu_eval 0.4171432764560352
+[2026-11-11 00:12:12] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k16__s1
+[real w16384 s1] step 50/8421 fvu 0.7384 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4737 dead 0.000 15s
+[real w16384 s1] step 1000/8421 fvu 0.4432 dead 0.000 28s
+[real w16384 s1] step 1500/8421 fvu 0.4050 dead 0.000 42s
+[real w16384 s1] step 2000/8421 fvu 0.3877 dead 0.000 58s
+[real w16384 s1] step 2500/8421 fvu 0.3950 dead 0.001 77s
+[real w16384 s1] step 3000/8421 fvu 0.3883 dead 0.003 96s
+[real w16384 s1] step 3500/8421 fvu 0.3763 dead 0.003 115s
+[2026-11-11T00:14:12Z] [watchdog] heartbeat: GPU 48%, idle 0s, 25G free, 300 min to deadline
+[real w16384 s1] step 4000/8421 fvu 0.3748 dead 0.003 134s
+[real w16384 s1] step 4500/8421 fvu 0.3693 dead 0.003 153s
+[real w16384 s1] step 5000/8421 fvu 0.3667 dead 0.004 172s
+[2026-11-11 00:15:11] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k8__s1: live 13386, fvu 0.417, L0 8.0, ranks 11-150 gamma full 0.831 fixed-n 0.818 [178s]
+[real w16384 s1] step 5500/8421 fvu 0.3694 dead 0.003 191s
+[real w16384 s1] step 6000/8421 fvu 0.3465 dead 0.003 209s
+[real w16384 s1] step 6500/8421 fvu 0.3498 dead 0.002 228s
+[real w16384 s1] step 7000/8421 fvu 0.3329 dead 0.002 247s
+[real w16384 s1] step 7500/8421 fvu 0.3570 dead 0.003 266s
+[real w16384 s1] step 8000/8421 fvu 0.3468 dead 0.003 284s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k16__s1 fvu_eval 0.34355880040611303
+[2026-11-11 00:17:19] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k24__s1
+[real w16384 s1] step 50/8421 fvu 0.7035 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4529 dead 0.000 16s
+[real w16384 s1] step 1000/8421 fvu 0.4128 dead 0.000 31s
+[real w16384 s1] step 1500/8421 fvu 0.3693 dead 0.000 45s
+[real w16384 s1] step 2000/8421 fvu 0.3466 dead 0.000 60s
+[real w16384 s1] step 2500/8421 fvu 0.3496 dead 0.000 75s
+[real w16384 s1] step 3000/8421 fvu 0.3432 dead 0.000 94s
+[real w16384 s1] step 3500/8421 fvu 0.3307 dead 0.001 114s
+[real w16384 s1] step 4000/8421 fvu 0.3295 dead 0.000 137s
+[real w16384 s1] step 4500/8421 fvu 0.3234 dead 0.001 158s
+[2026-11-11 00:20:08] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k16__s1: live 13860, fvu 0.344, L0 16.0, ranks 11-150 gamma full 0.653 fixed-n 0.630 [169s]
+[real w16384 s1] step 5000/8421 fvu 0.3205 dead 0.002 179s
+[real w16384 s1] step 5500/8421 fvu 0.3224 dead 0.001 199s
+[real w16384 s1] step 6000/8421 fvu 0.3026 dead 0.002 219s
+[real w16384 s1] step 6500/8421 fvu 0.3068 dead 0.001 239s
+[real w16384 s1] step 7000/8421 fvu 0.2934 dead 0.001 259s
+[real w16384 s1] step 7500/8421 fvu 0.3128 dead 0.002 279s
+[real w16384 s1] step 8000/8421 fvu 0.3038 dead 0.002 299s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k24__s1 fvu_eval 0.3016641892140968
+[2026-11-11 00:22:41] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k32__s1
+[real w16384 s1] step 50/8421 fvu 0.6773 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4384 dead 0.000 21s
+[real w16384 s1] step 1000/8421 fvu 0.3954 dead 0.000 43s
+[real w16384 s1] step 1500/8421 fvu 0.3483 dead 0.000 65s
+[real w16384 s1] step 2000/8421 fvu 0.3229 dead 0.000 85s
+[real w16384 s1] step 2500/8421 fvu 0.3217 dead 0.000 101s
+[real w16384 s1] step 3000/8421 fvu 0.3124 dead 0.000 117s
+[real w16384 s1] step 3500/8421 fvu 0.2998 dead 0.000 135s
+[real w16384 s1] step 4000/8421 fvu 0.2966 dead 0.000 154s
+[2026-11-11 00:25:27] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k24__s1: live 14331, fvu 0.302, L0 24.0, ranks 11-150 gamma full 0.556 fixed-n 0.532 [166s]
+[real w16384 s1] step 4500/8421 fvu 0.2912 dead 0.000 175s
+[real w16384 s1] step 5000/8421 fvu 0.2893 dead 0.001 196s
+[real w16384 s1] step 5500/8421 fvu 0.2908 dead 0.000 217s
+[real w16384 s1] step 6000/8421 fvu 0.2713 dead 0.000 238s
+[real w16384 s1] step 6500/8421 fvu 0.2758 dead 0.000 259s
+[real w16384 s1] step 7000/8421 fvu 0.2630 dead 0.000 280s
+[real w16384 s1] step 7500/8421 fvu 0.2801 dead 0.001 301s
+[real w16384 s1] step 8000/8421 fvu 0.2733 dead 0.002 322s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k32__s1 fvu_eval 0.2701716677946834
+[2026-11-11 00:28:28] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k48__s1
+[real w16384 s1] step 50/8421 fvu 0.6379 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4168 dead 0.000 20s
+[real w16384 s1] step 1000/8421 fvu 0.3759 dead 0.000 38s
+[real w16384 s1] step 1500/8421 fvu 0.3276 dead 0.000 56s
+[real w16384 s1] step 2000/8421 fvu 0.2993 dead 0.000 74s
+[real w16384 s1] step 2500/8421 fvu 0.2949 dead 0.000 91s
+[real w16384 s1] step 3000/8421 fvu 0.2829 dead 0.000 109s
+[real w16384 s1] step 3500/8421 fvu 0.2682 dead 0.000 127s
+[real w16384 s1] step 4000/8421 fvu 0.2634 dead 0.000 144s
+[real w16384 s1] step 4500/8421 fvu 0.2563 dead 0.000 164s
+[2026-11-11 00:31:14] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k32__s1: live 14836, fvu 0.270, L0 32.0, ranks 11-150 gamma full 0.509 fixed-n 0.483 [167s]
+[real w16384 s1] step 5000/8421 fvu 0.2527 dead 0.000 183s
+[real w16384 s1] step 5500/8421 fvu 0.2531 dead 0.000 205s
+[real w16384 s1] step 6000/8421 fvu 0.2346 dead 0.000 227s
+[real w16384 s1] step 6500/8421 fvu 0.2385 dead 0.000 249s
+[real w16384 s1] step 7000/8421 fvu 0.2260 dead 0.000 270s
+[real w16384 s1] step 7500/8421 fvu 0.2404 dead 0.000 293s
+[real w16384 s1] step 8000/8421 fvu 0.2334 dead 0.000 316s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k48__s1 fvu_eval 0.23161898923307758
+[2026-11-11 00:34:10] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k64__s1
+[real w16384 s1] step 50/8421 fvu 0.6083 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4001 dead 0.000 21s
+[real w16384 s1] step 1000/8421 fvu 0.3614 dead 0.000 41s
+[real w16384 s1] step 1500/8421 fvu 0.3154 dead 0.000 61s
+[real w16384 s1] step 2000/8421 fvu 0.2876 dead 0.000 81s
+[real w16384 s1] step 2500/8421 fvu 0.2815 dead 0.000 101s
+[real w16384 s1] step 3000/8421 fvu 0.2680 dead 0.000 120s
+[real w16384 s1] step 3500/8421 fvu 0.2523 dead 0.000 140s
+[real w16384 s1] step 4000/8421 fvu 0.2471 dead 0.000 160s
+[2026-11-11 00:36:55] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k48__s1: live 15917, fvu 0.232, L0 48.0, ranks 11-150 gamma full 0.472 fixed-n 0.449 [165s]
+[real w16384 s1] step 4500/8421 fvu 0.2393 dead 0.000 180s
+[real w16384 s1] step 5000/8421 fvu 0.2343 dead 0.000 200s
+[real w16384 s1] step 5500/8421 fvu 0.2335 dead 0.000 221s
+[real w16384 s1] step 6000/8421 fvu 0.2143 dead 0.000 242s
+[real w16384 s1] step 6500/8421 fvu 0.2186 dead 0.000 264s
+[real w16384 s1] step 7000/8421 fvu 0.2065 dead 0.000 286s
+[real w16384 s1] step 7500/8421 fvu 0.2184 dead 0.000 309s
+[real w16384 s1] step 8000/8421 fvu 0.2123 dead 0.000 333s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k64__s1 fvu_eval 0.21030329654875732
+[2026-11-11 00:40:08] train synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k128__s1
+[real w16384 s1] step 50/8421 fvu 0.5367 dead 0.000 5s
+[real w16384 s1] step 500/8421 fvu 0.3498 dead 0.000 29s
+[real w16384 s1] step 1000/8421 fvu 0.3221 dead 0.000 57s
+[real w16384 s1] step 1500/8421 fvu 0.2842 dead 0.000 86s
+[real w16384 s1] step 2000/8421 fvu 0.2596 dead 0.000 114s
+[real w16384 s1] step 2500/8421 fvu 0.2540 dead 0.000 142s
+[2026-11-11 00:42:59] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k64__s1: live 16245, fvu 0.210, L0 64.0, ranks 11-150 gamma full 0.451 fixed-n 0.427 [171s]
+[real w16384 s1] step 3000/8421 fvu 0.2406 dead 0.000 170s
+[real w16384 s1] step 3500/8421 fvu 0.2252 dead 0.000 197s
+[real w16384 s1] step 4000/8421 fvu 0.2188 dead 0.000 225s
+[2026-11-11T00:44:15Z] [watchdog] heartbeat: GPU 99%, idle 0s, 25G free, 270 min to deadline
+[real w16384 s1] step 4500/8421 fvu 0.2101 dead 0.000 254s
+[real w16384 s1] step 5000/8421 fvu 0.2045 dead 0.000 281s
+[real w16384 s1] step 5500/8421 fvu 0.2026 dead 0.000 309s
+[real w16384 s1] step 6000/8421 fvu 0.1849 dead 0.000 337s
+[real w16384 s1] step 6500/8421 fvu 0.1865 dead 0.000 364s
+[real w16384 s1] step 7000/8421 fvu 0.1751 dead 0.000 392s
+[real w16384 s1] step 7500/8421 fvu 0.1835 dead 0.000 420s
+[real w16384 s1] step 8000/8421 fvu 0.1781 dead 0.000 447s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k128__s1 fvu_eval 0.17565462153581513
+[2026-11-11 00:51:08] scored synth-rs12-D-ds2__blocks.0.hook_resid_post__real__w16384__k128__s1: live 16380, fvu 0.176, L0 128.0, ranks 11-150 gamma full 0.358 fixed-n 0.340 [182s]
+[2026-11-11 00:51:08] deleted /workspace/SAE/cache/acts/synth-rs12-D-ds2/blocks.0.hook_resid_post/acts.npy; 81 GB free
+[2026-11-11 00:51:08] generate rs12-G-ds2 (81 GB free)
+done synth-rs12-G-ds2: 12,000,000 tokens, fvu vs real nan, 449s
+[2026-11-11 00:58:42] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k8__s0
+[real w16384 s0] step 50/8421 fvu 0.8156 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.5434 dead 0.000 15s
+[real w16384 s0] step 1000/8421 fvu 0.4943 dead 0.000 27s
+[real w16384 s0] step 1500/8421 fvu 0.4711 dead 0.001 43s
+[real w16384 s0] step 2000/8421 fvu 0.4869 dead 0.003 61s
+[real w16384 s0] step 2500/8421 fvu 0.4628 dead 0.012 79s
+[real w16384 s0] step 3000/8421 fvu 0.4450 dead 0.015 97s
+[real w16384 s0] step 3500/8421 fvu 0.4389 dead 0.006 115s
+[real w16384 s0] step 4000/8421 fvu 0.4346 dead 0.006 134s
+[real w16384 s0] step 4500/8421 fvu 0.4409 dead 0.005 151s
+[real w16384 s0] step 5000/8421 fvu 0.4308 dead 0.005 169s
+[real w16384 s0] step 5500/8421 fvu 0.4202 dead 0.005 187s
+[real w16384 s0] step 6000/8421 fvu 0.4065 dead 0.003 205s
+[real w16384 s0] step 6500/8421 fvu 0.3983 dead 0.002 223s
+[real w16384 s0] step 7000/8421 fvu 0.4013 dead 0.003 241s
+[real w16384 s0] step 7500/8421 fvu 0.3994 dead 0.003 259s
+[real w16384 s0] step 8000/8421 fvu 0.4038 dead 0.004 277s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k8__s0 fvu_eval 0.39750876989652406
+[2026-11-11 01:03:42] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k16__s0
+[real w16384 s0] step 50/8421 fvu 0.7583 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.5025 dead 0.000 16s
+[real w16384 s0] step 1000/8421 fvu 0.4333 dead 0.000 29s
+[real w16384 s0] step 1500/8421 fvu 0.4020 dead 0.000 42s
+[real w16384 s0] step 2000/8421 fvu 0.4079 dead 0.000 56s
+[real w16384 s0] step 2500/8421 fvu 0.3877 dead 0.000 74s
+[real w16384 s0] step 3000/8421 fvu 0.3718 dead 0.001 93s
+[real w16384 s0] step 3500/8421 fvu 0.3688 dead 0.001 111s
+[real w16384 s0] step 4000/8421 fvu 0.3674 dead 0.001 131s
+[real w16384 s0] step 4500/8421 fvu 0.3728 dead 0.002 150s
+[real w16384 s0] step 5000/8421 fvu 0.3645 dead 0.002 169s
+[2026-11-11 01:06:43] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k8__s0: live 14352, fvu 0.398, L0 8.0, ranks 11-150 gamma full 0.842 fixed-n 0.819 [181s]
+[real w16384 s0] step 5500/8421 fvu 0.3542 dead 0.002 187s
+[real w16384 s0] step 6000/8421 fvu 0.3420 dead 0.001 207s
+[real w16384 s0] step 6500/8421 fvu 0.3362 dead 0.001 226s
+[real w16384 s0] step 7000/8421 fvu 0.3388 dead 0.001 245s
+[real w16384 s0] step 7500/8421 fvu 0.3347 dead 0.001 263s
+[real w16384 s0] step 8000/8421 fvu 0.3376 dead 0.002 282s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.3345255180947815
+[2026-11-11 01:08:45] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k24__s0
+[real w16384 s0] step 50/8421 fvu 0.7246 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4793 dead 0.000 17s
+[real w16384 s0] step 1000/8421 fvu 0.4060 dead 0.000 31s
+[real w16384 s0] step 1500/8421 fvu 0.3712 dead 0.000 45s
+[real w16384 s0] step 2000/8421 fvu 0.3695 dead 0.000 60s
+[real w16384 s0] step 2500/8421 fvu 0.3475 dead 0.000 75s
+[real w16384 s0] step 3000/8421 fvu 0.3309 dead 0.000 90s
+[real w16384 s0] step 3500/8421 fvu 0.3254 dead 0.000 108s
+[real w16384 s0] step 4000/8421 fvu 0.3266 dead 0.000 128s
+[real w16384 s0] step 4500/8421 fvu 0.3287 dead 0.000 147s
+[2026-11-11 01:11:33] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k16__s0: live 14861, fvu 0.335, L0 16.0, ranks 11-150 gamma full 0.578 fixed-n 0.553 [168s]
+[real w16384 s0] step 5000/8421 fvu 0.3234 dead 0.000 167s
+[real w16384 s0] step 5500/8421 fvu 0.3135 dead 0.000 187s
+[real w16384 s0] step 6000/8421 fvu 0.3034 dead 0.000 208s
+[real w16384 s0] step 6500/8421 fvu 0.2993 dead 0.001 227s
+[real w16384 s0] step 7000/8421 fvu 0.3029 dead 0.000 247s
+[real w16384 s0] step 7500/8421 fvu 0.2994 dead 0.001 267s
+[real w16384 s0] step 8000/8421 fvu 0.3028 dead 0.001 287s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k24__s0 fvu_eval 0.29887833971774175
+[2026-11-11 01:13:54] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k32__s0
+[real w16384 s0] step 50/8421 fvu 0.6983 dead 0.000 3s
+[real w16384 s0] step 500/8421 fvu 0.4656 dead 0.000 18s
+[2026-11-11T01:14:16Z] [watchdog] heartbeat: GPU 99%, idle 0s, 24G free, 240 min to deadline
+[real w16384 s0] step 1000/8421 fvu 0.3929 dead 0.000 34s
+[real w16384 s0] step 1500/8421 fvu 0.3553 dead 0.000 49s
+[real w16384 s0] step 2000/8421 fvu 0.3505 dead 0.000 65s
+[real w16384 s0] step 2500/8421 fvu 0.3254 dead 0.000 81s
+[real w16384 s0] step 3000/8421 fvu 0.3074 dead 0.000 97s
+[real w16384 s0] step 3500/8421 fvu 0.3005 dead 0.000 113s
+[real w16384 s0] step 4000/8421 fvu 0.2999 dead 0.000 132s
+[real w16384 s0] step 4500/8421 fvu 0.3018 dead 0.000 150s
+[2026-11-11 01:16:42] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k24__s0: live 15360, fvu 0.299, L0 24.0, ranks 11-150 gamma full 0.490 fixed-n 0.467 [168s]
+[real w16384 s0] step 5000/8421 fvu 0.2950 dead 0.000 170s
+[real w16384 s0] step 5500/8421 fvu 0.2861 dead 0.000 191s
+[real w16384 s0] step 6000/8421 fvu 0.2767 dead 0.000 212s
+[real w16384 s0] step 6500/8421 fvu 0.2735 dead 0.000 233s
+[real w16384 s0] step 7000/8421 fvu 0.2758 dead 0.000 253s
+[real w16384 s0] step 7500/8421 fvu 0.2729 dead 0.001 274s
+[real w16384 s0] step 8000/8421 fvu 0.2765 dead 0.000 295s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k32__s0 fvu_eval 0.27278409550784
+[2026-11-11 01:19:12] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k48__s0
+[real w16384 s0] step 50/8421 fvu 0.6587 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.4430 dead 0.000 20s
+[real w16384 s0] step 1000/8421 fvu 0.3755 dead 0.000 38s
+[real w16384 s0] step 1500/8421 fvu 0.3371 dead 0.000 55s
+[real w16384 s0] step 2000/8421 fvu 0.3303 dead 0.000 72s
+[real w16384 s0] step 2500/8421 fvu 0.3042 dead 0.000 90s
+[real w16384 s0] step 3000/8421 fvu 0.2856 dead 0.000 108s
+[real w16384 s0] step 3500/8421 fvu 0.2750 dead 0.000 125s
+[real w16384 s0] step 4000/8421 fvu 0.2720 dead 0.000 144s
+[real w16384 s0] step 4500/8421 fvu 0.2716 dead 0.000 161s
+[2026-11-11 01:22:00] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k32__s0: live 15863, fvu 0.273, L0 32.0, ranks 11-150 gamma full 0.464 fixed-n 0.441 [167s]
+[real w16384 s0] step 5000/8421 fvu 0.2637 dead 0.000 179s
+[real w16384 s0] step 5500/8421 fvu 0.2541 dead 0.000 199s
+[real w16384 s0] step 6000/8421 fvu 0.2426 dead 0.000 220s
+[real w16384 s0] step 6500/8421 fvu 0.2390 dead 0.000 240s
+[real w16384 s0] step 7000/8421 fvu 0.2408 dead 0.000 260s
+[real w16384 s0] step 7500/8421 fvu 0.2369 dead 0.000 280s
+[real w16384 s0] step 8000/8421 fvu 0.2391 dead 0.000 301s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k48__s0 fvu_eval 0.23632745525891016
+[2026-11-11 01:24:38] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k64__s0
+[real w16384 s0] step 50/8421 fvu 0.6283 dead 0.000 4s
+[real w16384 s0] step 500/8421 fvu 0.4243 dead 0.000 22s
+[real w16384 s0] step 1000/8421 fvu 0.3612 dead 0.000 42s
+[real w16384 s0] step 1500/8421 fvu 0.3247 dead 0.000 61s
+[real w16384 s0] step 2000/8421 fvu 0.3183 dead 0.000 84s
+[real w16384 s0] step 2500/8421 fvu 0.2930 dead 0.000 109s
+[real w16384 s0] step 3000/8421 fvu 0.2745 dead 0.000 134s
+[real w16384 s0] step 3500/8421 fvu 0.2636 dead 0.000 157s
+[2026-11-11 01:27:35] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k48__s0: live 16264, fvu 0.236, L0 48.0, ranks 11-150 gamma full 0.461 fixed-n 0.440 [176s]
+[real w16384 s0] step 4000/8421 fvu 0.2594 dead 0.000 181s
+[real w16384 s0] step 4500/8421 fvu 0.2580 dead 0.000 206s
+[real w16384 s0] step 5000/8421 fvu 0.2495 dead 0.000 226s
+[real w16384 s0] step 5500/8421 fvu 0.2391 dead 0.000 253s
+[real w16384 s0] step 6000/8421 fvu 0.2276 dead 0.000 277s
+[real w16384 s0] step 6500/8421 fvu 0.2234 dead 0.000 300s
+[real w16384 s0] step 7000/8421 fvu 0.2232 dead 0.000 320s
+[real w16384 s0] step 7500/8421 fvu 0.2185 dead 0.000 341s
+[real w16384 s0] step 8000/8421 fvu 0.2209 dead 0.000 362s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k64__s0 fvu_eval 0.21812034342635833
+[2026-11-11 01:31:04] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k128__s0
+[real w16384 s0] step 50/8421 fvu 0.5545 dead 0.000 5s
+[real w16384 s0] step 500/8421 fvu 0.3694 dead 0.000 37s
+[real w16384 s0] step 1000/8421 fvu 0.3210 dead 0.000 71s
+[real w16384 s0] step 1500/8421 fvu 0.2912 dead 0.000 101s
+[real w16384 s0] step 2000/8421 fvu 0.2869 dead 0.000 135s
+[real w16384 s0] step 2500/8421 fvu 0.2642 dead 0.000 168s
+[2026-11-11 01:33:59] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k64__s0: live 16365, fvu 0.218, L0 64.0, ranks 11-150 gamma full 0.479 fixed-n 0.456 [175s]
+[real w16384 s0] step 3000/8421 fvu 0.2476 dead 0.000 202s
+[real w16384 s0] step 3500/8421 fvu 0.2375 dead 0.000 235s
+[real w16384 s0] step 4000/8421 fvu 0.2343 dead 0.000 270s
+[real w16384 s0] step 4500/8421 fvu 0.2324 dead 0.000 303s
+[real w16384 s0] step 5000/8421 fvu 0.2245 dead 0.000 336s
+[real w16384 s0] step 5500/8421 fvu 0.2135 dead 0.000 369s
+[real w16384 s0] step 6000/8421 fvu 0.2025 dead 0.000 398s
+[real w16384 s0] step 6500/8421 fvu 0.1983 dead 0.000 426s
+[real w16384 s0] step 7000/8421 fvu 0.1973 dead 0.000 454s
+[real w16384 s0] step 7500/8421 fvu 0.1929 dead 0.000 482s
+[real w16384 s0] step 8000/8421 fvu 0.1935 dead 0.000 510s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k128__s0 fvu_eval 0.19094435569014215
+[2026-11-11 01:40:04] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k8__s1
+[real w16384 s1] step 50/8421 fvu 0.7945 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.5233 dead 0.000 15s
+[real w16384 s1] step 1000/8421 fvu 0.5076 dead 0.000 33s
+[real w16384 s1] step 1500/8421 fvu 0.4718 dead 0.000 54s
+[real w16384 s1] step 2000/8421 fvu 0.4536 dead 0.002 77s
+[real w16384 s1] step 2500/8421 fvu 0.4614 dead 0.012 100s
+[real w16384 s1] step 3000/8421 fvu 0.4539 dead 0.017 123s
+[real w16384 s1] step 3500/8421 fvu 0.4380 dead 0.009 146s
+[real w16384 s1] step 4000/8421 fvu 0.4326 dead 0.005 168s
+[2026-11-11 01:42:59] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k128__s0: live 16383, fvu 0.191, L0 128.0, ranks 11-150 gamma full 0.420 fixed-n 0.403 [175s]
+[real w16384 s1] step 4500/8421 fvu 0.4253 dead 0.006 193s
+[real w16384 s1] step 5000/8421 fvu 0.4220 dead 0.005 216s
+[real w16384 s1] step 5500/8421 fvu 0.4267 dead 0.006 239s
+[2026-11-11T01:44:17Z] [watchdog] heartbeat: GPU 100%, idle 0s, 23G free, 210 min to deadline
+[real w16384 s1] step 6000/8421 fvu 0.3970 dead 0.005 261s
+[real w16384 s1] step 6500/8421 fvu 0.4045 dead 0.002 284s
+[real w16384 s1] step 7000/8421 fvu 0.3860 dead 0.003 307s
+[real w16384 s1] step 7500/8421 fvu 0.4121 dead 0.003 330s
+[real w16384 s1] step 8000/8421 fvu 0.4027 dead 0.003 352s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k8__s1 fvu_eval 0.39819132318331535
+[2026-11-11 01:46:23] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k16__s1
+[real w16384 s1] step 50/8421 fvu 0.7352 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4759 dead 0.000 15s
+[real w16384 s1] step 1000/8421 fvu 0.4415 dead 0.000 29s
+[real w16384 s1] step 1500/8421 fvu 0.4022 dead 0.000 42s
+[real w16384 s1] step 2000/8421 fvu 0.3812 dead 0.000 56s
+[real w16384 s1] step 2500/8421 fvu 0.3878 dead 0.000 72s
+[real w16384 s1] step 3000/8421 fvu 0.3805 dead 0.000 91s
+[real w16384 s1] step 3500/8421 fvu 0.3659 dead 0.001 110s
+[real w16384 s1] step 4000/8421 fvu 0.3639 dead 0.001 128s
+[real w16384 s1] step 4500/8421 fvu 0.3586 dead 0.001 148s
+[real w16384 s1] step 5000/8421 fvu 0.3554 dead 0.002 167s
+[2026-11-11 01:49:19] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k8__s1: live 14415, fvu 0.398, L0 8.0, ranks 11-150 gamma full 0.843 fixed-n 0.821 [176s]
+[real w16384 s1] step 5500/8421 fvu 0.3598 dead 0.002 185s
+[real w16384 s1] step 6000/8421 fvu 0.3341 dead 0.002 204s
+[real w16384 s1] step 6500/8421 fvu 0.3394 dead 0.000 223s
+[real w16384 s1] step 7000/8421 fvu 0.3234 dead 0.001 242s
+[real w16384 s1] step 7500/8421 fvu 0.3454 dead 0.001 261s
+[real w16384 s1] step 8000/8421 fvu 0.3376 dead 0.001 279s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k16__s1 fvu_eval 0.3332650111064471
+[2026-11-11 01:51:25] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k24__s1
+[real w16384 s1] step 50/8421 fvu 0.7005 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4558 dead 0.000 16s
+[real w16384 s1] step 1000/8421 fvu 0.4149 dead 0.000 30s
+[real w16384 s1] step 1500/8421 fvu 0.3689 dead 0.000 45s
+[real w16384 s1] step 2000/8421 fvu 0.3441 dead 0.000 60s
+[real w16384 s1] step 2500/8421 fvu 0.3456 dead 0.000 75s
+[real w16384 s1] step 3000/8421 fvu 0.3379 dead 0.000 90s
+[real w16384 s1] step 3500/8421 fvu 0.3255 dead 0.000 108s
+[real w16384 s1] step 4000/8421 fvu 0.3231 dead 0.000 126s
+[real w16384 s1] step 4500/8421 fvu 0.3181 dead 0.000 146s
+[real w16384 s1] step 5000/8421 fvu 0.3145 dead 0.000 165s
+[2026-11-11 01:54:22] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k16__s1: live 14944, fvu 0.333, L0 16.0, ranks 11-150 gamma full 0.582 fixed-n 0.557 [177s]
+[real w16384 s1] step 5500/8421 fvu 0.3181 dead 0.000 185s
+[real w16384 s1] step 6000/8421 fvu 0.2972 dead 0.000 205s
+[real w16384 s1] step 6500/8421 fvu 0.3017 dead 0.001 225s
+[real w16384 s1] step 7000/8421 fvu 0.2883 dead 0.000 244s
+[real w16384 s1] step 7500/8421 fvu 0.3087 dead 0.000 264s
+[real w16384 s1] step 8000/8421 fvu 0.3015 dead 0.001 284s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k24__s1 fvu_eval 0.2974774449357077
+[2026-11-11 01:56:32] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k32__s1
+[real w16384 s1] step 50/8421 fvu 0.6756 dead 0.000 3s
+[real w16384 s1] step 500/8421 fvu 0.4421 dead 0.000 17s
+[real w16384 s1] step 1000/8421 fvu 0.3990 dead 0.000 33s
+[real w16384 s1] step 1500/8421 fvu 0.3524 dead 0.000 48s
+[real w16384 s1] step 2000/8421 fvu 0.3242 dead 0.000 64s
+[real w16384 s1] step 2500/8421 fvu 0.3239 dead 0.000 80s
+[real w16384 s1] step 3000/8421 fvu 0.3125 dead 0.000 95s
+[real w16384 s1] step 3500/8421 fvu 0.2999 dead 0.000 112s
+[real w16384 s1] step 4000/8421 fvu 0.2957 dead 0.000 128s
+[real w16384 s1] step 4500/8421 fvu 0.2912 dead 0.000 146s
+[real w16384 s1] step 5000/8421 fvu 0.2883 dead 0.000 165s
+[2026-11-11 01:59:28] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k24__s1: live 15403, fvu 0.297, L0 24.0, ranks 11-150 gamma full 0.499 fixed-n 0.475 [177s]
+[real w16384 s1] step 5500/8421 fvu 0.2905 dead 0.000 185s
+[real w16384 s1] step 6000/8421 fvu 0.2710 dead 0.000 205s
+[real w16384 s1] step 6500/8421 fvu 0.2751 dead 0.000 225s
+[real w16384 s1] step 7000/8421 fvu 0.2637 dead 0.000 246s
+[real w16384 s1] step 7500/8421 fvu 0.2817 dead 0.000 267s
+[real w16384 s1] step 8000/8421 fvu 0.2747 dead 0.000 287s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k32__s1 fvu_eval 0.27158238446743654
+[2026-11-11 02:01:44] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k48__s1
+[real w16384 s1] step 50/8421 fvu 0.6357 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4206 dead 0.000 19s
+[real w16384 s1] step 1000/8421 fvu 0.3800 dead 0.000 37s
+[real w16384 s1] step 1500/8421 fvu 0.3342 dead 0.000 55s
+[real w16384 s1] step 2000/8421 fvu 0.3058 dead 0.000 72s
+[real w16384 s1] step 2500/8421 fvu 0.3028 dead 0.000 90s
+[real w16384 s1] step 3000/8421 fvu 0.2888 dead 0.000 108s
+[real w16384 s1] step 3500/8421 fvu 0.2740 dead 0.000 125s
+[real w16384 s1] step 4000/8421 fvu 0.2682 dead 0.000 143s
+[real w16384 s1] step 4500/8421 fvu 0.2614 dead 0.000 162s
+[2026-11-11 02:04:40] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k32__s1: live 15829, fvu 0.272, L0 32.0, ranks 11-150 gamma full 0.466 fixed-n 0.447 [176s]
+[real w16384 s1] step 5000/8421 fvu 0.2563 dead 0.000 180s
+[real w16384 s1] step 5500/8421 fvu 0.2577 dead 0.000 199s
+[real w16384 s1] step 6000/8421 fvu 0.2383 dead 0.000 219s
+[real w16384 s1] step 6500/8421 fvu 0.2422 dead 0.000 239s
+[real w16384 s1] step 7000/8421 fvu 0.2300 dead 0.000 258s
+[real w16384 s1] step 7500/8421 fvu 0.2451 dead 0.000 279s
+[real w16384 s1] step 8000/8421 fvu 0.2386 dead 0.000 299s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k48__s1 fvu_eval 0.23564451255024005
+[2026-11-11 02:07:12] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k64__s1
+[real w16384 s1] step 50/8421 fvu 0.6070 dead 0.000 4s
+[real w16384 s1] step 500/8421 fvu 0.4024 dead 0.000 21s
+[real w16384 s1] step 1000/8421 fvu 0.3660 dead 0.000 41s
+[real w16384 s1] step 1500/8421 fvu 0.3225 dead 0.000 61s
+[real w16384 s1] step 2000/8421 fvu 0.2950 dead 0.000 81s
+[real w16384 s1] step 2500/8421 fvu 0.2915 dead 0.000 101s
+[real w16384 s1] step 3000/8421 fvu 0.2779 dead 0.000 120s
+[real w16384 s1] step 3500/8421 fvu 0.2630 dead 0.000 140s
+[real w16384 s1] step 4000/8421 fvu 0.2569 dead 0.000 160s
+[2026-11-11 02:10:09] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k48__s1: live 16303, fvu 0.236, L0 48.0, ranks 11-150 gamma full 0.464 fixed-n 0.443 [177s]
+[real w16384 s1] step 4500/8421 fvu 0.2494 dead 0.000 180s
+[real w16384 s1] step 5000/8421 fvu 0.2436 dead 0.000 200s
+[real w16384 s1] step 5500/8421 fvu 0.2439 dead 0.000 219s
+[real w16384 s1] step 6000/8421 fvu 0.2242 dead 0.000 239s
+[real w16384 s1] step 6500/8421 fvu 0.2267 dead 0.000 259s
+[real w16384 s1] step 7000/8421 fvu 0.2146 dead 0.000 279s
+[real w16384 s1] step 7500/8421 fvu 0.2262 dead 0.000 299s
+[real w16384 s1] step 8000/8421 fvu 0.2207 dead 0.000 318s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k64__s1 fvu_eval 0.21789820502629742
+[2026-11-11 02:12:54] train synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k128__s1
+[real w16384 s1] step 50/8421 fvu 0.5360 dead 0.000 5s
+[real w16384 s1] step 500/8421 fvu 0.3510 dead 0.000 29s
+[real w16384 s1] step 1000/8421 fvu 0.3255 dead 0.000 57s
+[2026-11-11T02:14:19Z] [watchdog] heartbeat: GPU 100%, idle 0s, 22G free, 180 min to deadline
+[real w16384 s1] step 1500/8421 fvu 0.2893 dead 0.000 85s
+[real w16384 s1] step 2000/8421 fvu 0.2661 dead 0.000 113s
+[real w16384 s1] step 2500/8421 fvu 0.2626 dead 0.000 141s
+[real w16384 s1] step 3000/8421 fvu 0.2506 dead 0.000 169s
+[2026-11-11 02:15:58] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k64__s1: live 16366, fvu 0.218, L0 64.0, ranks 11-150 gamma full 0.475 fixed-n 0.455 [184s]
+[real w16384 s1] step 3500/8421 fvu 0.2368 dead 0.000 197s
+[real w16384 s1] step 4000/8421 fvu 0.2310 dead 0.000 225s
+[real w16384 s1] step 4500/8421 fvu 0.2239 dead 0.000 254s
+[real w16384 s1] step 5000/8421 fvu 0.2178 dead 0.000 281s
+[real w16384 s1] step 5500/8421 fvu 0.2174 dead 0.000 309s
+[real w16384 s1] step 6000/8421 fvu 0.1986 dead 0.000 337s
+[real w16384 s1] step 6500/8421 fvu 0.2007 dead 0.000 365s
+[real w16384 s1] step 7000/8421 fvu 0.1893 dead 0.000 392s
+[real w16384 s1] step 7500/8421 fvu 0.1988 dead 0.000 420s
+[real w16384 s1] step 8000/8421 fvu 0.1932 dead 0.000 448s
+saved /workspace/SAE/cache/saes_r2rs/synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k128__s1 fvu_eval 0.19071266728550548
+[2026-11-11 02:23:48] scored synth-rs12-G-ds2__blocks.0.hook_resid_post__real__w16384__k128__s1: live 16382, fvu 0.191, L0 128.0, ranks 11-150 gamma full 0.424 fixed-n 0.406 [175s]
+[2026-11-11 02:23:49] deleted /workspace/SAE/cache/acts/synth-rs12-G-ds2/blocks.0.hook_resid_post/acts.npy; 78 GB free
+[2026-11-11 02:23:49] results /workspace/SAE/results/r2: 1.92 GB
+i_gauss_decline_as_steady_as_real      insufficient  
+ii_layer_profile_real_minus_gauss      insufficient  
+iii_whitening_isotropic                insufficient  
+iv_G_retains_D_decline                 mixed  {'(3, 50)': 'keeps', '(10, 150)': 'keeps', '(30, 450)': 'partial', '(100, 1000)': 'partial'}
+84 rows -> /workspace/SAE/results/r2/summary.json
+[2026-11-11 02:23:49] JOB DONE resynth
+[2026-11-11T02:23:50Z] [launcher] wrote results/r2/r2_job_resynth.DONE: exit_code=0 reason=job exited 0
+[2026-11-11T02:23:50Z] [launcher] grace period 20 min before stopping the pod: pull results now (gpu/pull_r2.sh)

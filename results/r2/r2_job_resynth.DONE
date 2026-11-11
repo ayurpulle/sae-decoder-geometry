@@ -1,0 +1,6 @@
+job=r2_job_resynth
+status=DONE
+exit_code=0
+reason=job exited 0
+time=2026-11-11T02:23:50Z
+pod=71pxexi9pc87hf

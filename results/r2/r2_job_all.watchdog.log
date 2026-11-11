@@ -1,0 +1,27 @@
+[2026-11-11T04:54:13Z] [watchdog] watchdog up (pid 215): deadline 2026-11-12T14:54:13Z, idle guard <5% for 1800s, check every 60s
+[2026-11-11T05:23:15Z] [watchdog] heartbeat: GPU 0%, idle 540s, 478T free, 2010 min to deadline
+!!!!!!!! [2026-11-11T05:44:17Z] [watchdog] GPU under 5% for 1800s while the job runs: treating it as hung !!!!!!!!
+[2026-11-11T05:44:17Z] [watchdog] wrote results/r2/r2_job_all.FAILED: exit_code=125 reason=idle: GPU idle 1800s while job pid 221 alive
+[2026-11-11T05:44:17Z] [watchdog] grace 1200s before stopping (pull results now)
+[2026-11-11T06:04:17Z] [watchdog] STOPPING POD (q4b9r8osxnxy88): watchdog idle guard
+[2026-11-11T06:04:17Z] [watchdog] terminated via REST v2 action
+[2026-11-11T06:49:54Z] [watchdog] watchdog up (pid 233): deadline 2026-11-12T04:49:54Z, idle guard <5% for 3600s, check every 60s
+[2026-11-11T07:18:57Z] [watchdog] heartbeat: GPU 100%, idle 0s, 476T free, 1290 min to deadline
+[2026-11-11T07:49:00Z] [watchdog] heartbeat: GPU 99%, idle 0s, 475T free, 1260 min to deadline
+[2026-11-11T08:19:04Z] [watchdog] heartbeat: GPU 99%, idle 0s, 475T free, 1230 min to deadline
+[2026-11-11T08:49:09Z] [watchdog] heartbeat: GPU 99%, idle 0s, 474T free, 1200 min to deadline
+[2026-11-11T09:19:17Z] [watchdog] heartbeat: GPU 99%, idle 0s, 472T free, 1170 min to deadline
+[2026-11-11T09:49:21Z] [watchdog] heartbeat: GPU 0%, idle 60s, 471T free, 1140 min to deadline
+[2026-11-11T10:19:28Z] [watchdog] heartbeat: GPU 100%, idle 0s, 471T free, 1110 min to deadline
+[2026-11-11T10:49:36Z] [watchdog] heartbeat: GPU 99%, idle 0s, 470T free, 1080 min to deadline
+[2026-11-11T11:19:44Z] [watchdog] heartbeat: GPU 100%, idle 0s, 469T free, 1050 min to deadline
+[2026-11-11T11:49:56Z] [watchdog] heartbeat: GPU 99%, idle 0s, 467T free, 1019 min to deadline
+[2026-11-11T12:20:03Z] [watchdog] heartbeat: GPU 99%, idle 0s, 467T free, 989 min to deadline
+[2026-11-11T12:50:19Z] [watchdog] heartbeat: GPU 0%, idle 240s, 464T free, 959 min to deadline
+[2026-11-11T13:20:26Z] [watchdog] heartbeat: GPU 0%, idle 60s, 462T free, 929 min to deadline
+[2026-11-11T13:50:34Z] [watchdog] heartbeat: GPU 8%, idle 0s, 460T free, 899 min to deadline
+[2026-11-11T14:20:40Z] [watchdog] heartbeat: GPU 99%, idle 0s, 457T free, 869 min to deadline
+[2026-11-11T14:50:50Z] [watchdog] heartbeat: GPU 0%, idle 480s, 456T free, 839 min to deadline
+[2026-11-11T15:20:57Z] [watchdog] heartbeat: GPU 0%, idle 60s, 454T free, 808 min to deadline
+[2026-11-11T15:51:08Z] [watchdog] heartbeat: GPU 0%, idle 60s, 452T free, 778 min to deadline
+[2026-11-11T16:21:14Z] [watchdog] heartbeat: GPU 99%, idle 0s, 450T free, 748 min to deadline
