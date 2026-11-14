@@ -2,8 +2,9 @@
 Uses a small-d Sigma (default: Pythia-70m layer 3, d = 512) with the job's generator settings (M = 65536, L = 64).
 Reports the relative Frobenius error ||C - Sigma||_F / ||Sigma||_F and the eigen-slope of C vs Sigma in each window
 (windows past d are truncated at d), next to a Gaussian N(mu, Sigma) sample of the same n as the sampling-error
-reference. Writes the JSON given by --out.
-Usage: python experiments/r2_sparse_check.py --stats <stats.npz> --n 2000000 --out <json>
+reference. Writes the JSON given by --out. --values halfnormal and --rho r select the codable variant (train_sae.py
+docstring: centred nonnegative values, dense N(0, Sigma) remainder of variance fraction r); defaults are the original.
+Usage: python experiments/r2_sparse_check.py --stats <stats.npz> --n 2000000 --out <json> [--M --L --values --rho]
 """
 import argparse
 import json
@@ -17,7 +18,7 @@ import torch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from geometry import slope_from_eigenvalues  # noqa: E402
-from train_sae import sparse_batches, sparse_dictionary  # noqa: E402
+from train_sae import sparse_batches, sparse_setup  # noqa: E402
 
 WINDOWS = [(3, 50), (10, 150), (30, 450), (100, 1000)]
 
@@ -45,22 +46,24 @@ def main():
     ap.add_argument("--n", type=int, default=2_000_000)
     ap.add_argument("--M", type=int, default=65536)
     ap.add_argument("--L", type=float, default=64)
+    ap.add_argument("--values", choices=["normal", "halfnormal"], default="normal")
+    ap.add_argument("--rho", type=float, default=0.0)
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     st = np.load(a.stats)
     Sigma, mu = st["cov"], st["mean"]
     d, t0 = len(mu), time.time()
-    sp = {"A": torch.tensor(sparse_dictionary(Sigma, a.M, 0)), "mu": torch.tensor(mu, dtype=torch.float32), "p": a.L / a.M}
+    sp = sparse_setup(Sigma, mu, a.M, a.L, 0, "cpu", a.values, a.rho)
     Cs, n = cov_of(sparse_batches(sp, a.n, 4096, 8_000_000, 1.0, "cpu"), d)
     t1 = time.time()
     gen = torch.Generator().manual_seed(1)
     Lt = torch.tensor(np.linalg.cholesky(Sigma).T, dtype=torch.float32)
     Cg, _ = cov_of((torch.randn(4096, d, generator=gen) @ Lt + torch.tensor(mu, dtype=torch.float32)
                     for _ in range(a.n // 4096)), d)
-    out = {"d": d, "n": n, "M": a.M, "L": a.L, "sparse": report(Cs, Sigma), "gaussian_reference": report(Cg, Sigma),
+    out = {"d": d, "n": n, "M": a.M, "L": a.L, "values": a.values, "rho": a.rho, "sparse": report(Cs, Sigma), "gaussian_reference": report(Cg, Sigma),
            "sparse_seconds": t1 - t0}
     json.dump(out, open(a.out, "w"), indent=1)
-    print(f"d={d} n={n:,} M={a.M} L={a.L}  ({t1 - t0:.0f}s)")
+    print(f"d={d} n={n:,} M={a.M} L={a.L} values={a.values} rho={a.rho}  ({t1 - t0:.0f}s)")
     for k in ("sparse", "gaussian_reference"):
         r = out[k]
         print(f"{k:<19} rel Frobenius error {r['rel_frob_err']:.4f}  slopes (sample vs Sigma): "

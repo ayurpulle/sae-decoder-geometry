@@ -1,0 +1,26 @@
+[2026-11-12T11:14:36Z] [watchdog] watchdog up (pid 380): deadline 2026-11-12T21:14:36Z, idle guard <5% for 10800s, check every 60s
+[2026-11-12T11:43:40Z] [watchdog] heartbeat: GPU 100%, idle 0s, 454T free, 570 min to deadline
+[2026-11-12T12:13:46Z] [watchdog] heartbeat: GPU 100%, idle 0s, 454T free, 540 min to deadline
+[2026-11-12T12:43:52Z] [watchdog] heartbeat: GPU 100%, idle 0s, 454T free, 510 min to deadline
+[2026-11-12T13:13:56Z] [watchdog] heartbeat: GPU 99%, idle 0s, 455T free, 480 min to deadline
+[2026-11-12T13:43:59Z] [watchdog] heartbeat: GPU 100%, idle 0s, 455T free, 450 min to deadline
+[2026-11-12T14:14:01Z] [watchdog] heartbeat: GPU 100%, idle 0s, 455T free, 420 min to deadline
+[2026-11-12T14:44:03Z] [watchdog] heartbeat: GPU 100%, idle 0s, 457T free, 390 min to deadline
+[2026-11-12T15:14:05Z] [watchdog] heartbeat: GPU 0%, idle 120s, 459T free, 360 min to deadline
+[2026-11-12T15:44:08Z] [watchdog] heartbeat: GPU 98%, idle 0s, 462T free, 330 min to deadline
+[2026-11-12T16:14:10Z] [watchdog] heartbeat: GPU 100%, idle 0s, 463T free, 300 min to deadline
+[2026-11-12T16:44:12Z] [watchdog] heartbeat: GPU 100%, idle 0s, 463T free, 270 min to deadline
+[2026-11-12T17:14:14Z] [watchdog] heartbeat: GPU 100%, idle 0s, 464T free, 240 min to deadline
+[2026-11-12T17:44:17Z] [watchdog] heartbeat: GPU 0%, idle 60s, 465T free, 210 min to deadline
+[2026-11-12T18:14:19Z] [watchdog] heartbeat: GPU 0%, idle 1860s, 466T free, 180 min to deadline
+[2026-11-12T18:44:21Z] [watchdog] heartbeat: GPU 0%, idle 3660s, 465T free, 150 min to deadline
+[2026-11-12T19:14:23Z] [watchdog] heartbeat: GPU 0%, idle 5460s, 465T free, 120 min to deadline
+[2026-11-12T19:44:25Z] [watchdog] heartbeat: GPU 0%, idle 7260s, 466T free, 90 min to deadline
+[2026-11-12T20:14:27Z] [watchdog] heartbeat: GPU 0%, idle 9060s, 466T free, 60 min to deadline
+!!!!!!!! [2026-11-12T20:43:30Z] [watchdog] GPU under 5% for 10800s while the job runs: treating it as hung !!!!!!!!
+[2026-11-12T20:43:30Z] [watchdog] wrote results/r2/r2_job_final.FAILED: exit_code=125 reason=idle: GPU idle 10800s while job pid 386 alive
+[2026-11-12T20:43:30Z] [watchdog] grace 1200s before stopping (pull results now)
+[2026-11-12T21:03:30Z] [watchdog] STOPPING POD (ygvhhi1wmiebav): watchdog idle guard
+[2026-11-12T21:03:31Z] [watchdog] terminated via REST v2 action
+[2026-11-13T05:17:05Z] [watchdog] watchdog up (pid 637): deadline 2026-11-13T07:47:05Z, idle guard <5% for 7200s, check every 60s
+[2026-11-13T05:46:06Z] [watchdog] heartbeat: GPU 0%, idle 1080s, 468T free, 120 min to deadline

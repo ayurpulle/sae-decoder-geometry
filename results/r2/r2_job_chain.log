@@ -1,0 +1,209 @@
+[2026-11-13T22:12:46Z] [launcher] job experiments/r2_job_chain.py | max_hours 3.5 (12600s) | grace 20 min | pod 7v7dujtja3ssd3 | python .venv/bin/python 
+[2026-11-13T22:12:46Z] [launcher] watchdog pid 339
+[2026-11-13T22:12:46Z] [launcher] job pid 345
+[2026-11-13T22:12:46Z] [watchdog] watchdog up (pid 339): deadline 2026-11-14T01:42:46Z, idle guard <5% for 7200s, check every 60s
+chain: /workspace/SAE/experiments/r2_job_robust.py --skip_g --skip_m --p_layers 13
+[2026-11-13 22:12:53] job robust: git e048d9db612df414abdec0aa262c8bb5c8698e37, code sha256 f4f6abeed333, job sha256 004abb481ff7, out /workspace/SAE/results/r2, 505171 GB free
+[2026-11-13 22:12:53] P: feature power
+[2026-11-13 22:13:33] P: collecting layers [13] in the background (pid 397, log /workspace/SAE/results/r2/robust_collect.log)
+[2026-11-13 22:13:33] P: waiting for the collection
+[2026-11-13 22:28:13] train P gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k40__s0
+[real w16384 s0] step 50/6957 fvu 0.7422 dead 0.000 10s
+[real w16384 s0] step 500/6957 fvu 0.4463 dead 0.000 46s
+[real w16384 s0] step 1000/6957 fvu 0.3377 dead 0.000 85s
+[real w16384 s0] step 1500/6957 fvu 0.3534 dead 0.000 118s
+[real w16384 s0] step 2000/6957 fvu 0.3162 dead 0.000 150s
+[real w16384 s0] step 2500/6957 fvu 0.2986 dead 0.000 183s
+[real w16384 s0] step 3000/6957 fvu 0.2940 dead 0.000 218s
+[real w16384 s0] step 3500/6957 fvu 0.2546 dead 0.000 246s
+[real w16384 s0] step 4000/6957 fvu 0.2903 dead 0.000 275s
+[real w16384 s0] step 4500/6957 fvu 0.2829 dead 0.000 308s
+[real w16384 s0] step 5000/6957 fvu 0.2778 dead 0.000 338s
+[real w16384 s0] step 5500/6957 fvu 0.2865 dead 0.000 367s
+[real w16384 s0] step 6000/6957 fvu 0.2851 dead 0.000 395s
+[real w16384 s0] step 6500/6957 fvu 0.2845 dead 0.000 426s
+saved /workspace/SAE/cache/saes_r2p/gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k40__s0 fvu_eval 0.2875493683467947
+[2026-11-13 22:36:26] deleted /workspace/SAE/cache/acts/gemma-2-2b/blocks.13.hook_resid_post/acts.npy (stats.npz kept)
+[2026-11-13 22:36:33] power gemma-2-2b__blocks.13.hook_resid_post__real__w16384__k40__s0: weighted bulk gamma 0.95/1.18, unweighted 0.60/0.87, top10 0.18, body rq +0.48, head/body True [7s]
+[2026-11-13 22:36:35] results /workspace/SAE/results/r2: 5.26 GB
+i_gauss_decline_as_steady_as_real      contradicts  {'(3, 50)': 'contradicts', '(10, 150)': 'contradicts', '(30, 450)': 'supports', '(100, 1000)': 'contradicts'}
+ii_layer_profile_real_minus_gauss      supports  {'(3, 50)': 'supports', '(10, 150)': 'supports', '(30, 450)': 'supports', '(100, 1000)': 'supports'}
+iii_whitening_isotropic                contradicts  {'(3, 50)': 'contradicts', '(10, 150)': 'contradicts', '(30, 450)': 'contradicts', '(100, 1000)': 'contradicts'}
+iv_G_retains_D_decline                 insufficient  
+v_sparse_null_separates_like_gaussian  supports  
+v_sparse2_null_separates_like_gaussian contradicts  
+models {"M1_gpt2": {"R1_bulk_flatter": "partial", "R2_top_profile": "replicates", "R3_k_decline": null, "fvu": null}, "M2_gemma9b": {"n_saes": 96, "layers": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41], "a_l0_per_doubling": "agrees", "b_midstack_steeper": "supports", "c_gamma_below_1": "holds"}}
+robust {"G_generator": "partial", "M_gpt2_codable_null": {"bulk": "partial", "primary": "replicates", "top": "fails"}, "P_feature_power": "insufficient"}
+pmatch "insufficient"
+404 rows -> /workspace/SAE/results/r2/summary.json
+[2026-11-13 22:36:42] JOB DONE robust
+chain: /workspace/SAE/experiments/r2_job_robust.py --skip_g --skip_m --p_layers 0
+[2026-11-13 22:36:49] job robust: git e048d9db612df414abdec0aa262c8bb5c8698e37, code sha256 f4f6abeed333, job sha256 004abb481ff7, out /workspace/SAE/results/r2, 503642 GB free
+[2026-11-13 22:36:49] P: feature power
+[2026-11-13 22:37:29] P: collecting layers [0] in the background (pid 905, log /workspace/SAE/results/r2/robust_collect.log)
+[2026-11-13 22:37:29] P: waiting for the collection
+[2026-11-13T22:41:48Z] [watchdog] heartbeat: GPU 0%, idle 360s, 458T free, 180 min to deadline
+[2026-11-13 22:45:09] train P gemma-2-2b__blocks.0.hook_resid_post__real__w16384__k40__s0
+[real w16384 s0] step 50/6957 fvu 0.5268 dead 0.000 4s
+[real w16384 s0] step 500/6957 fvu 0.2647 dead 0.000 27s
+[real w16384 s0] step 1000/6957 fvu 0.1572 dead 0.000 52s
+[real w16384 s0] step 1500/6957 fvu 0.1398 dead 0.000 76s
+[real w16384 s0] step 2000/6957 fvu 0.1227 dead 0.000 102s
+[real w16384 s0] step 2500/6957 fvu 0.1090 dead 0.000 127s
+[real w16384 s0] step 3000/6957 fvu 0.1198 dead 0.000 151s
+[real w16384 s0] step 3500/6957 fvu 0.0861 dead 0.000 176s
+[real w16384 s0] step 4000/6957 fvu 0.1076 dead 0.000 200s
+[real w16384 s0] step 4500/6957 fvu 0.1018 dead 0.000 225s
+[real w16384 s0] step 5000/6957 fvu 0.1041 dead 0.000 249s
+[real w16384 s0] step 5500/6957 fvu 0.1163 dead 0.000 274s
+[real w16384 s0] step 6000/6957 fvu 0.1128 dead 0.000 299s
+[real w16384 s0] step 6500/6957 fvu 0.1027 dead 0.000 323s
+saved /workspace/SAE/cache/saes_r2p/gemma-2-2b__blocks.0.hook_resid_post__real__w16384__k40__s0 fvu_eval 0.11309778182979195
+[2026-11-13 22:51:04] WARNING /workspace/SAE/cache/acts/gemma-2-2b/blocks.0.hook_resid_post/stats.npz differs from /workspace/SAE/results/r2/sigma/gemma-2-2b_L0.npz: relative Frobenius 3.23e-05
+[2026-11-13 22:51:34] deleted /workspace/SAE/cache/acts/gemma-2-2b/blocks.0.hook_resid_post/acts.npy (stats.npz kept)
+[2026-11-13 22:51:41] power gemma-2-2b__blocks.0.hook_resid_post__real__w16384__k40__s0: weighted bulk gamma 0.51/0.68, unweighted 0.37/0.62, top10 0.03, body rq +0.16, head/body False [7s]
+[2026-11-13 22:51:43] results /workspace/SAE/results/r2: 5.26 GB
+i_gauss_decline_as_steady_as_real      contradicts  {'(3, 50)': 'contradicts', '(10, 150)': 'contradicts', '(30, 450)': 'supports', '(100, 1000)': 'contradicts'}
+ii_layer_profile_real_minus_gauss      supports  {'(3, 50)': 'supports', '(10, 150)': 'supports', '(30, 450)': 'supports', '(100, 1000)': 'supports'}
+iii_whitening_isotropic                contradicts  {'(3, 50)': 'contradicts', '(10, 150)': 'contradicts', '(30, 450)': 'contradicts', '(100, 1000)': 'contradicts'}
+iv_G_retains_D_decline                 insufficient  
+v_sparse_null_separates_like_gaussian  supports  
+v_sparse2_null_separates_like_gaussian contradicts  
+models {"M1_gpt2": {"R1_bulk_flatter": "partial", "R2_top_profile": "replicates", "R3_k_decline": null, "fvu": null}, "M2_gemma9b": {"n_saes": 96, "layers": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41], "a_l0_per_doubling": "agrees", "b_midstack_steeper": "supports", "c_gamma_below_1": "holds"}}
+robust {"G_generator": "partial", "M_gpt2_codable_null": {"bulk": "partial", "primary": "replicates", "top": "fails"}, "P_feature_power": "insufficient"}
+pmatch "insufficient"
+405 rows -> /workspace/SAE/results/r2/summary.json
+[2026-11-13 22:51:49] JOB DONE robust
+chain: /workspace/SAE/experiments/r2_job_pmatch.py
+[2026-11-13 22:51:58] job pmatch: git e048d9db612df414abdec0aa262c8bb5c8698e37, code sha256 f4f6abeed333, job sha256 f9905b2932ef, generator sha256 9794b80e6548, out /workspace/SAE/results/r2, 503667 GB free, budget 90 min
+[2026-11-13 22:51:59] wrote /workspace/SAE/cache/acts/gemma-2-2b-sig/blocks.0.hook_resid_post/stats.npz from /workspace/SAE/results/r2/sigma/gemma-2-2b_L0.npz
+[2026-11-13 22:52:00] wrote /workspace/SAE/cache/acts/gemma-2-2b-sig/blocks.13.hook_resid_post/stats.npz from /workspace/SAE/results/r2/sigma/gemma-2-2b_L13.npz
+[2026-11-13 22:52:02] dictionary device cuda (float64 eigh of 2304 x 2304: cuda 0.14s, cpu 0.43s)
+[2026-11-13 22:52:02] setting PM|V1|L13|M8192_L16|ds0
+[2026-11-13 22:52:02] waiting for dictionary pmV1L13M8192ds0
+[2026-11-13 22:52:48] dictionary V1: 53 rounds, power err 3.0e-02, rq err None, cov err 1.5e-12 (float32 3.0e-08), moved 0.040, 45s
+[2026-11-13 22:52:57] pmV1L13M8192ds0: atom-cloud gamma 0.373 / 0.360 / 0.556 / 0.930, top-10 power share 0.176 (real 0.177), top-1% 0.319 (real 0.346), moved 0.040
+[2026-11-13 22:52:57] train gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.4300__DpmV1L13M8192ds0 (1 min into the job)
+[2026-11-13 22:53:08] dictionary V1: 7 rounds, power err 2.8e-02, rq err None, cov err 7.7e-13 (float32 1.0e-08), moved 0.000, 11s
+[2026-11-13 22:53:17] pmV1L0M8192ds0: atom-cloud gamma 0.871 / 0.860 / 0.860 / 0.941, top-10 power share 0.031 (real 0.028), top-1% 0.102 (real 0.109), moved 0.000
+[sparse w16384 s0] step 50/6957 fvu 0.7356 dead 0.000 6s
+[sparse w16384 s0] step 500/6957 fvu 0.4318 dead 0.000 56s
+[sparse w16384 s0] step 1000/6957 fvu 0.3599 dead 0.000 111s
+[sparse w16384 s0] step 1500/6957 fvu 0.3441 dead 0.000 166s
+[2026-11-13 22:57:08] dictionary V1: 133 rounds, power err 3.0e-02, rq err None, cov err 1.3e-12 (float32 2.6e-08), moved 0.040, 231s
+[sparse w16384 s0] step 2000/6957 fvu 0.3104 dead 0.000 219s
+[2026-11-13 22:57:18] pmV1L13M8192ds1: atom-cloud gamma 0.376 / 0.364 / 0.559 / 0.930, top-10 power share 0.176 (real 0.177), top-1% 0.319 (real 0.346), moved 0.040
+[sparse w16384 s0] step 2500/6957 fvu 0.3091 dead 0.000 244s
+[sparse w16384 s0] step 3000/6957 fvu 0.2850 dead 0.000 269s
+[sparse w16384 s0] step 3500/6957 fvu 0.2891 dead 0.000 295s
+[sparse w16384 s0] step 4000/6957 fvu 0.2854 dead 0.000 320s
+[sparse w16384 s0] step 4500/6957 fvu 0.2738 dead 0.000 346s
+[sparse w16384 s0] step 5000/6957 fvu 0.2895 dead 0.000 374s
+[sparse w16384 s0] step 5500/6957 fvu 0.2901 dead 0.000 402s
+[sparse w16384 s0] step 6000/6957 fvu 0.2787 dead 0.000 435s
+[sparse w16384 s0] step 6500/6957 fvu 0.2694 dead 0.000 470s
+[sparse w16384 s0] step 6957/6957 fvu 0.2826 dead 0.002 501s
+saved /workspace/SAE/cache/saes_pm/gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.4300__DpmV1L13M8192ds0 fvu_eval 0.28175425402019577
+[2026-11-13 23:01:58] PM|V1|L13|M8192_L16|ds0: rho 0.43, FVU 0.282, target 0.288, matched
+[2026-11-13 23:02:09] gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.4300__DpmV1L13M8192ds0: null SAE top-1% power share 0.532 (real 0.346), ESS fraction 0.0096 (real 0.0121)
+[2026-11-13 23:02:09] setting PM|V1|L0|M8192_L16|ds0
+[2026-11-13 23:02:09] train gemma-2-2b-sig__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.1300__DpmV1L0M8192ds0 (10 min into the job)
+[sparse w16384 s0] step 50/6957 fvu 0.7754 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.3756 dead 0.000 26s
+[sparse w16384 s0] step 1000/6957 fvu 0.2265 dead 0.000 52s
+[2026-11-13 23:03:41] scored gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.4300__DpmV1L13M8192ds0: live 14470, fvu 0.282, L0 40.0, primary window (10, 150) gamma full 0.424 fixed-n 0.422 [93s]
+[sparse w16384 s0] step 1500/6957 fvu 0.1813 dead 0.000 78s
+[sparse w16384 s0] step 2000/6957 fvu 0.1582 dead 0.000 103s
+[sparse w16384 s0] step 2500/6957 fvu 0.1488 dead 0.000 129s
+[sparse w16384 s0] step 3000/6957 fvu 0.1407 dead 0.000 155s
+[sparse w16384 s0] step 3500/6957 fvu 0.1336 dead 0.000 186s
+[sparse w16384 s0] step 4000/6957 fvu 0.1275 dead 0.001 220s
+[sparse w16384 s0] step 4500/6957 fvu 0.1266 dead 0.002 256s
+[sparse w16384 s0] step 5000/6957 fvu 0.1244 dead 0.002 291s
+[sparse w16384 s0] step 5500/6957 fvu 0.1244 dead 0.003 326s
+[sparse w16384 s0] step 6000/6957 fvu 0.1213 dead 0.006 361s
+[sparse w16384 s0] step 6500/6957 fvu 0.1187 dead 0.009 396s
+[sparse w16384 s0] step 6957/6957 fvu 0.1192 dead 0.022 428s
+saved /workspace/SAE/cache/saes_pm/gemma-2-2b-sig__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.1300__DpmV1L0M8192ds0 fvu_eval 0.11965549772343949
+[2026-11-13 23:09:48] PM|V1|L0|M8192_L16|ds0: rho 0.13, FVU 0.120, target 0.114, matched
+[2026-11-13 23:09:59] gemma-2-2b-sig__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.1300__DpmV1L0M8192ds0: null SAE top-1% power share 0.301 (real 0.109), ESS fraction 0.0193 (real 0.2245)
+[2026-11-13 23:09:59] setting PM|V1|L13|M8192_L8|ds0
+[2026-11-13 23:09:59] train gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L8__halfnormal__rho0.4300__DpmV1L13M8192ds0 (18 min into the job)
+[sparse w16384 s0] step 50/6957 fvu 0.7471 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.4297 dead 0.000 25s
+[sparse w16384 s0] step 1000/6957 fvu 0.3346 dead 0.000 50s
+[2026-11-13 23:11:35] scored gemma-2-2b-sig__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.1300__DpmV1L0M8192ds0: live 13305, fvu 0.120, L0 40.0, primary window (10, 150) gamma full 0.555 fixed-n 0.545 [97s]
+[sparse w16384 s0] step 1500/6957 fvu 0.3305 dead 0.000 75s
+[2026-11-13T23:11:49Z] [watchdog] heartbeat: GPU 98%, idle 0s, 459T free, 150 min to deadline
+[sparse w16384 s0] step 2000/6957 fvu 0.2945 dead 0.000 100s
+[sparse w16384 s0] step 2500/6957 fvu 0.2860 dead 0.000 124s
+[sparse w16384 s0] step 3000/6957 fvu 0.2935 dead 0.000 149s
+[sparse w16384 s0] step 3500/6957 fvu 0.2669 dead 0.000 173s
+[sparse w16384 s0] step 4000/6957 fvu 0.2766 dead 0.000 198s
+[sparse w16384 s0] step 4500/6957 fvu 0.2817 dead 0.000 223s
+[sparse w16384 s0] step 5000/6957 fvu 0.2784 dead 0.000 250s
+[sparse w16384 s0] step 5500/6957 fvu 0.2951 dead 0.000 282s
+[sparse w16384 s0] step 6000/6957 fvu 0.2680 dead 0.000 316s
+[sparse w16384 s0] step 6500/6957 fvu 0.2677 dead 0.001 349s
+[sparse w16384 s0] step 6957/6957 fvu 0.2847 dead 0.003 380s
+saved /workspace/SAE/cache/saes_pm/gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L8__halfnormal__rho0.4300__DpmV1L13M8192ds0 fvu_eval 0.2715214850701161
+[2026-11-13 23:16:49] PM|V1|L13|M8192_L8|ds0: rho 0.43, FVU 0.272, target 0.288, matched
+[2026-11-13 23:17:00] gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L8__halfnormal__rho0.4300__DpmV1L13M8192ds0: null SAE top-1% power share 0.555 (real 0.346), ESS fraction 0.0094 (real 0.0121)
+[2026-11-13 23:17:00] setting PM|V1|L13|M8192_L32|ds0
+[2026-11-13 23:17:00] train gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L32__halfnormal__rho0.4200__DpmV1L13M8192ds0 (25 min into the job)
+[sparse w16384 s0] step 50/6957 fvu 0.7271 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.4694 dead 0.000 28s
+[sparse w16384 s0] step 1000/6957 fvu 0.3986 dead 0.000 57s
+[2026-11-13 23:18:51] scored gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L8__halfnormal__rho0.4300__DpmV1L13M8192ds0: live 14222, fvu 0.272, L0 40.0, primary window (10, 150) gamma full 0.349 fixed-n 0.346 [111s]
+[sparse w16384 s0] step 1500/6957 fvu 0.3655 dead 0.000 85s
+[sparse w16384 s0] step 2000/6957 fvu 0.3474 dead 0.000 113s
+[sparse w16384 s0] step 2500/6957 fvu 0.3310 dead 0.000 141s
+[sparse w16384 s0] step 3000/6957 fvu 0.3160 dead 0.000 168s
+[sparse w16384 s0] step 3500/6957 fvu 0.3017 dead 0.000 196s
+[sparse w16384 s0] step 4000/6957 fvu 0.3087 dead 0.000 224s
+[sparse w16384 s0] step 4500/6957 fvu 0.2966 dead 0.000 252s
+[sparse w16384 s0] step 5000/6957 fvu 0.3027 dead 0.000 280s
+[sparse w16384 s0] step 5500/6957 fvu 0.3038 dead 0.000 309s
+[sparse w16384 s0] step 6000/6957 fvu 0.2912 dead 0.000 341s
+[sparse w16384 s0] step 6500/6957 fvu 0.2934 dead 0.000 376s
+[sparse w16384 s0] step 6957/6957 fvu 0.2960 dead 0.001 410s
+saved /workspace/SAE/cache/saes_pm/gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L32__halfnormal__rho0.4200__DpmV1L13M8192ds0 fvu_eval 0.2928638628462916
+[2026-11-13 23:24:30] PM|V1|L13|M8192_L32|ds0: rho 0.42, FVU 0.293, target 0.288, matched
+[2026-11-13 23:24:48] gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L32__halfnormal__rho0.4200__DpmV1L13M8192ds0: null SAE top-1% power share 0.521 (real 0.346), ESS fraction 0.0091 (real 0.0121)
+[2026-11-13 23:24:48] setting PM|V1|L13|M8192_L16|ds1
+[2026-11-13 23:24:48] train gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds1__M8192__L16__halfnormal__rho0.4300__DpmV1L13M8192ds1 (33 min into the job)
+[sparse w16384 s0] step 50/6957 fvu 0.7029 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.4556 dead 0.000 26s
+[sparse w16384 s0] step 1000/6957 fvu 0.3645 dead 0.000 52s
+[sparse w16384 s0] step 1500/6957 fvu 0.3312 dead 0.000 78s
+[sparse w16384 s0] step 2000/6957 fvu 0.3217 dead 0.000 104s
+[2026-11-13 23:27:07] scored gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L32__halfnormal__rho0.4200__DpmV1L13M8192ds0: live 14990, fvu 0.293, L0 40.0, primary window (10, 150) gamma full 0.511 fixed-n 0.504 [139s]
+[sparse w16384 s0] step 2500/6957 fvu 0.3027 dead 0.000 129s
+[sparse w16384 s0] step 3000/6957 fvu 0.2858 dead 0.000 155s
+[sparse w16384 s0] step 3500/6957 fvu 0.2972 dead 0.000 181s
+[sparse w16384 s0] step 4000/6957 fvu 0.2958 dead 0.000 206s
+[sparse w16384 s0] step 4500/6957 fvu 0.3008 dead 0.000 232s
+[sparse w16384 s0] step 5000/6957 fvu 0.2826 dead 0.000 259s
+[sparse w16384 s0] step 5500/6957 fvu 0.3006 dead 0.000 289s
+[sparse w16384 s0] step 6000/6957 fvu 0.2805 dead 0.000 321s
+[sparse w16384 s0] step 6500/6957 fvu 0.2704 dead 0.000 356s
+[sparse w16384 s0] step 6957/6957 fvu 0.2756 dead 0.002 388s
+saved /workspace/SAE/cache/saes_pm/gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds1__M8192__L16__halfnormal__rho0.4300__DpmV1L13M8192ds1 fvu_eval 0.2813975034592379
+[2026-11-13 23:31:56] PM|V1|L13|M8192_L16|ds1: rho 0.43, FVU 0.281, target 0.288, matched
+[2026-11-13 23:32:07] gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds1__M8192__L16__halfnormal__rho0.4300__DpmV1L13M8192ds1: null SAE top-1% power share 0.529 (real 0.346), ESS fraction 0.0101 (real 0.0121)
+[2026-11-13 23:33:53] scored gemma-2-2b-sig__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds1__M8192__L16__halfnormal__rho0.4300__DpmV1L13M8192ds1: live 14499, fvu 0.281, L0 40.0, primary window (10, 150) gamma full 0.424 fixed-n 0.420 [106s]
+[2026-11-13 23:33:55] results /workspace/SAE/results/r2: 5.36 GB
+i_gauss_decline_as_steady_as_real      contradicts  {'(3, 50)': 'contradicts', '(10, 150)': 'contradicts', '(30, 450)': 'supports', '(100, 1000)': 'contradicts'}
+ii_layer_profile_real_minus_gauss      supports  {'(3, 50)': 'supports', '(10, 150)': 'supports', '(30, 450)': 'supports', '(100, 1000)': 'supports'}
+iii_whitening_isotropic                contradicts  {'(3, 50)': 'contradicts', '(10, 150)': 'contradicts', '(30, 450)': 'contradicts', '(100, 1000)': 'contradicts'}
+iv_G_retains_D_decline                 insufficient  
+v_sparse_null_separates_like_gaussian  supports  
+v_sparse2_null_separates_like_gaussian contradicts  
+models {"M1_gpt2": {"R1_bulk_flatter": "partial", "R2_top_profile": "replicates", "R3_k_decline": null, "fvu": null}, "M2_gemma9b": {"n_saes": 96, "layers": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41], "a_l0_per_doubling": "agrees", "b_midstack_steeper": "supports", "c_gamma_below_1": "holds"}}
+robust {"G_generator": "partial", "M_gpt2_codable_null": {"bulk": "partial", "primary": "replicates", "top": "fails"}, "P_feature_power": "insufficient"}
+pmatch {"headline": "PARTLY EXPLAINS", "generator_settings": "differs", "replicate_max_abs_bulk_diff": 0.003494632225502725}
+410 rows -> /workspace/SAE/results/r2/summary.json
+[2026-11-13 23:33:59] JOB DONE pmatch (42 min)
+chain: exit codes [0, 0, 0]
+[2026-11-13T23:34:01Z] [launcher] wrote results/r2/r2_job_chain.DONE: exit_code=0 reason=job exited 0
+[2026-11-13T23:34:01Z] [launcher] grace period 20 min before stopping the pod: pull results now (gpu/pull_r2.sh)

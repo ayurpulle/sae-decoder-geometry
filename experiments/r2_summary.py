@@ -1,6 +1,8 @@
-"""Pre-registered readings (i)-(iv) of the round-2 GPU jobs, from results/r2/runs_real.jsonl and runs_resynth.jsonl.
-The rules are fixed in the docstrings of r2_job_real.py ((i)-(iii)) and r2_job_resynth.py ((iv)); this file only
-implements them. Works on partial results: every reading lists the runs it used and is "insufficient" when a fit
+"""Pre-registered readings (i)-(v) of the round-2 GPU jobs, from results/r2/runs_real.jsonl, runs_resynth.jsonl and
+runs_sparse2.jsonl. The rules are fixed in the docstrings of r2_job_real.py ((i)-(iii), (v)), r2_job_resynth.py ((iv))
+and r2_job_sparse2.py ((v) with the codable sparse null in place of the first one); the "robust" section implements
+the rules of r2_job_robust.py (runs_robust.jsonl) and the "pmatch" section those of r2_job_pmatch.py (runs_pmatch.jsonl);
+this file only implements them. Works on partial results: every reading lists the runs it used and is "insufficient" when a fit
 cannot be made. Writes <dir>/summary.json.
 Usage: python experiments/r2_summary.py [--dir results/r2]
 """
@@ -191,10 +193,10 @@ def _D(ii, w):
     return {int(L): v["D"] for L, v in t.items()}
 
 
-def reading_v(rows):
-    """Statement (v), rules in r2_job_real.py's docstring (Q5)."""
-    ig, isp = reading_i(rows, "gaussian"), reading_i(rows, "sparse")
-    iig, iisp = reading_ii(rows, "gaussian"), reading_ii(rows, "sparse")
+def reading_v(rows, null="sparse"):
+    """Statement (v), rules in r2_job_real.py's docstring (Q5); null="sparse2" applies them to the codable null."""
+    ig, isp = reading_i(rows, "gaussian"), reading_i(rows, null)
+    iig, iisp = reading_ii(rows, "gaussian"), reading_ii(rows, null)
     out = {"i_sparse": isp, "ii_sparse": iisp, "windows": {}}
     prof, s3 = {}, {}
     if "windows" in iig and "windows" in iisp and iig["windows"] and iisp["windows"]:
@@ -238,6 +240,25 @@ def reading_v(rows):
     out["verdict"] = ("moot" if not live else "contradicts" if "contradicts" in live
                       else "supports" if all(g == "supports" for g in live) else "mixed")
     out["gaussian_verdicts"] = {"i": ig.get("verdict"), "ii": iig.get("verdict")}
+    return out
+
+
+def sparse2_rows(rows):
+    """Final sparse2 runs (not calibration runs) relabelled into job 1's namespace (job "real", step "Q5") so that
+    readings (i), (ii) and (v) compare them with job 1's real and Gaussian rows; job 1's own rows are untouched."""
+    return [dict(r, job="real", step="Q5") for r in rows if r["job"] == "sparse2" and r.get("step") in ("S2a", "S2b")]
+
+
+def reading_v_sparse2(rows):
+    """Statement (v) with the codable sparse null (r2_job_sparse2.py); same rules and thresholds as reading_v."""
+    s2 = sparse2_rows(rows)
+    if not s2:
+        return {"verdict": "insufficient", "n_sparse2_rows": 0}
+    out = reading_v(rows + s2, "sparse2")
+    out["n_sparse2_rows"] = len(s2)
+    out["fvu_k40"] = side_by_side(rows + s2)
+    out["calibration"] = [{k: r.get(k) for k in ("layer", "fvu_eval", "rho", "n_train_tokens", "run")}
+                          for r in rows if r["job"] == "sparse2" and r.get("step") == "CAL"]
     return out
 
 
@@ -500,19 +521,235 @@ def reading_iv(rows):
     return out
 
 
+# robust (job 5) ----------------------------------------------------------------------------------------------------
+G_BULK_GAP, G_NEAR, M_TRACK = 0.15, 0.05, 0.06
+M_TOP, M_PRIMARY, M_BULK = "(1, 17)", "(3, 50)", ["(10, 150)", "(33, 333)"]
+
+
+def _real_mean(rows, job, k, steps=None):
+    """{layer: {window: mean gamma_fixed}} and {layer: mean FVU} of the real SAEs of a job at one k."""
+    g, f = defaultdict(lambda: defaultdict(list)), defaultdict(list)
+    for r in rows:
+        if (r["job"] == job and r.get("cond") == "real" and r.get("k") == k and not r.get("whitened")
+                and (steps is None or r.get("step") in steps)):
+            for w, v in r["gamma_fixed"].items():
+                g[r["layer"]][w].append(v)
+            f[r["layer"]].append(r["fvu_eval"])
+    return ({L: {w: float(np.mean(v)) for w, v in ws.items()} for L, ws in g.items()},
+            {L: float(np.mean(v)) for L, v in f.items()})
+
+
+def robust_g(rows, rb):
+    """Step G of r2_job_robust.py: generator sensitivity of the bulk result."""
+    real, real_fvu = _real_mean(rows, "real", 40)
+    out, gaps = {"settings": {}}, []
+    base = [r for r in rows if r["job"] == "sparse2" and r.get("k") == 40 and r.get("seed") == 0
+            and r.get("step") in ("S2a", "S2b")]
+    for r in sorted(base, key=lambda r: r["layer"]):
+        out["settings"][f"G|L{r['layer']}|M8192_L16 (sparse2, reference)"] = {
+            "gamma_fixed": r["gamma_fixed"], "fvu": r["fvu_eval"], "rho": r.get("rho"), "in_rule": False}
+    for r in sorted((r for r in rb if r.get("step") == "G"), key=lambda r: r["setting_key"]):
+        L = r["layer"]
+        if L not in real:
+            continue
+        d = {w: r["gamma_fixed"][w] - real[L][w] for w in WINDOWS}
+        out["settings"][r["setting_key"]] = {
+            "matched": r["matched"], "codable": r.get("codable"), "rho": r["rho"], "fvu": r["fvu_eval"],
+            "fvu_target": r["fvu_target"], "n_live": r["n_live"], "gamma_fixed": r["gamma_fixed"],
+            "real_gamma_fixed": real[L], "null_minus_real": d, "in_rule": bool(r["matched"])}
+        if r["matched"]:
+            gaps.append(min(d[w] for w in BULK))
+    out["unmatched"] = sorted(k for k, v in out["settings"].items() if v["in_rule"] is False and "reference" not in k)
+    out["n_matched"] = len(gaps)
+    out["min_bulk_gap"] = min(gaps) if gaps else None
+    out["verdict"] = ("insufficient" if not gaps else "generator-dependent" if min(gaps) <= G_NEAR
+                      else "robust to the generator" if min(gaps) >= G_BULK_GAP else "partial")
+    return out
+
+
+def robust_m(rows, rb):
+    """Step M of r2_job_robust.py: the codable null on GPT-2 small, three statements against Gemma's outcome."""
+    real, _ = _real_mean(rows, "models", 32, steps=("M1",))
+    null = {r["layer"]: r for r in rb if r.get("step") == "M"}
+    Ls = sorted(L for L, r in null.items() if r["matched"] and L in real)
+    if not Ls:
+        return {"verdict": "insufficient", "n_layers": 0}
+    d = {L: {w: null[L]["gamma_fixed"][w] - real[L][w] for w in real[L]} for L in Ls}
+    out = {"layers_matched": Ls, "unmatched": sorted(L for L, r in null.items() if not r["matched"]),
+           "fvu": {L: {"null": null[L]["fvu_eval"], "target": null[L]["fvu_target"], "rho": null[L]["rho"]}
+                   for L in sorted(null)},
+           "null_minus_real": d, "windows_note": "GPT-2 windows (1,17), (3,50) primary, (10,150), (33,333)"}
+    frac = {w: sum(d[L][w] >= G_BULK_GAP for L in Ls) / len(Ls) for w in M_BULK}
+    out["bulk"] = {"flatter_by_0.15_fraction": frac, "gemma": "8/8 in both bulk windows",
+                   "verdict": ("replicates" if all(f >= 0.9 for f in frac.values())
+                               else "fails" if any(f < 0.5 for f in frac.values()) else "partial")}
+    track = [L for L in Ls if abs(d[L][M_PRIMARY]) <= M_TRACK]
+    inner, ends = [L for L in Ls if L in G_INTERIOR], [L for L in Ls if L in G_ENDS]
+    ti, te = sum(L in track for L in inner), sum(L in track for L in ends)
+    out["primary"] = {"tracking_layers": track, "interior_tracking": f"{ti}/{len(inner)}",
+                      "end_tracking": f"{te}/{len(ends)}", "gemma": "tracks at 6, 9, 13, 17; not at 0, 3, 21, 24",
+                      "verdict": ("insufficient" if not inner else
+                                  "replicates" if ti >= 2 / 3 * len(inner) and te <= 1 else
+                                  "fails" if ti < len(inner) / 3 or te >= 3 else "partial")}
+    steeper = sum(d[L][M_TOP] < 0 for L in Ls)  # real gamma above the null's: real steeper
+    flatter = sum(d[L][M_TOP] > 0 for L in Ls)
+    out["top"] = {"real_steeper_layers": steeper, "real_flatter_layers": flatter, "n": len(Ls),
+                  "gemma": "real steeper at 7/8 layers",
+                  "verdict": ("replicates" if steeper >= 0.75 * len(Ls) else "fails" if flatter >= 0.5 * len(Ls)
+                              else "partial")}
+    out["verdict"] = {k: out[k]["verdict"] for k in ("bulk", "primary", "top")}
+    return out
+
+
+def robust_p(rows, rb):
+    """Step P of r2_job_robust.py: feature power and the head/body rule, real against the equal-power null."""
+    ref = {(r["job"], r["run"]): r for r in rows if r["job"] in ("real", "sparse2")}
+    out = {"layers": {}}
+    pres = {"real": {}, "sparse2": {}}
+    for r in sorted((r for r in rb if r.get("step") == "P"), key=lambda r: (r["layer"], r["cond"])):
+        o = ref.get(("real" if r["cond"] == "real" else "sparse2", r["run"]))
+        rep = None
+        if o is not None:
+            rep = {"fvu_new": r["fvu_eval"], "fvu_ref": o["fvu_eval"], "n_live_new": r["n_live_eval"],
+                   "n_live_ref": o["n_live"], "max_abs_gamma_fixed_diff": max(
+                       abs(r["reproduction"]["gamma_fixed_eval_live"][w] - o["gamma_fixed"][w]) for w in WINDOWS)}
+        pres[r["cond"]][r["layer"]] = r["head_body"]["present"]
+        out["layers"][f"L{r['layer']}_{r['cond']}"] = {
+            "head_body": r["head_body"], "power_weighted_gamma": r["power_weighted_gamma"],
+            "unweighted_gamma_fixed": r["unweighted"]["gamma_fixed"], "share_top10": r["power_share_top10"],
+            "share_top1pct": r["power_share_top1pct"], "ess_frac_live": r["power_ess_frac_live"],
+            "rq_median_log10": r["rq_median_log10"], "spearman_pi_rq": r["spearman_pi_rq"],
+            "sum_pi_over_total_var": r["sum_pi_over_total_var"], "fvu": r["fvu_eval"], "reproduction": rep}
+    nr, nn = len(pres["real"]), len(pres["sparse2"])
+    fr = sum(pres["real"].values()) / nr if nr else float("nan")
+    fn = sum(pres["sparse2"].values()) / nn if nn else float("nan")
+    out["present_real"] = f"{sum(pres['real'].values())}/{nr}"
+    out["present_null"] = f"{sum(pres['sparse2'].values())}/{nn}"
+    out["verdict"] = ("insufficient" if nr < 4 else "not specific to real" if nn and fn >= 0.5
+                      else "supported" if fr >= 0.75 and (not nn or fn <= 0.25) else "absent" if fr <= 0.25
+                      else "partial") + ("" if nn >= 4 or nr < 4 else " (fewer than 4 null layers)")
+    return out
+
+
+def reading_robust(rows):
+    """The three pre-registered verdicts of r2_job_robust.py (rules in its docstring)."""
+    rb = [r for r in rows if r["job"] == "robust"]
+    if not rb:
+        return {"verdict": "insufficient", "n_rows": 0}
+    out = {"n_rows": len(rb)}
+    for name, fn in (("G_generator", robust_g), ("M_gpt2_codable_null", robust_m), ("P_feature_power", robust_p)):
+        try:
+            out[name] = fn(rows, rb)
+        except Exception as e:  # partial results must not hide the other two
+            out[name] = {"verdict": "error", "error": f"{type(e).__name__}: {e}"}
+    out["verdict"] = {k: out[k].get("verdict") for k in ("G_generator", "M_gpt2_codable_null", "P_feature_power")}
+    return out
+
+
+# pmatch (job 6) ----------------------------------------------------------------------------------------------------
+PM_MARGIN, PM_FRAC, PM_LAYERS = 0.10, 0.30, (13, 0)
+
+
+def _pm_window(N, R, Z):
+    """One bulk window: closed (|N - R| <= margin), overshoot (N < R - margin), partial (f >= 0.30) or open."""
+    f = (Z - N) / (Z - R)
+    cls = ("closed" if abs(N - R) <= PM_MARGIN else "overshoot" if N < R - PM_MARGIN
+           else "partial" if f >= PM_FRAC else "open")
+    return {"null": N, "real": R, "v0": Z, "closed_fraction": f, "class": cls}
+
+
+def _pm_layer_verdict(r, R, Z):
+    w = {b: _pm_window(r["gamma_fixed"][b], R[b], Z[b]) for b in BULK}
+    cls = [w[b]["class"] for b in BULK]
+    v = "EXPLAINS" if all(c == "closed" for c in cls) else "DOES NOT EXPLAIN" if "open" in cls else "PARTLY EXPLAINS"
+    if not r["matched"]:
+        v = "insufficient (FVU not matched)"
+    pc = r.get("power_check") or {}
+    dic = r.get("dictionary") or {}
+    a1, a0 = dic.get("atom_cloud_gamma_fixed"), dic.get("v0_atom_cloud_gamma_fixed")
+    pred = {b: a1[b] + Z[b] - a0[b] for b in WINDOWS} if a1 and a0 else None  # registered additive prediction
+    return {"verdict": v, "overshoots": all(c == "overshoot" for c in cls), "windows": w, "rho": r["rho"],
+            "additive_prediction": pred, "additive_prediction_error": {b: r["gamma_fixed"][b] - pred[b] for b in BULK}
+            if pred else None,
+            "fvu": r["fvu_eval"], "fvu_target": r["fvu_target"], "matched": r["matched"],
+            "calibration_complete": r.get("calibration_complete"), "n_live": r["n_live"],
+            "gamma_fixed_all_windows": r["gamma_fixed"], "real_all_windows": R, "v0_all_windows": Z,
+            "atom_cloud_gamma_fixed": dic.get("atom_cloud_gamma_fixed"), "dictionary_power": dic.get("power"),
+            "dictionary_converged": dic.get("converged"),
+            "power_moved_by_projection": dic.get("power_share_moved_by_projection"),
+            "manipulation_check": {k: pc.get(k) for k in ("null", "real", "top1pct_share_diff", "ess_ratio",
+                                                          "rq_median_log10", "spearman_pi_rq")} if pc else None}
+
+
+def reading_pmatch(rows):
+    """Rules of r2_job_pmatch.py: the power-matched null (V1) against real (mean of job 1's three k = 40 SAEs) and the
+    equal-power null V0 at the same (layer, M, L): sparse2 S2a/S2b seed 0 for M 8192 L 16, robust step G otherwise."""
+    pm = [r for r in rows if r["job"] == "pmatch"]
+    if not pm:
+        return {"verdict": "insufficient", "n_rows": 0}
+    real, _ = _real_mean(rows, "real", 40)
+    v0 = {(r["layer"], 16): r["gamma_fixed"] for r in rows if r["job"] == "sparse2" and r.get("k") == 40
+          and r.get("seed") == 0 and r.get("step") in ("S2a", "S2b")}
+    for r in rows:
+        if r["job"] == "robust" and r.get("step") == "G" and r.get("matched") and (r.get("setting") or {}).get("M") == 8192 \
+                and not (r.get("setting") or {}).get("overflow"):
+            v0.setdefault((r["layer"], r["setting"]["L"]), r["gamma_fixed"])
+    out = {"n_rows": len(pm), "margin": PM_MARGIN, "min_closed_fraction": PM_FRAC, "settings": {}}
+    acc = {r["setting_key"]: r for r in pm if r.get("step") == "PM"}
+    for key in sorted({r["setting_key"] for r in pm}):
+        r = acc.get(key)
+        tried = sorted((x["rho"], x["fvu_eval"]) for x in pm if x["setting_key"] == key)
+        if r is None:
+            out["settings"][key] = {"verdict": "insufficient", "tried": tried}
+            continue
+        L, Ls = r["layer"], r["setting"]["L"]
+        if L not in real or (L, Ls) not in v0:
+            out["settings"][key] = {"verdict": "insufficient (no real or V0 reference)", "tried": tried}
+            continue
+        out["settings"][key] = _pm_layer_verdict(r, real[L], v0[(L, Ls)]) | {"tried": tried, "setting": r["setting"]}
+
+    def find(layer, L, ds):
+        for k, v in out["settings"].items():
+            if k.startswith(f"PM|V1|L{layer}|") and k.endswith(f"_L{L}|ds{ds}"):
+                return k, v
+        return None, None
+    core = {Lyr: find(Lyr, 16, 0)[1] for Lyr in PM_LAYERS}
+    vs = [c["verdict"] if c else "insufficient" for c in core.values()]
+    head = ("insufficient" if any(v.startswith("insufficient") for v in vs) else vs[0] if vs[0] == vs[1]
+            else "PARTLY EXPLAINS")
+    out["headline"] = {"question": "does unequal feature power (V1) explain the bulk gap?", "verdict": head,
+                       "per_layer": dict(zip([f"L{x}" for x in PM_LAYERS], vs))}
+    gen = [find(13, Ls, 0)[1] for Ls in (8, 32)]
+    gv = [g["verdict"] if g else "insufficient" for g in gen]
+    out["generator_settings"] = {"L8": gv[0], "L32": gv[1], "L16_layer13": vs[0],
+                                 "verdict": ("insufficient" if any(v.startswith("insufficient") for v in gv + vs[:1])
+                                             else "same at other (M, L)" if all(v == vs[0] for v in gv) else "differs")}
+    k0, s0 = find(13, 16, 0)
+    k1, s1 = find(13, 16, 1)
+    if s0 and s1 and "windows" in s0 and "windows" in s1:
+        dmax = max(abs(s1["windows"][b]["null"] - s0["windows"][b]["null"]) for b in BULK)
+        out["replicate"] = {"max_abs_bulk_diff": dmax, "flag_margin_too_narrow": dmax > 0.05}
+    else:
+        out["replicate"] = {"verdict": "insufficient"}
+    out["verdict"] = {"headline": head, "generator_settings": out["generator_settings"]["verdict"],
+                      "replicate_max_abs_bulk_diff": out["replicate"].get("max_abs_bulk_diff")}
+    return out
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dir", default=str(ROOT / "results" / "r2"))
     d = Path(ap.parse_args().dir)
     rows = load(d)
-    out = {"n_rows": len(rows), "n_rows_by_job": {j: sum(r["job"] == j for r in rows) for j in ("real", "resynth", "models")},
+    out = {"n_rows": len(rows), "n_rows_by_job": {j: sum(r["job"] == j for r in rows) for j in ("real", "resynth", "models", "sparse2", "robust",
+                                                                             "pmatch")},
            "git_hashes": sorted({str(r.get("git_hash")) for r in rows}),
            "code_sha256": sorted({r.get("code_sha256", "")[:12] for r in rows}),
            "fixed_n_short_runs": sorted(r["run"] for r in rows if r.get("fixed_n_short")),
            "window_rule": "primary ranks 11-150 plus at least two of the other three windows"}
     for name, fn in (("i_gauss_decline_as_steady_as_real", reading_i), ("ii_layer_profile_real_minus_gauss", reading_ii),
                      ("iii_whitening_isotropic", reading_iii), ("iv_G_retains_D_decline", reading_iv),
-                     ("v_sparse_null_separates_like_gaussian", reading_v)):
+                     ("v_sparse_null_separates_like_gaussian", reading_v),
+                     ("v_sparse2_null_separates_like_gaussian", reading_v_sparse2)):
         try:
             out[name] = fn(rows)
         except Exception as e:  # a partial pull must never stop the other readings
@@ -524,6 +761,16 @@ def main():
         out["models"] = {"error": f"{type(e).__name__}: {e}"}
     print("models", json.dumps({k: {kk: (vv.get("verdict") if isinstance(vv, dict) else vv) for kk, vv in v.items()}
                                 for k, v in out["models"].items() if isinstance(v, dict)}, default=str)[:600])
+    try:
+        out["robust"] = reading_robust(rows)
+    except Exception as e:
+        out["robust"] = {"verdict": "error", "error": f"{type(e).__name__}: {e}"}
+    print("robust", json.dumps(out["robust"].get("verdict"), default=str))
+    try:
+        out["pmatch"] = reading_pmatch(rows)
+    except Exception as e:
+        out["pmatch"] = {"verdict": "error", "error": f"{type(e).__name__}: {e}"}
+    print("pmatch", json.dumps(out["pmatch"].get("verdict"), default=str))
     for name, fn in (("fvu_real_gauss_sparse", side_by_side), ("sparse_ground_truth_dictionary", ground_truth)):
         try:
             out[name] = fn(rows)

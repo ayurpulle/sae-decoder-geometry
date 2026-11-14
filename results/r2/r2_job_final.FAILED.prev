@@ -1,0 +1,6 @@
+job=r2_job_final
+status=FAILED
+exit_code=125
+reason=idle: GPU idle 10800s while job pid 386 alive
+time=2026-11-12T20:43:30Z
+pod=ygvhhi1wmiebav

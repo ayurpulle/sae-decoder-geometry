@@ -1070,3 +1070,150 @@ No new experiments. All numbers were recomputed from finished result files (inli
   null -0.025 to -0.115, real -0.095 to -0.103. Null neighbouring-k changes 0.088/0.154 against seed sd <= 0.006.
 - Massive activations (`gpu/analysis.json` C): max |Δγ| 0.0052 (0.1% drop, ranks 4-50); Sec 6 now says "top 0.1% or 1%", "at most 0.005".
 Build: latexmk exit 0, no undefined references, 13 pages, main text ends on p. 7.
+
+## 2026-11-12 — Round-2 GPU results written into thesisA.tex
+
+Sources: `results/r2/runs_real.jsonl` (140 runs), `results/r2/runs_models.jsonl` (94 runs; GPT-2 rows only, Gemma-2-9b rows are
+partial and not used), deduplicated by run name, last row kept (no duplicates were present). Every number in the paper from these runs
+is recomputed by `paper/figures/make_fig_null_r2.py`, which writes `results/r2/paper_numbers_r2.json`, Figures 8-10 and two tables,
+and asserts that its verdicts equal `results/r2/summary.json` (they do, for (i), (ii), (iii) and GPT-2's R3, and the (i) slopes to 1e-9).
+Scoring is the pre-registered one: 8,192 random live latents, mean of 4 draws.
+- 8 layers, k=40, 3 seeds (ii): supports in all four windows. D = null raw slope - real. Top windows: argmax at L13 (4-50: D=+0.182;
+  11-150: D=-0.049), margin over every end layer >= 0.128 / 0.085, >19 se. Null steeper than real in 11-150 at all 8 layers; real
+  steeper in 4-50 at layers 6-24. Bulk: real flatter at every layer, null/real 2.05-3.74 (31-450) and 3.15-4.36 (101-1000).
+  FVU real 0.114-0.288, Gaussian 0.519-0.603. Post hoc: across layers the null's top-window slope moves 0.03 / 0.09 against 0.24 / 0.23
+  for real and 0.27 for Sigma; in the bulk the null tracks Sigma (r 0.99, 1.00). Diag share in Sigma's basis: real 0.77-0.84, null 0.94-0.98.
+  The new runs' all-live slopes at L3 and L13 match the round-1 runs (`results/gpu/runs.json` saes_gpu_p2) within 0.003.
+- k sweep at L13 (k 8-128, 3 seeds) (i): contradicted (4-50, 11-150, 101-1000 contradict; 31-450 supports, where the null declines
+  4.3x faster than real). 11-150 over k=16-128: real -0.103/doubling, null -0.042 (ratio 0.41, min leave-one-out 0.08). Null step
+  k=8->16 -0.36 (real -0.09). Real minus null gamma in 11-150 is within 0.05 at every k from 24 to 128, +0.18 at k=16.
+  Post hoc matched-FVU pairs (real k8 / null k64, real k16 / null k128): null flatter in the top windows, steeper in 101-1000,
+  mixed in 31-450.
+- Whitened inputs at L12 (iii): contradicted in all four windows. Whitened-space decoder slopes are within 0.04 of an isotropic cloud's,
+  but mapped back their gamma is 0.11-0.45 below mapped isotropic directions (gap grows with k). Whitened SAEs have higher FVU.
+- GPT-2 small (k=32, 12 layers, 1 seed; L6 k sweep 2 seeds): bulk flatter than the null at all 12 layers in point estimates (R1 partial
+  by rule, no se with one seed); top-window D range 0.087 / 0.057 (R2 replicates) but the maximum is at layers 10-11, not mid-stack;
+  R3 fails: the null's gamma declines as steadily as real's in all four windows (ratio 1.1-10). This goes against reading the steady
+  real decline at Gemma L13 as a general real-data signature; the paper now says so.
+- First sparse null (65,536 sources, 64 active): FVU equal to the Gaussian null's within 0.001 at all 15 layer/k cells, gamma within
+  0.02 in ranks 4-450. Not sparsely codable, so not used; one sentence in the paper. Its replacement is running.
+- Sigma convergence: 1M-token vs 10M-token Sigma slopes at 9 layers differ by at most 0.035 (4-50), 0.029 (11-150), 0.020 (31-450),
+  0.046 (101-1000); the 1M bulk is the steeper one at layers 0, 21, 24.
+- Paper: Fig 2 is now the 8-layer figure, Fig 3 the 3-seed k sweep; the 3-layer table, FVU table and 65k table moved to the appendix
+  with the 8-layer table; new appendix sections for whitening and GPT-2; Pythia and GPT-2 in a new "Other models" subsection.
+  Abstract numbers updated (8 layers, ratios, FVU); title, thesis and first two abstract sentences unchanged. Remaining markers:
+  sparse2 and M2. L0 of Li et al.'s SAE now given as 75.9 measured on 1M tokens (the 75.8 was from 8,192 tokens).
+Build: both latexmk runs exit 0 with no overfull boxes or undefined references; ICML build 17 pages, main text ends on p. 8 (left column).
+
+## 2026-11-13 — Codable sparse null and Gemma-2-9b written into thesisA.tex
+
+Pod runs, 12-13 Nov. (1) Final job (`experiments/r2_job_final.py`): codable sparse null at layers 0-24 and the Gemma-2-9b spectra, on an
+RTX PRO 4500, $7.17. The idle guard stopped the pod while the 9b scoring was CPU-bound, before the job finished. (2) Completion run,
+including the k=128 sparse-null SAEs, on an RTX PRO 6000 (96 GB), about 1.2 h at $2.69/h. Results were recovered from the network
+volume with a CPU pod. Rows: `results/r2/runs_sparse2.jsonl` (54: 16 calibration, 16 layer-13 k sweep, 14 other layers at k=40,
+8 ground-truth dictionaries), `results/r2/sparse2_calibration.json`, and 96 step-M2 rows in `results/r2/runs_models.jsonl`.
+`paper/figures/make_fig_null_r2.py` now recomputes the sparse-null and 9b readings from the rows and asserts they equal
+`results/r2/summary.json` (they do: verdicts, every f, and the 9b (a) means and (b) contrasts to 1e-9).
+- Calibration: rho 0.13 (L0) to 0.43 (L13); every layer matched at its third run. At rho=0 the k=40 SAE's FVU is 0.013-0.016, so the
+  purely sparse version is far too easy. Final FVU within 0.0162 of real at all 8 layers. Ground-truth dictionary gamma 0.986-1.000.
+- Pre-registered (v) with the codable null: contradicted. Profile group mixed: top windows keep 0.85 (4-50, supports) and 0.72
+  (11-150, partial) of the Gaussian profile amplitude; bulk keeps 0.44 and 0.18 (contradicts). Decline-with-k group contradicts:
+  the sparse null's gamma falls as steadily as real's over k=16-128 in 4-50, 11-150 and 31-450 (0.89x, 1.59x, 1.62x real's rate)
+  and is flat in 101-1000. (ii) rerun against the sparse null still supports in all four windows (argmax L13 in 4-50, L17 in 11-150).
+- What it looks like at k=40: sparse-null SAEs sit near gamma=1 in the bulk (0.88-0.95, 1.03-1.16), real is flatter at every layer
+  (0.38-0.86) but the gap is much smaller than the Gaussian one. In 11-150 the sparse null is steeper than real at all 8 layers by
+  > 2 se, but only by 0.014-0.058 in gamma at layers 6-17 (0.11-0.37 at L0, L3, L21, L24). In 4-50 real is steeper at layers 3-24.
+  At L13 real minus sparse gamma in 11-150 is within 0.04 for k >= 32. Against the paper: the primary window does not really separate
+  real from sparse-plus-Sigma mid-stack, and the k decline is reproduced by a sparse null with random atoms.
+- Gemma-2-9b (Gemma Scope 16k, 96 SAEs, 42 layers, no null): (a) L0 law agrees (primary 0.089/doubling, interval 0.045-0.136;
+  101-1000 image partial, 0.077 vs upper bound 0.073); (b) mid-stack steeper supports (top contrasts 0.062-0.111); (c) gamma < 1 holds
+  (92 SAEs with L0 >= 20; one of 92 has gamma 1.023 in ranks 157-1556, so that window is partial).
+- Paper: new Sec 5.6 with an 8-layer real / sparse / Gaussian gamma table; sparse null added to Fig 3; 9b paragraph in Other models
+  and one sentence in Setup; Discussion, Limitations and Conclusion now carry the sparse-null result and the pre-registered readings
+  that went against us. The "needs Gemma Scope's own directions" reading of the resynthesis control is withdrawn from the text.
+  Our 65k SAEs are now appendix-only with an undertraining caveat. Detail moved to the appendix to keep the ICML main text within
+  8 pages. Abstract, title and contributions list unchanged except for comments marking what now looks overstated.
+Build: both latexmk runs exit 0, no overfull boxes or undefined references; ICML 18 pages, main text ends at the bottom of p. 8.
+
+## 2026-11-13 - Robustness run (generator settings, GPT-2 codable null, feature power) written into thesisA.tex
+
+Pod run, 13 Nov, 12:44-17:00 UTC, one RTX PRO 4500 (about $3.1): `experiments/r2_job_robust.py`, rules in its docstring, fixed
+before the run. Steps G and M finished. Step P was stopped by the 150 GB volume quota: it was writing eight 46 GB activation caches
+at once for the real-SAE retraining, and only the layer-13 null SAE had finished. Pod terminated. Rows: `results/r2/runs_robust.jsonl`
+(37: 15 G/GCAL, 21 M/MCAL, 1 P), `results/r2/robust_calibration.json`, power arrays in `results/r2/power/`.
+`paper/figures/make_fig_null_r2.py` recomputes G, M and P from the rows (key `robust` in `results/r2/paper_numbers_r2.json`) and
+asserts they equal `results/r2/summary.json`; they do.
+- G, generator settings at Gemma-2-2b layers 13 and 0, k=40, one seed: (M,L) = (4096,16), (32768,16), (8192,8), (8192,32), plus an
+  overflow setting at L13 (second sparse dictionary of 65,536 atoms, 64 active, in place of the dense remainder). L0 M=32768 could not
+  be matched (FVU 0.354 at rho=0, target 0.114), excluded by rule. The other 8 matched (rho 0-0.43, FVU within 0.023). Bulk gap
+  (null minus real gamma) positive at all 8 in both bulk windows, 0.137-0.653; the minimum (M=32768 at L13, 101-1000) is under the 0.15
+  bar, so verdict partial (prediction was robust). The 11-150 agreement at L13 does not hold up: null minus real -0.13 (L=8) to +0.19
+  (L=32); within 0.06 only for M=4096 and the overflow setting. Top window at L13: real steeper at all five settings (0.15-0.30). At L0
+  the null stays steeper than real in 11-150 at every setting (0.28-0.49).
+- M, codable null on GPT-2 small, 12 layers, k=32, one seed: all 12 matched (FVU within 0.019); layers 0-2 calibrated at rho=0 because
+  the rho=0 SAE already had the real FVU; rho 0.09-0.36 elsewhere. Bulk partial: null minus real >= 0.15 at 12/12 layers in 11-150
+  (0.17-0.38) and 9/12 in 34-333 (misses at the rho=0 layers 0-2). Primary (4-50) replicates: tracks within 0.06 at layers 4-10
+  (5/6 interior, 1/4 ends). Top (2-17) fails: real steeper at 6 layers, flatter at 6.
+- P, feature power: only the L13 null SAE (FVU 0.2756 against 0.2755 originally). Verdict insufficient (no real layers). Top-10
+  latents carry 21% of power at median Rayleigh quotient 78x a random direction; latents outside the top 1% median 1.46x (log10 0.163);
+  power-weighted gamma 1.47/1.18/0.93/0.99 against unweighted 0.23/0.50/0.94/1.18, so head/body "not present" (fails part a).
+- Like-for-like Rayleigh check from the stored decoder covariances, k=40, 8 layers, mean quotient tr(C Sigma)/tr(C)/(tr Sigma/d):
+  real SAEs 1.7-3.6, matched-null SAEs 2.5-3.5, Gaussian-null SAEs 2.9-4.7, the null's dictionary 11-29. The old contrast (Gemma
+  Scope medians 0.97-2.2 against 9.5-24.6 for null atoms) set a trained SAE against untrained atoms. Most of the gap is training.
+- Paper: new title ("Sparse Autoencoder Decoder Spectra Compared with a Covariance-Matched Sparse Null"); abstract, introduction,
+  contributions, Discussion, Limitations and Conclusion now say that the 11-150 agreement depends on the calibrated dense share and
+  on the generator, and that the bulk gap holds in sign under every matched setting with a size that depends on the generator.
+  New Table 2 (generator settings) and Figure 4 (GPT-2 codable null); the k-sweep figure, the resynthesis result (iv, mixed), the
+  Sigma-decoder correlation caveats and the cluster caveats moved back into the main text. "Reproduces" claims softened; the k
+  decline is stated as a level match (null rate 1.44x real's over k=24-128, 1.59x over 16-128); 9b gamma<1 stated for the 92 SAEs
+  with L0 >= 20; contribution 5 rewritten around the like-for-like Rayleigh numbers.
+Build: both latexmk runs exit 0, no overfull boxes or undefined references; ICML 22 pages, main text (through the Impact Statement)
+ends on p. 8 with the references starting at the foot of its right column.
+
+## 2026-11-13 - Second and third pod runs: real feature power and the power-matched null
+
+Second pod run, 17:28-18:30 UTC (about $0.8): restarted step P of `experiments/r2_job_robust.py` to retrain the real SAEs with
+encoders. It collected activations for two layers at once and hit the volume quota again; the 45 GB model cache sitting on the
+volume had not been counted in the space estimate. Before it stopped it finished the layer-0 null SAE's power pass (FVU 0.1126
+against 0.1120 originally; weighted bulk gamma 0.98/1.00, unweighted 0.92/1.03; head/body absent). Pod terminated.
+
+Third pod run, 21:47-23:38 UTC, one RTX PRO 4500 (about $1.3). Step P again, one layer at a time: layer 13 collected 22:14-22:28,
+real SAE retrained and measured, then layer 0 (22:38-22:45). Then `experiments/r2_job_pmatch.py`, rules and predictions
+in `notes/prereg_pmatch.md` (hashes of job, generator, trainer and summary code checked again today: all four match). All five
+settings ran in 42 minutes, each matched to the real FVU at its first calibration run. Rows: `results/r2/runs_pmatch.jsonl` (5),
+`results/r2/pmatch/`, `results/r2/power_pmatch/`, `results/r2/pmatch_calibration.json`, and four P rows in `runs_robust.jsonl`.
+- Real SAEs reproduce: FVU 0.2875 vs 0.2870 (L13), 0.1131 vs 0.1132 (L0); gamma_fixed within 0.011.
+- Feature power (P), real: L13 head/body present (weighted bulk gamma 0.95/1.18 vs unweighted 0.60/0.87; body median log10 rq 0.48);
+  L0 absent (0.51/0.68 vs 0.37/0.62). Null SAEs absent at both. Rule needs four real layers, so verdict insufficient (1/2 real).
+  Prediction was supported; not met.
+- Power-matched null, bulk gamma, real / equal-power / power-matched, % of gap closed:
+  L13 ref (M8192 L16): 31-450 .60/.93/.75 (54%), 101-1000 .86/1.16/.99 (55%) -> partly.
+  L13 second dictionary draw: within 0.0035 of the first (55%, 57%).
+  L0 ref: .38/.91/.73 (32%), .62/1.03/.92 (28%) -> does not (one window under 30%).
+  L13 L=8: 69%, 78%, both within 0.10 of real -> explains. L13 L=32: 50%, 45% -> partly.
+  Headline partly (layers disagree), as predicted; but the per-layer calls were the other way round (predicted L13 does not, L0
+  partly), and the generator check is "differs" where I predicted the same verdict at L 8 and 32. Replicate within 0.05 as predicted.
+- Not in the rule: in 4-50 and 11-150 the power-matched null does not follow real. L13 top window stays at .24 (real .47); primary
+  goes from .51 to .42 (real .48), i.e. crosses real.
+- Manipulation check: atoms match the target (top 1% of atom power .319 vs .321 at L13; .102 vs .103 at L0), but the trained null
+  SAE's latents are more concentrated than real's: top 1% carry .53 vs .35 at L13, .30 vs .11 at L0 (equal-power null SAE .48, .27).
+  So power is matched for the atoms only; the learned latents stay more concentrated than real.
+- Additive prediction from the prereg (atom shift + V0): L13 .49/1.09 vs observed .75/.99; L0 .77/.97 vs .73/.92.
+
+Quality check (`notes/prereg_quality.md`, sha256 8b2c5031..., recorded 17:58 UTC): no evidence that gamma predicts SAEBench metrics
+beyond L0, FVU, layer and width (52 Gemma Scope + 42 SAEBench 4k SAEs). The one pass (CE-loss recovery in the Gemma Scope sample)
+goes away under the pre-stated layer x L0 check. Low power; not a clean null. Bulk-window autointerp association is post hoc.
+
+Numbers: `paper/figures/make_fig_null_r2.py` has a new `pmatch()` that recomputes every class, fraction and verdict from the rows and
+asserts agreement with `results/r2/summary.json` (key `pmatch`, plus `feature_power`); also `bulk_bias()`, the finite-n calibration
+of gamma extended to all four windows at n = 8,192 (exact Sigma cloud reads .97/.96/.96/1.08; reproduces the old 11-150 table to
+0.002). New figure `fig13_pmatch_r2` and table `tab_pmatch_r2.tex`.
+
+Paper: restructured around the decomposition of the bulk gap. New title ("How Much of a Sparse Autoencoder's Decoder Spectrum Do
+Covariance and Feature Power Explain?"), abstract, introduction and contributions. Main text now: measurement, the two nulls (with
+the Schur-Horn construction and a paragraph on what was fixed before which run, with hashes), L0 dependence (short), equal-power null
+(short; primary-window agreement described as a one-sided offset, the +-0.06 margin as post hoc), power-matched null (new Fig 3 and
+Table 1), real feature power, discussion with a reporting protocol and the quality result, limitations. Moved to appendices: the
+eight-layer equivalence table, k sweep figure, top window, reading (v), resynthesis summary, generator-settings table, GPT-2 null
+figure, Rayleigh and power-family analyses. New appendices: rules fixed in advance (one table, all outcomes, full hashes), the
+power-matched null, quality. Earlier rules without a hash are now called pre-specified. Impact statement rewritten.

@@ -1,0 +1,6 @@
+job=r2_job_all
+status=DONE
+exit_code=0
+reason=job exited 0
+time=2026-11-12T01:02:10Z
+pod=9f9b2vm793syix

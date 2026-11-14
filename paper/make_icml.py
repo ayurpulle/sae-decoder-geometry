@@ -18,6 +18,8 @@ head = r"""\documentclass{article}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{seqsplit}
+\usepackage{tikz}
 \usepackage{hyperref}
 \usepackage{icml2026}
 \usepackage{amsmath,amssymb}
