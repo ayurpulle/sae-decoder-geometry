@@ -44,6 +44,21 @@ plt.rcParams.update({
     "lines.linewidth": 1.1, "lines.markersize": 3.5, "axes.linewidth": 0.6, "pdf.fonttype": 42, "ps.fonttype": 42,
     "savefig.dpi": 300, "font.family": "sans-serif", "mathtext.fontset": "dejavusans",
 })
+# Every figure is placed at a fixed width on the page. Drawing on a slightly narrower and taller canvas
+# makes the labels, markers and panels larger in print.
+FIG_SCALE = (0.92, 1.2)
+_figure = plt.figure
+
+
+def _scaled_figure(*args, **kw):
+    if kw.get("figsize") is not None:
+        w, h = kw["figsize"]
+        kw["figsize"] = (w * FIG_SCALE[0], h * FIG_SCALE[1])
+    return _figure(*args, **kw)
+
+
+plt.figure = _scaled_figure
+
 NUM = {}
 
 

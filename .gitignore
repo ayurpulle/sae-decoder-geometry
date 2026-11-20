@@ -20,3 +20,5 @@ paper/icml_style/icml_numpapers.pdf
 results/test1/sigma_gemma-2-2b.npz
 results/test1/sigma_gemma-2-2b_val_float32.npz
 results/test1/sigma_gemma-2-2b_val_float16.npz
+results/r2_pm2/dec/
+results/r2_pm2/sigma/

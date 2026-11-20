@@ -1,0 +1,177 @@
+{
+ "embT": {
+  "started_min": 0.1,
+  "steps": {
+   "a_collect_sigma": "done",
+   "b_real": "done",
+   "c_power": "done",
+   "d_v0": "done",
+   "e_v1": "done",
+   "f_extra_k": "done",
+   "g_delete_acts": "done"
+  },
+  "label": "ladder-embT",
+  "description": "trained Gemma-2-2B token embeddings as fed to block 0 (row x sqrt(d), model scaling), no blocks",
+  "act_dir": "cache/acts/ladder-embT/blocks.0.hook_resid_post",
+  "sigma": {
+   "top1_share": 0.22879459332852625,
+   "top10_share": 0.39903997581049155,
+   "participation_ratio": 17.26081357185877,
+   "n_positive": 2304,
+   "d": 2304,
+   "min_positive": 0.0011063861170555224,
+   "slopes": {
+    "(3, 50)": -0.945799344300158,
+    "(10, 150)": -0.9361610373947074,
+    "(30, 450)": -0.8220586205976942,
+    "(100, 1000)": -0.7670143992897733
+   }
+  },
+  "step_minutes": {
+   "a_collect_sigma": 13.65,
+   "b_real": 20.02,
+   "c_power": 0.37,
+   "d_v0": 27.84,
+   "e_v1": 8.14,
+   "f_extra_k": 15.62
+  },
+  "real_fvu": [
+   0.04396678012707976,
+   0.044176910362186385,
+   0.04448638651181884
+  ],
+  "notes": [
+   "ladder-embT__blocks.0.hook_resid_post__real__w16384__k4__s0: 7215 live latents < 8192; scored on all live (fixed_n_short)"
+  ],
+  "finished_min": 87.5,
+  "ok": true
+ },
+ "embR": {
+  "started_min": 87.5,
+  "steps": {
+   "a_collect_sigma": "done",
+   "b_real": "done",
+   "c_power": "done",
+   "d_v0": "done",
+   "e_v1": "done",
+   "f_extra_k": "done",
+   "g_delete_acts": "done"
+  },
+  "label": "ladder-embR",
+  "description": "i.i.d. Gaussian embedding matrix with the trained matrix's RMS, model scaling, no blocks",
+  "act_dir": "cache/acts/ladder-embR/blocks.0.hook_resid_post",
+  "sigma": {
+   "top1_share": 0.032393627759410966,
+   "top10_share": 0.19674724272099722,
+   "participation_ratio": 169.3081292061674,
+   "n_positive": 2304,
+   "d": 2304,
+   "min_positive": 0.5438060530357232,
+   "slopes": {
+    "(3, 50)": -0.9048986923777642,
+    "(10, 150)": -1.057003892243248,
+    "(30, 450)": -0.8769291672578238,
+    "(100, 1000)": -0.7647896788372077
+   }
+  },
+  "step_minutes": {
+   "a_collect_sigma": 12.78,
+   "b_real": 22.19,
+   "c_power": 0.35,
+   "d_v0": 26.13,
+   "e_v1": 7.88,
+   "f_extra_k": 13.02
+  },
+  "real_fvu": [
+   0.08426924955985829,
+   0.08508510511033529,
+   0.08533688474083372
+  ],
+  "finished_min": 171.6,
+  "ok": true
+ },
+ "randL0": {
+  "started_min": 171.6,
+  "steps": {
+   "a_collect_sigma": "done",
+   "b_real": "done",
+   "c_power": "done",
+   "d_v0": "done",
+   "e_v1": "done",
+   "g_delete_acts": "done"
+  },
+  "label": "ladder-rand_L0",
+  "description": "resid_post of block 0 of a randomly initialised Gemma-2-2B (HF default init, fixed seed)",
+  "act_dir": "cache/acts/ladder-rand/blocks.0.hook_resid_post",
+  "sigma": {
+   "top1_share": 0.02854585031736768,
+   "top10_share": 0.1456960964086646,
+   "participation_ratio": 272.9901199519992,
+   "n_positive": 2304,
+   "d": 2304,
+   "min_positive": 0.42814151913400017,
+   "slopes": {
+    "(3, 50)": -0.7674945460050367,
+    "(10, 150)": -0.8383213045335701,
+    "(30, 450)": -0.7579882180085495,
+    "(100, 1000)": -0.7441651203295673
+   }
+  },
+  "step_minutes": {
+   "a_collect_sigma": 13.22,
+   "b_real": 19.98,
+   "c_power": 0.61,
+   "d_v0": 24.83,
+   "e_v1": 7.26
+  },
+  "real_fvu": [
+   0.2948689721844565,
+   0.2959767349292237,
+   0.2954644884450205
+  ],
+  "finished_min": 239.1,
+  "ok": true
+ },
+ "randL13": {
+  "started_min": 239.1,
+  "steps": {
+   "a_collect_sigma": "done",
+   "b_real": "done",
+   "c_power": "done",
+   "d_v0": "done",
+   "e_v1": "done",
+   "g_delete_acts": "done"
+  },
+  "label": "ladder-rand_L13",
+  "description": "resid_post of block 13 of the same randomly initialised Gemma-2-2B",
+  "act_dir": "cache/acts/ladder-rand/blocks.13.hook_resid_post",
+  "sigma": {
+   "top1_share": 0.0403727215113302,
+   "top10_share": 0.15051117486763102,
+   "participation_ratio": 233.69842627430148,
+   "n_positive": 2304,
+   "d": 2304,
+   "min_positive": 4.877952888988493,
+   "slopes": {
+    "(3, 50)": -0.6932763276274877,
+    "(10, 150)": -0.6494850500315984,
+    "(30, 450)": -0.721931138460011,
+    "(100, 1000)": -0.7528710848532192
+   }
+  },
+  "step_minutes": {
+   "a_collect_sigma": 20.27,
+   "b_real": 18.36,
+   "c_power": 0.34,
+   "d_v0": 23.52,
+   "e_v1": 6.94
+  },
+  "real_fvu": [
+   0.5996498368063177,
+   0.604294367954339,
+   0.6000006793706819
+  ],
+  "finished_min": 310.3,
+  "ok": true
+ }
+}

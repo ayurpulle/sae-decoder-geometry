@@ -1,0 +1,11 @@
+[2026-11-20T10:01:39Z] [watchdog] watchdog up (pid 823): deadline 2026-11-20T20:01:39Z, idle guard <5% for 7200s, check every 60s
+[2026-11-20T10:30:42Z] [watchdog] heartbeat: GPU 99%, idle 0s, 282T free, 570 min to deadline
+[2026-11-20T11:00:45Z] [watchdog] heartbeat: GPU 100%, idle 0s, 280T free, 540 min to deadline
+[2026-11-20T11:30:48Z] [watchdog] heartbeat: GPU 0%, idle 240s, 281T free, 510 min to deadline
+[2026-11-20T12:00:50Z] [watchdog] heartbeat: GPU 99%, idle 0s, 281T free, 480 min to deadline
+[2026-11-20T12:30:53Z] [watchdog] heartbeat: GPU 12%, idle 0s, 282T free, 450 min to deadline
+[2026-11-20T13:00:56Z] [watchdog] heartbeat: GPU 0%, idle 600s, 282T free, 420 min to deadline
+[2026-11-20T13:30:58Z] [watchdog] heartbeat: GPU 100%, idle 0s, 284T free, 390 min to deadline
+[2026-11-20T14:01:01Z] [watchdog] heartbeat: GPU 0%, idle 180s, 285T free, 360 min to deadline
+[2026-11-20T14:31:03Z] [watchdog] heartbeat: GPU 99%, idle 0s, 286T free, 330 min to deadline
+[2026-11-20T15:01:06Z] [watchdog] heartbeat: GPU 99%, idle 0s, 285T free, 300 min to deadline

@@ -33,7 +33,7 @@ def main():
                         elinewidth=0.6, lw=1.0, label=LAB[X])
         r1 = A["k8_128"]["windows"][w]["fixed"]
         r2 = A["k16_128_posthoc"]["windows"][w]["fixed"]
-        ax.set_title(f"{WIN_LABEL[w]}; G/D {r1['gamma']['retained']:.2f} (k 8–128), "
+        ax.set_title(f"{WIN_LABEL[w]}\nG/D {r1['gamma']['retained']:.2f} (k 8–128), "
                      f"{r2['gamma']['retained']:.2f} (k 16–128)", fontsize=6.6)
         log2_axis(ax, [8, 16, 32, 64, 128])
         ax.set_xlim(6.5, 160)

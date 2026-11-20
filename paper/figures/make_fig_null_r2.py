@@ -319,7 +319,7 @@ def fig_k(cur, res, cur_sp=None):
         ax.set_xlabel("k")
         if tag == "a":
             ax.set_ylabel(r"$\gamma$, 8,192 live latents")
-        panel_tag(ax, tag, x=-0.12, y=1.12)
+        panel_tag(ax, tag, x=-0.2, y=1.3)
     ax = axes[4]
     for c in ("real", "gaussian"):
         ax.plot(KS, [res["fvu"][c][k] for k in KS], "o-", color=COL[c], ms=2.4)
@@ -328,7 +328,7 @@ def fig_k(cur, res, cur_sp=None):
     log2_axis(ax, [8, 16, 32, 64, 128])
     ax.set_xlabel("k")
     ax.set_ylabel("eval FVU")
-    panel_tag(ax, "e", x=-0.12, y=1.12)
+    panel_tag(ax, "e", x=-0.2, y=1.3)
     h, l_ = axes[0].get_legend_handles_labels()
     order = [l_.index(x) for x in (LAB["real"], LAB["gaussian"], LAB["sparse2"]) if x in l_]
     fig.legend([h[i] for i in order], [l_[i] for i in order], loc="lower center", bbox_to_anchor=(0.5, -0.1),
@@ -1517,30 +1517,52 @@ def fig_pmatch():
     if "pmatch" not in N:
         return
     S = N["pmatch"]["settings"]
-    fig, axes = plt.subplots(1, 2, figsize=(3.3, 2.45), sharey=False)
-    xs = np.arange(len(PM_ORDER))
+    # Settings with three SAE seeds (results/r2_pm2/pmatch2_summary.json, written by experiments/r2_pmatch2_summary.py)
+    # are drawn from their three-seed means: R three seeds, Z two seeds (three at 32,768 atoms), N three seeds with
+    # its seed sd and seed dots. The other settings are the first run (one seed per null, Z seed 0). Nothing drawn
+    # here is written to N, so paper_numbers_r2.json does not depend on this figure.
+    p2f = RES / "r2_pm2" / "pmatch2_summary.json"
+    P2 = json.load(open(p2f))["settings"] if p2f.exists() else {}
+    order = PM_ORDER[:4] + (["PM|V1|L13|M32768_L16|ds0"] if "PM|V1|L13|M32768_L16|ds0" in P2 else []) + PM_ORDER[4:]
+    label = {**PM_LABEL, "PM|V1|L13|M32768_L16|ds0": "13, $M$=32,768"}
+
+    def vals(k, w):
+        if k in P2:
+            x = P2[k]["windows"][w]
+            return {"real": x["R"], "equal_power": x["Z"], "power_matched": x["N"], "sd": x["N_sd"],
+                    "seeds": list(x["N_per_seed"].values()), "closed_fraction": x["closed_fraction"], "three": True}
+        o = S[k]["windows"][w]
+        return {**o, "sd": None, "seeds": [], "three": False}
+
+    fig, axes = plt.subplots(1, 2, figsize=(3.9, 2.45), sharey=False)
+    xs = np.arange(len(order))
+    sep = len(order) - 1.5  # between the layer-13 settings and layer 0
     for j, w in enumerate(BULK):
         ax = axes[j]
-        for i, k in enumerate(PM_ORDER):
-            o = S[k]["windows"][w]
+        for i, k in enumerate(order):
+            o = vals(k, w)
             ax.add_patch(plt.Rectangle((i - 0.32, o["real"] - PM_MARGIN), 0.64, 2 * PM_MARGIN, color=OI["blue"],
                                        alpha=0.13, lw=0))
             ax.plot([i], [o["real"]], "o", color=OI["blue"], ms=3.4, label="real" if i == 0 else None)
             ax.plot([i], [o["equal_power"]], "^", mfc="white", mec=OI["green"], ms=3.8, mew=0.9,
                     label="equal-power null" if i == 0 else None)
             ax.plot([i], [o["power_matched"]], "D", color=OI["verm"], ms=3.2, label="power-matched null" if i == 0 else None)
+            if o["three"]:
+                ax.plot([i + 0.2] * len(o["seeds"]), o["seeds"], ".", color=OI["verm"], ms=1.6, alpha=0.7)
+                ax.errorbar([i], [o["power_matched"]], yerr=[o["sd"]], color=OI["verm"], lw=0.6, capsize=1.2)
             ax.annotate("", xy=(i, o["power_matched"] + 0.012), xytext=(i, o["equal_power"] - 0.015),
                         arrowprops=dict(arrowstyle="-|>", lw=0.6, color=OI["grey"], mutation_scale=5))
             ax.text(i, o["equal_power"] + 0.03, f"{100 * o['closed_fraction']:.0f}%", ha="center", va="bottom",
-                    fontsize=6.2)
-        ax.axvline(3.5, color=OI["grey"], lw=0.5, ls=":")
+                    fontsize=5.6, fontweight="bold" if o["three"] else "normal")
+        ax.axvline(sep, color=OI["grey"], lw=0.5, ls=":")
         ax.set_xticks(xs)
-        ax.set_xticklabels([PM_LABEL[k] for k in PM_ORDER], rotation=55, ha="right", fontsize=6.4)
+        ax.set_xticklabels([label[k] + (r"$^{*}$" if k in P2 else "") for k in order], rotation=55, ha="right",
+                           fontsize=6.2)
         ax.tick_params(axis="y", labelsize=6.4)
         ax.set_title(WIN_LABEL[w], fontsize=7.5)
-        ax.set_xlim(-0.6, len(PM_ORDER) - 0.4)
-        lo = min(min(S[k]["windows"][w]["real"] for k in PM_ORDER) - 0.14, 0.3)
-        hi = max(S[k]["windows"][w]["equal_power"] for k in PM_ORDER) + 0.15
+        ax.set_xlim(-0.6, len(order) - 0.4)
+        lo = min(min(vals(k, w)["real"] for k in order) - 0.14, 0.3)
+        hi = max(vals(k, w)["equal_power"] for k in order) + 0.15
         ax.set_ylim(lo, hi)
         if j == 0:
             ax.set_ylabel(r"$\gamma$ at 8,192 live latents", fontsize=7)
@@ -1698,7 +1720,7 @@ def fig_generator():
                     ax.bar(x, o["gap_equal_power"] - rem, 0.7, bottom=rem, color=OI["green"], alpha=0.35, lw=0,
                            hatch="////", edgecolor=OI["verm"])
                     ax.text(x, o["gap_equal_power"] + 0.012, f"{100 * o['closed_fraction']:.0f}%", ha="center",
-                            va="bottom", fontsize=5.6)
+                            va="bottom", fontsize=5.6, rotation=90)
                     r = {"layer": L, "setting": lab, "window": w, "gap_equal_power": o["gap_equal_power"],
                          "gap_power_matched": rem, "closed_fraction": o["closed_fraction"]}
                 rec.append(r)
@@ -1713,9 +1735,9 @@ def fig_generator():
         ax.set_xticklabels(labels, rotation=70, ha="right", fontsize=5.6)
         ax.tick_params(axis="y", labelsize=6.4)
         ax.set_title(WIN_LABEL[w], fontsize=7.5)
-        ax.text(2.5, 0.68, "layer 13", ha="center", fontsize=6.2)
-        ax.text(8.2, 0.68, "layer 0", ha="center", fontsize=6.2)
-        ax.set_ylim(0, 0.74)
+        ax.text(2.5, 0.72, "layer 13", ha="center", fontsize=6.2)
+        ax.text(8.2, 0.72, "layer 0", ha="center", fontsize=6.2)
+        ax.set_ylim(0, 0.78)
         if j == 0:
             ax.set_ylabel(r"null $-$ real $\gamma$", fontsize=7)
         panel_tag(ax, "ab"[j], x=-0.1)

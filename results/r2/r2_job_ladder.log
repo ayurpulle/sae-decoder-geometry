@@ -1,0 +1,704 @@
+[2026-11-20T10:01:39Z] [launcher] job experiments/r2_job_ladder.py | max_hours 10 (36000s) | grace 15 min | pod 9851y0j1mljd39 | python .venv/bin/python --budget_min 420
+[2026-11-20T10:01:39Z] [launcher] watchdog pid 823
+[2026-11-20T10:01:39Z] [launcher] job pid 829
+[2026-11-20T10:01:39Z] [watchdog] watchdog up (pid 823): deadline 2026-11-20T20:01:39Z, idle guard <5% for 7200s, check every 60s
+[2026-11-20 10:01:45] job ladder: git 0b3d907c57387fc2601ac6193292e5b6de7e7b51, code sha256 f4f6abeed333, job sha256 df6dd2da349f, out /workspace/SAE/results/r2, 310044 GB free, budget 420 min, datasets ['embT', 'embR', 'randL0', 'randL13']
+[2026-11-20 10:01:53] estimate: 34 SAEs expected (worst 48), 6.5 h expected, 8.4 h worst
+[2026-11-20 10:01:53] === embT: trained Gemma-2-2B token embeddings as fed to block 0 (row x sqrt(d), model scaling), no blocks; about 9.5 SAEs (worst 13) x 8 min: 106 min expected, 134 worst (0 min into the job, budget 420)
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:04<00:08,  4.35s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:18<00:09,  9.97s/it]Fetching 3 files: 100%|██████████| 3/3 [00:19<00:00,  5.88s/it]Fetching 3 files: 100%|██████████| 3/3 [00:19<00:00,  6.42s/it]
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights:   2%|▏         | 5/288 [00:00<00:06, 46.64it/s]Loading weights:  28%|██▊       | 82/288 [00:00<00:00, 459.18it/s]Loading weights:  47%|████▋     | 135/288 [00:00<00:00, 375.52it/s]Loading weights:  61%|██████▏   | 177/288 [00:00<00:00, 387.43it/s]Loading weights:  76%|███████▌  | 218/288 [00:00<00:00, 390.80it/s]Loading weights:  90%|████████▉ | 259/288 [00:00<00:00, 385.96it/s]Loading weights: 100%|██████████| 288/288 [00:00<00:00, 369.70it/s]
+[2026-11-20 10:02:44] collect embT (trained Gemma-2-2B token embeddings as fed to block 0 (row x sqrt(d), model scaling), no blocks) on cuda, 10,000,000 tokens, 310025 GB free
+[2026-11-20 10:04:09] collect embT: 1,014,816 tokens, 132s
+[2026-11-20 10:05:19] collect embT: 2,013,264 tokens, 202s
+[2026-11-20 10:06:33] collect embT: 3,011,712 tokens, 276s
+[2026-11-20 10:07:56] collect embT: 4,010,160 tokens, 359s
+[2026-11-20 10:09:13] collect embT: 5,008,608 tokens, 436s
+[2026-11-20 10:10:31] collect embT: 6,007,056 tokens, 513s
+[2026-11-20 10:11:56] collect embT: 7,005,504 tokens, 599s
+[2026-11-20 10:13:05] collect embT: 8,003,952 tokens, 667s
+[2026-11-20 10:14:15] collect embT: 9,002,400 tokens, 737s
+[2026-11-20 10:15:24] collect embT: 10,000,000 tokens, 806s
+[2026-11-20 10:15:27] collect embT: done, 10,000,000 tokens x 2304, 809s
+[2026-11-20 10:15:31] embT: Sigma top-1 share 0.2288, top-10 0.3990, participation ratio 17.3 of d = 2304, 2304 positive eigenvalues
+[2026-11-20 10:15:31] train ladder-embT__blocks.0.hook_resid_post__real__w16384__k40__s0 (14 min into the job)
+[real w16384 s0] step 50/6957 fvu 0.3393 dead 0.000 9s
+[real w16384 s0] step 500/6957 fvu 0.1371 dead 0.000 41s
+[real w16384 s0] step 1000/6957 fvu 0.0847 dead 0.000 76s
+[real w16384 s0] step 1500/6957 fvu 0.0590 dead 0.000 107s
+[real w16384 s0] step 2000/6957 fvu 0.0519 dead 0.000 141s
+[real w16384 s0] step 2500/6957 fvu 0.0460 dead 0.000 171s
+[real w16384 s0] step 3000/6957 fvu 0.0514 dead 0.000 196s
+[real w16384 s0] step 3500/6957 fvu 0.0389 dead 0.000 221s
+[real w16384 s0] step 4000/6957 fvu 0.0432 dead 0.000 246s
+[real w16384 s0] step 4500/6957 fvu 0.0393 dead 0.000 271s
+[real w16384 s0] step 5000/6957 fvu 0.0417 dead 0.000 296s
+[real w16384 s0] step 5500/6957 fvu 0.0488 dead 0.000 322s
+[real w16384 s0] step 6000/6957 fvu 0.0459 dead 0.000 348s
+[real w16384 s0] step 6500/6957 fvu 0.0404 dead 0.000 373s
+saved /workspace/SAE/cache/saes_ladder/ladder-embT__blocks.0.hook_resid_post__real__w16384__k40__s0 fvu_eval 0.04396678012707976
+[2026-11-20 10:22:19] train ladder-embT__blocks.0.hook_resid_post__real__w16384__k40__s1 (21 min into the job)
+[real w16384 s1] step 50/6957 fvu 0.3129 dead 0.000 9s
+[real w16384 s1] step 500/6957 fvu 0.1070 dead 0.000 42s
+[real w16384 s1] step 1000/6957 fvu 0.0820 dead 0.000 68s
+[2026-11-20 10:23:57] scored ladder-embT__blocks.0.hook_resid_post__real__w16384__k40__s0: live 16382, fvu 0.044, L0 40.0, primary window (10, 150) gamma full 0.251 fixed-n 0.227 [98s]
+[real w16384 s1] step 1500/6957 fvu 0.0662 dead 0.000 94s
+[real w16384 s1] step 2000/6957 fvu 0.0493 dead 0.000 119s
+[real w16384 s1] step 2500/6957 fvu 0.0495 dead 0.000 145s
+[real w16384 s1] step 3000/6957 fvu 0.0464 dead 0.000 171s
+[real w16384 s1] step 3500/6957 fvu 0.0574 dead 0.000 196s
+[real w16384 s1] step 4000/6957 fvu 0.0386 dead 0.000 221s
+[real w16384 s1] step 4500/6957 fvu 0.0453 dead 0.000 246s
+[real w16384 s1] step 5000/6957 fvu 0.0253 dead 0.000 270s
+[real w16384 s1] step 5500/6957 fvu 0.0601 dead 0.000 297s
+[real w16384 s1] step 6000/6957 fvu 0.0398 dead 0.000 321s
+[real w16384 s1] step 6500/6957 fvu 0.0423 dead 0.000 346s
+saved /workspace/SAE/cache/saes_ladder/ladder-embT__blocks.0.hook_resid_post__real__w16384__k40__s1 fvu_eval 0.044176910362186385
+[2026-11-20 10:28:41] train ladder-embT__blocks.0.hook_resid_post__real__w16384__k40__s2 (27 min into the job)
+[real w16384 s2] step 50/6957 fvu 0.3129 dead 0.000 12s
+[real w16384 s2] step 500/6957 fvu 0.1075 dead 0.000 45s
+[real w16384 s2] step 1000/6957 fvu 0.0741 dead 0.000 77s
+[2026-11-20 10:30:36] scored ladder-embT__blocks.0.hook_resid_post__real__w16384__k40__s1: live 16384, fvu 0.044, L0 39.9, primary window (10, 150) gamma full 0.246 fixed-n 0.223 [114s]
+[real w16384 s2] step 1500/6957 fvu 0.0541 dead 0.000 112s
+[2026-11-20T10:30:42Z] [watchdog] heartbeat: GPU 99%, idle 0s, 282T free, 570 min to deadline
+[real w16384 s2] step 2000/6957 fvu 0.0554 dead 0.000 147s
+[real w16384 s2] step 2500/6957 fvu 0.0481 dead 0.000 172s
+[real w16384 s2] step 3000/6957 fvu 0.0452 dead 0.000 197s
+[real w16384 s2] step 3500/6957 fvu 0.0419 dead 0.000 222s
+[real w16384 s2] step 4000/6957 fvu 0.0491 dead 0.000 247s
+[real w16384 s2] step 4500/6957 fvu 0.0382 dead 0.000 272s
+[real w16384 s2] step 5000/6957 fvu 0.0344 dead 0.000 299s
+[real w16384 s2] step 5500/6957 fvu 0.0428 dead 0.000 324s
+[real w16384 s2] step 6000/6957 fvu 0.0413 dead 0.000 349s
+[real w16384 s2] step 6500/6957 fvu 0.0416 dead 0.000 375s
+saved /workspace/SAE/cache/saes_ladder/ladder-embT__blocks.0.hook_resid_post__real__w16384__k40__s2 fvu_eval 0.04448638651181884
+[2026-11-20 10:35:33] embT: real k = 40 eval FVU 0.044, 0.044, 0.044; target 0.044
+[2026-11-20 10:35:55] embT: power pass of ladder-embT__blocks.0.hook_resid_post__real__w16384__k40__s0: 16384 live, FVU 0.042, top-10 share 0.111, top-1% 0.221, ESS fraction 0.0246
+[2026-11-20 10:35:55] train ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.0000 (34 min into the job)
+[2026-11-20 10:36:39] dictionary device cuda (float64 eigh of 2304 x 2304: cuda 0.14s, cpu 28.19s)
+[2026-11-20 10:36:59] dictionary V1: 9 rounds, power err 2.8e-02, rq err None, cov err 3.0e-10 (float32 9.7e-09), moved 0.000, 20s
+[2026-11-20 10:37:33] ladembTM8192ds0: atom-cloud gamma 0.829 / 0.786 / 0.791 / 0.924, top-10 power share 0.117 (real 0.111), moved 0.000
+[sparse w16384 s0] step 50/6957 fvu 0.6313 dead 0.000 4s
+[sparse w16384 s0] step 500/6957 fvu 0.2999 dead 0.000 27s
+[2026-11-20 10:38:11] scored ladder-embT__blocks.0.hook_resid_post__real__w16384__k40__s2: live 16384, fvu 0.044, L0 39.9, primary window (10, 150) gamma full 0.247 fixed-n 0.222 [158s]
+[sparse w16384 s0] step 1000/6957 fvu 0.0429 dead 0.000 53s
+[sparse w16384 s0] step 1500/6957 fvu 0.0188 dead 0.000 78s
+[sparse w16384 s0] step 2000/6957 fvu 0.0162 dead 0.000 104s
+[sparse w16384 s0] step 2500/6957 fvu 0.0151 dead 0.006 139s
+[sparse w16384 s0] step 3000/6957 fvu 0.0143 dead 0.050 174s
+[sparse w16384 s0] step 3500/6957 fvu 0.0137 dead 0.169 209s
+[sparse w16384 s0] step 4000/6957 fvu 0.0135 dead 0.297 245s
+[sparse w16384 s0] step 4500/6957 fvu 0.0133 dead 0.369 280s
+[sparse w16384 s0] step 5000/6957 fvu 0.0131 dead 0.401 315s
+[sparse w16384 s0] step 5500/6957 fvu 0.0130 dead 0.414 351s
+[sparse w16384 s0] step 6000/6957 fvu 0.0127 dead 0.421 386s
+[sparse w16384 s0] step 6500/6957 fvu 0.0120 dead 0.429 422s
+[sparse w16384 s0] step 6957/6957 fvu 0.0116 dead 0.432 454s
+saved /workspace/SAE/cache/saes_ladder/ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.0000 fvu_eval 0.011694112971789163
+[2026-11-20 10:45:08] calibrate: rho 0.00 -> FVU 0.0117 (target 0.0442)
+[2026-11-20 10:45:08] train ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.0500 (43 min into the job)
+[sparse w16384 s0] step 50/6957 fvu 0.6330 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.3490 dead 0.000 26s
+[sparse w16384 s0] step 1000/6957 fvu 0.0808 dead 0.000 51s
+[sparse w16384 s0] step 1500/6957 fvu 0.0483 dead 0.000 77s
+[sparse w16384 s0] step 2000/6957 fvu 0.0446 dead 0.000 103s
+[sparse w16384 s0] step 2500/6957 fvu 0.0427 dead 0.002 134s
+[sparse w16384 s0] step 3000/6957 fvu 0.0421 dead 0.035 169s
+[sparse w16384 s0] step 3500/6957 fvu 0.0405 dead 0.130 205s
+[sparse w16384 s0] step 4000/6957 fvu 0.0408 dead 0.242 241s
+[sparse w16384 s0] step 4500/6957 fvu 0.0399 dead 0.337 276s
+[sparse w16384 s0] step 5000/6957 fvu 0.0394 dead 0.391 312s
+[sparse w16384 s0] step 5500/6957 fvu 0.0398 dead 0.416 348s
+[sparse w16384 s0] step 6000/6957 fvu 0.0390 dead 0.428 384s
+[sparse w16384 s0] step 6500/6957 fvu 0.0382 dead 0.437 420s
+[sparse w16384 s0] step 6957/6957 fvu 0.0379 dead 0.442 452s
+saved /workspace/SAE/cache/saes_ladder/ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.0500 fvu_eval 0.03789632287401347
+[2026-11-20 10:53:35] calibrate: rho 0.05 -> FVU 0.0379 (target 0.0442)
+[2026-11-20 10:53:35] embT V0: rho 0.05, FVU 0.038, target 0.044, matched
+[2026-11-20 10:55:13] scored ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.0000: live 9271, fvu 0.012, L0 39.9, primary window (10, 150) gamma full 0.810 fixed-n 0.806 [98s]
+[2026-11-20 10:55:13] train ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s1__ds0__M8192__L16__halfnormal__rho0.0500 (53 min into the job)
+[sparse w16384 s1] step 50/6957 fvu 0.6337 dead 0.000 3s
+[sparse w16384 s1] step 500/6957 fvu 0.3499 dead 0.000 26s
+[sparse w16384 s1] step 1000/6957 fvu 0.0814 dead 0.000 51s
+[2026-11-20 10:57:05] scored ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.0500: live 9079, fvu 0.038, L0 40.0, primary window (10, 150) gamma full 0.732 fixed-n 0.729 [112s]
+[sparse w16384 s1] step 1500/6957 fvu 0.0487 dead 0.000 78s
+[sparse w16384 s1] step 2000/6957 fvu 0.0451 dead 0.000 104s
+[sparse w16384 s1] step 2500/6957 fvu 0.0432 dead 0.003 137s
+[sparse w16384 s1] step 3000/6957 fvu 0.0428 dead 0.028 172s
+[sparse w16384 s1] step 3500/6957 fvu 0.0410 dead 0.106 207s
+[sparse w16384 s1] step 4000/6957 fvu 0.0414 dead 0.220 243s
+[sparse w16384 s1] step 4500/6957 fvu 0.0404 dead 0.312 279s
+[2026-11-20T11:00:45Z] [watchdog] heartbeat: GPU 100%, idle 0s, 280T free, 540 min to deadline
+[sparse w16384 s1] step 5000/6957 fvu 0.0398 dead 0.369 315s
+[sparse w16384 s1] step 5500/6957 fvu 0.0403 dead 0.397 351s
+[sparse w16384 s1] step 6000/6957 fvu 0.0394 dead 0.411 386s
+[sparse w16384 s1] step 6500/6957 fvu 0.0386 dead 0.425 422s
+[sparse w16384 s1] step 6957/6957 fvu 0.0383 dead 0.432 455s
+saved /workspace/SAE/cache/saes_ladder/ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s1__ds0__M8192__L16__halfnormal__rho0.0500 fvu_eval 0.038338318512725705
+[2026-11-20 11:03:45] train ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.0500__DladembTM8192ds0 (62 min into the job)
+[sparse w16384 s0] step 50/6957 fvu 0.6070 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.2045 dead 0.000 26s
+[sparse w16384 s0] step 1000/6957 fvu 0.1266 dead 0.000 52s
+[2026-11-20 11:05:25] scored ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s1__ds0__M8192__L16__halfnormal__rho0.0500: live 9162, fvu 0.038, L0 40.0, primary window (10, 150) gamma full 0.743 fixed-n 0.740 [100s]
+[sparse w16384 s0] step 1500/6957 fvu 0.0981 dead 0.000 78s
+[sparse w16384 s0] step 2000/6957 fvu 0.0861 dead 0.000 104s
+[sparse w16384 s0] step 2500/6957 fvu 0.0779 dead 0.000 130s
+[sparse w16384 s0] step 3000/6957 fvu 0.0689 dead 0.000 158s
+[sparse w16384 s0] step 3500/6957 fvu 0.0547 dead 0.000 193s
+[sparse w16384 s0] step 4000/6957 fvu 0.0572 dead 0.003 228s
+[sparse w16384 s0] step 4500/6957 fvu 0.0582 dead 0.009 263s
+[sparse w16384 s0] step 5000/6957 fvu 0.0531 dead 0.020 298s
+[sparse w16384 s0] step 5500/6957 fvu 0.0539 dead 0.039 333s
+[sparse w16384 s0] step 6000/6957 fvu 0.0509 dead 0.067 369s
+[sparse w16384 s0] step 6500/6957 fvu 0.0466 dead 0.107 404s
+[sparse w16384 s0] step 6957/6957 fvu 0.0451 dead 0.155 437s
+saved /workspace/SAE/cache/saes_ladder/ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.0500__DladembTM8192ds0 fvu_eval 0.04835736294703914
+[2026-11-20 11:11:42] calibrate: rho 0.05 -> FVU 0.0484 (target 0.0442)
+[2026-11-20 11:11:42] embT V1: rho 0.05, FVU 0.048, target 0.044, matched
+[2026-11-20 11:11:54] ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.0500__DladembTM8192ds0: null SAE top-1% power share 0.480 (real 0.221), ESS fraction 0.0065 (real 0.0246)
+[2026-11-20 11:11:54] train ladder-embT__blocks.0.hook_resid_post__real__w16384__k4__s0 (70 min into the job)
+[real w16384 s0] step 50/6957 fvu 0.7034 dead 0.000 17s
+[real w16384 s0] step 500/6957 fvu 0.2071 dead 0.642 57s
+[2026-11-20 11:13:44] scored ladder-embT__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.0500__DladembTM8192ds0: live 11397, fvu 0.048, L0 40.0, primary window (10, 150) gamma full 0.550 fixed-n 0.542 [110s]
+[real w16384 s0] step 1000/6957 fvu 0.1633 dead 0.679 106s
+[real w16384 s0] step 1500/6957 fvu 0.1138 dead 0.677 144s
+[real w16384 s0] step 2000/6957 fvu 0.1095 dead 0.673 189s
+[real w16384 s0] step 2500/6957 fvu 0.1056 dead 0.661 224s
+[real w16384 s0] step 3000/6957 fvu 0.1130 dead 0.642 250s
+[real w16384 s0] step 3500/6957 fvu 0.0970 dead 0.612 276s
+[real w16384 s0] step 4000/6957 fvu 0.1008 dead 0.545 302s
+[real w16384 s0] step 4500/6957 fvu 0.0885 dead 0.495 328s
+[real w16384 s0] step 5000/6957 fvu 0.0939 dead 0.454 354s
+[real w16384 s0] step 5500/6957 fvu 0.1035 dead 0.378 380s
+[real w16384 s0] step 6000/6957 fvu 0.0940 dead 0.349 406s
+[real w16384 s0] step 6500/6957 fvu 0.0873 dead 0.400 432s
+saved /workspace/SAE/cache/saes_ladder/ladder-embT__blocks.0.hook_resid_post__real__w16384__k4__s0 fvu_eval 0.08612359980222244
+[2026-11-20 11:19:47] train ladder-embT__blocks.0.hook_resid_post__real__w16384__k16__s0 (78 min into the job)
+[real w16384 s0] step 50/6957 fvu 0.4481 dead 0.000 16s
+[real w16384 s0] step 500/6957 fvu 0.1521 dead 0.000 51s
+[2026-11-20 11:21:25] scored ladder-embT__blocks.0.hook_resid_post__real__w16384__k4__s0: live 7215, fvu 0.086, L0 4.0, primary window (10, 150) gamma full 0.361 fixed-n 0.361 [98s]
+[2026-11-20 11:21:25] embT: ladder-embT__blocks.0.hook_resid_post__real__w16384__k4__s0: 7215 live latents < 8192; scored on all live (fixed_n_short)
+[real w16384 s0] step 1000/6957 fvu 0.0953 dead 0.000 89s
+[real w16384 s0] step 1500/6957 fvu 0.0658 dead 0.000 120s
+[real w16384 s0] step 2000/6957 fvu 0.0592 dead 0.000 157s
+[real w16384 s0] step 2500/6957 fvu 0.0510 dead 0.000 188s
+[real w16384 s0] step 3000/6957 fvu 0.0579 dead 0.001 216s
+[real w16384 s0] step 3500/6957 fvu 0.0439 dead 0.003 244s
+[real w16384 s0] step 4000/6957 fvu 0.0477 dead 0.001 272s
+[real w16384 s0] step 4500/6957 fvu 0.0430 dead 0.001 300s
+[real w16384 s0] step 5000/6957 fvu 0.0455 dead 0.000 328s
+[real w16384 s0] step 5500/6957 fvu 0.0513 dead 0.000 357s
+[real w16384 s0] step 6000/6957 fvu 0.0487 dead 0.000 385s
+[real w16384 s0] step 6500/6957 fvu 0.0432 dead 0.000 413s
+saved /workspace/SAE/cache/saes_ladder/ladder-embT__blocks.0.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.04687748446510355
+[2026-11-20 11:29:08] scored ladder-embT__blocks.0.hook_resid_post__real__w16384__k16__s0: live 16257, fvu 0.047, L0 16.0, primary window (10, 150) gamma full 0.283 fixed-n 0.257 [97s]
+[2026-11-20 11:29:15] deleted /workspace/SAE/cache/acts/ladder-embT/blocks.0.hook_resid_post/acts.npy (stats.npz kept); 308851 GB free
+[2026-11-20 11:29:15] === embT: all steps done ({"a_collect_sigma": "done", "b_real": "done", "c_power": "done", "d_v0": "done", "e_v1": "done", "f_extra_k": "done", "g_delete_acts": "done"}), 88 min into the job
+[2026-11-20 11:29:16] === embR: i.i.d. Gaussian embedding matrix with the trained matrix's RMS, model scaling, no blocks; about 9.5 SAEs (worst 13) x 8 min: 106 min expected, 134 worst (88 min into the job, budget 420)
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights:   0%|          | 1/288 [00:10<51:30, 10.77s/it]Loading weights:  28%|██▊       | 82/288 [00:10<00:19, 10.59it/s]Loading weights:  45%|████▍     | 129/288 [00:14<00:13, 12.17it/s]Loading weights:  52%|█████▏    | 149/288 [00:15<00:11, 12.27it/s]Loading weights:  56%|█████▌    | 161/288 [00:16<00:09, 12.72it/s]Loading weights:  59%|█████▊    | 169/288 [00:17<00:09, 12.37it/s]Loading weights:  61%|██████▏   | 177/288 [00:17<00:08, 13.50it/s]Loading weights:  63%|██████▎   | 182/288 [00:18<00:08, 12.49it/s]Loading weights:  65%|██████▍   | 187/288 [00:18<00:08, 11.98it/s]Loading weights:  66%|██████▌   | 190/288 [00:18<00:07, 12.57it/s]Loading weights:  67%|██████▋   | 193/288 [00:19<00:07, 12.43it/s]Loading weights:  70%|██████▉   | 201/288 [00:19<00:07, 12.02it/s]Loading weights:  73%|███████▎  | 209/288 [00:20<00:05, 13.99it/s]Loading weights:  74%|███████▎  | 212/288 [00:20<00:06, 12.12it/s]Loading weights:  74%|███████▍  | 214/288 [00:21<00:07,  9.78it/s]Loading weights:  77%|███████▋  | 223/288 [00:21<00:04, 13.74it/s]Loading weights:  78%|███████▊  | 225/288 [00:21<00:04, 12.68it/s]Loading weights:  80%|████████  | 231/288 [00:21<00:03, 16.16it/s]Loading weights:  81%|████████▏ | 234/288 [00:22<00:04, 10.94it/s]Loading weights:  84%|████████▍ | 243/288 [00:22<00:03, 14.52it/s]Loading weights:  85%|████████▌ | 245/288 [00:23<00:03, 11.90it/s]Loading weights:  88%|████████▊ | 253/288 [00:23<00:02, 15.94it/s]Loading weights:  89%|████████▉ | 256/288 [00:23<00:02, 12.46it/s]Loading weights:  90%|████████▉ | 258/288 [00:24<00:02, 11.65it/s]Loading weights:  92%|█████████▏| 264/288 [00:24<00:01, 15.83it/s]Loading weights:  93%|█████████▎| 267/288 [00:24<00:01, 15.10it/s]Loading weights:  93%|█████████▎| 269/288 [00:24<00:01, 15.64it/s]Loading weights:  95%|█████████▌| 274/288 [00:24<00:00, 19.55it/s]Loading weights:  97%|█████████▋| 278/288 [00:25<00:00, 12.54it/s]Loading weights:  97%|█████████▋| 280/288 [00:25<00:00, 11.36it/s]Loading weights: 100%|██████████| 288/288 [00:25<00:00, 11.23it/s]
+[2026-11-20 11:30:25] collect embR (i.i.d. Gaussian embedding matrix with the trained matrix's RMS, model scaling, no blocks) on cuda, 10,000,000 tokens, 308822 GB free
+[2026-11-20T11:30:48Z] [watchdog] heartbeat: GPU 0%, idle 240s, 281T free, 510 min to deadline
+[2026-11-20 11:31:43] collect embR: 1,014,816 tokens, 141s
+[2026-11-20 11:32:48] collect embR: 2,013,264 tokens, 206s
+[2026-11-20 11:33:56] collect embR: 3,011,712 tokens, 274s
+[2026-11-20 11:35:03] collect embR: 4,010,160 tokens, 342s
+[2026-11-20 11:36:11] collect embR: 5,008,608 tokens, 409s
+[2026-11-20 11:37:20] collect embR: 6,007,056 tokens, 478s
+[2026-11-20 11:38:35] collect embR: 7,005,504 tokens, 553s
+[2026-11-20 11:39:45] collect embR: 8,003,952 tokens, 623s
+[2026-11-20 11:40:49] collect embR: 9,002,400 tokens, 687s
+[2026-11-20 11:41:54] collect embR: 10,000,000 tokens, 753s
+[2026-11-20 11:41:58] collect embR: done, 10,000,000 tokens x 2304, 756s
+[2026-11-20 11:42:02] embR: Sigma top-1 share 0.0324, top-10 0.1967, participation ratio 169.3 of d = 2304, 2304 positive eigenvalues
+[2026-11-20 11:42:02] train ladder-embR__blocks.0.hook_resid_post__real__w16384__k40__s0 (100 min into the job)
+[real w16384 s0] step 50/6957 fvu 0.3602 dead 0.000 8s
+[real w16384 s0] step 500/6957 fvu 0.2073 dead 0.000 39s
+[real w16384 s0] step 1000/6957 fvu 0.1363 dead 0.000 73s
+[real w16384 s0] step 1500/6957 fvu 0.1074 dead 0.000 104s
+[real w16384 s0] step 2000/6957 fvu 0.0927 dead 0.000 134s
+[real w16384 s0] step 2500/6957 fvu 0.0819 dead 0.000 160s
+[real w16384 s0] step 3000/6957 fvu 0.0958 dead 0.000 185s
+[real w16384 s0] step 3500/6957 fvu 0.0671 dead 0.000 210s
+[real w16384 s0] step 4000/6957 fvu 0.0814 dead 0.000 235s
+[real w16384 s0] step 4500/6957 fvu 0.0784 dead 0.000 260s
+[real w16384 s0] step 5000/6957 fvu 0.0780 dead 0.000 284s
+[real w16384 s0] step 5500/6957 fvu 0.0921 dead 0.000 310s
+[real w16384 s0] step 6000/6957 fvu 0.0867 dead 0.000 334s
+[real w16384 s0] step 6500/6957 fvu 0.0810 dead 0.000 359s
+saved /workspace/SAE/cache/saes_ladder/ladder-embR__blocks.0.hook_resid_post__real__w16384__k40__s0 fvu_eval 0.08426924955985829
+[2026-11-20 11:48:35] train ladder-embR__blocks.0.hook_resid_post__real__w16384__k40__s1 (107 min into the job)
+[real w16384 s1] step 50/6957 fvu 0.3262 dead 0.000 16s
+[real w16384 s1] step 500/6957 fvu 0.1682 dead 0.000 58s
+[2026-11-20 11:50:20] scored ladder-embR__blocks.0.hook_resid_post__real__w16384__k40__s0: live 16384, fvu 0.084, L0 37.5, primary window (10, 150) gamma full 0.057 fixed-n 0.072 [105s]
+[real w16384 s1] step 1000/6957 fvu 0.1363 dead 0.000 101s
+[real w16384 s1] step 1500/6957 fvu 0.1165 dead 0.000 144s
+[real w16384 s1] step 2000/6957 fvu 0.0872 dead 0.000 183s
+[real w16384 s1] step 2500/6957 fvu 0.0917 dead 0.000 218s
+[real w16384 s1] step 3000/6957 fvu 0.0877 dead 0.000 243s
+[real w16384 s1] step 3500/6957 fvu 0.1051 dead 0.000 267s
+[real w16384 s1] step 4000/6957 fvu 0.0769 dead 0.000 292s
+[real w16384 s1] step 4500/6957 fvu 0.0850 dead 0.000 317s
+[real w16384 s1] step 5000/6957 fvu 0.0452 dead 0.000 341s
+[real w16384 s1] step 5500/6957 fvu 0.1126 dead 0.000 366s
+[real w16384 s1] step 6000/6957 fvu 0.0785 dead 0.000 391s
+[real w16384 s1] step 6500/6957 fvu 0.0847 dead 0.000 416s
+saved /workspace/SAE/cache/saes_ladder/ladder-embR__blocks.0.hook_resid_post__real__w16384__k40__s1 fvu_eval 0.08508510511033529
+[2026-11-20 11:56:23] train ladder-embR__blocks.0.hook_resid_post__real__w16384__k40__s2 (115 min into the job)
+[real w16384 s2] step 50/6957 fvu 0.3174 dead 0.000 19s
+[real w16384 s2] step 500/6957 fvu 0.1681 dead 0.000 59s
+[2026-11-20 11:58:01] scored ladder-embR__blocks.0.hook_resid_post__real__w16384__k40__s1: live 16384, fvu 0.085, L0 37.5, primary window (10, 150) gamma full 0.057 fixed-n 0.073 [98s]
+[real w16384 s2] step 1000/6957 fvu 0.1263 dead 0.000 98s
+[real w16384 s2] step 1500/6957 fvu 0.0868 dead 0.000 142s
+[real w16384 s2] step 2000/6957 fvu 0.0981 dead 0.000 187s
+[real w16384 s2] step 2500/6957 fvu 0.0868 dead 0.000 221s
+[real w16384 s2] step 3000/6957 fvu 0.0842 dead 0.000 245s
+[2026-11-20T12:00:50Z] [watchdog] heartbeat: GPU 99%, idle 0s, 281T free, 480 min to deadline
+[real w16384 s2] step 3500/6957 fvu 0.0816 dead 0.000 270s
+[real w16384 s2] step 4000/6957 fvu 0.0906 dead 0.000 295s
+[real w16384 s2] step 4500/6957 fvu 0.0718 dead 0.000 319s
+[real w16384 s2] step 5000/6957 fvu 0.0646 dead 0.000 345s
+[real w16384 s2] step 5500/6957 fvu 0.0824 dead 0.000 369s
+[real w16384 s2] step 6000/6957 fvu 0.0791 dead 0.000 394s
+[real w16384 s2] step 6500/6957 fvu 0.0795 dead 0.000 419s
+saved /workspace/SAE/cache/saes_ladder/ladder-embR__blocks.0.hook_resid_post__real__w16384__k40__s2 fvu_eval 0.08533688474083372
+[2026-11-20 12:04:14] embR: real k = 40 eval FVU 0.084, 0.085, 0.085; target 0.085
+[2026-11-20 12:04:35] embR: power pass of ladder-embR__blocks.0.hook_resid_post__real__w16384__k40__s0: 16384 live, FVU 0.083, top-10 share 0.010, top-1% 0.105, ESS fraction 0.3298
+[2026-11-20 12:04:35] train ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.3000 (123 min into the job)
+[2026-11-20 12:04:47] dictionary V1: 5 rounds, power err 2.0e-02, rq err None, cov err 4.3e-13 (float32 8.9e-09), moved 0.000, 12s
+[2026-11-20 12:05:21] ladembRM8192ds0: atom-cloud gamma 0.907 / 0.837 / 0.810 / 0.896, top-10 power share 0.018 (real 0.010), moved 0.000
+[sparse w16384 s0] step 50/6957 fvu 0.7216 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.5827 dead 0.000 26s
+[2026-11-20 12:06:16] scored ladder-embR__blocks.0.hook_resid_post__real__w16384__k40__s2: live 16384, fvu 0.085, L0 37.6, primary window (10, 150) gamma full 0.057 fixed-n 0.072 [123s]
+[sparse w16384 s0] step 1000/6957 fvu 0.4467 dead 0.000 52s
+[sparse w16384 s0] step 1500/6957 fvu 0.2663 dead 0.000 78s
+[sparse w16384 s0] step 2000/6957 fvu 0.2214 dead 0.000 103s
+[sparse w16384 s0] step 2500/6957 fvu 0.2105 dead 0.000 129s
+[sparse w16384 s0] step 3000/6957 fvu 0.2082 dead 0.000 155s
+[sparse w16384 s0] step 3500/6957 fvu 0.2059 dead 0.000 182s
+[sparse w16384 s0] step 4000/6957 fvu 0.2054 dead 0.000 212s
+[sparse w16384 s0] step 4500/6957 fvu 0.2066 dead 0.000 246s
+[sparse w16384 s0] step 5000/6957 fvu 0.2042 dead 0.000 281s
+[sparse w16384 s0] step 5500/6957 fvu 0.2038 dead 0.001 315s
+[sparse w16384 s0] step 6000/6957 fvu 0.2040 dead 0.001 350s
+[sparse w16384 s0] step 6500/6957 fvu 0.2013 dead 0.003 384s
+[sparse w16384 s0] step 6957/6957 fvu 0.2032 dead 0.013 416s
+saved /workspace/SAE/cache/saes_ladder/ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.3000 fvu_eval 0.2015448144967407
+[2026-11-20 12:12:31] calibrate: rho 0.30 -> FVU 0.2015 (target 0.0849)
+[2026-11-20 12:12:31] train ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.1200 (131 min into the job)
+[sparse w16384 s0] step 50/6957 fvu 0.7214 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.5294 dead 0.000 26s
+[sparse w16384 s0] step 1000/6957 fvu 0.1772 dead 0.000 52s
+[sparse w16384 s0] step 1500/6957 fvu 0.1131 dead 0.000 77s
+[sparse w16384 s0] step 2000/6957 fvu 0.1056 dead 0.000 103s
+[sparse w16384 s0] step 2500/6957 fvu 0.1025 dead 0.000 129s
+[sparse w16384 s0] step 3000/6957 fvu 0.1012 dead 0.002 164s
+[sparse w16384 s0] step 3500/6957 fvu 0.0996 dead 0.015 199s
+[sparse w16384 s0] step 4000/6957 fvu 0.0981 dead 0.038 235s
+[sparse w16384 s0] step 4500/6957 fvu 0.0975 dead 0.063 270s
+[sparse w16384 s0] step 5000/6957 fvu 0.0956 dead 0.060 306s
+[sparse w16384 s0] step 5500/6957 fvu 0.0950 dead 0.039 342s
+[sparse w16384 s0] step 6000/6957 fvu 0.0944 dead 0.036 377s
+[sparse w16384 s0] step 6500/6957 fvu 0.0925 dead 0.049 413s
+[sparse w16384 s0] step 6957/6957 fvu 0.0933 dead 0.081 445s
+saved /workspace/SAE/cache/saes_ladder/ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.1200 fvu_eval 0.09241486958338126
+[2026-11-20 12:20:42] calibrate: rho 0.12 -> FVU 0.0924 (target 0.0849)
+[2026-11-20 12:20:42] embR V0: rho 0.12, FVU 0.092, target 0.085, matched
+[2026-11-20 12:22:19] scored ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.1200: live 12188, fvu 0.092, L0 40.0, primary window (10, 150) gamma full 0.587 fixed-n 0.582 [97s]
+[2026-11-20 12:22:19] train ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s1__ds0__M8192__L16__halfnormal__rho0.1200 (141 min into the job)
+[sparse w16384 s1] step 50/6957 fvu 0.7215 dead 0.000 3s
+[sparse w16384 s1] step 500/6957 fvu 0.5305 dead 0.000 26s
+[2026-11-20 12:24:02] scored ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.3000: live 13602, fvu 0.202, L0 40.0, primary window (10, 150) gamma full 0.536 fixed-n 0.532 [103s]
+[sparse w16384 s1] step 1000/6957 fvu 0.1804 dead 0.000 52s
+[sparse w16384 s1] step 1500/6957 fvu 0.1121 dead 0.000 78s
+[sparse w16384 s1] step 2000/6957 fvu 0.1057 dead 0.000 104s
+[sparse w16384 s1] step 2500/6957 fvu 0.1023 dead 0.000 130s
+[sparse w16384 s1] step 3000/6957 fvu 0.1007 dead 0.001 163s
+[sparse w16384 s1] step 3500/6957 fvu 0.0993 dead 0.010 198s
+[sparse w16384 s1] step 4000/6957 fvu 0.0983 dead 0.020 233s
+[sparse w16384 s1] step 4500/6957 fvu 0.0980 dead 0.031 269s
+[sparse w16384 s1] step 5000/6957 fvu 0.0959 dead 0.036 305s
+[sparse w16384 s1] step 5500/6957 fvu 0.0953 dead 0.033 340s
+[sparse w16384 s1] step 6000/6957 fvu 0.0948 dead 0.032 376s
+[sparse w16384 s1] step 6500/6957 fvu 0.0929 dead 0.039 411s
+[sparse w16384 s1] step 6957/6957 fvu 0.0938 dead 0.070 444s
+saved /workspace/SAE/cache/saes_ladder/ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s1__ds0__M8192__L16__halfnormal__rho0.1200 fvu_eval 0.0929125351339983
+[2026-11-20 12:30:42] train ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.1200__DladembRM8192ds0 (149 min into the job)
+[2026-11-20T12:30:53Z] [watchdog] heartbeat: GPU 12%, idle 0s, 282T free, 450 min to deadline
+[sparse w16384 s0] step 50/6957 fvu 0.6808 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.3426 dead 0.000 26s
+[sparse w16384 s0] step 1000/6957 fvu 0.2303 dead 0.000 52s
+[2026-11-20 12:32:20] scored ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s1__ds0__M8192__L16__halfnormal__rho0.1200: live 12346, fvu 0.093, L0 40.0, primary window (10, 150) gamma full 0.598 fixed-n 0.591 [98s]
+[sparse w16384 s0] step 1500/6957 fvu 0.1821 dead 0.000 78s
+[sparse w16384 s0] step 2000/6957 fvu 0.1576 dead 0.000 104s
+[sparse w16384 s0] step 2500/6957 fvu 0.1480 dead 0.000 129s
+[sparse w16384 s0] step 3000/6957 fvu 0.1400 dead 0.000 155s
+[sparse w16384 s0] step 3500/6957 fvu 0.1330 dead 0.000 182s
+[sparse w16384 s0] step 4000/6957 fvu 0.1269 dead 0.000 214s
+[sparse w16384 s0] step 4500/6957 fvu 0.1231 dead 0.001 249s
+[sparse w16384 s0] step 5000/6957 fvu 0.1211 dead 0.002 283s
+[sparse w16384 s0] step 5500/6957 fvu 0.1204 dead 0.003 318s
+[sparse w16384 s0] step 6000/6957 fvu 0.1161 dead 0.004 353s
+[sparse w16384 s0] step 6500/6957 fvu 0.1150 dead 0.010 387s
+[sparse w16384 s0] step 6957/6957 fvu 0.1144 dead 0.027 419s
+saved /workspace/SAE/cache/saes_ladder/ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.1200__DladembRM8192ds0 fvu_eval 0.11416597644405518
+[2026-11-20 12:38:23] calibrate: rho 0.12 -> FVU 0.1142 (target 0.0849)
+[2026-11-20 12:38:23] embR V1: rho 0.12, FVU 0.114, target 0.085, matched
+[2026-11-20 12:38:35] ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.1200__DladembRM8192ds0: null SAE top-1% power share 0.409 (real 0.105), ESS fraction 0.0192 (real 0.3298)
+[2026-11-20 12:38:35] train ladder-embR__blocks.0.hook_resid_post__real__w16384__k4__s0 (157 min into the job)
+[real w16384 s0] step 50/6957 fvu 0.6499 dead 0.000 14s
+[real w16384 s0] step 500/6957 fvu 0.2238 dead 0.001 47s
+[2026-11-20 12:40:12] scored ladder-embR__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.1200__DladembRM8192ds0: live 12770, fvu 0.114, L0 40.0, primary window (10, 150) gamma full 0.491 fixed-n 0.482 [97s]
+[real w16384 s0] step 1000/6957 fvu 0.1460 dead 0.013 91s
+[real w16384 s0] step 1500/6957 fvu 0.1147 dead 0.008 129s
+[real w16384 s0] step 2000/6957 fvu 0.0967 dead 0.009 173s
+[real w16384 s0] step 2500/6957 fvu 0.0864 dead 0.006 207s
+[real w16384 s0] step 3000/6957 fvu 0.1029 dead 0.004 232s
+[real w16384 s0] step 3500/6957 fvu 0.0749 dead 0.001 258s
+[real w16384 s0] step 4000/6957 fvu 0.0874 dead 0.000 282s
+[real w16384 s0] step 4500/6957 fvu 0.0874 dead 0.000 307s
+[real w16384 s0] step 5000/6957 fvu 0.0853 dead 0.000 325s
+[real w16384 s0] step 5500/6957 fvu 0.0942 dead 0.000 341s
+[real w16384 s0] step 6000/6957 fvu 0.0948 dead 0.000 357s
+[real w16384 s0] step 6500/6957 fvu 0.0891 dead 0.000 372s
+saved /workspace/SAE/cache/saes_ladder/ladder-embR__blocks.0.hook_resid_post__real__w16384__k4__s0 fvu_eval 0.09272288688345509
+[2026-11-20 12:45:18] train ladder-embR__blocks.0.hook_resid_post__real__w16384__k16__s0 (164 min into the job)
+[real w16384 s0] step 50/6957 fvu 0.4211 dead 0.000 13s
+[real w16384 s0] step 500/6957 fvu 0.2111 dead 0.000 48s
+[2026-11-20 12:46:56] scored ladder-embR__blocks.0.hook_resid_post__real__w16384__k4__s0: live 16298, fvu 0.093, L0 4.0, primary window (10, 150) gamma full 0.068 fixed-n 0.081 [98s]
+[real w16384 s0] step 1000/6957 fvu 0.1395 dead 0.000 85s
+[real w16384 s0] step 1500/6957 fvu 0.1114 dead 0.000 116s
+[real w16384 s0] step 2000/6957 fvu 0.0967 dead 0.000 153s
+[real w16384 s0] step 2500/6957 fvu 0.0859 dead 0.000 181s
+[real w16384 s0] step 3000/6957 fvu 0.1014 dead 0.000 200s
+[real w16384 s0] step 3500/6957 fvu 0.0721 dead 0.000 219s
+[real w16384 s0] step 4000/6957 fvu 0.0883 dead 0.000 238s
+[real w16384 s0] step 4500/6957 fvu 0.0857 dead 0.000 257s
+[real w16384 s0] step 5000/6957 fvu 0.0850 dead 0.000 275s
+[real w16384 s0] step 5500/6957 fvu 0.0996 dead 0.000 295s
+[real w16384 s0] step 6000/6957 fvu 0.0947 dead 0.000 313s
+[real w16384 s0] step 6500/6957 fvu 0.0887 dead 0.000 332s
+saved /workspace/SAE/cache/saes_ladder/ladder-embR__blocks.0.hook_resid_post__real__w16384__k16__s0 fvu_eval 0.0922735666196205
+[2026-11-20 12:53:12] scored ladder-embR__blocks.0.hook_resid_post__real__w16384__k16__s0: live 16384, fvu 0.092, L0 15.5, primary window (10, 150) gamma full 0.063 fixed-n 0.077 [96s]
+[2026-11-20 12:53:19] deleted /workspace/SAE/cache/acts/ladder-embR/blocks.0.hook_resid_post/acts.npy (stats.npz kept); 308801 GB free
+[2026-11-20 12:53:19] === embR: all steps done ({"a_collect_sigma": "done", "b_real": "done", "c_power": "done", "d_v0": "done", "e_v1": "done", "f_extra_k": "done", "g_delete_acts": "done"}), 172 min into the job
+[2026-11-20 12:53:19] === randL0: resid_post of block 0 of a randomly initialised Gemma-2-2B (HF default init, fixed seed); about 7.5 SAEs (worst 11) x 8 min: 90 min expected, 118 worst (172 min into the job, budget 420)
+/workspace/SAE/experiments/r2_job_ladder.py:388: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:835.)
+  info["input_layernorm0_max_abs"] = float(model.model.layers[0].input_layernorm.weight.abs().max())
+[2026-11-20 12:54:30] collect randL0 (resid_post of block 0 of a randomly initialised Gemma-2-2B (HF default init, fixed seed)) on cuda, 10,000,000 tokens, 308877 GB free
+[2026-11-20 12:55:53] collect randL0: 1,014,816 tokens, 148s
+[2026-11-20 12:57:04] collect randL0: 2,013,264 tokens, 218s
+[2026-11-20 12:58:06] collect randL0: 3,011,712 tokens, 281s
+[2026-11-20 12:59:32] collect randL0: 4,010,160 tokens, 366s
+[2026-11-20 13:00:53] collect randL0: 5,008,608 tokens, 447s
+[2026-11-20T13:00:56Z] [watchdog] heartbeat: GPU 0%, idle 600s, 282T free, 420 min to deadline
+[2026-11-20 13:02:02] collect randL0: 6,007,056 tokens, 517s
+[2026-11-20 13:03:06] collect randL0: 7,005,504 tokens, 580s
+[2026-11-20 13:04:05] collect randL0: 8,003,952 tokens, 640s
+[2026-11-20 13:05:20] collect randL0: 9,002,400 tokens, 715s
+[2026-11-20 13:06:24] collect randL0: 10,000,000 tokens, 778s
+[2026-11-20 13:06:27] collect randL0: done, 10,000,000 tokens x 2304, 781s
+[2026-11-20 13:06:32] randL0: Sigma top-1 share 0.0285, top-10 0.1457, participation ratio 273.0 of d = 2304, 2304 positive eigenvalues
+[2026-11-20 13:06:32] train ladder-rand__blocks.0.hook_resid_post__real__w16384__k40__s0 (185 min into the job)
+[real w16384 s0] step 50/6957 fvu 0.6069 dead 0.000 5s
+[real w16384 s0] step 500/6957 fvu 0.4415 dead 0.000 28s
+[real w16384 s0] step 1000/6957 fvu 0.3723 dead 0.000 53s
+[real w16384 s0] step 1500/6957 fvu 0.3216 dead 0.000 78s
+[real w16384 s0] step 2000/6957 fvu 0.2988 dead 0.000 104s
+[real w16384 s0] step 2500/6957 fvu 0.2872 dead 0.000 129s
+[real w16384 s0] step 3000/6957 fvu 0.2977 dead 0.000 154s
+[real w16384 s0] step 3500/6957 fvu 0.2757 dead 0.000 179s
+[real w16384 s0] step 4000/6957 fvu 0.2910 dead 0.000 204s
+[real w16384 s0] step 4500/6957 fvu 0.2808 dead 0.000 229s
+[real w16384 s0] step 5000/6957 fvu 0.2811 dead 0.000 254s
+[real w16384 s0] step 5500/6957 fvu 0.3085 dead 0.000 279s
+[real w16384 s0] step 6000/6957 fvu 0.2998 dead 0.000 304s
+[real w16384 s0] step 6500/6957 fvu 0.3008 dead 0.000 329s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.0.hook_resid_post__real__w16384__k40__s0 fvu_eval 0.2948689721844565
+[2026-11-20 13:12:35] train ladder-rand__blocks.0.hook_resid_post__real__w16384__k40__s1 (191 min into the job)
+[real w16384 s1] step 50/6957 fvu 0.5836 dead 0.000 8s
+[real w16384 s1] step 500/6957 fvu 0.4190 dead 0.000 31s
+[real w16384 s1] step 1000/6957 fvu 0.3582 dead 0.000 57s
+[real w16384 s1] step 1500/6957 fvu 0.3400 dead 0.000 83s
+[2026-11-20 13:14:16] scored ladder-rand__blocks.0.hook_resid_post__real__w16384__k40__s0: live 16384, fvu 0.295, L0 40.0, primary window (10, 150) gamma full 0.205 fixed-n 0.204 [100s]
+[real w16384 s1] step 2000/6957 fvu 0.2834 dead 0.000 108s
+[real w16384 s1] step 2500/6957 fvu 0.2942 dead 0.000 134s
+[real w16384 s1] step 3000/6957 fvu 0.2939 dead 0.000 160s
+[real w16384 s1] step 3500/6957 fvu 0.3120 dead 0.000 185s
+[real w16384 s1] step 4000/6957 fvu 0.2932 dead 0.000 210s
+[real w16384 s1] step 4500/6957 fvu 0.2869 dead 0.000 235s
+[real w16384 s1] step 5000/6957 fvu 0.2397 dead 0.000 259s
+[real w16384 s1] step 5500/6957 fvu 0.3264 dead 0.000 285s
+[real w16384 s1] step 6000/6957 fvu 0.2901 dead 0.000 310s
+[real w16384 s1] step 6500/6957 fvu 0.3062 dead 0.000 334s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.0.hook_resid_post__real__w16384__k40__s1 fvu_eval 0.2959767349292237
+[2026-11-20 13:18:45] train ladder-rand__blocks.0.hook_resid_post__real__w16384__k40__s2 (197 min into the job)
+[real w16384 s2] step 50/6957 fvu 0.5674 dead 0.000 13s
+[real w16384 s2] step 500/6957 fvu 0.4228 dead 0.000 55s
+[2026-11-20 13:20:22] scored ladder-rand__blocks.0.hook_resid_post__real__w16384__k40__s1: live 16384, fvu 0.296, L0 40.0, primary window (10, 150) gamma full 0.212 fixed-n 0.213 [97s]
+[real w16384 s2] step 1000/6957 fvu 0.3452 dead 0.000 94s
+[real w16384 s2] step 1500/6957 fvu 0.3067 dead 0.000 138s
+[real w16384 s2] step 2000/6957 fvu 0.3050 dead 0.000 181s
+[real w16384 s2] step 2500/6957 fvu 0.2857 dead 0.000 215s
+[real w16384 s2] step 3000/6957 fvu 0.2895 dead 0.000 240s
+[real w16384 s2] step 3500/6957 fvu 0.2756 dead 0.000 265s
+[real w16384 s2] step 4000/6957 fvu 0.2875 dead 0.000 290s
+[real w16384 s2] step 4500/6957 fvu 0.2596 dead 0.000 314s
+[real w16384 s2] step 5000/6957 fvu 0.2557 dead 0.000 340s
+[real w16384 s2] step 5500/6957 fvu 0.2791 dead 0.000 364s
+[real w16384 s2] step 6000/6957 fvu 0.2800 dead 0.000 389s
+[real w16384 s2] step 6500/6957 fvu 0.2963 dead 0.000 414s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.0.hook_resid_post__real__w16384__k40__s2 fvu_eval 0.2954644884450205
+[2026-11-20 13:26:31] randL0: real k = 40 eval FVU 0.295, 0.296, 0.295; target 0.295
+[2026-11-20 13:27:08] randL0: power pass of ladder-rand__blocks.0.hook_resid_post__real__w16384__k40__s0: 16384 live, FVU 0.294, top-10 share 0.050, top-1% 0.224, ESS fraction 0.0927
+[2026-11-20 13:27:08] train ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.3000 (205 min into the job)
+[2026-11-20 13:27:35] dictionary V1: 20 rounds, power err 2.9e-02, rq err None, cov err 4.5e-13 (float32 2.0e-08), moved 0.000, 27s
+[2026-11-20 13:28:05] ladrandL0M8192ds0: atom-cloud gamma 0.557 / 0.555 / 0.664 / 0.868, top-10 power share 0.071 (real 0.050), moved 0.000
+[sparse w16384 s0] step 50/6957 fvu 0.7678 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.6412 dead 0.000 26s
+[2026-11-20 13:28:42] scored ladder-rand__blocks.0.hook_resid_post__real__w16384__k40__s2: live 16384, fvu 0.295, L0 40.0, primary window (10, 150) gamma full 0.204 fixed-n 0.205 [130s]
+[sparse w16384 s0] step 1000/6957 fvu 0.4526 dead 0.000 53s
+[sparse w16384 s0] step 1500/6957 fvu 0.2732 dead 0.000 78s
+[sparse w16384 s0] step 2000/6957 fvu 0.2451 dead 0.000 104s
+[sparse w16384 s0] step 2500/6957 fvu 0.2385 dead 0.000 130s
+[sparse w16384 s0] step 3000/6957 fvu 0.2365 dead 0.000 155s
+[2026-11-20T13:30:58Z] [watchdog] heartbeat: GPU 100%, idle 0s, 284T free, 390 min to deadline
+[sparse w16384 s0] step 3500/6957 fvu 0.2350 dead 0.000 181s
+[sparse w16384 s0] step 4000/6957 fvu 0.2342 dead 0.000 210s
+[sparse w16384 s0] step 4500/6957 fvu 0.2337 dead 0.000 241s
+[sparse w16384 s0] step 5000/6957 fvu 0.2312 dead 0.000 274s
+[sparse w16384 s0] step 5500/6957 fvu 0.2315 dead 0.001 309s
+[sparse w16384 s0] step 6000/6957 fvu 0.2308 dead 0.001 344s
+[sparse w16384 s0] step 6500/6957 fvu 0.2283 dead 0.003 378s
+[sparse w16384 s0] step 6957/6957 fvu 0.2301 dead 0.012 410s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.3000 fvu_eval 0.22778727418489875
+[2026-11-20 13:35:03] calibrate: rho 0.30 -> FVU 0.2278 (target 0.2954)
+[2026-11-20 13:35:03] train ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.4000 (213 min into the job)
+[sparse w16384 s0] step 50/6957 fvu 0.7678 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.6494 dead 0.000 26s
+[sparse w16384 s0] step 1000/6957 fvu 0.5931 dead 0.000 52s
+[sparse w16384 s0] step 1500/6957 fvu 0.4320 dead 0.000 78s
+[sparse w16384 s0] step 2000/6957 fvu 0.3305 dead 0.000 103s
+[sparse w16384 s0] step 2500/6957 fvu 0.3097 dead 0.000 129s
+[sparse w16384 s0] step 3000/6957 fvu 0.3029 dead 0.000 154s
+[sparse w16384 s0] step 3500/6957 fvu 0.2999 dead 0.000 180s
+[sparse w16384 s0] step 4000/6957 fvu 0.2987 dead 0.000 208s
+[sparse w16384 s0] step 4500/6957 fvu 0.2980 dead 0.000 237s
+[sparse w16384 s0] step 5000/6957 fvu 0.2953 dead 0.000 271s
+[sparse w16384 s0] step 5500/6957 fvu 0.2963 dead 0.000 305s
+[sparse w16384 s0] step 6000/6957 fvu 0.2961 dead 0.000 340s
+[sparse w16384 s0] step 6500/6957 fvu 0.2939 dead 0.001 375s
+[sparse w16384 s0] step 6957/6957 fvu 0.2961 dead 0.004 406s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.4000 fvu_eval 0.2932669396160984
+[2026-11-20 13:42:34] calibrate: rho 0.40 -> FVU 0.2933 (target 0.2954)
+[2026-11-20 13:42:34] randL0 V0: rho 0.40, FVU 0.293, target 0.295, matched
+[2026-11-20 13:44:11] scored ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.3000: live 13641, fvu 0.228, L0 40.0, primary window (10, 150) gamma full 0.546 fixed-n 0.545 [97s]
+[2026-11-20 13:44:11] train ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s1__ds0__M8192__L16__halfnormal__rho0.4000 (222 min into the job)
+[sparse w16384 s1] step 50/6957 fvu 0.7679 dead 0.000 3s
+[sparse w16384 s1] step 500/6957 fvu 0.6498 dead 0.000 26s
+[sparse w16384 s1] step 1000/6957 fvu 0.5922 dead 0.000 52s
+[2026-11-20 13:46:04] scored ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.4000: live 14224, fvu 0.293, L0 40.0, primary window (10, 150) gamma full 0.519 fixed-n 0.523 [113s]
+[sparse w16384 s1] step 1500/6957 fvu 0.4296 dead 0.000 79s
+[sparse w16384 s1] step 2000/6957 fvu 0.3303 dead 0.000 105s
+[sparse w16384 s1] step 2500/6957 fvu 0.3100 dead 0.000 130s
+[sparse w16384 s1] step 3000/6957 fvu 0.3030 dead 0.000 156s
+[sparse w16384 s1] step 3500/6957 fvu 0.3002 dead 0.000 182s
+[sparse w16384 s1] step 4000/6957 fvu 0.2988 dead 0.000 208s
+[sparse w16384 s1] step 4500/6957 fvu 0.2984 dead 0.000 238s
+[sparse w16384 s1] step 5000/6957 fvu 0.2958 dead 0.000 271s
+[sparse w16384 s1] step 5500/6957 fvu 0.2963 dead 0.000 306s
+[sparse w16384 s1] step 6000/6957 fvu 0.2962 dead 0.001 340s
+[sparse w16384 s1] step 6500/6957 fvu 0.2937 dead 0.001 375s
+[sparse w16384 s1] step 6957/6957 fvu 0.2960 dead 0.005 407s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s1__ds0__M8192__L16__halfnormal__rho0.4000 fvu_eval 0.29325283703700733
+[2026-11-20 13:51:58] train ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.4000__DladrandL0M8192ds0 (230 min into the job)
+[sparse w16384 s0] step 50/6957 fvu 0.7218 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.5117 dead 0.000 26s
+[sparse w16384 s0] step 1000/6957 fvu 0.4557 dead 0.000 52s
+[2026-11-20 13:53:38] scored ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s1__ds0__M8192__L16__halfnormal__rho0.4000: live 14199, fvu 0.293, L0 40.0, primary window (10, 150) gamma full 0.536 fixed-n 0.536 [100s]
+[sparse w16384 s0] step 1500/6957 fvu 0.4162 dead 0.000 79s
+[sparse w16384 s0] step 2000/6957 fvu 0.3806 dead 0.000 105s
+[sparse w16384 s0] step 2500/6957 fvu 0.3632 dead 0.000 130s
+[sparse w16384 s0] step 3000/6957 fvu 0.3504 dead 0.000 156s
+[sparse w16384 s0] step 3500/6957 fvu 0.3416 dead 0.000 182s
+[sparse w16384 s0] step 4000/6957 fvu 0.3323 dead 0.000 207s
+[sparse w16384 s0] step 4500/6957 fvu 0.3164 dead 0.000 233s
+[sparse w16384 s0] step 5000/6957 fvu 0.3183 dead 0.000 259s
+[sparse w16384 s0] step 5500/6957 fvu 0.3232 dead 0.000 287s
+[sparse w16384 s0] step 6000/6957 fvu 0.3121 dead 0.000 317s
+[sparse w16384 s0] step 6500/6957 fvu 0.3096 dead 0.000 350s
+[sparse w16384 s0] step 6957/6957 fvu 0.3096 dead 0.001 382s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.4000__DladrandL0M8192ds0 fvu_eval 0.3106254692157364
+[2026-11-20 13:59:02] calibrate: rho 0.40 -> FVU 0.3106 (target 0.2954)
+[2026-11-20 13:59:02] randL0 V1: rho 0.40, FVU 0.311, target 0.295, matched
+[2026-11-20 13:59:14] ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.4000__DladrandL0M8192ds0: null SAE top-1% power share 0.388 (real 0.224), ESS fraction 0.0160 (real 0.0927)
+[2026-11-20 14:00:51] scored ladder-rand__blocks.0.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.4000__DladrandL0M8192ds0: live 15382, fvu 0.311, L0 40.0, primary window (10, 150) gamma full 0.645 fixed-n 0.641 [98s]
+[2026-11-20 14:00:52] deleted /workspace/SAE/cache/acts/ladder-rand/blocks.0.hook_resid_post/acts.npy (stats.npz kept); 313202 GB free
+[2026-11-20 14:00:52] === randL0: all steps done ({"a_collect_sigma": "done", "b_real": "done", "c_power": "done", "d_v0": "done", "e_v1": "done", "g_delete_acts": "done"}), 239 min into the job
+[2026-11-20 14:00:52] === randL13: resid_post of block 13 of the same randomly initialised Gemma-2-2B; about 7.5 SAEs (worst 11) x 8 min: 90 min expected, 118 worst (239 min into the job, budget 420)
+[2026-11-20T14:01:01Z] [watchdog] heartbeat: GPU 0%, idle 180s, 285T free, 360 min to deadline
+/workspace/SAE/experiments/r2_job_ladder.py:388: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:835.)
+  info["input_layernorm0_max_abs"] = float(model.model.layers[0].input_layernorm.weight.abs().max())
+[2026-11-20 14:01:56] collect randL13: embedding and block 0 match randL0's
+[2026-11-20 14:02:04] collect randL13 (resid_post of block 13 of the same randomly initialised Gemma-2-2B) on cuda, 10,000,000 tokens, 313310 GB free
+[2026-11-20 14:04:00] collect randL13: 1,014,816 tokens, 182s
+[2026-11-20 14:05:48] collect randL13: 2,013,264 tokens, 290s
+[2026-11-20 14:07:43] collect randL13: 3,011,712 tokens, 406s
+[2026-11-20 14:09:36] collect randL13: 4,010,160 tokens, 518s
+[2026-11-20 14:11:34] collect randL13: 5,008,608 tokens, 636s
+[2026-11-20 14:13:24] collect randL13: 6,007,056 tokens, 746s
+[2026-11-20 14:15:26] collect randL13: 7,005,504 tokens, 868s
+[2026-11-20 14:17:24] collect randL13: 8,003,952 tokens, 986s
+[2026-11-20 14:19:13] collect randL13: 9,002,400 tokens, 1095s
+[2026-11-20 14:21:00] collect randL13: 10,000,000 tokens, 1203s
+[2026-11-20 14:21:03] collect randL13: done, 10,000,000 tokens x 2304, 1205s
+[2026-11-20 14:21:08] randL13: Sigma top-1 share 0.0404, top-10 0.1505, participation ratio 233.7 of d = 2304, 2304 positive eigenvalues
+[2026-11-20 14:21:08] train ladder-rand__blocks.13.hook_resid_post__real__w16384__k40__s0 (259 min into the job)
+[real w16384 s0] step 50/6957 fvu 0.6347 dead 0.000 5s
+[real w16384 s0] step 500/6957 fvu 0.6461 dead 0.000 28s
+[real w16384 s0] step 1000/6957 fvu 0.5671 dead 0.000 54s
+[real w16384 s0] step 1500/6957 fvu 0.4386 dead 0.000 79s
+[real w16384 s0] step 2000/6957 fvu 0.3541 dead 0.000 104s
+[real w16384 s0] step 2500/6957 fvu 0.3354 dead 0.000 129s
+[real w16384 s0] step 3000/6957 fvu 0.3384 dead 0.000 154s
+[real w16384 s0] step 3500/6957 fvu 0.3418 dead 0.000 179s
+[real w16384 s0] step 4000/6957 fvu 0.3440 dead 0.000 204s
+[real w16384 s0] step 4500/6957 fvu 0.3434 dead 0.000 229s
+[real w16384 s0] step 5000/6957 fvu 0.3310 dead 0.000 254s
+[real w16384 s0] step 5500/6957 fvu 0.4350 dead 0.000 280s
+[real w16384 s0] step 6000/6957 fvu 0.3852 dead 0.000 305s
+[real w16384 s0] step 6500/6957 fvu 0.4187 dead 0.000 329s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.13.hook_resid_post__real__w16384__k40__s0 fvu_eval 0.5996498368063177
+[2026-11-20 14:27:10] train ladder-rand__blocks.13.hook_resid_post__real__w16384__k40__s1 (265 min into the job)
+[real w16384 s1] step 50/6957 fvu 0.6324 dead 0.000 7s
+[real w16384 s1] step 500/6957 fvu 0.6556 dead 0.000 30s
+[real w16384 s1] step 1000/6957 fvu 0.5584 dead 0.000 56s
+[real w16384 s1] step 1500/6957 fvu 0.4944 dead 0.000 81s
+[2026-11-20 14:28:46] scored ladder-rand__blocks.13.hook_resid_post__real__w16384__k40__s0: live 16338, fvu 0.600, L0 40.0, primary window (10, 150) gamma full 0.634 fixed-n 0.633 [96s]
+[real w16384 s1] step 2000/6957 fvu 0.3403 dead 0.000 106s
+[real w16384 s1] step 2500/6957 fvu 0.3398 dead 0.000 132s
+[real w16384 s1] step 3000/6957 fvu 0.3490 dead 0.000 157s
+[real w16384 s1] step 3500/6957 fvu 0.3557 dead 0.000 181s
+[real w16384 s1] step 4000/6957 fvu 0.3498 dead 0.000 206s
+[2026-11-20T14:31:03Z] [watchdog] heartbeat: GPU 99%, idle 0s, 286T free, 330 min to deadline
+[real w16384 s1] step 4500/6957 fvu 0.3465 dead 0.000 231s
+[real w16384 s1] step 5000/6957 fvu 0.3029 dead 0.000 255s
+[real w16384 s1] step 5500/6957 fvu 0.4395 dead 0.000 282s
+[real w16384 s1] step 6000/6957 fvu 0.3916 dead 0.000 307s
+[real w16384 s1] step 6500/6957 fvu 0.4188 dead 0.000 332s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.13.hook_resid_post__real__w16384__k40__s1 fvu_eval 0.604294367954339
+[2026-11-20 14:33:17] train ladder-rand__blocks.13.hook_resid_post__real__w16384__k40__s2 (272 min into the job)
+[real w16384 s2] step 50/6957 fvu 0.6022 dead 0.000 6s
+[real w16384 s2] step 500/6957 fvu 0.6593 dead 0.000 30s
+[real w16384 s2] step 1000/6957 fvu 0.5204 dead 0.000 55s
+[real w16384 s2] step 1500/6957 fvu 0.3581 dead 0.000 80s
+[2026-11-20 14:35:07] scored ladder-rand__blocks.13.hook_resid_post__real__w16384__k40__s1: live 16346, fvu 0.604, L0 40.0, primary window (10, 150) gamma full 0.643 fixed-n 0.641 [109s]
+[real w16384 s2] step 2000/6957 fvu 0.3579 dead 0.000 107s
+[real w16384 s2] step 2500/6957 fvu 0.3341 dead 0.000 132s
+[real w16384 s2] step 3000/6957 fvu 0.3362 dead 0.000 157s
+[real w16384 s2] step 3500/6957 fvu 0.3257 dead 0.000 181s
+[real w16384 s2] step 4000/6957 fvu 0.3285 dead 0.000 206s
+[real w16384 s2] step 4500/6957 fvu 0.3089 dead 0.000 231s
+[real w16384 s2] step 5000/6957 fvu 0.3036 dead 0.000 257s
+[real w16384 s2] step 5500/6957 fvu 0.3278 dead 0.000 286s
+[real w16384 s2] step 6000/6957 fvu 0.3291 dead 0.000 312s
+[real w16384 s2] step 6500/6957 fvu 0.4614 dead 0.000 338s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.13.hook_resid_post__real__w16384__k40__s2 fvu_eval 0.6000006793706819
+[2026-11-20 14:39:30] randL13: real k = 40 eval FVU 0.600, 0.604, 0.600; target 0.601
+[2026-11-20 14:39:50] randL13: power pass of ladder-rand__blocks.13.hook_resid_post__real__w16384__k40__s0: 16375 live, FVU 0.510, top-10 share 0.076, top-1% 0.239, ESS fraction 0.0577
+[2026-11-20 14:39:50] train ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.3000 (278 min into the job)
+[2026-11-20 14:40:39] dictionary V1: 36 rounds, power err 2.9e-02, rq err None, cov err 8.1e-13 (float32 2.7e-08), moved 0.000, 49s
+[sparse w16384 s0] step 50/6957 fvu 0.7721 dead 0.000 6s
+[2026-11-20 14:41:12] ladrandL13M8192ds0: atom-cloud gamma 0.207 / 0.339 / 0.541 / 0.914, top-10 power share 0.107 (real 0.076), moved 0.000
+[sparse w16384 s0] step 500/6957 fvu 0.6550 dead 0.000 34s
+[2026-11-20 14:41:35] scored ladder-rand__blocks.13.hook_resid_post__real__w16384__k40__s2: live 16337, fvu 0.600, L0 40.0, primary window (10, 150) gamma full 0.628 fixed-n 0.628 [125s]
+[sparse w16384 s0] step 1000/6957 fvu 0.4324 dead 0.000 61s
+[sparse w16384 s0] step 1500/6957 fvu 0.2709 dead 0.000 86s
+[sparse w16384 s0] step 2000/6957 fvu 0.2537 dead 0.000 112s
+[sparse w16384 s0] step 2500/6957 fvu 0.2475 dead 0.000 138s
+[sparse w16384 s0] step 3000/6957 fvu 0.2458 dead 0.000 163s
+[sparse w16384 s0] step 3500/6957 fvu 0.2436 dead 0.000 189s
+[sparse w16384 s0] step 4000/6957 fvu 0.2424 dead 0.000 217s
+[sparse w16384 s0] step 4500/6957 fvu 0.2421 dead 0.000 248s
+[sparse w16384 s0] step 5000/6957 fvu 0.2386 dead 0.001 283s
+[sparse w16384 s0] step 5500/6957 fvu 0.2396 dead 0.001 317s
+[sparse w16384 s0] step 6000/6957 fvu 0.2389 dead 0.001 352s
+[sparse w16384 s0] step 6500/6957 fvu 0.2368 dead 0.003 387s
+[sparse w16384 s0] step 6957/6957 fvu 0.2375 dead 0.009 418s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.3000 fvu_eval 0.23584755546678698
+[2026-11-20 14:47:55] calibrate: rho 0.30 -> FVU 0.2358 (target 0.6013)
+[2026-11-20 14:47:55] train ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.8600 (286 min into the job)
+[sparse w16384 s0] step 50/6957 fvu 0.7720 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.6710 dead 0.000 26s
+[sparse w16384 s0] step 1000/6957 fvu 0.6528 dead 0.000 52s
+[sparse w16384 s0] step 1500/6957 fvu 0.6440 dead 0.000 78s
+[sparse w16384 s0] step 2000/6957 fvu 0.6376 dead 0.000 104s
+[sparse w16384 s0] step 2500/6957 fvu 0.6339 dead 0.000 130s
+[sparse w16384 s0] step 3000/6957 fvu 0.6342 dead 0.000 156s
+[sparse w16384 s0] step 3500/6957 fvu 0.6318 dead 0.000 182s
+[sparse w16384 s0] step 4000/6957 fvu 0.6301 dead 0.000 208s
+[sparse w16384 s0] step 4500/6957 fvu 0.6286 dead 0.000 234s
+[sparse w16384 s0] step 5000/6957 fvu 0.6280 dead 0.000 260s
+[sparse w16384 s0] step 5500/6957 fvu 0.6285 dead 0.000 286s
+[sparse w16384 s0] step 6000/6957 fvu 0.6252 dead 0.000 312s
+[sparse w16384 s0] step 6500/6957 fvu 0.6233 dead 0.000 338s
+[sparse w16384 s0] step 6957/6957 fvu 0.6206 dead 0.000 362s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.8600 fvu_eval 0.6214771948230292
+[2026-11-20 14:54:40] calibrate: rho 0.86 -> FVU 0.6215 (target 0.6013)
+[2026-11-20 14:54:40] randL13 V0: rho 0.86, FVU 0.621, target 0.601, matched
+[2026-11-20 14:56:19] scored ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.3000: live 13848, fvu 0.236, L0 40.0, primary window (10, 150) gamma full 0.629 fixed-n 0.632 [98s]
+[2026-11-20 14:56:19] train ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s1__ds0__M8192__L16__halfnormal__rho0.8600 (295 min into the job)
+[sparse w16384 s1] step 50/6957 fvu 0.7720 dead 0.000 3s
+[sparse w16384 s1] step 500/6957 fvu 0.6704 dead 0.000 26s
+[sparse w16384 s1] step 1000/6957 fvu 0.6506 dead 0.000 52s
+[2026-11-20 14:58:12] scored ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.8600: live 16384, fvu 0.621, L0 40.0, primary window (10, 150) gamma full 0.752 fixed-n 0.760 [113s]
+[sparse w16384 s1] step 1500/6957 fvu 0.6437 dead 0.000 79s
+[sparse w16384 s1] step 2000/6957 fvu 0.6397 dead 0.000 105s
+[sparse w16384 s1] step 2500/6957 fvu 0.6366 dead 0.000 131s
+[sparse w16384 s1] step 3000/6957 fvu 0.6360 dead 0.000 157s
+[sparse w16384 s1] step 3500/6957 fvu 0.6323 dead 0.000 183s
+[sparse w16384 s1] step 4000/6957 fvu 0.6302 dead 0.000 209s
+[2026-11-20T15:01:06Z] [watchdog] heartbeat: GPU 99%, idle 0s, 285T free, 300 min to deadline
+[sparse w16384 s1] step 4500/6957 fvu 0.6287 dead 0.000 235s
+[sparse w16384 s1] step 5000/6957 fvu 0.6273 dead 0.000 261s
+[sparse w16384 s1] step 5500/6957 fvu 0.6270 dead 0.000 287s
+[sparse w16384 s1] step 6000/6957 fvu 0.6239 dead 0.000 313s
+[sparse w16384 s1] step 6500/6957 fvu 0.6218 dead 0.000 339s
+[sparse w16384 s1] step 6957/6957 fvu 0.6193 dead 0.000 362s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s1__ds0__M8192__L16__halfnormal__rho0.8600 fvu_eval 0.6198238715642194
+[2026-11-20 15:03:21] train ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.8600__DladrandL13M8192ds0 (302 min into the job)
+[sparse w16384 s0] step 50/6957 fvu 0.7732 dead 0.000 3s
+[sparse w16384 s0] step 500/6957 fvu 0.6627 dead 0.000 26s
+[sparse w16384 s0] step 1000/6957 fvu 0.6383 dead 0.000 52s
+[2026-11-20 15:05:00] scored ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s1__ds0__M8192__L16__halfnormal__rho0.8600: live 16384, fvu 0.620, L0 40.0, primary window (10, 150) gamma full 0.743 fixed-n 0.750 [98s]
+[sparse w16384 s0] step 1500/6957 fvu 0.6263 dead 0.000 79s
+[sparse w16384 s0] step 2000/6957 fvu 0.6206 dead 0.000 105s
+[sparse w16384 s0] step 2500/6957 fvu 0.6131 dead 0.000 131s
+[sparse w16384 s0] step 3000/6957 fvu 0.6066 dead 0.000 157s
+[sparse w16384 s0] step 3500/6957 fvu 0.5994 dead 0.000 183s
+[sparse w16384 s0] step 4000/6957 fvu 0.5970 dead 0.000 209s
+[sparse w16384 s0] step 4500/6957 fvu 0.5949 dead 0.000 235s
+[sparse w16384 s0] step 5000/6957 fvu 0.5939 dead 0.000 261s
+[sparse w16384 s0] step 5500/6957 fvu 0.5965 dead 0.000 287s
+[sparse w16384 s0] step 6000/6957 fvu 0.5915 dead 0.000 313s
+[sparse w16384 s0] step 6500/6957 fvu 0.5853 dead 0.000 338s
+[sparse w16384 s0] step 6957/6957 fvu 0.5837 dead 0.000 362s
+saved /workspace/SAE/cache/saes_ladder/ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.8600__DladrandL13M8192ds0 fvu_eval 0.5869277739575215
+[2026-11-20 15:10:06] calibrate: rho 0.86 -> FVU 0.5869 (target 0.6013)
+[2026-11-20 15:10:06] randL13 V1: rho 0.86, FVU 0.587, target 0.601, matched
+[2026-11-20 15:10:18] ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.8600__DladrandL13M8192ds0: null SAE top-1% power share 0.521 (real 0.239), ESS fraction 0.0034 (real 0.0577)
+[2026-11-20 15:11:54] scored ladder-rand__blocks.13.hook_resid_post__sparse__w16384__k40__s0__ds0__M8192__L16__halfnormal__rho0.8600__DladrandL13M8192ds0: live 16384, fvu 0.587, L0 40.0, primary window (10, 150) gamma full 0.738 fixed-n 0.747 [96s]
+[2026-11-20 15:12:01] deleted /workspace/SAE/cache/acts/ladder-rand/blocks.13.hook_resid_post/acts.npy (stats.npz kept); 311673 GB free
+[2026-11-20 15:12:01] === randL13: all steps done ({"a_collect_sigma": "done", "b_real": "done", "c_power": "done", "d_v0": "done", "e_v1": "done", "g_delete_acts": "done"}), 310 min into the job
+[2026-11-20 15:12:01] results /workspace/SAE/results/r2: 0.81 GB; status {"embT": true, "embR": true, "randL0": true, "randL13": true}
+embT       R 0.313 Z 0.869 N 0.680 / R 0.574 Z 0.953 N 0.837  matched {'v0': True, 'v1': True}  missing []
+embR       R 0.192 Z 0.863 N 0.699 / R 0.456 Z 0.988 N 0.859  matched {'v0': True, 'v1': True}  missing []
+randL0     R 0.402 Z 1.023 N 0.951 / R 0.727 Z 1.177 N 1.113  matched {'v0': True, 'v1': True}  missing []
+randL13    R 0.875 Z 1.449 N 1.429 / R 1.161 Z 2.649 N 2.256  matched {'v0': True, 'v1': True}  missing []
+embR vs embT           persists       no gap False  
+randL0 vs gemma_L0     uninformative  no gap False  trained rung missing
+randL13 vs gemma_L13   uninformative  no gap False  trained rung missing
+-> /workspace/SAE/results/r2/ladder_summary.json
+[2026-11-20 15:12:02] JOB DONE ladder (310 min)
+[2026-11-20T15:12:04Z] [launcher] wrote results/r2/r2_job_ladder.DONE: exit_code=0 reason=job exited 0
+[2026-11-20T15:12:04Z] [launcher] grace period 15 min before stopping the pod: pull results now (gpu/pull_r2.sh)

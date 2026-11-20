@@ -1,0 +1,7 @@
+[2026-11-19T11:59:42Z] [watchdog] watchdog up (pid 1774): deadline 2026-11-19T21:59:42Z, idle guard <5% for 1800s, check every 60s
+[2026-11-19T12:29:44Z] [watchdog] heartbeat: GPU 99%, idle 0s, 300T free, 569 min to deadline
+[2026-11-19T12:59:46Z] [watchdog] heartbeat: GPU 99%, idle 0s, 300T free, 539 min to deadline
+[2026-11-19T13:29:48Z] [watchdog] heartbeat: GPU 0%, idle 780s, 299T free, 509 min to deadline
+!!!!!!!! [2026-11-19T13:46:49Z] [watchdog] GPU under 5% for 1800s while the job runs: treating it as hung !!!!!!!!
+[2026-11-19T13:46:49Z] [watchdog] wrote results/r2/r2_job_chain2.FAILED: exit_code=125 reason=idle: GPU idle 1800s while job pid 1790 alive
+[2026-11-19T13:46:49Z] [watchdog] grace 900s before stopping (pull results now)

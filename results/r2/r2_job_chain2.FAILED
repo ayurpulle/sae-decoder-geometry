@@ -1,0 +1,6 @@
+job=r2_job_chain2
+status=FAILED
+exit_code=125
+reason=idle: GPU idle 1800s while job pid 1790 alive
+time=2026-11-19T13:46:49Z
+pod=ih8b1rsr8cg8wc

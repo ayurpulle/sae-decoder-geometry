@@ -1217,3 +1217,106 @@ Table 1), real feature power, discussion with a reporting protocol and the quali
 eight-layer equivalence table, k sweep figure, top window, reading (v), resynthesis summary, generator-settings table, GPT-2 null
 figure, Rayleigh and power-family analyses. New appendices: rules fixed in advance (one table, all outcomes, full hashes), the
 power-matched null, quality. Earlier rules without a hash are now called pre-specified. Impact statement rewritten.
+
+## 2026-11-20 - Power-matched null: three SAE seeds and the 32,768-atom setting
+
+Pod run, 19 Nov, 11:59-13:19 UTC (80 min): `experiments/r2_job_pmatch2.py` as the first job of `experiments/r2_job_chain2.py`,
+rules and predictions in `notes/prereg_ladder.md` Parts 1-2 (dated 2026-11-19; job sha256 8703fb0638d1..., recorded in all ten
+rows and equal to the note's; the first run's job and generator hashes unchanged). Rows: `results/r2_pm2/runs_pmatch2.jsonl` (10:
+2 PM/PMCAL and 2 PMSEED at M=32,768, 4 PMSEED at the reference settings, 2 V0SEED), dictionary reports in `results/r2_pm2/pmatch/`.
+New `experiments/r2_pmatch2_summary.py` reads these with the first-run rows and writes `results/r2_pm2/pmatch2_summary.json` and
+`paper/figures/tab_pmatch2_r2.tex`. R = real k=40, three seeds; Z = equal-power null (two seeds at the reference settings, three at
+M=32,768); N = power-matched null, three seeds. Bulk gamma_fixed, ranks 31-450 / 101-1000:
+- L13 ref (rho .43): R .595/.863, Z .934/1.155, N .751+-.002/.993+-.003, N-R .155/.129, closed 54%/56% (seed sd 0.5/1.1 pts) ->
+  partly, as in the first run (first run 54%/55%).
+- L0 ref (rho .13): R .375/.623, Z .912/1.030, N .738+-.004/.916+-.0005, N-R .363/.292, closed 32%/28% (sd 0.7/0.1 pts) -> does not,
+  as in the first run. The +-5-point band borrowed from the equal-power null is replaced by these measured spreads.
+- L13 M=32,768 L=16: rho=0 left FVU .083 (target .288; gamma .643/.900; null SAE top-1% power share .22), so calibration (fixed
+  slope 0.6) went to rho .34 (FVU .290). Three seeds: N .650+-.007/.940+-.004 (seeds .643/.935, .652/.942, .655/.942); Z at rho 0
+  .750/.996 (seed 0 .756/1.001 from the robust run, seeds 1-2 .747/.994 each); N-R .054/.076 -> both closed -> explains. Gap Z-R
+  only 1.55/1.33x the 0.10 margin, so the closed fraction is the number to read: 65%/43% (sd 4.2/2.9 pts; 40-71% over all N x Z
+  seed pairs). N and Z differ in rho here (.34 vs 0), so this is not a clean power-only comparison. Dictionary: no power moved by
+  the Schur-Horn cap, Spearman(power, rq) .08 (.65 at M=8192), atom-cloud gamma .76/1.02 vs .96/1.05 for equal-power atoms.
+- Manipulation check: null SAE top-1% share at M=32,768, rho .34: .53/.52/.51 (real .35). At rho=0 .22. So the dense share drives
+  the extra concentration, while the rho=0 bulk gamma is within .001/.035 of the matched seed-0 run (at a much lower FVU).
+- Rebuilt reference dictionaries (first-run files not kept): same rounds and report statistics; atom power and rq agree to ~1e-13
+  relative; file sha256 differs (rounding).
+- Predictions, Part 1: verdict explains - right; closed fraction 40-80% in both windows - right (65/43); top-1% share below .45 -
+  wrong (.51-.53). The no-dense-share design could not be run as intended because rho had to rise to match FVU. Part 2: seed sd of
+  N <= .015 - right (.0005-.004); both verdicts confirmed - right; closed fractions move < 5 points - right (at most 0.6).
+- Timing: note created 11:44 UTC, run started 11:59; the note's file was last modified 12:04, during the first SAE's training and
+  before any SAE finished (12:08). That edit added the hashes of the two ladder job files (not yet run); Parts 1 and 2
+  were not changed. Stated in the paper's appendix.
+
+Ladder (`experiments/r2_job_ladder.py`, second job of the chain): the first attempt stopped during embedding collection for embT
+(13:20 UTC) when the watchdog's GPU-idle limit (under 5% for 1800 s) fired at 13:46 UTC (`r2_job_chain2.FAILED`). Restarted on a
+new pod on 20 Nov at 10:01 UTC; still running, nothing written about it.
+
+Paper: abstract and introduction now give 54-56% (layer 13) with a seed sd of about one point and the 43-78% generator range; new
+Table `tab:pmatch2` (three seeds, three settings); new paragraph on the 32,768-atom setting (closed, but easy to close there; the
+dense share was needed; the comparison varies rho too); the four qualifications, limitations, the appendix seed-uncertainty
+paragraph, checks, additive prediction (M=32,768: .55/.96 vs .65/.94), manipulation check and Table `tab:manip` updated; the
+second note, its hash and every prediction outcome added to the rules-fixed-in-advance appendix; stray ",;" in the checks fixed.
+Figures unchanged (captions note that they show the first run).
+
+## 2026-11-20 - Ladder: the remainder without a trained model
+
+Pod run, 20 Nov, 10:01-15:12 UTC (310 min, budget 420): `experiments/r2_job_ladder.py`, rules and predictions in
+`notes/prereg_ladder.md` Part 3 (dated 2026-11-19; job sha256 df6dd2da349f..., recorded in full in all 36 rows of
+`results/r2/runs_ladder.jsonl` and equal to the note's; rule script `experiments/r2_ladder_summary.py` e4affde34d59..., equal to
+the note's, recorded only there). The first attempt (19 Nov 13:20-13:46 UTC) stopped during embT collection on the idle-GPU
+guard; it trained nothing and wrote no row. 36 rows: per dataset 3 real k=40, 1 power pass, 2 V0 + 1-2 V0 calibration, 1 V1;
+embT/embR also real k=4 and k=16. On the pod the summary ran without the Gemma reference rows and returned "uninformative
+(trained rung missing)" for the block pairs; rerun locally with them (`results/r2/ladder_summary.json`, unchanged script,
+reproduces byte-for-byte from the rows). New descriptive script `experiments/r2_ladder_extra.py` -> `results/r2/ladder_extra.json`
+(Sigma fit quality, half-window slopes, Z vs rho, live counts, power, three-seed trained reference).
+
+Bulk gamma_fixed, ranks 31-450 / 101-1000 (R real 3 seeds, Z equal-power 2 seeds, N power-matched 1 seed; Rem = N - R):
+- embT (FVU .044, rho .05): R .313/.574, Z .869/.953, N .680/.837, G .556/.379, Rem .367/.262.
+- embR (FVU .085, rho .12): R .192/.456, Z .863/.988, N .699/.859, G .671/.532, Rem .507/.403 -> vs embT persists (ratios 1.38/1.53).
+- randL0 (FVU .295, rho .40): R .402/.727, Z 1.023/1.177, N .951/1.113, G .621/.451, Rem .549/.386 -> vs Gemma L0 (Rem .359/.292)
+  persists (1.53/1.32).
+- randL13 (FVU .601, rho .86): R .875/1.161, Z 1.449/2.649, N 1.429/2.256, G .575/1.489, Rem .554/1.095 -> vs Gemma L13 (Rem
+  .155/.130) persists by the rule (3.57/8.40); read as uninformative in practice (below).
+- "no gap" false everywhere. Closed fraction (Z-N)/(Z-R): embT 34/31%, embR 24/24%, randL0 12/14%, randL13 4/26% (Gemma L0
+  33/28%, L13 54/55%). With the three-seed trained N the ratios move by at most .07; no verdict changes.
+- Calibration: all eight nulls matched (embR V1 FVU .114 vs .085, .029 off, just inside). V0 tried rho: embT 0 (.012), .05 (.038);
+  embR .30 (.202), .12 (.092); randL0 .30 (.228), .40 (.293); randL13 .30 (.236), .86 (.621). V1 matched at its first run each time.
+- Power check (top-1% share, real seed 0 / dictionary / null SAE): embT .22/.21/.48, embR .11/.10/.41, randL0 .22/.22/.39,
+  randL13 .24/.24/.52; same over-concentration as on Gemma (.35/.32/.53 at L13). Dictionaries: 9/5/20/36 rounds, log power err
+  <= .029, cov exact (float64 3e-10 embT, ~5e-13 others), 1M-sample cov err .011-.019; Spearman(power, rq) .11/.38/.49/.80.
+- Sigma: top-1 / top-10 / PR: embT .229/.399/17, embR .032/.197/169, randL0 .029/.146/273, randL13 .040/.151/234 (Gemma L13
+  .063/.233/111). Bulk slopes -.71 to -.88, fit R^2 >= .99; no degeneracy flag. Sigma is not the problem at randL13.
+- Live latents: real 16,337-16,384; nulls 9,079-12,770 on the embeddings, 14,199-15,382 randL0, 16,384 randL13; all >= 8,192.
+  Only the descriptive embT k=4 SAE was short (7,215, fixed_n_short). Extra k: embT k4 .369/.583 (FVU .086), k16 .322/.571 (.047);
+  embR k4 .213/.495 (.093), k16 .204/.483 (.092) - within .06 of k=40.
+- Init (rows' meta): randL0/randL13 from AutoModelForCausalLM.from_config(google/gemma-2-2b), torch.manual_seed(1234), float32
+  CPU then bf16, transformers 5.23.0 / torch 2.8.0; linear and embedding weights N(0, .02^2) (embedding std .0200), pad row 0,
+  RMSNorm weights 0 (= unit gain in Gemma's 1+w form); randL13 checked that embedding and block 0 hash to randL0's. embR:
+  N(0, .03745^2), seed 4321; trained embedding RMS .03745, scale 48.
+
+Caveats:
+- randL13: real FVU .60 so rho .86 (nulls mostly Gaussian). Null clouds bend inside the bulk windows: Z's gamma .81 / 1.94 over
+  the lower/upper halves of 31-450, 1.47 / 3.24 for 101-1000; fit R^2 down to .93 (real >= .98). Z is driven by rho: 1.00/1.11 at
+  rho .30 vs 1.45/2.65 at .86. The real SAE also overfits: FVU .51 on the last 1M cached tokens (half training) vs .60 held out
+  (others agree within .002). So the randL13 remainder mostly measures the dense share; verdict reported as the rule's
+  "persists" with this caveat, treated as uninformative in practice. The rule is unchanged.
+- Embeddings: one vector per token type; FVU match not trivial (rho .05/.12) and R stable over k, but a finite frequency-weighted
+  point set. Real embedding clouds are curved too (embR gamma .08/.29 over the halves of 31-450; R^2 down to .94).
+- One N seed per dataset, one random init (default HF init, not depth-scaled).
+- embR is a one-sparse mixture of random directions, so its remainder (.51/.40) cannot come from learned arrangement of
+  directions; it must come from how the null's source differs (16 atoms/token, dense share, forced alignment) or from the SAE.
+
+Predictions (Part 3): embR raw decoder slope 31-450 flatter than -.15 - wrong (-.168; gamma small .19 and G large .67 as reasoned);
+embR vs embT uninformative or partial (p .6 that embT Rem < .10 somewhere) - wrong (embT Rem .37/.26; persists); randL0 persists
+(.55) - right; randL13 partial or absent (.60) - wrong under the rule (persists; degenerate in practice, a post hoc reading); at
+least one dataset fails a stop rule or is uninformative (.7) - wrong (none; only the descriptive k=4 SAE short).
+
+Paper: new Section 5.5 (sec:ladder) with Table tab:ladder (`paper/figures/tab_ladder_r2.tex`) and Figure 5 (fig15_ladder, new
+`paper/figures/make_fig_ladder.py`, which also writes `tab_ladder_detail_r2.tex`); new Appendix app:ladder; prereg appendix: Ladder
+paragraph (dates, both hashes, first attempt, pod-side summary), predictions, table rows, full hashes; abstract (one sentence,
+205 words), introduction, contribution (3), Section 3's "fixed in advance", Discussion's remainder paragraph (does not need a
+trained model; coherence hypothesis narrowed, two cheaper checks), limitations, conclusion, impact statement. Claim: a trained
+model is not needed to produce a remainder of this size under this null; not that the cause is the same. Fig13 now shows the
+three-seed reference settings and the 32,768-atom setting (make_fig_null_r2.py fig_pmatch only; paper_numbers_r2.json and all
+tab_*.tex byte-identical after regeneration). Fig14 unchanged (first run; caption points to Table tab:pmatch2 and Fig13).
