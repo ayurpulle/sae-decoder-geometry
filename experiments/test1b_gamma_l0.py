@@ -27,10 +27,12 @@ D_GEMMA, D_PYTHIA = 2304, 512
 
 
 def main():
+    tag = sys.argv[1] if len(sys.argv) > 1 else ""  # "1m": the 1M-token Sigma, outputs suffixed _1m
+    sfx = f"_{tag}" if tag else ""
     ladder = json.load(open(ROOT / "results" / "phase1" / "width_ladder_L12.json"))
     windows = [tuple(w) for w in ladder["config"]["windows"]]
     freqs = json.load(open(ROOT / "results" / "phase1" / "freqs_L12.json"))["results"]
-    sig_eig = np.load(OUT / "sigma_eigenvalues.npy")[12]
+    sig_eig = np.load(OUT / f"sigma_eigenvalues{sfx}.npy")[12]
     sig = {w: slope_from_eigenvalues(sig_eig, w)["slope"] for w in windows}
 
     rows = []
@@ -80,7 +82,7 @@ def main():
 
     json.dump({"sigma12_slopes": {str(w): sig[w] for w in windows}, "rows": rows, "fits": fits,
                "pythia": {"sigma_slopes": {str(w): p_sig[w] for w in PYTHIA_WINDOWS}, "runs": pythia}},
-              open(OUT / "gamma_l0_L12.json", "w"), indent=1)
+              open(OUT / f"gamma_l0_L12{sfx}.json", "w"), indent=1)
 
     fig, axes = plt.subplots(1, len(windows), figsize=(4.2 * len(windows), 4), sharey=True)
     widths = [w for w in WIDTH_N if any(x["width"] == w for x in rows)]
@@ -106,9 +108,9 @@ def main():
         ax.set_title(f"ranks {w[0] + 1}–{w[1]}")
     axes[0].set_ylabel("γ = decoder slope / Σ slope")
     axes[0].legend(fontsize=6.5)
-    fig.suptitle("Gemma-2-2B layer 12: γ vs L0 across the Gemma Scope width ladder")
+    fig.suptitle("Gemma-2-2B layer 12: γ vs L0 across the Gemma Scope width ladder" + (" (1M-token Σ)" if tag else ""))
     fig.tight_layout()
-    fig.savefig(OUT / "gamma_l0_L12.png", dpi=150)
+    fig.savefig(OUT / f"gamma_l0_L12{sfx}.png", dpi=150)
 
 
 if __name__ == "__main__":

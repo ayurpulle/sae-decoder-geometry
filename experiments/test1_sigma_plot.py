@@ -22,10 +22,12 @@ DEC = {("65k", 40): "C1", ("65k", 70): "C2", ("16k", 40): "C1", ("16k", 70): "C2
 
 
 def main():
-    z = np.load(OUT / "sigma_gemma-2-2b.npz")
+    tag = sys.argv[1] if len(sys.argv) > 1 else ""  # "1m": the 1M-token Sigma, outputs suffixed _1m
+    sfx = f"_{tag}" if tag else ""
+    z = np.load(OUT / f"sigma_gemma-2-2b{sfx}.npz")
     cov, n = z["cov"], int(z["n"])
     L = cov.shape[0]
-    eig = np.stack([np.sort(np.linalg.eigvalsh(c))[::-1] for c in cov])
+    eig = np.stack([np.sort(np.linalg.eigvalsh(c.astype(np.float64)))[::-1] for c in cov])
     sig = {w: np.array([slope_from_eigenvalues(e, w)["slope"] for e in eig]) for w in WINDOWS}
     dec = json.load(open(ROOT / "results" / "phase1" / "slope_vs_layer_matched_l0.json"))
 
@@ -91,9 +93,9 @@ def main():
             ax.legend(fontsize=7)
     fig.suptitle(f"Test 1: activation covariance Σ vs decoder cloud, Gemma-2-2B ({n:,} Pile tokens)")
     fig.tight_layout()
-    fig.savefig(OUT / "sigma_vs_decoder_layers.png", dpi=150)
-    np.save(OUT / "sigma_eigenvalues.npy", eig)
-    json.dump(rows, open(OUT / "sigma_slopes.json", "w"), indent=1)
+    fig.savefig(OUT / f"sigma_vs_decoder_layers{sfx}.png", dpi=150)
+    np.save(OUT / f"sigma_eigenvalues{sfx}.npy", eig)
+    json.dump(rows, open(OUT / f"sigma_slopes{sfx}.json", "w"), indent=1)
     print("\ncorrelations across layers (decoder slope vs Σ slope):")
     for k, v in rows["correlations"].items():
         print(f"  {k:<28} r={v['pearson_r']:+.2f}  gamma={v['gamma_mean']:.2f}±{v['gamma_sd']:.2f}  (n={v['n_layers']})")

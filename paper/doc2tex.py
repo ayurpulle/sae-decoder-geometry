@@ -11,8 +11,8 @@ import xml.etree.ElementTree as ET
 FIGURES = {
     "blob/ad23c7bc-24d6": "results/phase1/slope_vs_l0_L12.png",
     "blob/ddf82f36-2f9e": "results/phase1/slope_vs_layer_matched_l0.png",
-    "blob/a39830ef-8f46": "results/test1/sigma_vs_decoder_layers.png",
-    "blob/3fd5b536-0eb0": "results/test1/gamma_l0_L12.png",
+    "blob/e17ca472-bcb0": "results/test1/sigma_vs_decoder_layers_1m.png",
+    "blob/bd7544a5-eff9": "results/test1/gamma_l0_L12_1m.png",
     "blob/4e65aa08-f19d": "results/gpu/gpu_results.png",
 }
 
